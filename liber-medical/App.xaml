@@ -3,29 +3,36 @@
 	<Application.Resources>
         <ResourceDictionary>
             <!-- Application resource dictionary -->
-            <Color x:Key="AppBackgroundColor">White</Color>
-            <Color x:Key="EntryLoginPage">#9b9b9b</Color>
-            <Color x:Key="ButtonBackgroundLoginPage">#d1d1d1</Color>
-            <Color x:Key="ButtonTextBackgroundLoginPage">#ffffff</Color>
+            <Color x:Key="AppBackgroundColor">#ffffff</Color>
+            <Color x:Key="HeaderBackgroundColor">#91c602</Color>
+            <Color x:Key="PurpleyGrey">#9b9b9b</Color>
+            <Color x:Key="LightGrey">#d1d1d1</Color>
             
             <!-- Global Style -->
             <Style x:Key="LoginPageEntry" TargetType="Entry">
-                    <Setter Property="TextColor" Value="{StaticResource EntryLoginPage}" />
-                    <Setter Property="PlaceholderColor" Value="{StaticResource EntryLoginPage}" />
+                    <Setter Property="TextColor" Value="{StaticResource PurpleyGrey}" />
+                    <Setter Property="PlaceholderColor" Value="{StaticResource PurpleyGrey}" />
                     <Setter Property="FontFamily" Value="SFUIDisplay-Light" />
-                    <Setter Property="FontSize" Value="15" />
-                
+                    <Setter Property="FontSize" Value="15" /> 
             </Style>
             <Style x:Key="LoginPageButton" TargetType="Button">
-                    <Setter Property="BackgroundColor" Value="{StaticResource ButtonBackgroundLoginPage}" />
-                    <Setter Property="TextColor" Value="{StaticResource ButtonTextBackgroundLoginPage}" />
+                    <Setter Property="BackgroundColor" Value="{StaticResource LightGrey}" />
+                    <Setter Property="TextColor" Value="#ffffff" />
                     <Setter Property="FontFamily" Value="SFUIText-Light.otf" />
                     <Setter Property="FontSize" Value="18" />
             </Style>
-            <Style x:Key="LoginPageForgot" TargetType="Label">
-                    <Setter Property="TextColor" Value="{StaticResource EntryLoginPage}" />
-                    <Setter Property="FontFamily" Value="SFUIDisplay-Light" />
+            <Style x:Key="LoginPageForgot" TargetType="Label">        
+                    <Setter Property="FontFamily" Value="SFUIDisplay-Light.otf" />
                     <Setter Property="FontSize" Value="14" />
+                    <Setter Property="TextColor" Value="{StaticResource PurpleyGrey}" />
+            </Style>
+            <Style x:Key="HeaderBackground" TargetType="View">
+                <Setter Property="BackgroundColor" Value="{StaticResource HeaderBackgroundColor}" />
+            </Style>
+            <Style x:Key="HeaderLabel" TargetType="Label">        
+                    <Setter Property="FontFamily" Value="SFUIText-Semibold" />
+                    <Setter Property="FontSize" Value="17" />
+                    <Setter Property="TextColor" Value="#ffffff" />
             </Style>
         </ResourceDictionary>
 	</Application.Resources>

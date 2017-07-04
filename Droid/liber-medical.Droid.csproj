@@ -110,6 +110,9 @@
     <AndroidResource Include="Resources\drawable-hdpi\slice.jpg" />
     <AndroidResource Include="Resources\drawable-xhdpi\slice.jpg" />
     <AndroidResource Include="Resources\drawable-xxhdpi\slice.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\back_arrow.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\back_arrow.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\back_arrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

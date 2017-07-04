@@ -33,6 +33,9 @@
     <EmbeddedResource Include="Views\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\MissingPasswordPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -45,6 +48,9 @@
     <Compile Include="CustomControls\BasePage.cs" />
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MissingPasswordPage.xaml.cs">
+      <DependentUpon>MissingPasswordPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

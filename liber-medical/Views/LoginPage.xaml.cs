@@ -15,7 +15,7 @@ namespace libermedical.Views
 
         void Handle_Tapped(object sender, System.EventArgs e)
         {
-            //throw new NotImplementedException();
+            Navigation.PushAsync(new MissingPasswordPage());
         }
     }
 }

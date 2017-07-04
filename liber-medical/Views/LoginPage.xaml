@@ -29,9 +29,9 @@
                         Text="Mot de passe oublié ?"
                         HorizontalOptions="Center"
                         Style="{StaticResource LoginPageForgot}">
-                        <Label.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped" />
-                </Label.GestureRecognizers>
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped" />
+                    </Label.GestureRecognizers>
                 </Label>    
 
             </StackLayout>
