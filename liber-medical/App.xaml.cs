@@ -9,7 +9,7 @@ namespace libermedical
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new LoginPage());
+            MainPage = new NavigationPage(new MainTabPage());
         }
 
         protected override void OnStart()
