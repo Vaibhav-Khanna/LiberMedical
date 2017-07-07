@@ -47,10 +47,12 @@ namespace libermedical.Views
                 var pickerOptions = new PickMediaOptions();
 
                 var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
-
-                var profilePicture = ImageSource.FromStream(() => file.GetStream());
-                var typeNavigation = "normal";
-                await Navigation.PushAsync(new PatientsListPage(typeNavigation));
+                if (file != null)
+                {
+                    var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                    var typeNavigation = "normal";
+                    await Navigation.PushAsync(new PatientsListPage(typeNavigation));
+                }
             }
 
 

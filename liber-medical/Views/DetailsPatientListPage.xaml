@@ -64,7 +64,7 @@
                                             
                                                 <Label Text="{Binding Reference, StringFormat='Ordonnance {0}'}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand"  Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
                                                 <Label Text="{Binding AddDate}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}"  Grid.Row="1" Grid.Column="0" />
-                                                <Label Text="{Binding Status}" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#9f9f9f" Grid.RowSpan="2" Grid.Column="1" />
+                                                <Button Text="{Binding Status}" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="#d1d1d1"  TextColor="#ffffff" Grid.RowSpan="2" Grid.Column="1" BorderRadius="50"  />
                                                 <Image Source="back_arrow_green.png" HorizontalOptions="Start" VerticalOptions="Center" Grid.RowSpan="2" Grid.Column="2" />
 
                                         </Grid>
