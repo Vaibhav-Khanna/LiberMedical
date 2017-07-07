@@ -9,8 +9,19 @@ namespace libermedical.Views
     {
         public MainTabPage()
         {
+            BindingContext = this.CurrentPage;
+            this.CurrentPageChanged += CurrentPageHasChanged;
             InitializeComponent();
         }
 
+
+        protected void CurrentPageHasChanged(object sender, EventArgs e)
+        {
+
+            if (this.CurrentPage.Title == "Accueil")
+            { this.Title = "LiberMedical"; }
+            else { this.Title = this.CurrentPage.Title; }
+
+        }
     }
 }

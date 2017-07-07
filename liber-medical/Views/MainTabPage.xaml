@@ -5,10 +5,10 @@
     x:Class="libermedical.Views.MainTabPage" 
     Title="LiberMedical"
     Style="{StaticResource AppBackgroundColor}">
-            <local:HomePage Title="Accueil"  />
-            <local:PatientsListPage Title="Patients"  />
-            <local:OrdonnancesListPage Title="Ordonnances" />
-            <local:TeledeclarationsListPage Title="Télédéclarations" />
-            <local:PlusPage Title="Plus" />
+            <local:HomePage Title="Accueil" Icon="home_green.png" />
+            <local:PatientsListPage Title="Patients"  Icon="patients.png"/>
+            <local:OrdonnancesListPage Title="Ordonnances" Icon="ordonnances.png"/>
+            <local:TeledeclarationsListPage Title="Télédéclarations" Icon="teledeclaration.png" />
+            <local:PlusPage Title="Plus" Icon="plus.png"/>
     
 	</TabbedPage>

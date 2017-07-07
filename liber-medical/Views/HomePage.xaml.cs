@@ -14,28 +14,68 @@ namespace libermedical.Views
             InitializeComponent();
         }
 
-        async void OnActionSheetSimpleClicked(object sender, EventArgs e)
+        async void AddActionSheetSimpleTapped(object sender, EventArgs e)
         {
             var action = await DisplayActionSheet("Que souhaitez vous ajouter?", "Annuler", null, "Ordonnance rapide", "Documents");
             if (action == "Ordonnance rapide")
             {
-                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsPickPhotoSupported)
+                await CrossMedia.Current.Initialize();
+
+                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 {
-                    await DisplayAlert("No Camera", ":( No camera available.", "Got It");
+                    await DisplayAlert("No Camera", ":( No camera available.", "OK");
                     return;
                 }
 
-                var mediaFile = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions()
+                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions()
                 {
                     AllowCropping = true
                 });
-
-                // profilePicture.Source = ImageSource.FromStream(() => mediaFile.GetStream());
-
+                if (file != null)
+                {
+                    var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                    var typeNavigation = "normal";
+                    await Navigation.PushAsync(new PatientsListPage(typeNavigation));
+                }
 
             }
-            if (action == "Documents") { await Navigation.PushAsync(new LoginPage()); }
+            if (action == "Documents")
+            {
+                await CrossMedia.Current.Initialize();
+
+
+                var pickerOptions = new PickMediaOptions();
+
+                var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
+
+                var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                var typeNavigation = "normal";
+                await Navigation.PushAsync(new PatientsListPage(typeNavigation));
+            }
+
+
         }
 
+        async void FastTapped(object sender, EventArgs e)
+        {
+            await CrossMedia.Current.Initialize();
+
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+            {
+                await DisplayAlert("No Camera", ":( No camera available.", "OK");
+                return;
+            }
+
+            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions()
+            {
+                AllowCropping = true
+            });
+            if (file != null)
+            {
+                var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                var typeNavigation = "fast";
+                await Navigation.PushAsync(new PatientsListPage(typeNavigation));
+            }
+        }
     }
 }

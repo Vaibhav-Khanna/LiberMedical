@@ -4,7 +4,7 @@
         <ResourceDictionary>
             <!-- Application resource dictionary -->
 
-            <Color x:Key="HeaderBackgroundColor">#91c602</Color>
+            <Color x:Key="HeaderFooterBackgroundColor">#91c602</Color>
             <Color x:Key="PurpleyGrey">#9b9b9b</Color>
             <Color x:Key="PurpleyGrey2">#9f9f9f</Color>
             <Color x:Key="LightGrey">#d1d1d1</Color>
@@ -15,7 +15,7 @@
             <Style x:Key="LoginPageEntry" TargetType="Entry">
                 <Setter Property="TextColor" Value="{StaticResource PurpleyGrey}" />
                 <Setter Property="PlaceholderColor" Value="{StaticResource PurpleyGrey}" />
-                <Setter Property="FontFamily" Value="SFUIDisplay-Light" />
+                <Setter Property="FontFamily" Value="SFUIDisplay-Light.otf" />
                 <Setter Property="FontSize" Value="15" />
             </Style>
             <Style x:Key="LoginPageButton" TargetType="Button">
@@ -29,16 +29,23 @@
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="TextColor" Value="{StaticResource PurpleyGrey}" />
             </Style>
-            <Style x:Key="HeaderBackground" TargetType="View">
-                <Setter Property="BackgroundColor" Value="{StaticResource HeaderBackgroundColor}" />
+            <Style x:Key="HeaderFooterBackground" TargetType="View">
+                <Setter Property="BackgroundColor" Value="{StaticResource HeaderFooterBackgroundColor}" />
             </Style>
             <Style x:Key="HeaderLabel" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Semibold" />
+                <Setter Property="FontFamily" Value="SFUIText-Semibold.otf" />
                 <Setter Property="FontSize" Value="17" />
                 <Setter Property="TextColor" Value="#ffffff" />
             </Style>
+            <Style x:Key="HeaderLabelAction" BasedOn="{StaticResource HeaderLabel}" TargetType="Label">
+                <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
+            </Style>
+            <Style x:Key="FooterLabel" BasedOn="{StaticResource HeaderLabel}" TargetType="Label">
+                <Setter Property="FontFamily" Value="SFUIText-Medium.otf" />
+                <Setter Property="FontSize" Value="18" />
+            </Style>
             <Style x:Key="NavigationLink" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Semibold" />
+                <Setter Property="FontFamily" Value="SFUIText-Semibold.otf" />
                 <Setter Property="FontSize" Value="17" />
                 <Setter Property="TextColor" Value="#ffffff" />
              </Style>  
@@ -52,6 +59,34 @@
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="TextColor" Value="{StaticResource PurpleyGrey2}" />
             </Style>
+            <Style x:Key="PatientNameTitle" TargetType="Label">
+                <Setter Property="FontFamily" Value="SFUIDisplay-Regular.otf" />
+                <Setter Property="FontSize" Value="28" />
+                <Setter Property="TextColor" Value="#000000" />
+            </Style>
+            <Style x:Key="PortableTitle" TargetType="Label" BasedOn="{StaticResource PatientNameTitle}">
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+            <Style x:Key="PortableNumber" TargetType="Label" BasedOn="{StaticResource PatientNameTitle}">
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="TextColor" Value="#007aff" />
+            </Style>
+             <Style x:Key="OrdonnanceDocumentMenu" TargetType="Label">
+                <Setter Property="FontFamily" Value="SFUIDisplay-Regular.otf" />
+                <Setter Property="FontSize" Value="17" />
+                <Setter Property="TextColor" Value="#4a4a4a" />
+            </Style>
+            <Style x:Key="Ordonnance" TargetType="Label">
+                <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="TextColor" Value="#000000" />
+            </Style>
+            <Style x:Key="OrdonnanceAddDate" TargetType="Label">
+                <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="TextColor" Value="{StaticResource PurpleyGrey}" />
+            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -13,13 +13,17 @@
                 <StackLayout HorizontalOptions="FillAndExpand" Grid.Row="1">
                     <Image Source="add.png" Margin="0,10,0,0">
                         <Image.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnActionSheetSimpleClicked" />
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="AddActionSheetSimpleTapped" />
                         </Image.GestureRecognizers>
                     </Image>
                     <Label Margin="0,5,0,0" Text="Ajouter une ordonnance" HorizontalOptions="Center" Style="{StaticResource HomePageTask}" />
                 </StackLayout>
                 <StackLayout HorizontalOptions="FillAndExpand" Grid.Row="2">
-                    <Image Source="addfast.png" Margin="0,10,0,0" />
+                    <Image Source="addfast.png" Margin="0,10,0,0">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="FastTapped" />
+                        </Image.GestureRecognizers>
+                    </Image>
                     <Label Margin="0,5,0,0" Text="Ajout rapide" HorizontalOptions="Center" Style="{StaticResource HomePageTask}" />
                 </StackLayout>
                 <StackLayout HorizontalOptions="FillAndExpand" Grid.Row="3">
