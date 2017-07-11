@@ -1,10 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
-    xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-    x:Class="libermedical.Views.PlusPage" 
-    Style="{StaticResource AppBackgroundColor}">
-    <ContentPage.Content>
-    </ContentPage.Content>
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.PlusPage" Style="{StaticResource AppBackgroundColor}" Title="Plus">
+    <custom:BasePage.ContentPresenter>
+        <ContentView Padding="15,0,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70*" />
+                    <RowDefinition Height="30*" />
+                </Grid.RowDefinitions>
+                <TableView Intent="Data" HasUnevenRows="True" Grid.Row="0">
+                    <TableRoot>
+                        <TableSection>
+                            <ViewCell Height="60">
+                                <StackLayout Orientation="Horizontal" Padding="0,0,21,0">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="AccountTapped" />
+                                    </StackLayout.GestureRecognizers>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*" />
+                                            <ColumnDefinition Width="88*" />
+                                            <ColumnDefinition Width="13" />
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="patients.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Grid.Column="0" />
+                                        <Label Text="Mon compte" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Grid.Column="1" Style="{StaticResource PlusList}" />
+                                        <Image Source="back_arrow_green.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Grid.Column="2" />
+                                    </Grid>
+                                </StackLayout>
+                            </ViewCell>
+                            <ViewCell Height="60">
+                                <StackLayout Orientation="Horizontal" Padding="0,0,21,0" >
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*" />
+                                            <ColumnDefinition Width="88*" />
+                                            <ColumnDefinition Width="13" />
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="patients.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Grid.Column="0" />
+                                        <Label Text="Mes factures à sécuriser" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Grid.Column="1" Style="{StaticResource PlusList}" />
+                                        <Image Source="back_arrow_green.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Grid.Column="2" />
+                                    </Grid>
+                                </StackLayout>
+                            </ViewCell>
+                            <ViewCell Height="60">
+                                <StackLayout Orientation="Horizontal" Padding="0,0,21,0">
+                                    <Label Text="CGV" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Style="{StaticResource PlusList}" />
+                                    <Image Source="back_arrow_green.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
+                                </StackLayout>
+                            </ViewCell>
+                            <ViewCell Height="60">
+                                <StackLayout Orientation="Horizontal" Padding="0,0,21,0">
+                                    <Label Text="CGU" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Style="{StaticResource PlusList}" />
+                                    <Image Source="back_arrow_green.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
+                                </StackLayout>
+                            </ViewCell>
+                            <ViewCell Height="60">
+                                <StackLayout Orientation="Horizontal" Padding="0,0,21,0">
+                                    <Label Text="FAQ" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Style="{StaticResource PlusList}" />
+                                    <Image Source="back_arrow_green.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
+                                </StackLayout>
+                            </ViewCell>
+                        </TableSection>
+                    </TableRoot>
+                </TableView>
+                <Button Grid.Row="1" HeightRequest="69" WidthRequest="291" BackgroundColor="White" BorderColor="#91c602" FontFamily="SFUIText-Medium.otf" FontSize="18" TextColor="#91c602" Text="Contacter mon conseiller" VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="CenterAndExpand" Clicked="AddActionSheetSimpleTapped" />
+            </Grid>
+        </ContentView>
+    </custom:BasePage.ContentPresenter>
 </custom:BasePage>
-

@@ -7,31 +7,15 @@
     Title="Patients">
 
     <custom:BasePage.ToolbarItems Name="Patients" Command="AddPatient">
-        <ToolbarItem Name="Patients" Icon="plus.png" Order="Primary" />
+        <ToolbarItem Name="Patients" Icon="plus.png" Order="Primary" Clicked="AddUser_Clicked" />
     </custom:BasePage.ToolbarItems>
     
-   <!-- <custom:BasePage.Header>
-        <ContentView Style="{StaticResource HeaderFooterBackground}">
-            <Grid Padding="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="40" />
-                </Grid.ColumnDefinitions>
-                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}" Text="Patients" />
-                <Image Grid.Column="1" HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Handle_Tapped" />
-                    </Image.GestureRecognizers>
-                </Image>
-            </Grid>
-        </ContentView>
-    </custom:BasePage.Header> -->
     <custom:BasePage.ContentPresenter>
         <ContentView>
             <ListView x:Name="PatientView" ItemsSource="{Binding patients}" SeparatorVisibility="Default" ItemTapped="Handle_ItemTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding FirstLastName}" TextColor="Black"/>
+                        <TextCell Text="{Binding FirstLastName}" TextColor="Black" Tapped="PatientTapped" />    
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

@@ -121,12 +121,12 @@ namespace libermedical.CustomControls
 
         Grid _mainLayout;
 
-        public BasePage(int headerSize = -1, int footerSize = -1)
+        public BasePage(int headerSize = -1, int footerSize = -1, bool hasNavigationBar = true)
         {
             headerSize = headerSize > -1 ? headerSize : 44;
             footerSize = footerSize > -1 ? footerSize : 44;
 
-            //	NavigationPage.SetHasNavigationBar(this, false);
+            if (hasNavigationBar == false) { NavigationPage.SetHasNavigationBar(this, false); }//NavigationPage.SetHasNavigationBar(this, false);
             _mainLayout = new Grid
             {
                 Padding = new Thickness(0),

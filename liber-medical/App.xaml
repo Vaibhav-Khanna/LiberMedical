@@ -111,7 +111,12 @@
                 <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
                 <Setter Property="TextColor" Value="#8a8a8f" />
                 <Setter Property="FontSize" Value="14" />
-                
+            </Style>
+            <Style x:Key="PlusList" TargetType="Label">
+            <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
+                <Setter Property="TextColor" Value="{StaticResource PurpleyGrey2}" />
+                <Setter Property="FontSize" Value="18" />
+
             </Style>
         </ResourceDictionary>
     </Application.Resources>

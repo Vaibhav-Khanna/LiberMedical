@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.OrdonnanceDetailEditPage" Style="{StaticResource AppBackgroundColor}">
+    <custom:BasePage.Header>
+        <ContentView Style="{StaticResource HeaderFooterBackground}">
+            <Grid Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="99" />
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0" >
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Cancel_Tapped" />
+                    </Grid.GestureRecognizers>
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}" Text="Annuler" />
+                </Grid>    
+
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderLabel}" Text="Ordonnance" />
+
+                <Grid Grid.Column="2" >
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Save_Tapped" />
+                    </Grid.GestureRecognizers>
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}" Text="Enregistrer" />
+                </Grid>  
+                </Grid>
+        </ContentView>
+    </custom:BasePage.Header>
+    <custom:BasePage.ContentPresenter>
+        <ContentView Padding="10,0,5,0">
+        <TableView Intent="Settings" HasUnevenRows="True">
+            <TableRoot >
+                <TableSection>
+                    <TextCell Text="Fred Pearson" Height="50" />
+                        
+                    <ViewCell Height="50">
+                        <StackLayout Orientation="Horizontal" Padding="10,0,10,0">
+                             <Label  Text="Visualiser l'ordonnance" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                             <Image Source="add.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                         </StackLayout> 
+                    </ViewCell>
+                    <ViewCell Height="50">
+                        <StackLayout Orientation="Horizontal" Padding="10,0,10,0">
+                             <Label  Text="Vendredi 23 Juin 2017" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                             <Image Source="add.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                         </StackLayout> 
+                    </ViewCell>        
+                    <TextCell Text="Statut traité" />
+                    <ViewCell Height="50">
+                        <StackLayout Orientation="Horizontal" Padding="10,0,10,0">
+                             <Label  Text="Date de premier soin" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                             <Image Source="add.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                         </StackLayout> 
+                    </ViewCell>    
+                </TableSection>
+                <TableSection Title="Frequence d'administration" >
+                    <SwitchCell Text="Matin"  Height="50"/>
+                    <SwitchCell Text="Midi" Height="50"/>
+                    <SwitchCell Text="Après-midi" Height="50"/>
+                    <SwitchCell Text="Soir" Height="50"/>
+                </TableSection>
+
+                <TableSection  >
+                    <ViewCell Height="200"  >
+                            <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                                
+                            
+                       <Grid Grid.Row="0" Padding="10,0,10,0">
+                             <Label  Text="Cotation" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                             <Image Source="add.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                         </Grid>
+                        <Grid Grid.Row="1">
+                        <ListView x:Name="listView" ItemsSource="{Binding cotation}" SeparatorVisibility="None" RowHeight="40">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                            <Grid >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="10*" />
+                                                    <ColumnDefinition Width="15*" />
+                                                    <ColumnDefinition Width="60*" />
+                                                    <ColumnDefinition Width="15*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Image Source="delete.png" Grid.Column="0" HorizontalOptions="CenterAndExpand"  VerticalOptions="CenterAndExpand" />       
+                                                <Label Text="{Binding FirstCode}" HorizontalOptions="CenterAndExpand"  VerticalOptions="CenterAndExpand" Grid.Column="1" />
+                                                <Label Text="{Binding SecondCode}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Column="2" />
+                                                <Label Text="{Binding ThirdCode}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Column="3"  />
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        </Grid>
+                                </Grid>
+                    </ViewCell>
+                </TableSection>
+                <TableSection >
+                    <SwitchCell Text="Majoration" />
+                </TableSection>
+
+                <TableSection >
+                    <SwitchCell Text="Deplacement" />
+                </TableSection>
+
+                <TableSection >
+                    <SwitchCell Text="Nuit" />
+                </TableSection>
+
+                <TableSection Title="Pièce jointe">
+                       <ViewCell>
+                        <StackLayout Orientation="Horizontal" Padding="10,0,10,0">
+                             <Label  Text="Pièce jointe" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                             <Image Source="add.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                         </StackLayout>
+                        
+                            
+                    </ViewCell>
+                </TableSection>
+                <TableSection Title="Commentaire" >
+                    <ViewCell Height="100">
+                        <StackLayout Padding="10,0,10,0" >
+                             <Editor  Text="Ecrivez quelque chose" BackgroundColor="#f0f0f0" 
+                                FontFamily="SFUIText-Regular.otf" FontSize="12" 
+                                HorizontalOptions="FillAndExpand" 
+                                />
+                         </StackLayout> 
+                    </ViewCell> 
+                </TableSection>
+                
+            </TableRoot>
+        </TableView>
+        </ContentView>
+    </custom:BasePage.ContentPresenter>
+</custom:BasePage>

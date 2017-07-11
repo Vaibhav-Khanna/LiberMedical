@@ -90,6 +90,10 @@ namespace libermedical.Views
         }
 
 
+        void Handle_Tapped(object sender, System.EventArgs e)
+        {
+            Navigation.PushModalAsync(new NavigationPage(new OrdonnanceDetailEditPage()));
+        }
     }
 
 }

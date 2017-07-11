@@ -36,7 +36,7 @@
         <ContentView>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="44"/>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
            
@@ -49,7 +49,7 @@
                         <ListView x:Name="listView" ItemsSource="{Binding ordonnances}" SeparatorVisibility="Default" RowHeight="60">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <ViewCell>
+                                    <ViewCell Tapped="Handle_Tapped">
                                             <Grid >
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="60*" />

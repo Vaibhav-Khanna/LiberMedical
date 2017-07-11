@@ -66,6 +66,12 @@
     <EmbeddedResource Include="Views\AddDocument.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\OrdonnanceDetailEditPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MyAccountPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -115,6 +121,13 @@
       <DependentUpon>AddDocument.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Teledeclaration.cs" />
+    <Compile Include="Views\OrdonnanceDetailEditPage.xaml.cs">
+      <DependentUpon>OrdonnanceDetailEditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cotation.cs" />
+    <Compile Include="Views\MyAccountPage.xaml.cs">
+      <DependentUpon>MyAccountPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

@@ -7,17 +7,17 @@ namespace libermedical.Views
 {
     public partial class AddPatient : BasePage
     {
-        public AddPatient()
+        public AddPatient() : base(-1, -1, false)
         {
             InitializeComponent();
         }
         void Cancel_Tapped(object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new DetailsPatientListPage());
+            Navigation.PopModalAsync();
         }
         void Save_Tapped(object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new DetailsPatientListPage());
+            Navigation.PopModalAsync();
         }
 
     }

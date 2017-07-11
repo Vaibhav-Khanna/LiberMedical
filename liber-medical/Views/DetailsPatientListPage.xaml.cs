@@ -12,7 +12,7 @@ namespace libermedical.Views
 
         public ObservableCollection<Ordonnance> ordonnances { get; set; }
 
-        public DetailsPatientListPage() : base(-1, 64)
+        public DetailsPatientListPage() : base(-1, 64, false)
         {
 
             BindingContext = this;
@@ -60,12 +60,12 @@ namespace libermedical.Views
 
         void Back_Tapped(object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new PatientsListPage());
+            Navigation.PopModalAsync();
         }
 
         void Edit_Tapped(object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new LoginPage());
+            Navigation.PushModalAsync(new PatientDetailModify());
         }
     }
 }

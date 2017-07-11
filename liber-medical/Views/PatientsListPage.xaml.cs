@@ -220,5 +220,14 @@ namespace libermedical.Views
 
             }
         }
+
+        void AddUser_Clicked(object sender, System.EventArgs e)
+        {
+            Navigation.PushModalAsync(new NavigationPage(new AddPatient()));
+        }
+        void PatientTapped(object sender, System.EventArgs e)
+        {
+            Navigation.PushModalAsync(new NavigationPage(new DetailsPatientListPage()));
+        }
     }
 }

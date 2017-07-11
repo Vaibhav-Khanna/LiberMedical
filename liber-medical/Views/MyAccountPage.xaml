@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.MyAccountPage" 
+    Style="{StaticResource AppBackgroundColor}" Title="Mon Compte">
+
+    <custom:BasePage.ToolbarItems Name="Account" >
+        <ToolbarItem Name="Editer" Text="Editer" Order="Primary" />
+    </custom:BasePage.ToolbarItems>
+
+    <custom:BasePage.ContentPresenter>
+        <ContentView Padding="15,0,0,0">
+           
+                <TableView Intent="Data" RowHeight="60" >
+                    <TableRoot>
+                        <TableSection>
+                        <TextCell Text="Lola" />
+                        <TextCell Text="Powell" />
+                        <TextCell Text="mt89@hotmail.fr" />                        
+                        <ViewCell >
+                                <StackLayout Orientation="Horizontal" Padding="0,0,21,0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*" />
+                                            <ColumnDefinition Width="88*" />
+                                            <ColumnDefinition Width="13" />
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="patients.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Grid.Column="0" />
+                                        <Label Text="Mon contrat" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Grid.Column="1" Style="{StaticResource PlusList}" />
+                                        <Image Source="back_arrow_green.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Grid.Column="2" />
+                                    </Grid>
+                                </StackLayout>
+                            </ViewCell>
+                            <ViewCell >
+                                <StackLayout Orientation="Horizontal" Padding="0,0,21,0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*" />
+                                            <ColumnDefinition Width="88*" />
+                                            <ColumnDefinition Width="13" />
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="patients.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Grid.Column="0" />
+                                        <Label Text="Mes factures" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Grid.Column="1" Style="{StaticResource PlusList}" />
+                                        <Image Source="back_arrow_green.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Grid.Column="2" />
+                                    </Grid>
+                                </StackLayout>
+                            </ViewCell>
+                        </TableSection>
+                    </TableRoot>
+                </TableView>
+               
+           
+        </ContentView>
+    </custom:BasePage.ContentPresenter>
+</custom:BasePage>
