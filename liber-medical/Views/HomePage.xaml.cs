@@ -35,7 +35,7 @@ namespace libermedical.Views
                 {
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "normal";
-                    await Navigation.PushAsync(new PatientsListPage(typeNavigation));
+                    await Navigation.PushModalAsync(new NavigationPage(new PatientsListPage(typeNavigation)));
                 }
 
             }

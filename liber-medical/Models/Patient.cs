@@ -1,4 +1,5 @@
-﻿namespace libermedical.Models
+﻿using System;
+namespace libermedical.Models
 {
     public class Patient
     {

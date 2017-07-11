@@ -164,15 +164,15 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\support.png" />
     <AndroidResource Include="Resources\drawable-hdpi\ordonnances.png" />
     <AndroidResource Include="Resources\drawable-hdpi\patients.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\plus.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\plus_tabbed.png" />
     <AndroidResource Include="Resources\drawable-hdpi\teledeclaration.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\ordonnances.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\patients.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\plus.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\plus_tabbed.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\teledeclaration.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ordonnances.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\patients.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\plus.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\plus_tabbed.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\teledeclaration.png" />
     <AndroidResource Include="Resources\drawable-hdpi\home_green.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\home_green.png" />
@@ -187,6 +187,12 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\delete.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\path_5.png" />
     <AndroidResource Include="Resources\drawable-hdpi\add.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\filters.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\filters.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\filters.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\plus.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\plus.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\plus.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

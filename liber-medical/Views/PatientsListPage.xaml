@@ -3,7 +3,13 @@
     xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
     x:Class="libermedical.Views.PatientsListPage" 
-    Style="{StaticResource AppBackgroundColor}">
+    Style="{StaticResource AppBackgroundColor}"
+    Title="Patients">
+
+    <custom:BasePage.ToolbarItems Name="Patients" Command="AddPatient">
+        <ToolbarItem Name="Patients" Icon="plus.png" Order="Primary" />
+    </custom:BasePage.ToolbarItems>
+    
    <!-- <custom:BasePage.Header>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
             <Grid Padding="5">

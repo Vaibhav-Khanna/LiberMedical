@@ -26,7 +26,6 @@ namespace libermedical.Views
                 new Ordonnance {
                     Reference= 2,
                     AddDate= new DateTime(2017, 06, 15,10,30,00),
-
                     Status = "Traité"
                 },
                 new Ordonnance {

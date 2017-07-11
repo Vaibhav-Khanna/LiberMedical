@@ -14,7 +14,7 @@ namespace libermedical.Views
 
 
 
-        public PatientsListPage() : base(-1, 0)
+        public PatientsListPage() : base(0, 0)
         {
             BindingContext = this;
             patients = new ObservableCollection<Patient>
@@ -112,7 +112,7 @@ namespace libermedical.Views
             InitializeComponent();
 
         }
-        public PatientsListPage(string navigationType) : base(-1, 0)
+        public PatientsListPage(string navigationType) : base(0, 0)
         {
 
             this.navigationAfter = navigationType;
@@ -220,6 +220,5 @@ namespace libermedical.Views
 
             }
         }
-
     }
 }

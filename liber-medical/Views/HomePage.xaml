@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.HomePage" Style="{StaticResource AppBackgroundColor}">
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="libermedical.Views.HomePage" 
+    Style="{StaticResource AppBackgroundColor}"
+    Title="LiberMedical">
     <custom:BasePage.ContentPresenter>
         <ContentView>
             <Grid RowSpacing="0">
@@ -11,7 +14,7 @@
                 </Grid.RowDefinitions>
                 <Label Text="Bonjour Marc, que souhaitez vous faire?" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HomePageAsk}" Grid.Row="0" />
                 <StackLayout HorizontalOptions="FillAndExpand" Grid.Row="1">
-                    <Image Source="add.png" Margin="0,10,0,0">
+                    <Image Source="addfast.png" Margin="0,10,0,0">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="AddActionSheetSimpleTapped" />
                         </Image.GestureRecognizers>

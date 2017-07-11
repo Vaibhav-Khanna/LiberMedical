@@ -4,11 +4,47 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
     x:Class="libermedical.Views.MainTabPage" 
     Title="LiberMedical"
-    Style="{StaticResource AppBackgroundColor}">
-            <local:HomePage Title="Accueil" Icon="home_green.png" />
-            <local:PatientsListPage Title="Patients"  Icon="patients.png"/>
-            <local:OrdonnancesListPage Title="Ordonnances" Icon="ordonnances.png"/>
-            <local:TeledeclarationsListPage Title="Télédéclarations" Icon="teledeclaration.png" />
-            <local:PlusPage Title="Plus" Icon="plus.png"/>
-    
+    Style="{StaticResource AppBackgroundColor}"
+    BarBackgroundColor="#4a4a4a">
+        <NavigationPage  Icon="home_green.png"> 
+            <NavigationPage.Title>
+             <OnPlatform x:TypeArguments="x:String" iOS="Accueil" Android="" />
+            </NavigationPage.Title>
+            <x:Arguments> 
+               <local:HomePage/>
+             </x:Arguments>
+            
+        </NavigationPage>
+        <NavigationPage Icon="patients.png"> 
+            <NavigationPage.Title>
+             <OnPlatform x:TypeArguments="x:String" iOS="Patients" Android="" />
+            </NavigationPage.Title>
+                    <x:Arguments> 
+                        <local:PatientsListPage/>
+                    </x:Arguments>
+        </NavigationPage>
+        <NavigationPage Icon="ordonnances.png" >
+            <NavigationPage.Title>
+             <OnPlatform x:TypeArguments="x:String" iOS="Ordonnances" Android="" />
+            </NavigationPage.Title>
+                    <x:Arguments> 
+                        <local:OrdonnancesListPage/>
+                    </x:Arguments>
+        </NavigationPage>
+        <NavigationPage Icon="teledeclaration.png"> 
+            <NavigationPage.Title>
+             <OnPlatform x:TypeArguments="x:String" iOS="Télédéclarations" Android="" />
+            </NavigationPage.Title>
+                    <x:Arguments> 
+                        <local:TeledeclarationsListPage/>
+                    </x:Arguments>
+        </NavigationPage>
+        <NavigationPage Icon="plus_tabbed.png"> 
+            <NavigationPage.Title>
+             <OnPlatform x:TypeArguments="x:String" iOS="Plus" Android="" />
+            </NavigationPage.Title>
+                    <x:Arguments> 
+                        <local:PlusPage/>
+                    </x:Arguments>
+        </NavigationPage>
 	</TabbedPage>

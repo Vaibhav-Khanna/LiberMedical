@@ -114,6 +114,7 @@
     <Compile Include="Views\AddDocument.xaml.cs">
       <DependentUpon>AddDocument.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Teledeclaration.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

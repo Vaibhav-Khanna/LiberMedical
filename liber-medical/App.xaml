@@ -104,6 +104,15 @@
             <Style x:Key="PhoneNumberEntry" TargetType="Entry" BasedOn="{StaticResource PatientNameEntry}">               
                 <Setter Property="FontSize" Value="15" />
             </Style>
+            <Style x:Key="BackgroundResearch" TargetType="View">
+                <Setter Property="BackgroundColor" Value="#c8c7cc" />
+            </Style>
+            <Style x:Key="ResearchBar" TargetType="SearchBar">
+                <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
+                <Setter Property="TextColor" Value="#8a8a8f" />
+                <Setter Property="FontSize" Value="14" />
+                
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
