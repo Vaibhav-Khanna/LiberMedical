@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.OrdonnanceDetailPage" Style="{StaticResource AppBackgroundColor}">
+<custom:BasePage.Header>
+        <ContentView Style="{StaticResource HeaderFooterBackground}">
+            <Grid Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" >
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
+                    </Grid.GestureRecognizers>
+                <Image  HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center" />
+                </Grid>    
+               
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}" Text="Ordonnance 1" />
+            </Grid>
+        </ContentView>
+    </custom:BasePage.Header>
+
+    <custom:BasePage.ContentPresenter>
+        <ContentView Padding="10,0,5,0">
+        <TableView Intent="Settings" HasUnevenRows="True">
+            <TableRoot >
+                <TableSection>
+                    <TextCell Text="Fred Pearson" Height="50" />
+                        
+                    <ViewCell Height="50">
+                        <StackLayout Orientation="Horizontal" Padding="10,0,10,0">
+                             <Label  Text="Visualiser l'ordonnance" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                             <Image Source="add.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                         </StackLayout> 
+                    </ViewCell>
+                    <ViewCell Height="50">
+                        <StackLayout Orientation="Horizontal" Padding="10,0,10,0">
+                             <Label  Text="Traité le 12/07/2017" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                             <Image Source="add.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                         </StackLayout> 
+                    </ViewCell>        
+                    <ViewCell Height="50">
+                        <StackLayout Orientation="Horizontal" Padding="10,0,10,0">
+                             <Label  Text="Afficher le détail de l'ordonnance" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                             <Image Source="add.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                         </StackLayout> 
+                    </ViewCell>    
+                </TableSection>
+                
+            </TableRoot>
+        </TableView>
+        </ContentView>
+    </custom:BasePage.ContentPresenter>
+</custom:BasePage>

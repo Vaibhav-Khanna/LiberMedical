@@ -2,14 +2,27 @@
 <custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-    x:Class="libermedical.Views.TeledeclarationsListPage" 
+    x:Class="libermedical.Views.SecuriseBillsPage" 
     Style="{StaticResource AppBackgroundColor}"
-    Title="Télédéclarations">
-    
-    <custom:BasePage.ToolbarItems Name="Télédéclarations">
-        <ToolbarItem Name="Télédéclarations" Icon="filters.png" />
-    </custom:BasePage.ToolbarItems>
-    
+    Title="Facture à sécuriser">
+ <custom:BasePage.Header>
+        <ContentView Style="{StaticResource HeaderFooterBackground}">
+            <Grid Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" >
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
+                    </Grid.GestureRecognizers>
+                <Image  HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center" />
+                </Grid>    
+               
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}" Text="Facture à sécuriser" />
+            </Grid>
+        </ContentView>
+    </custom:BasePage.Header>
     <custom:BasePage.ContentPresenter>
         <ContentView>
             <Grid>
@@ -25,11 +38,10 @@
                         <ListView x:Name="listView" ItemsSource="{Binding teledeclarations}" SeparatorVisibility="Default" RowHeight="60">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <ViewCell>
+                                    <ViewCell Tapped="Bill_Tapped">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="60*" />
-                                                <ColumnDefinition Width="30*" />
+                                                <ColumnDefinition Width="90*" />
                                                 <ColumnDefinition Width="10*" />
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
@@ -38,8 +50,7 @@
                                             </Grid.RowDefinitions>
                                             <Label Text="{Binding AddDate, StringFormat='{0:dd-MM-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
                                             <Label Text="{Binding TotalAccount, StringFormat='€ {0}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
-                                            <Button Text="{Binding Status}" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="#d1d1d1" TextColor="#ffffff" Grid.RowSpan="2" Grid.Column="1" BorderRadius="50" />
-                                            <Image Source="back_arrow_green.png" HorizontalOptions="Start" VerticalOptions="Center" Grid.RowSpan="2" Grid.Column="2" />
+                                            <Image Source="back_arrow_green.png" HorizontalOptions="Start" VerticalOptions="Center" Grid.RowSpan="2" Grid.Column="1" />
                                         </Grid>
                                     </ViewCell>
                                 </DataTemplate>
@@ -50,12 +61,4 @@
             </Grid>
         </ContentView>
     </custom:BasePage.ContentPresenter>
-    <custom:BasePage.Footer>
-        <ContentView Style="{StaticResource HeaderFooterBackground}" >
-            <Label Text="Mes factures à sécuriser" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource FooterLabel}" />
-            <ContentView.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Bill_Tapped" />
-                    </ContentView.GestureRecognizers>
-        </ContentView>
-    </custom:BasePage.Footer>
-</custom:BasePage>
+    </custom:BasePage>

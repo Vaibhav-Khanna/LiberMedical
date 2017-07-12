@@ -15,11 +15,11 @@ namespace libermedical.Views
         }
         void Cancel_Tapped(object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new DetailsPatientListPage());
+            Navigation.PushAsync(new DetailsPatientListPage("documents"));
         }
         void Save_Tapped(object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new DetailsPatientListPage());
+            Navigation.PushAsync(new DetailsPatientListPage("documents"));
         }
         async void Document_Tapped(object sender, System.EventArgs e)
         {

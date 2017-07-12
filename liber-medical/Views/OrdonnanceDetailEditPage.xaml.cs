@@ -11,7 +11,7 @@ namespace libermedical.Views
     {
         public ObservableCollection<Cotation> cotation { get; set; }
 
-        public OrdonnanceDetailEditPage() : base(-1, 0, false)
+        public OrdonnanceDetailEditPage() : base(-1, -1, false)
         {
             BindingContext = this;
             cotation = new ObservableCollection<Cotation>
@@ -42,13 +42,13 @@ namespace libermedical.Views
 
 
         }
-        void Cancel_Tapped(object sender, System.EventArgs e)
+        async void Cancel_Tapped(object sender, System.EventArgs e)
         {
-            Navigation.PopModalAsync();
+            await Navigation.PushAsync(new HomePage());
         }
-        void Save_Tapped(object sender, System.EventArgs e)
+        async void Save_Tapped(object sender, System.EventArgs e)
         {
-            Navigation.PopModalAsync();
+            await Navigation.PushAsync(new HomePage());
         }
 
     }

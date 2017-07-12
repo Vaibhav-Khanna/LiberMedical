@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using libermedical.CustomControls;
 using libermedical.Models;
+using libermedical.Utility;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Xamarin.Forms;
 
 namespace libermedical.Views
@@ -92,8 +95,46 @@ namespace libermedical.Views
 
         void Handle_Tapped(object sender, System.EventArgs e)
         {
-            Navigation.PushModalAsync(new NavigationPage(new OrdonnanceDetailEditPage()));
+            Navigation.PushModalAsync(new NavigationPage(new OrdonnanceDetailPage()));
+        }
+
+        async void Add_Clicked(object sender, System.EventArgs e)
+        {
+
+            var action = await DisplayActionSheet(null, "Annuler", null, "Ordonnance rapide", "Ordonnance classique");
+            var typeDoc = "ordonnance";
+            string typeNavigation = "";
+
+            if (action != null)
+            {
+                //init du plugin photo 
+                await CrossMedia.Current.Initialize();
+
+                if (UtilityClass.CameraAvailable())
+                {
+
+                    var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions()
+                    {
+                        AllowCropping = true
+                    });
+
+                    if (file != null)
+                    {
+
+                        var profilePicture = ImageSource.FromStream(() => file.GetStream());
+
+                        if (action == "Ordonnance rapide") { typeNavigation = "fast"; }
+                        if (action == "Ordonnance classique") { typeNavigation = "normal"; }
+
+                        await Navigation.PushModalAsync(new NavigationPage(new PatientsListPage(typeNavigation, typeDoc)));
+
+                    }
+                }
+                else
+                {
+                    await DisplayAlert("No Camera", ":( No camera available.", "OK");
+                }
+            }
         }
     }
-
 }

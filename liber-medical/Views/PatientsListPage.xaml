@@ -12,7 +12,7 @@
     
     <custom:BasePage.ContentPresenter>
         <ContentView>
-            <ListView x:Name="PatientView" ItemsSource="{Binding patients}" SeparatorVisibility="Default" ItemTapped="Handle_ItemTapped">
+            <ListView x:Name="PatientView" ItemsSource="{Binding patients}" SeparatorVisibility="Default" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell Text="{Binding FirstLastName}" TextColor="Black" Tapped="PatientTapped" />    

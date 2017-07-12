@@ -7,10 +7,10 @@ using Xamarin.Forms;
 
 namespace libermedical.Views
 {
-    public partial class TeledeclarationsListPage : BasePage
+    public partial class SecuriseBillsPage : BasePage
     {
         public ObservableCollection<Teledeclaration> teledeclarations { get; set; }
-        public TeledeclarationsListPage() : base(0, -1)
+        public SecuriseBillsPage() : base(-1, 0, false)
         {
             BindingContext = this;
             teledeclarations = new ObservableCollection<Teledeclaration>
@@ -83,11 +83,17 @@ namespace libermedical.Views
                 }
             };
 
+
             InitializeComponent();
         }
+        async void Back_Tapped(object sender, System.EventArgs e)
+        {
+            await Navigation.PopModalAsync();
+        }
+
         async void Bill_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushModalAsync(new SecuriseBillsPage());
+            await Navigation.PushModalAsync(new TeledeclarationSecureActionPage());
         }
     }
 }

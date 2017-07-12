@@ -122,11 +122,12 @@
                     </ViewCell>
                 </TableSection>
                 <TableSection Title="Commentaire" >
-                    <ViewCell Height="100">
+                    <ViewCell Height="150">
                         <StackLayout Padding="10,0,10,0" >
                              <Editor  Text="Ecrivez quelque chose" BackgroundColor="#f0f0f0" 
                                 FontFamily="SFUIText-Regular.otf" FontSize="12" 
                                 HorizontalOptions="FillAndExpand" 
+                                    VerticalOptions="FillAndExpand"
                                 />
                          </StackLayout> 
                     </ViewCell> 
@@ -136,4 +137,9 @@
         </TableView>
         </ContentView>
     </custom:BasePage.ContentPresenter>
+    <custom:BasePage.Footer>
+        <ContentView Style="{StaticResource HeaderFooterBackground}">
+            <Label Text="Enregistrer" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource FooterLabel}" />
+        </ContentView>
+    </custom:BasePage.Footer>
 </custom:BasePage>

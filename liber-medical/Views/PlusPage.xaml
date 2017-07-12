@@ -28,20 +28,6 @@
                                 </StackLayout>
                             </ViewCell>
                             <ViewCell Height="60">
-                                <StackLayout Orientation="Horizontal" Padding="0,0,21,0" >
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="10*" />
-                                            <ColumnDefinition Width="88*" />
-                                            <ColumnDefinition Width="13" />
-                                        </Grid.ColumnDefinitions>
-                                        <Image Source="patients.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Grid.Column="0" />
-                                        <Label Text="Mes factures à sécuriser" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Grid.Column="1" Style="{StaticResource PlusList}" />
-                                        <Image Source="back_arrow_green.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Grid.Column="2" />
-                                    </Grid>
-                                </StackLayout>
-                            </ViewCell>
-                            <ViewCell Height="60">
                                 <StackLayout Orientation="Horizontal" Padding="0,0,21,0">
                                     <Label Text="CGV" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Style="{StaticResource PlusList}" />
                                     <Image Source="back_arrow_green.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />

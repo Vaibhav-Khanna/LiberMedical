@@ -9,15 +9,21 @@ namespace libermedical.Views
 {
     public partial class HomePage : BasePage
     {
+
+        //type of photo, most of the time ordonannces but we can also have document
+        //so we initialize typeDoc to "ordonnace"
+        private string typeDoc = "ordonnance";
+
         public HomePage() : base(0, 0)
         {
             InitializeComponent();
         }
 
-        async void AddActionSheetSimpleTapped(object sender, EventArgs e)
+        //This concern only ordonances  in normal process
+        async void AddOrdonnanceTapped(object sender, EventArgs e)
         {
-            var action = await DisplayActionSheet("Que souhaitez vous ajouter?", "Annuler", null, "Ordonnance rapide", "Documents");
-            if (action == "Ordonnance rapide")
+            var action = await DisplayActionSheet(null, "Annuler", null, "Appareil photo", "Bibliothèque photo");
+            if (action == "Appareil photo")
             {
                 await CrossMedia.Current.Initialize();
 
@@ -35,11 +41,11 @@ namespace libermedical.Views
                 {
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "normal";
-                    await Navigation.PushModalAsync(new NavigationPage(new PatientsListPage(typeNavigation)));
+                    await Navigation.PushModalAsync(new NavigationPage(new PatientsListPage(typeNavigation, typeDoc)));
                 }
 
             }
-            if (action == "Documents")
+            if (action == "Bibliothèque photo")
             {
                 await CrossMedia.Current.Initialize();
 
@@ -51,33 +57,50 @@ namespace libermedical.Views
                 {
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "normal";
-                    await Navigation.PushAsync(new PatientsListPage(typeNavigation));
+                    await Navigation.PushAsync(new PatientsListPage(typeNavigation, typeDoc));
                 }
             }
 
 
         }
 
+        //This concern  ordonances or documents in fast process
         async void FastTapped(object sender, EventArgs e)
         {
-            await CrossMedia.Current.Initialize();
 
-            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
-            {
-                await DisplayAlert("No Camera", ":( No camera available.", "OK");
-                return;
-            }
+            var action = await DisplayActionSheet(null, "Annuler", null, "Ordonnance", "Document");
 
-            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions()
+            if ((action == "Ordonnance") || (action == "Document"))
             {
-                AllowCropping = true
-            });
-            if (file != null)
-            {
-                var profilePicture = ImageSource.FromStream(() => file.GetStream());
-                var typeNavigation = "fast";
-                await Navigation.PushAsync(new PatientsListPage(typeNavigation));
+
+                await CrossMedia.Current.Initialize();
+
+                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                {
+                    await DisplayAlert("No Camera", ":( No camera available.", "OK");
+                    return;
+                }
+
+                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions()
+                {
+                    AllowCropping = true
+                });
+                if (file != null)
+                {
+                    //if document we change typeDoc to document
+                    if (action == "Document") { typeDoc = "document"; }
+
+                    var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                    var typeNavigation = "fast";
+                    await Navigation.PushModalAsync(new NavigationPage(new PatientsListPage(typeNavigation, typeDoc)));
+
+                }
             }
+        }
+
+        async void AssistTapped(object sender, EventArgs e)
+        {
+            var action = await DisplayActionSheet(null, "Annuler", null, "Appel vocal", "E-mail", "SMS");
         }
     }
 }

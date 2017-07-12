@@ -11,7 +11,7 @@ namespace libermedical.Views
     {
         public ObservableCollection<Patient> patients { get; set; }
         private string navigationAfter;
-
+        private string typeDoc;
 
 
         public PatientsListPage() : base(0, 0)
@@ -112,10 +112,12 @@ namespace libermedical.Views
             InitializeComponent();
 
         }
-        public PatientsListPage(string navigationType) : base(0, 0)
+        public PatientsListPage(string navigationType, string typeDoc) : base(0, 0)
         {
 
             this.navigationAfter = navigationType;
+            this.typeDoc = typeDoc;
+
             BindingContext = this;
             patients = new ObservableCollection<Patient>
             {
@@ -212,22 +214,39 @@ namespace libermedical.Views
 
         }
 
-        void Handle_ItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
-        {
-            if (this.navigationAfter == "fast")
-            {
-                Navigation.PushAsync(new MainTabPage());
-
-            }
-        }
-
         void AddUser_Clicked(object sender, System.EventArgs e)
         {
             Navigation.PushModalAsync(new NavigationPage(new AddPatient()));
         }
+
         void PatientTapped(object sender, System.EventArgs e)
         {
-            Navigation.PushModalAsync(new NavigationPage(new DetailsPatientListPage()));
+            //if fast mode
+            if (this.navigationAfter == "fast")
+            {
+
+                if (this.typeDoc == "Ordonance")
+                {
+                    //save ordonnance
+                }
+                if (this.typeDoc == "Document")
+                {
+                    //save document
+                }
+
+                Navigation.PopAsync();
+
+            }
+            //if normal mode it's an ordoannce 
+            else if (this.navigationAfter == "normal") { Navigation.PushModalAsync(new NavigationPage(new OrdonnanceDetailEditPage())); }
+
+            // if patient list navigation from icon menu
+
+            else
+            {
+                var typeDocument = "ordonnances";
+                Navigation.PushModalAsync(new NavigationPage(new DetailsPatientListPage(typeDocument)));
+            }
         }
     }
 }

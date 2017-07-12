@@ -113,10 +113,22 @@
                 <Setter Property="FontSize" Value="14" />
             </Style>
             <Style x:Key="PlusList" TargetType="Label">
-            <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
+                <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
                 <Setter Property="TextColor" Value="{StaticResource PurpleyGrey2}" />
                 <Setter Property="FontSize" Value="18" />
-
+            </Style>
+            <Style x:Key="TeledeclarationActionAsk" TargetType="Label">
+                <Setter Property="FontFamily" Value="SFUIText-Semibold.otf" />
+                <Setter Property="TextColor" Value="#4a4a4a" />
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+            <Style x:Key="TeledeclarationCancelAction" TargetType="Label">
+                <Setter Property="FontFamily" Value="SFUIText-Semibold.otf" />
+                <Setter Property="TextColor" Value="#fb001e" />
+                <Setter Property="FontSize" Value="18" />
+            </Style>
+            <Style x:Key="TeledeclarationSendAction" BasedOn="{StaticResource TeledeclarationCancelAction}" TargetType="Label">
+                <Setter Property="TextColor" Value="#91c602" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>
