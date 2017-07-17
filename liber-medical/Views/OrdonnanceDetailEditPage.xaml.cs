@@ -11,7 +11,7 @@ namespace libermedical.Views
     {
         public ObservableCollection<Cotation> cotation { get; set; }
 
-        public OrdonnanceDetailEditPage() : base(-1, -1, false)
+        public OrdonnanceDetailEditPage() : base(-1, 64, false)
         {
             BindingContext = this;
             cotation = new ObservableCollection<Cotation>
@@ -31,20 +31,20 @@ namespace libermedical.Views
                     SecondCode= "AMK",
                     ThirdCode= 5
                 }
-
-
-
             };
 
             InitializeComponent();
 
-
-
-
         }
+
+        async void Frequence_Tapped(object sender, System.EventArgs e)
+        {
+            await Navigation.PushModalAsync(new OrdonnanceFrequencePage());
+        }
+
         async void Cancel_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushAsync(new HomePage());
+            await Navigation.PopModalAsync();
         }
         async void Save_Tapped(object sender, System.EventArgs e)
         {

@@ -7,7 +7,7 @@
     Title="Ordonnances">
 
     <custom:BasePage.ToolbarItems Name="Ordonnances">
-        <ToolbarItem Name="Ordonnances"   Icon="filters.png"/>
+        <ToolbarItem Name="Ordonnances"   Icon="filters.png" Clicked="Filter_Clicked"/>
         <ToolbarItem Name="Ordonnances"   Icon="plus.png" Clicked="Add_Clicked"/>
     </custom:BasePage.ToolbarItems>
     <custom:BasePage.ContentPresenter>

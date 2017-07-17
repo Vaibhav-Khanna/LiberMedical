@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.PatientDetailModify" Style="{StaticResource AppBackgroundColor}">
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.PatientDetailModify" Style="{StaticResource AppBackgroundColor}">
     <custom:BasePage.Header>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
             <Grid Padding="5">
@@ -8,55 +8,54 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="99" />
                 </Grid.ColumnDefinitions>
-                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Style="{StaticResource HeaderLabelAction}" Text="Annuler">
-                    <Label.GestureRecognizers>
+                <Grid Grid.Column="0">
+                    <Grid.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Cancel_Tapped" />
-                    </Label.GestureRecognizers>
-                </Label>
-                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Style="{StaticResource HeaderLabelAction}" Text="Enregistrer">
-                    <Label.GestureRecognizers>
+                    </Grid.GestureRecognizers>
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}" Text="Annuler" />
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Grid.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Save_Tapped" />
-                    </Label.GestureRecognizers>
-                </Label>
+                    </Grid.GestureRecognizers>
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}" Text="Enregistrer" />
+                </Grid>
             </Grid>
         </ContentView>
     </custom:BasePage.Header>
-    
-   <custom:BasePage.ContentPresenter>
-
+    <custom:BasePage.ContentPresenter>
         <ContentView Padding="20,10,0,10">
-    <TableView Intent="Data" HorizontalOptions="FillAndExpand">
-            <TableRoot >
-               <TableSection >
-                        <ViewCell  >
-                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100" >
-                                <Entry Text="Bill"  Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+            <TableView Intent="Data" HorizontalOptions="FillAndExpand">
+                <TableRoot>
+                    <TableSection>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100">
+                                <Entry Text="Bill" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
                             </StackLayout>
                         </ViewCell>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100" >
-                                <Entry Text="Anderson"  Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100">
+                                <Entry Text="Anderson" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
                             </StackLayout>
                         </ViewCell>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  HeightRequest="100">
-                                    <Image Source="delete.png" />
-                                    <Label Text="Portable" Style="{StaticResource PortableNumber}" VerticalOptions="Center"/>
-                                    <BoxView BackgroundColor="#d1d1d1" HeightRequest="15" WidthRequest="2"/>
-                                    <Image Source="path_5.png" />    
-                                    <Entry Text="+1 (202) 555-0158" VerticalOptions="Center" Style="{StaticResource PortableNumberBlack}" />
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100">
+                                <Image Source="delete.png" />
+                                <Label Text="Portable" Style="{StaticResource PortableNumber}" VerticalOptions="Center" />
+                                <BoxView BackgroundColor="#d1d1d1" HeightRequest="15" WidthRequest="2" />
+                                <Image Source="path_5.png" />
+                                <Entry Text="+1 (202) 555-0158" VerticalOptions="Center" Style="{StaticResource PortableNumberBlack}" />
                             </StackLayout>
-                            </ViewCell> 
+                        </ViewCell>
                         <ViewCell>
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100" >
-                            <Image Source="add.png"/>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100">
+                                <Image Source="add.png" />
                                 <Entry Placeholder="Ajouter un numéro" Style="{StaticResource PhoneNumberEntry}" />
-                        </StackLayout>
+                            </StackLayout>
                         </ViewCell>
-                            
-                </TableSection>
-            </TableRoot>
-        </TableView>
-    </ContentView>
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+        </ContentView>
     </custom:BasePage.ContentPresenter>
 </custom:BasePage>

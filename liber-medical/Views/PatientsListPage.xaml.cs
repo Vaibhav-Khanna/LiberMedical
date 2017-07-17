@@ -12,11 +12,24 @@ namespace libermedical.Views
         public ObservableCollection<Patient> patients { get; set; }
         private string navigationAfter;
         private string typeDoc;
-
+        public bool visibility;
 
         public PatientsListPage() : base(0, 0)
         {
+
+            //ToolItemBarConstruction because we arrive from TabbedPage Directely
+
+            var Item1 = new ToolbarItem
+            {
+                Icon = "plus.png",
+                Order = ToolbarItemOrder.Primary,
+            };
+            Item1.Clicked += AddUser_Clicked;
+            this.ToolbarItems.Add(Item1);
+            this.Title = "Patients";
             BindingContext = this;
+
+
             patients = new ObservableCollection<Patient>
             {
                 new Patient {
@@ -112,13 +125,14 @@ namespace libermedical.Views
             InitializeComponent();
 
         }
-        public PatientsListPage(string navigationType, string typeDoc) : base(0, 0)
+        public PatientsListPage(string navigationType, string typeDoc) : base(-1, 0, false)
         {
 
             this.navigationAfter = navigationType;
             this.typeDoc = typeDoc;
 
             BindingContext = this;
+            // this.visibility = true;
             patients = new ObservableCollection<Patient>
             {
                 new Patient {
@@ -214,9 +228,14 @@ namespace libermedical.Views
 
         }
 
-        void AddUser_Clicked(object sender, System.EventArgs e)
+        async void AddUser_Clicked(object sender, System.EventArgs e)
         {
-            Navigation.PushModalAsync(new NavigationPage(new AddPatient()));
+            await Navigation.PushModalAsync(new NavigationPage(new AddPatient()));
+        }
+
+        async void Back_Tapped(object sender, System.EventArgs e)
+        {
+            await Navigation.PopModalAsync();
         }
 
         void PatientTapped(object sender, System.EventArgs e)
@@ -225,16 +244,18 @@ namespace libermedical.Views
             if (this.navigationAfter == "fast")
             {
 
-                if (this.typeDoc == "Ordonance")
+                if (this.typeDoc == "ordonnance")
                 {
                     //save ordonnance
+                    Navigation.PopModalAsync();
                 }
-                if (this.typeDoc == "Document")
+                if (this.typeDoc == "document")
                 {
                     //save document
+                    Navigation.PushModalAsync(new NavigationPage(new AddDocument()));
                 }
 
-                Navigation.PopAsync();
+
 
             }
             //if normal mode it's an ordoannce 

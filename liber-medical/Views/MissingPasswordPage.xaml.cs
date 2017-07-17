@@ -7,13 +7,13 @@ namespace libermedical.Views
 {
     public partial class MissingPasswordPage : BasePage
     {
-        public MissingPasswordPage()
+        public MissingPasswordPage() : base(-1, -1, false)
         {
             InitializeComponent();
         }
-		void Handle_Tapped(object sender, System.EventArgs e)
-		{
-			Navigation.PushAsync(new LoginPage());
-		}
+        async void Handle_Tapped(object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new LoginPage());
+        }
     }
 }

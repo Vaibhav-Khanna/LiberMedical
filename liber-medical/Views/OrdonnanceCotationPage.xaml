@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:wp="clr-namespace:Vapolia.WheelPickerForms;assembly=Vapolia.WheelPickerForms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.OrdonnanceCotationPage" Style="{StaticResource AppBackgroundColor}">
+    <custom:BasePage.Header>
+        <ContentView Style="{StaticResource HeaderFooterBackground}">
+            <Grid Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Cancel_Tapped" />
+                    </Grid.GestureRecognizers>
+                    <Image HorizontalOptions="Center" VerticalOptions="Center" Source="back_arrow.png" />
+                </Grid>
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}" Text="Cotations" />
+            </Grid>
+        </ContentView>
+    </custom:BasePage.Header>
+    <custom:BasePage.ContentPresenter>
+        <ContentView Padding="20,10,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <ScrollView Grid.Row="0">
+                    <ListView x:Name="listView" ItemsSource="{Binding cotation}" SeparatorVisibility="Default" Header="Séléctionnez votre cotation dans la liste ou choisissez Cotation Custom">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*" />
+                                            <ColumnDefinition Width="75*" />
+                                            <ColumnDefinition Width="15*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding FirstCode}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Column="0" />
+                                        <Label Text="{Binding SecondCode}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Column="1" />
+                                        <Label Text="{Binding ThirdCode}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Column="2" />
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollView>
+                <TableView Intent="Data" Grid.Row="1" HasUnevenRows="true">
+                    <TableRoot>
+                        <TableSection>
+                            <SwitchCell Text="Cotation custom" Height="40" />
+                           <!-- <ViewCell Height="200">
+                                <wp:WheelPicker SelectionLinesColor="Navy" 
+                                    HorizontalSpaceBetweenWheels="40" 
+                                    ItemsSourceMulti="{Binding ItemsSource}" 
+                                    SelectedItemsIndex="0,0,0" 
+
+                                    HorizontalOptions="Fill">
+                                    
+                                    <wp:WheelPicker.WheelDefinitions>
+                                        <wp:WheelDefinition Width="*" HorizontalOptions="Right" />
+                                        <wp:WheelDefinition Width="Auto" HorizontalOptions="Left" />
+                                        <wp:WheelDefinition Width="*" HorizontalOptions="Left" />
+                                    </wp:WheelPicker.WheelDefinitions>
+                                </wp:WheelPicker>
+                            </ViewCell> -->
+                        </TableSection>
+                    </TableRoot>
+                </TableView>
+            </Grid>
+        </ContentView>
+    </custom:BasePage.ContentPresenter>
+</custom:BasePage>

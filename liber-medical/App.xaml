@@ -11,7 +11,7 @@
             <!-- Global Style -->
             <Style x:Key="AppBackgroundColor" TargetType="Page">
                 <Setter Property="BackgroundColor" Value= "#ffffff" />
-            </Style>    
+            </Style>
             <Style x:Key="LoginPageEntry" TargetType="Entry">
                 <Setter Property="TextColor" Value="{StaticResource PurpleyGrey}" />
                 <Setter Property="PlaceholderColor" Value="{StaticResource PurpleyGrey}" />
@@ -49,16 +49,8 @@
                 <Setter Property="FontSize" Value="17" />
                 <Setter Property="TextColor" Value="#ffffff" />
              </Style>  
-            <Style x:Key="HomePageAsk" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
-                <Setter Property="FontSize" Value="17" />
-                <Setter Property="TextColor" Value="{StaticResource PurpleyGrey2}" />
-            </Style>
-            <Style x:Key="HomePageTask" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Medium.otf" />
-                <Setter Property="FontSize" Value="14" />
-                <Setter Property="TextColor" Value="{StaticResource PurpleyGrey2}" />
-            </Style>
+            
+           
             <Style x:Key="PatientNameTitle" TargetType="Label">
                 <Setter Property="FontFamily" Value="SFUIDisplay-Regular.otf" />
                 <Setter Property="FontSize" Value="28" />
@@ -92,14 +84,9 @@
                 <Setter Property="TextColor" Value="{StaticResource PurpleyGrey}" />
             </Style>
             <Style x:Key="PatientNameEntry" TargetType="Entry">
-                <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
+               <Setter Property="FontFamily" Value="SFUIText-Regular.otf" /> 
                 <Setter Property="FontSize" Value="18" />
                 <Setter Property="TextColor" Value="#4a4a4a" />
-            </Style>
-            <Style x:Key="JoinDocumentLabel" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
-                <Setter Property="FontSize" Value="18" />
-                <Setter Property="TextColor" Value="#9f9f9f" />
             </Style>
             <Style x:Key="PhoneNumberEntry" TargetType="Entry" BasedOn="{StaticResource PatientNameEntry}">               
                 <Setter Property="FontSize" Value="15" />

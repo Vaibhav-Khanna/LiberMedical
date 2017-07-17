@@ -1,50 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms" 
-    xmlns:local="clr-namespace:libermedical.Views;" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-    x:Class="libermedical.Views.MainTabPage" 
-    Title="LiberMedical"
-    Style="{StaticResource AppBackgroundColor}"
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:local="clr-namespace:libermedical.Views;" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.MainTabPage" 
+    Title="LiberMedical" Style="{StaticResource AppBackgroundColor}" 
     BarBackgroundColor="#4a4a4a">
-        <NavigationPage  Icon="home_green.png"> 
-            <NavigationPage.Title>
-             <OnPlatform x:TypeArguments="x:String" iOS="Accueil" Android="" />
-            </NavigationPage.Title>
-            <x:Arguments> 
-               <local:HomePage/>
-             </x:Arguments>
-            
-        </NavigationPage>
-        <NavigationPage Icon="patients.png"> 
-            <NavigationPage.Title>
-             <OnPlatform x:TypeArguments="x:String" iOS="Patients" Android="" />
-            </NavigationPage.Title>
-                    <x:Arguments> 
-                        <local:PatientsListPage/>
-                    </x:Arguments>
-        </NavigationPage>
-        <NavigationPage Icon="ordonnances.png" >
-            <NavigationPage.Title>
-             <OnPlatform x:TypeArguments="x:String" iOS="Ordonnances" Android="" />
-            </NavigationPage.Title>
-                    <x:Arguments> 
-                        <local:OrdonnancesListPage/>
-                    </x:Arguments>
-        </NavigationPage>
-        <NavigationPage Icon="teledeclaration.png"> 
-            <NavigationPage.Title>
-             <OnPlatform x:TypeArguments="x:String" iOS="Télédéclarations" Android="" />
-            </NavigationPage.Title>
-                    <x:Arguments> 
-                        <local:TeledeclarationsListPage/>
-                    </x:Arguments>
-        </NavigationPage>
-        <NavigationPage Icon="plus_tabbed.png"> 
-            <NavigationPage.Title>
-             <OnPlatform x:TypeArguments="x:String" iOS="Plus" Android="" />
-            </NavigationPage.Title>
-                    <x:Arguments> 
-                        <local:PlusPage/>
-                    </x:Arguments>
-        </NavigationPage>
-	</TabbedPage>
+    
+    <NavigationPage Icon="home_green.png" >
+        <NavigationPage.Title>
+            <OnPlatform x:TypeArguments="x:String" iOS="Accueil" Android="" />
+        </NavigationPage.Title>
+        <x:Arguments>
+            <local:HomePage />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Icon="patients.png">
+        <NavigationPage.Title>
+            <OnPlatform x:TypeArguments="x:String" iOS="Patients" Android="" />
+        </NavigationPage.Title>
+        <x:Arguments>
+            <local:PatientsListPage />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Icon="ordonnances.png">
+        <NavigationPage.Title>
+            <OnPlatform x:TypeArguments="x:String" iOS="Ordonnances" Android="" />
+        </NavigationPage.Title>
+        <x:Arguments>
+            <local:OrdonnancesListPage />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Icon="teledeclaration.png">
+        <NavigationPage.Title>
+            <OnPlatform x:TypeArguments="x:String" iOS="Télédéclarations" Android="" />
+        </NavigationPage.Title>
+        <x:Arguments>
+            <local:TeledeclarationsListPage />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Icon="plus_tabbed.png">
+        <NavigationPage.Title>
+            <OnPlatform x:TypeArguments="x:String" iOS="Plus" Android="" />
+        </NavigationPage.Title>
+        <x:Arguments>
+            <local:PlusPage />
+        </x:Arguments>
+    </NavigationPage>
+</TabbedPage>

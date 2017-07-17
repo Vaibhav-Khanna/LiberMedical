@@ -9,7 +9,6 @@ namespace libermedical.Views
 {
     public partial class HomePage : BasePage
     {
-
         //type of photo, most of the time ordonannces but we can also have document
         //so we initialize typeDoc to "ordonnace"
         private string typeDoc = "ordonnance";
@@ -18,7 +17,6 @@ namespace libermedical.Views
         {
             InitializeComponent();
         }
-
         //This concern only ordonances  in normal process
         async void AddOrdonnanceTapped(object sender, EventArgs e)
         {
@@ -37,18 +35,17 @@ namespace libermedical.Views
                 {
                     AllowCropping = true
                 });
+                //if photo ok
                 if (file != null)
                 {
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "normal";
-                    await Navigation.PushModalAsync(new NavigationPage(new PatientsListPage(typeNavigation, typeDoc)));
+                    await Navigation.PushModalAsync(new PatientsListPage(typeNavigation, typeDoc));
                 }
-
             }
             if (action == "Bibliothèque photo")
             {
                 await CrossMedia.Current.Initialize();
-
 
                 var pickerOptions = new PickMediaOptions();
 
@@ -60,19 +57,15 @@ namespace libermedical.Views
                     await Navigation.PushAsync(new PatientsListPage(typeNavigation, typeDoc));
                 }
             }
-
-
         }
 
         //This concern  ordonances or documents in fast process
         async void FastTapped(object sender, EventArgs e)
         {
-
             var action = await DisplayActionSheet(null, "Annuler", null, "Ordonnance", "Document");
 
             if ((action == "Ordonnance") || (action == "Document"))
             {
-
                 await CrossMedia.Current.Initialize();
 
                 if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
@@ -92,12 +85,10 @@ namespace libermedical.Views
 
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "fast";
-                    await Navigation.PushModalAsync(new NavigationPage(new PatientsListPage(typeNavigation, typeDoc)));
-
+                    await Navigation.PushModalAsync(new PatientsListPage(typeNavigation, typeDoc));
                 }
             }
         }
-
         async void AssistTapped(object sender, EventArgs e)
         {
             var action = await DisplayActionSheet(null, "Annuler", null, "Appel vocal", "E-mail", "SMS");

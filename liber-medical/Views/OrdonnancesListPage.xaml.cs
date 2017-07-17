@@ -93,9 +93,14 @@ namespace libermedical.Views
         }
 
 
-        void Handle_Tapped(object sender, System.EventArgs e)
+        async void Handle_Tapped(object sender, System.EventArgs e)
         {
-            Navigation.PushModalAsync(new NavigationPage(new OrdonnanceDetailPage()));
+            await Navigation.PushModalAsync(new NavigationPage(new OrdonnanceDetailPage()));
+        }
+
+        async void Filter_Clicked(object sender, System.EventArgs e)
+        {
+            await Navigation.PushModalAsync(new FilterPage());
         }
 
         async void Add_Clicked(object sender, System.EventArgs e)
@@ -105,7 +110,7 @@ namespace libermedical.Views
             var typeDoc = "ordonnance";
             string typeNavigation = "";
 
-            if (action != null)
+            if ((action != null) && (action != "Annuler"))
             {
                 //init du plugin photo 
                 await CrossMedia.Current.Initialize();
@@ -134,6 +139,10 @@ namespace libermedical.Views
                 {
                     await DisplayAlert("No Camera", ":( No camera available.", "OK");
                 }
+            }
+            else
+            {
+                return;
             }
         }
     }

@@ -16,5 +16,9 @@ namespace libermedical.Views
             await Navigation.PopModalAsync();
         }
 
+        async void Detail_Tapped(object sender, System.EventArgs e)
+        {
+            await Navigation.PushModalAsync(new TeledeclarationDetailPage());
+        }
     }
 }

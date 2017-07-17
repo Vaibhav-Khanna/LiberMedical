@@ -18,7 +18,7 @@ namespace libermedical.Views
         }
         void AccountTapped(object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new MyAccountPage());
+            Navigation.PushModalAsync(new MyAccountPage());
         }
     }
 }

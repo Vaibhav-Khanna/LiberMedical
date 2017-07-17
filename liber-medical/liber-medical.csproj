@@ -81,6 +81,27 @@
     <EmbeddedResource Include="Views\OrdonnanceDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\WheelPicker.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\OrdonnanceFrequencePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\OrdonnanceFrequence2Page.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\OrdonnanceCotationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MyAccountEditPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\TeledeclarationDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FilterPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -148,6 +169,27 @@
     <Compile Include="Views\OrdonnanceDetailPage.xaml.cs">
       <DependentUpon>OrdonnanceDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WheelPicker.xaml.cs">
+      <DependentUpon>WheelPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrdonnanceFrequencePage.xaml.cs">
+      <DependentUpon>OrdonnanceFrequencePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrdonnanceFrequence2Page.xaml.cs">
+      <DependentUpon>OrdonnanceFrequence2Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrdonnanceCotationPage.xaml.cs">
+      <DependentUpon>OrdonnanceCotationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyAccountEditPage.xaml.cs">
+      <DependentUpon>MyAccountEditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TeledeclarationDetailPage.xaml.cs">
+      <DependentUpon>TeledeclarationDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FilterPage.xaml.cs">
+      <DependentUpon>FilterPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -164,6 +206,12 @@
     </Reference>
     <Reference Include="Plugin.Media">
       <HintPath>..\packages\Xam.Plugin.Media.3.0.1\lib\netstandard1.0\Plugin.Media.dll</HintPath>
+    </Reference>
+    <Reference Include="Vapolia.WheelPickerCore">
+      <HintPath>..\packages_external\lib\pcl\Vapolia.WheelPickerCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Vapolia.WheelPickerForms">
+      <HintPath>..\packages_external\lib\pcl\Vapolia.WheelPickerForms.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

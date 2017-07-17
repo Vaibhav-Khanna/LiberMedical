@@ -101,6 +101,18 @@
     <Reference Include="Plugin.Media">
       <HintPath>..\packages\Xam.Plugin.Media.3.0.1\lib\Xamarin.iOS10\Plugin.Media.dll</HintPath>
     </Reference>
+    <Reference Include="Vapolia.WheelPickerCore">
+      <HintPath>..\packages_external\lib\ios-unified\Vapolia.WheelPickerCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Vapolia.WheelPickerForms">
+      <HintPath>..\packages_external\lib\ios-unified\Vapolia.WheelPickerForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Vapolia.WheelPickerForms.Ios">
+      <HintPath>..\packages_external\lib\ios-unified\Vapolia.WheelPickerForms.Ios.dll</HintPath>
+    </Reference>
+    <Reference Include="Vapolia.WheelPickerIos">
+      <HintPath>..\packages_external\lib\ios-unified\Vapolia.WheelPickerIos.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\liber-medical\liber-medical.csproj">

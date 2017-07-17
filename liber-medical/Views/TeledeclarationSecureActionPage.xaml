@@ -25,15 +25,13 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-            
-            
             <TableView Intent="Data" RowHeight="50" Grid.Row="0">
                 <TableRoot>
                     <TableSection>
                         <TextCell Text="En attente..."  />
                         <TextCell Text="01-04-2017"  />
-                        <ViewCell >
-                            <StackLayout Orientation="Horizontal" Padding="10,0,10,0">
+                        <ViewCell Tapped="Detail_Tapped">
+                            <StackLayout Orientation="Horizontal" Padding="10,0,10,0" >
                                 <Label Text="Détails déclaration" HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
                                 <Image Source="back_arrow_green.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
                             </StackLayout>

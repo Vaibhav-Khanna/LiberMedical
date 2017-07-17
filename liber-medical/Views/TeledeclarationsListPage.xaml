@@ -7,7 +7,7 @@
     Title="Télédéclarations">
     
     <custom:BasePage.ToolbarItems Name="Télédéclarations">
-        <ToolbarItem Name="Télédéclarations" Icon="filters.png" />
+        <ToolbarItem Name="Télédéclarations" Icon="filters.png" Clicked="Filter_Clicked"/>
     </custom:BasePage.ToolbarItems>
     
     <custom:BasePage.ContentPresenter>
@@ -25,7 +25,7 @@
                         <ListView x:Name="listView" ItemsSource="{Binding teledeclarations}" SeparatorVisibility="Default" RowHeight="60">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <ViewCell>
+                                    <ViewCell Tapped="Teledeclaration_Tapped">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="60*" />

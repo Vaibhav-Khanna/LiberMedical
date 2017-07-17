@@ -9,17 +9,18 @@ namespace libermedical.Views
 {
     public partial class AddDocument : BasePage
     {
-        public AddDocument()
+        public AddDocument() : base(-1, 0, false)
         {
             InitializeComponent();
         }
-        void Cancel_Tapped(object sender, System.EventArgs e)
+        async void Cancel_Tapped(object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new DetailsPatientListPage("documents"));
+            await Navigation.PopModalAsync();
         }
-        void Save_Tapped(object sender, System.EventArgs e)
+        async void Save_Tapped(object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new DetailsPatientListPage("documents"));
+
+            await Navigation.PopModalAsync();
         }
         async void Document_Tapped(object sender, System.EventArgs e)
         {

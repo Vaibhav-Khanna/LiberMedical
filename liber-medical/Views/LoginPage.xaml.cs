@@ -5,17 +5,15 @@ using Xamarin.Forms;
 
 namespace libermedical.Views
 {
-    public partial class LoginPage : BasePage    
+    public partial class LoginPage : BasePage
     {
-
-        public LoginPage()
+        public LoginPage() : base(-1, -1, false)
         {
             InitializeComponent();
         }
-
-        void Handle_Tapped(object sender, System.EventArgs e)
+        async void Handle_Tapped(object sender, System.EventArgs e)
         {
-            Navigation.PushAsync(new MissingPasswordPage());
+            await Navigation.PushAsync(new MissingPasswordPage());
         }
     }
 }
