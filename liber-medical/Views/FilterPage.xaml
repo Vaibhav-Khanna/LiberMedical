@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.FilterPage" Style="{StaticResource AppBackgroundColor}">
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+    x:Class="libermedical.Views.FilterPage" Style="{StaticResource ModalBackgroundColor}">
     <custom:BasePage.Header>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
             <Grid Padding="5">
@@ -24,7 +25,7 @@
         </ContentView>
     </custom:BasePage.Header>
     <custom:BasePage.ContentPresenter>
-        <ContentView Padding="10,0,5,0">
+        <ContentView Padding="10,0,5,0" Style="{StaticResource HeaderFooterBackground}">
             <TableView Intent="Settings" HasUnevenRows="True">
                 <TableRoot>
                     <TableSection>
@@ -32,12 +33,29 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="15*" />
-                                    <ColumnDefinition Width="75*" />
-                                    <ColumnDefinition Width="10*" />
+                                    <ColumnDefinition Width="55*" />
+                                    <ColumnDefinition Width="30*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
                                 <Label Text="Date de Début" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
-                                <Image Source="back_arrow_green.png" VerticalOptions="Center" Grid.Column="2" />
+                                <!-- <Image Source="back_arrow_green.png" VerticalOptions="Center" Grid.Column="2" /> -->
+                                <DatePicker VerticalOptions="CenterAndExpand" Date="{x:Static sys:DateTime.Now}" Grid.Column="2">
+                                    <DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
+                                    <DatePicker.MinimumDate>
+                                        <sys:DateTime x:FactoryMethod="Parse">
+                                            <x:Arguments>
+                                                <x:String>Jan 1 2010</x:String>
+                                            </x:Arguments>
+                                        </sys:DateTime>
+                                    </DatePicker.MinimumDate>
+                                    <DatePicker.MaximumDate>
+                                        <sys:DateTime x:FactoryMethod="Parse">
+                                            <x:Arguments>
+                                                <x:String>Dec 31 2030</x:String>
+                                            </x:Arguments>
+                                        </sys:DateTime>
+                                    </DatePicker.MaximumDate>
+                                </DatePicker>
                             </Grid>
                         </ViewCell>
                         <ViewCell Height="50">
@@ -54,9 +72,9 @@
                         </ViewCell>
                     </TableSection>
                     <TableSection Title="Statut">
-                        <SwitchCell Text="En attente"/>
-                         <SwitchCell Text="Traité"/>
-                         <SwitchCell Text="Refusé"/>
+                        <SwitchCell Text="En attente" />
+                        <SwitchCell Text="Traité" />
+                        <SwitchCell Text="Refusé" />
                     </TableSection>
                 </TableRoot>
             </TableView>

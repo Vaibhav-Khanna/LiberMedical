@@ -3,7 +3,7 @@
     xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
     x:Class="libermedical.Views.PatientsListPage" 
-    Style="{StaticResource AppBackgroundColor}">
+    Style="{StaticResource ModalBackgroundColor}">
 
     <custom:BasePage.Header>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
@@ -43,8 +43,7 @@
                 </Grid.RowDefinitions>
            
            <StackLayout BackgroundColor="#c8c7cc" Grid.Row="0"   Padding="8,7" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
-           <SearchBar Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" />
-            </StackLayout>
+           <SearchBar Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" /></StackLayout>
 
             
             <ListView x:Name="PatientView" ItemsSource="{Binding patients}" SeparatorVisibility="Default" Grid.Row="1">

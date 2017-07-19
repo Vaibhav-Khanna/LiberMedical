@@ -7,23 +7,24 @@
     Title="Ordonnances">
 
     <custom:BasePage.ToolbarItems Name="Ordonnances">
-        <ToolbarItem Name="Ordonnances"   Icon="filters.png" Clicked="Filter_Clicked"/>
+        <ToolbarItem Name="Ordonnances"   Icon="filters.png" Clicked="Filter_Clicked" />
         <ToolbarItem Name="Ordonnances"   Icon="plus.png" Clicked="Add_Clicked"/>
     </custom:BasePage.ToolbarItems>
     <custom:BasePage.ContentPresenter>
         <ContentView>
-            <Grid>
+           <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
            
            <StackLayout BackgroundColor="#c8c7cc" Grid.Row="0"   Padding="8,7" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
-           <SearchBar Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" />
-            </StackLayout>
-           <ScrollView Grid.Row="1">
+           <SearchBar Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" />
+           </StackLayout>
+
+           <ScrollView Grid.Row="1" >
                     <StackLayout  Padding="20,0,0,0">
-                        <ListView x:Name="listView" ItemsSource="{Binding ordonnances}" SeparatorVisibility="Default" RowHeight="60">
+                        <ListView x:Name="listView"  IsPullToRefreshEnabled="true" ItemsSource="{Binding ordonnances}" SeparatorVisibility="Default" RowHeight="60" >
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell Tapped="Handle_Tapped">
@@ -39,7 +40,7 @@
                                                 </Grid.RowDefinitions>
                                                 <Label Text="{Binding Patient.FirstLastName}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand"  Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
                                                 <Label Text="{Binding AddDate, StringFormat='{0:dd-MM-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}"  Grid.Row="1" Grid.Column="0" />
-                                                <Button Text="{Binding Status}" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="#d1d1d1"  TextColor="#ffffff" Grid.RowSpan="2" Grid.Column="1" BorderRadius="50"  />
+                                                <Button Text="{Binding Status}" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="#d1d1d1"  TextColor="#ffffff" Grid.RowSpan="2" Grid.Column="1" BorderRadius="0"  />
                                                 <Image Source="back_arrow_green.png" HorizontalOptions="Start" VerticalOptions="Center" Grid.RowSpan="2" Grid.Column="2" />
 
                                         </Grid>

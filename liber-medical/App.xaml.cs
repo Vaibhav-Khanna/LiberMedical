@@ -9,7 +9,7 @@ namespace libermedical
         {
             InitializeComponent();
 
-            //MainPage = new NavigationPage(new WheelPicker());
+            // MainPage = new NavigationPage(new WheelPicker());
             //MainPage = new NavigationPage(new OrdonnanceCotationPage());
             MainPage = new MainTabPage();
         }

@@ -160,9 +160,6 @@
     <AndroidResource Include="Resources\drawable-hdpi\icon.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\icon.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\slice.jpg" />
-    <AndroidResource Include="Resources\drawable-xhdpi\slice.jpg" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\slice.jpg" />
     <AndroidResource Include="Resources\drawable-hdpi\back_arrow.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\back_arrow.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\back_arrow.png" />
@@ -220,6 +217,21 @@
     <AndroidResource Include="Resources\drawable-hdpi\clock.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\clock.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\clock.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\close.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\close.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\close.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\addnormal.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\addnormal.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\addnormal.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\logo.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\logo.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\logo.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\cancel.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\send.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\cancel.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\send.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\cancel.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\send.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

@@ -9,15 +9,32 @@
 
         <StackLayout>
 
-            <wp:WheelPicker HorizontalOptions="Fill" SelectedItemsIndex="0,0,0"
-                            ItemsSourceSimple="{Binding ItemsSource}" 
-                            Command="{Binding ItemSelectedCommand}">
-                <wp:WheelPicker.WheelDefinitions>
-                    <wp:WheelDefinition Width="Auto" HorizontalOptions="Left" Alignment="Center" />
-                </wp:WheelPicker.WheelDefinitions>
-            </wp:WheelPicker>
+          <wp:WheelPicker SelectionLinesColor="Lime"
+                                    HorizontalSpaceBetweenWheels="40" 
 
-        </StackLayout>
+                                    SelectedItemsIndex="0,0,0" 
+
+                                    HorizontalOptions="Fill">
+                                    
+                                    <wp:WheelPicker.WheelDefinitions>
+                                        <wp:WheelDefinition Width="*" HorizontalOptions="Right" />
+                                        <wp:WheelDefinition Width="Auto" HorizontalOptions="Left" />
+                                        <wp:WheelDefinition Width="*" HorizontalOptions="Left" />
+                                    </wp:WheelPicker.WheelDefinitions>
+                                </wp:WheelPicker> 
+         
+         <!--
+         ItemsSourceMulti="{Binding ItemsSource}" 
+                
+        <wp:WheelPicker HorizontalOptions="Fill" SelectedItemsIndex="0"
+                    ItemsSourceSimple="{Binding ItemsSource}" 
+                    Command="{Binding ItemSelectedCommand}">
+            <wp:WheelPicker.WheelDefinitions>
+                <wp:WheelDefinition Width="Auto" HorizontalOptions="Left" Alignment="Center" />
+            </wp:WheelPicker.WheelDefinitions>
+        </wp:WheelPicker> -->
+
+        </StackLayout>        
         </ContentView>
     </custom:BasePage.ContentPresenter>
 </custom:BasePage>

@@ -11,63 +11,74 @@
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Cancel_Tapped" />
                     </Grid.GestureRecognizers>
-                    <Image HorizontalOptions="Center" VerticalOptions="Center" Source="back_arrow.png" />
+                    <Image HorizontalOptions="Center" VerticalOptions="Center" Source="close.png" />
                 </Grid>
                 <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}" Text="Cotations" />
             </Grid>
         </ContentView>
     </custom:BasePage.Header>
     <custom:BasePage.ContentPresenter>
-        <ContentView Padding="20,10,0,0">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <ScrollView Grid.Row="0">
-                    <ListView x:Name="listView" ItemsSource="{Binding cotation}" SeparatorVisibility="Default" Header="Séléctionnez votre cotation dans la liste ou choisissez Cotation Custom">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="10*" />
-                                            <ColumnDefinition Width="75*" />
-                                            <ColumnDefinition Width="15*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Label Text="{Binding FirstCode}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Column="0" />
-                                        <Label Text="{Binding SecondCode}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Column="1" />
-                                        <Label Text="{Binding ThirdCode}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Column="2" />
-                                    </Grid>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </ScrollView>
-                <TableView Intent="Data" Grid.Row="1" HasUnevenRows="true">
-                    <TableRoot>
-                        <TableSection>
-                            <SwitchCell Text="Cotation custom" Height="40" />
-                           <!-- <ViewCell Height="200">
-                                <wp:WheelPicker SelectionLinesColor="Navy" 
-                                    HorizontalSpaceBetweenWheels="40" 
-                                    ItemsSourceMulti="{Binding ItemsSource}" 
-                                    SelectedItemsIndex="0,0,0" 
+        <ContentView Padding="0,10,0,0">
+        <Grid>
+            <Grid.RowDefinitions>
+                 <RowDefinition Height="*" />
+                 <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-                                    HorizontalOptions="Fill">
+                 <TableView Intent="Data" HasUnevenRows="true" Grid.Row="0" >
+                    <TableRoot>
+                        <TableSection Title="Sélectionnez votre cotation dans la liste ou choisissez cotation manuelle">
+                            <ViewCell Height="200" > 
+                                <Grid VerticalOptions="CenterAndExpand" Padding="10,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="33*" />
+                                        <ColumnDefinition Width="33*" />
+                                        <ColumnDefinition Width="33*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50" />
+                                        <RowDefinition Height="50" />
+                                        <RowDefinition Height="50" />
+                                    </Grid.RowDefinitions>
+                                
+                                        <Button Text="1 AMI 1"  WidthRequest="100"  Grid.Row="0" Grid.Column="0" HorizontalOptions="CenterAndExpand" Style="{StaticResource Button}" />
+                                        <Button Text="1 AMI 2"  WidthRequest="100" Grid.Row="0" Grid.Column="1" HorizontalOptions="CenterAndExpand" Style="{StaticResource Button}" />
+                                        <Button Text="1 AMI 4"  WidthRequest="100" Grid.Row="0" Grid.Column="2" HorizontalOptions="CenterAndExpand" Style="{StaticResource Button}"/>
+                                        <Button Text="1 AMI 1.5" WidthRequest="100" Grid.Row="1"  Grid.Column="0" HorizontalOptions="CenterAndExpand" Style="{StaticResource Button}"/>
+                                        <Button Text="1 AIS 3"   WidthRequest="100" Grid.Row="1"  Grid.Column="1" HorizontalOptions="CenterAndExpand" Style="{StaticResource Button}"/>
+                                        <Button Text="1 AIS 4"   WidthRequest="100" Grid.Row="1"  Grid.Column="2" HorizontalOptions="CenterAndExpand" Style="{StaticResource Button}" />
+                                        <Button Text="2 AIS 3"  WidthRequest="100" Grid.Row="2"  Grid.Column="0" HorizontalOptions="CenterAndExpand" Style="{StaticResource Button}"/>
+                                        <Button Text="1 AMS 7.5" WidthRequest="100" Grid.Row="2" Grid.Column="1" HorizontalOptions="CenterAndExpand" Style="{StaticResource Button}"/>
+                                        <Button Text="1 AMS 9.5"  WidthRequest="100" Grid.Row="2" Grid.Column="2" HorizontalOptions="CenterAndExpand" Style="{StaticResource Button}"/>
                                     
+                                </Grid>
+                         </ViewCell>
+                        </TableSection>
+                        <TableSection >
+                            <SwitchCell Text="Cotation manuelle" Height="40" OnChanged="Handle_OnChanged" x:Name="Switch" On="false"/>
+                       
+                          <ViewCell>
+                                <wp:WheelPicker SelectionLinesColor="Navy" HorizontalSpaceBetweenWheels="40" ItemsSourceMulti="{Binding ItemsSource}" SelectedItemsIndex="0,0,0" HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" x:Name="Picker" IsVisible="false">
                                     <wp:WheelPicker.WheelDefinitions>
                                         <wp:WheelDefinition Width="*" HorizontalOptions="Right" />
                                         <wp:WheelDefinition Width="Auto" HorizontalOptions="Left" />
                                         <wp:WheelDefinition Width="*" HorizontalOptions="Left" />
                                     </wp:WheelPicker.WheelDefinitions>
                                 </wp:WheelPicker>
-                            </ViewCell> -->
+                            </ViewCell> 
                         </TableSection>
                     </TableRoot>
                 </TableView>
             </Grid>
         </ContentView>
     </custom:BasePage.ContentPresenter>
+    <custom:BasePage.Footer>
+        <ContentView Style="{StaticResource HeaderFooterBackground}" IsVisible="false" x:Name="Footer">
+            <Label Text="Ajouter la cotation manuelle" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource FooterLabel}" />
+           <!-- <ContentView.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Bill_Tapped" />
+                    </ContentView.GestureRecognizers> -->
+        </ContentView> 
+    </custom:BasePage.Footer>
+    
 </custom:BasePage>

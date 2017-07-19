@@ -31,19 +31,18 @@
                <TableSection >
                         <ViewCell  >
                             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100" >
-                                <Entry Placeholder="Prénom"   Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+                                <Entry Placeholder="Prénom"  WidthRequest="200"  Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
                             </StackLayout>
                         </ViewCell>
-                        <ViewCell>
+                        <ViewCell >
                             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100" >
-                                <Entry Placeholder="Nom"  Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+                                <Entry Placeholder="Nom"  WidthRequest="200" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
                             </StackLayout>
                         </ViewCell>
-                        <ViewCell>
+                        <ViewCell >
                             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  HeightRequest="100">
                                     <Image Source="delete.png" />
                                     <Label Text="Portable" Style="{StaticResource PortableNumber}" VerticalOptions="Center"/>
-                                    <BoxView BackgroundColor="#d1d1d1" HeightRequest="15" WidthRequest="2"/>
                                     <Image Source="path_5.png" />    
                                     <Entry Placeholder="+1 (202) 555-0158" VerticalOptions="Center" Style="{StaticResource PortableNumberBlack}" Keyboard="Telephone" />
                             </StackLayout>

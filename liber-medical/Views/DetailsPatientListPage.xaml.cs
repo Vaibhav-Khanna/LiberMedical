@@ -12,15 +12,11 @@ namespace libermedical.Views
 
         public ObservableCollection<Ordonnance> ordonnances { get; set; }
         public ObservableCollection<Document> documents { get; set; }
+
         public DetailsPatientListPage(string typeDocument) : base(-1, 64, false)
         {
 
-            if (typeDocument == "ordonnances")
-            {
-
-                BindingContext = this;
-                //  var visibility1 = "true";
-                ordonnances = new ObservableCollection<Ordonnance>
+            ordonnances = new ObservableCollection<Ordonnance>
                 {
                     new Ordonnance {
                         Reference= 1,
@@ -59,13 +55,7 @@ namespace libermedical.Views
                     }
                 };
 
-            }
-
-            if (typeDocument == "documents")
-            {
-
-                BindingContext = this;
-                documents = new ObservableCollection<Document>
+            documents = new ObservableCollection<Document>
                 {
                     new Document {
                         Reference= 1,
@@ -95,10 +85,10 @@ namespace libermedical.Views
                         Reference= 7,
                         AddDate= new DateTime(2017, 07, 03,10,30,00),
                     }
-                };
-
-            }
+            };
+            BindingContext = this;
             InitializeComponent();
+
         }
 
         async void Back_Tapped(object sender, System.EventArgs e)
@@ -111,14 +101,29 @@ namespace libermedical.Views
             await Navigation.PushModalAsync(new PatientDetailModify());
         }
 
-        async void Ordonnances_Tapped(object sender, System.EventArgs e)
+        void Ordonnances_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushAsync(new DetailsPatientListPage("ordonnances"));
+            stackDocument.IsVisible = false;
+            stackOrdonnance.IsVisible = true;
+            BoxViewOrdonnances.IsVisible = true;
+            BoxViewDocuments.IsVisible = false;
+            Label.Text = "+ Ajoutez une ordonnance";
+
         }
 
-        async void Documents_Tapped(object sender, System.EventArgs e)
+        void Documents_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushAsync(new DetailsPatientListPage("documents"));
+            stackDocument.IsVisible = true;
+            stackOrdonnance.IsVisible = false;
+            BoxViewDocuments.IsVisible = true;
+            BoxViewOrdonnances.IsVisible = false;
+
+            Label.Text = "+ Ajoutez un document";
+
+        }
+        async void AddOrdonnance_Tapped(object sender, System.EventArgs e)
+        {
+            await Navigation.PushModalAsync(new OrdonnanceDetailEditPage());
         }
     }
 }

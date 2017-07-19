@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.TeledeclarationSecureActionPage" Style="{StaticResource AppBackgroundColor}" Title="Facture à sécuriser">
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.TeledeclarationSecureActionPage" 
+    Style="{StaticResource ModalBackgroundColor}">
     <custom:BasePage.Header>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
             <Grid Padding="5">
@@ -18,7 +19,7 @@
         </ContentView>
     </custom:BasePage.Header>
     <custom:BasePage.ContentPresenter>
-        <ContentView Padding="10,0,0,0">
+        <ContentView Padding="10,0,0,0" Style="{StaticResource ModalContentBackgroundColor}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="160"/>
@@ -55,8 +56,8 @@
                         Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0"
                         HorizontalOptions="CenterAndExpand"
                         />
-                    <Image Source="add.png" Grid.Column="0" Grid.Row="1" HorizontalOptions="CenterAndExpand"/>
-                    <Image Source="add.png" Grid.Column="1" Grid.Row="1" HorizontalOptions="CenterAndExpand"/>
+                    <Image Source="cancel.png" Grid.Column="0" Grid.Row="1" HorizontalOptions="CenterAndExpand"/>
+                    <Image Source="send.png" Grid.Column="1" Grid.Row="1" HorizontalOptions="CenterAndExpand"/>
                     <Label Text="Annuler" Style="{StaticResource TeledeclarationCancelAction}"  Grid.Column="0" Grid.Row="2" HorizontalOptions="CenterAndExpand"/>
                     <Label Text="Envoyer" Style="{StaticResource TeledeclarationSendAction}"  Grid.Column="1" Grid.Row="2" HorizontalOptions="CenterAndExpand"/>
                            

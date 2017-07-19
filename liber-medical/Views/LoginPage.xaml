@@ -4,7 +4,7 @@
         <ContentView>
             <ScrollView>
                 <StackLayout HorizontalOptions="FillAndExpand" Padding="24.2, 0">
-                    <Image Source="slice.jpg" />
+                    <Image Source="logo.jpg" />
                     <Entry HeightRequest="48" Placeholder="Email" Margin="0, 20, 0, 0" Style="{StaticResource LoginPageEntry}" Keyboard="Email" />
                     <Entry HeightRequest="48" Placeholder="Mot de passe" Margin="0, 10, 0, 0" Style="{StaticResource LoginPageEntry}" IsPassword="true" />
                     <Button HeightRequest="48" Margin="0,20,0,0" HorizontalOptions="FillAndExpand" Text="Valider" Style="{StaticResource LoginPageButton}" />

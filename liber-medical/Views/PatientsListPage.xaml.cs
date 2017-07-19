@@ -25,9 +25,9 @@ namespace libermedical.Views
                 Order = ToolbarItemOrder.Primary,
             };
             Item1.Clicked += AddUser_Clicked;
-            this.ToolbarItems.Add(Item1);
-            this.Title = "Patients";
-            BindingContext = this;
+            ToolbarItems.Add(Item1);
+            Title = "Patients";
+
 
 
             patients = new ObservableCollection<Patient>
@@ -121,7 +121,7 @@ namespace libermedical.Views
                 }
 
             };
-
+            BindingContext = this;
             InitializeComponent();
 
         }
@@ -132,7 +132,6 @@ namespace libermedical.Views
             this.typeDoc = typeDoc;
 
             BindingContext = this;
-            // this.visibility = true;
             patients = new ObservableCollection<Patient>
             {
                 new Patient {

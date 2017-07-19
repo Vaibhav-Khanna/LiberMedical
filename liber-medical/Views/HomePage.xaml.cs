@@ -27,11 +27,11 @@ namespace libermedical.Views
 
                 if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 {
-                    await DisplayAlert("No Camera", ":( No camera available.", "OK");
+                    await DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
                     return;
                 }
 
-                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions()
+                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                 {
                     AllowCropping = true
                 });
@@ -70,11 +70,11 @@ namespace libermedical.Views
 
                 if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 {
-                    await DisplayAlert("No Camera", ":( No camera available.", "OK");
+                    await DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
                     return;
                 }
 
-                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions()
+                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                 {
                     AllowCropping = true
                 });

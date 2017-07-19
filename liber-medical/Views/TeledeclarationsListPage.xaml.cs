@@ -10,7 +10,7 @@ namespace libermedical.Views
     public partial class TeledeclarationsListPage : BasePage
     {
         public ObservableCollection<Teledeclaration> teledeclarations { get; set; }
-        public TeledeclarationsListPage() : base(0, -1)
+        public TeledeclarationsListPage() : base(0, 64)
         {
             BindingContext = this;
             teledeclarations = new ObservableCollection<Teledeclaration>

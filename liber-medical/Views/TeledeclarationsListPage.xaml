@@ -14,11 +14,11 @@
         <ContentView>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="44" />
+                    <RowDefinition Height="50" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <StackLayout BackgroundColor="#c8c7cc" Grid.Row="0"   Padding="8,7" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
-                <SearchBar Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" />
+           <SearchBar Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" />
             </StackLayout> 
                 <ScrollView Grid.Row="1">
                     <StackLayout Padding="20,0,0,0">
@@ -38,7 +38,7 @@
                                             </Grid.RowDefinitions>
                                             <Label Text="{Binding AddDate, StringFormat='{0:dd-MM-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
                                             <Label Text="{Binding TotalAccount, StringFormat='€ {0}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
-                                            <Button Text="{Binding Status}" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="#d1d1d1" TextColor="#ffffff" Grid.RowSpan="2" Grid.Column="1" BorderRadius="50" />
+                                            <Button Text="{Binding Status}" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="#d1d1d1" TextColor="#ffffff" Grid.RowSpan="2" Grid.Column="1" BorderRadius="5" />
                                             <Image Source="back_arrow_green.png" HorizontalOptions="Start" VerticalOptions="Center" Grid.RowSpan="2" Grid.Column="2" />
                                         </Grid>
                                     </ViewCell>

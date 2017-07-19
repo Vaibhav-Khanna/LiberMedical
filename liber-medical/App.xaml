@@ -9,9 +9,26 @@
             <Color x:Key="PurpleyGrey2">#9f9f9f</Color>
             <Color x:Key="LightGrey">#d1d1d1</Color>
             <!-- Global Style -->
+            <Style x:Key="TabbedPage" TargetType="TabbedPage">
+                <Setter Property="BarBackgroundColor" Value="#4a4a4a" />
+               <Setter Property="BarTextColor" Value="{StaticResource HeaderFooterBackgroundColor}" />
+                <Setter Property="BackgroundColor" Value= "#ffffff" />
+            </Style>
+            <Style x:Key="NavigationPage" TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource HeaderFooterBackgroundColor}" />
+                <Setter Property="BarTextColor" Value="#ffffff" />
+                <Setter Property="BackgroundColor" Value= "#ffffff" />
+            </Style>
             <Style x:Key="AppBackgroundColor" TargetType="Page">
                 <Setter Property="BackgroundColor" Value= "#ffffff" />
             </Style>
+           <Style x:Key="ModalBackgroundColor" TargetType="Page">
+                <Setter Property="BackgroundColor" Value= "#91c602" />
+            </Style>
+            <Style x:Key="ModalContentBackgroundColor" TargetType="Page">
+                <Setter Property="BackgroundColor" Value= "#ffffff" />
+            </Style>
+            
             <Style x:Key="LoginPageEntry" TargetType="Entry">
                 <Setter Property="TextColor" Value="{StaticResource PurpleyGrey}" />
                 <Setter Property="PlaceholderColor" Value="{StaticResource PurpleyGrey}" />
@@ -117,6 +134,10 @@
             <Style x:Key="TeledeclarationSendAction" BasedOn="{StaticResource TeledeclarationCancelAction}" TargetType="Label">
                 <Setter Property="TextColor" Value="#91c602" />
             </Style>
+            <Style x:Key="Button" TargetType="Button">
+                <Setter Property="TextColor" Value="#ffffff" />
+            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

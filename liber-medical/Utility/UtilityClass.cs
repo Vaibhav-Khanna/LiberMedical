@@ -10,7 +10,7 @@ namespace libermedical.Utility
         public static async Task<MediaFile> TakePhoto()
         {
 
-            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions()
+            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
             {
                 AllowCropping = true
             });

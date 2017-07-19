@@ -20,32 +20,56 @@
     </custom:BasePage.Header>
 
     <custom:BasePage.ContentPresenter>
-        <ContentView Padding="10,0,5,0">
-        <TableView Intent="Settings" HasUnevenRows="True">
-            <TableRoot >
-                <TableSection>
-                    <TextCell Text="Fred Pearson" Height="50" />
-                        
+        <ContentView Padding="0,10,0,0">
+            <TableView Intent="Settings" HasUnevenRows="True">
+                <TableRoot>
+                    <TableSection>
+                        <ViewCell Height="50">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="15*" />
+                                    <ColumnDefinition Width="75*" />
+                                    <ColumnDefinition Width="10*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="user.png" VerticalOptions="Center" Grid.Column="0" />
+                                <Label Text="Fred Pearson" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+                            </Grid>
+                        </ViewCell>
+                    </TableSection>
+                    <TableSection>
+                        <ViewCell Height="50">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="15*" />
+                                    <ColumnDefinition Width="75*" />
+                                    <ColumnDefinition Width="10*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="search.png" VerticalOptions="Center" Grid.Column="0" />
+                                <Label Text="Visualiser l'ordonnance" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+                            </Grid>
+                        </ViewCell>
+                    </TableSection>
+                    <TableSection>
+                        <ViewCell Height="50">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="15*" />
+                                    <ColumnDefinition Width="75*" />
+                                    <ColumnDefinition Width="10*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
+                                <Label Text="Traité le 12/07/2017" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+                            </Grid>
+                        </ViewCell>
+                    </TableSection>
+                    <TableSection>
                     <ViewCell Height="50">
-                        <StackLayout Orientation="Horizontal" Padding="10,0,10,0">
-                             <Label  Text="Visualiser l'ordonnance" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                             <Image Source="add.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
-                         </StackLayout> 
-                    </ViewCell>
-                    <ViewCell Height="50">
-                        <StackLayout Orientation="Horizontal" Padding="10,0,10,0">
-                             <Label  Text="Traité le 12/07/2017" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                             <Image Source="add.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
-                         </StackLayout> 
-                    </ViewCell>        
-                    <ViewCell Height="50">
-                        <StackLayout Orientation="Horizontal" Padding="10,0,10,0">
+                        <StackLayout Orientation="Horizontal" Padding="20,0,10,0">
                              <Label  Text="Afficher le détail de l'ordonnance" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
                              <Image Source="add.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
                          </StackLayout> 
                     </ViewCell>    
                 </TableSection>
-                
             </TableRoot>
         </TableView>
         </ContentView>

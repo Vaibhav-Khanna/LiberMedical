@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.TeledeclarationDetailPage" Style="{StaticResource AppBackgroundColor}">
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.TeledeclarationDetailPage" 
+    Style="{StaticResource ModalBackgroundColor}">
     <custom:BasePage.Resources>
         <ResourceDictionary>
             <Style x:Key="TeledeclarationTitle" TargetType="Label">
@@ -32,7 +33,7 @@
         </ContentView>
     </custom:BasePage.Header>
     <custom:BasePage.ContentPresenter>
-        <ContentView Padding="10,0,0,0">
+        <ContentView Padding="10,0,0,0" Style="{StaticResource ModalContentBackgroundColor}">
             <ScrollView>
                 <StackLayout>
                     <Label Text="A brief History Of Anesthetics" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource TeledeclarationTitle}" Margin="25, 20,25,20" />

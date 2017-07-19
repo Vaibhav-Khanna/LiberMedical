@@ -25,68 +25,60 @@
         </ContentView>
     </custom:BasePage.Header>
     <custom:BasePage.ContentPresenter>
-
-    <ContentView Padding="0,10,0,0">
-            <TableView Intent="Data" x:Name="Table" >
+        <ContentView Padding="0,10,0,0">
+            <TableView Intent="Data" x:Name="Table">
                 <TableRoot>
-                   <TableSection Title="Matin">
-                        <TextCell Text="Cotations"  Detail="+ Ajouter" DetailColor="#007aff"  Tapped="Cotations_Tapped"/> 
-                    </TableSection> 
-                   <TableSection x:Name="Section">
-                   <ViewCell >
+                    <TableSection Title="Matin">
+                        <TextCell Text="Cotations" Detail="+ Ajouter" DetailColor="#007aff" Tapped="Cotations_Tapped" />
+                    </TableSection>
+                    <TableSection x:Name="Section">
+                        <ViewCell>
                             <Grid Padding="15,0,0,0">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="90*" />
-                                    <ColumnDefinition Width="10*" />
+                                    <ColumnDefinition Width="88*" />
+                                    <ColumnDefinition Width="12*" />
                                 </Grid.ColumnDefinitions>
-                                
-                                <Grid Grid.Column="0" >
-                                <Label Text="Majoration" VerticalOptions="Center"/>
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Majoration_Tapped"/>
-                                </Grid.GestureRecognizers>
-                                </Grid>
+                                <Label Text="Majoration" VerticalOptions="Center" Grid.Column="0" />
                                 <Label Text="Non" x:Name="maj" VerticalOptions="Center" Grid.Column="1" />
+                                <ViewCell.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Majoration_Tapped" />
+                                </ViewCell.GestureRecognizers>
                             </Grid>
-                        </ViewCell> 
-                  <ViewCell Tapped="Deplacement_Tapped" x:Name="Depla">
+                        </ViewCell>
+                        <ViewCell Tapped="Deplacement_Tapped" x:Name="Depla">
                             <Grid Padding="15,0,0,0">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="90*" />
-                                    <ColumnDefinition Width="10*" />
+                                    <ColumnDefinition Width="88*" />
+                                    <ColumnDefinition Width="12*" />
                                 </Grid.ColumnDefinitions>
-                                <Label Text="Déplacement" VerticalOptions="Center"  Grid.Column="0" />
-                                <Label Text="Non" VerticalOptions="Center" Grid.Column="1"  />
+                                <Label Text="Déplacement" VerticalOptions="Center" Grid.Column="0" />
+                                <Picker x:Name="picker" Grid.Column="1" Title="Déplacement">
+                                    <Picker.ItemsSource>
+                                        <x:Array Type="{x:Type x:String}">
+                                            <x:String>Non</x:String>
+                                            <x:String>IFD</x:String>
+                                            <x:String>IFP</x:String>
+                                            <x:String>IFO</x:String>
+                                            <x:String>IFN</x:String>
+                                            <x:String>IFR</x:String>
+                                            <x:String>IFS</x:String>
+                                        </x:Array>
+                                    </Picker.ItemsSource>
+                                    <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                                </Picker>
                             </Grid>
                         </ViewCell>
-                        </TableSection>
-                   <TableSection x:Name="Picker" >     
-                        <ViewCell>                        
-                            <Picker x:Name="picker" HorizontalOptions="FillAndExpand" >
-                              <Picker.ItemsSource>
-                                <x:Array Type="{x:Type x:String}">
-                                  <x:String>Non</x:String>
-                                  <x:String>IFD</x:String>
-                                  <x:String>IFP</x:String>
-                                  <x:String>IFO</x:String>
-                                  <x:String>IFN</x:String>
-                                  <x:String>IFR</x:String>
-                                  <x:String>IFS</x:String>
-                                </x:Array>
-                              </Picker.ItemsSource>
-                        </Picker>
-                        </ViewCell>
-                        </TableSection>
-                   <TableSection>
+                    </TableSection>
+                    <TableSection>
                         <SwitchCell Text="Nuit" />
                     </TableSection>
-                    </TableRoot>
-                </TableView>
-        </ContentView> 
-    </custom:BasePage.ContentPresenter> 
+                </TableRoot>
+            </TableView>
+        </ContentView>
+    </custom:BasePage.ContentPresenter>
     <custom:BasePage.Footer>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
             <Label Text="Enregistrer" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource FooterLabel}" />
         </ContentView>
     </custom:BasePage.Footer>
-    </custom:BasePage>
+</custom:BasePage>

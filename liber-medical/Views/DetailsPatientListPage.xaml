@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.DetailsPatientListPage" Style="{StaticResource AppBackgroundColor}">
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.DetailsPatientListPage" Style="{StaticResource ModalBackgroundColor}">
     <custom:BasePage.Header>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
             <Grid Padding="5">
@@ -25,7 +25,7 @@
         </ContentView>
     </custom:BasePage.Header>
     <custom:BasePage.ContentPresenter>
-        <ContentView>
+        <ContentView BackgroundColor="White">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="127" />
@@ -43,22 +43,30 @@
                             <ColumnDefinition Width="50*" />
                             <ColumnDefinition Width="50*" />
                         </Grid.ColumnDefinitions>
-                        <Label Text="Ordonnances" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource OrdonnanceDocumentMenu}" Grid.Column="0">
-                            <Label.GestureRecognizers>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="5"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Column="0" Grid.Row="0">
+                        <Label Text="Ordonnances" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource OrdonnanceDocumentMenu}"   />
+                            <Grid.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Ordonnances_Tapped" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                        <Label Text="Documents" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource OrdonnanceDocumentMenu}" Grid.Column="1">
-                            <Label.GestureRecognizers>
+                            </Grid.GestureRecognizers>
+                            </Grid>
+                        <BoxView HeightRequest="2" BackgroundColor="#91c602" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.Row="1" WidthRequest="100" x:Name="BoxViewOrdonnances" IsVisible="true"/>
+                            
+                        <Grid Grid.Column="1" Grid.Row="0">
+                       <Label Text="Documents" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource OrdonnanceDocumentMenu}"  />
+                            <Grid.GestureRecognizers>
                                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Documents_Tapped" />
-                            </Label.GestureRecognizers>
-                        </Label>
+                            </Grid.GestureRecognizers>
+                            </Grid>
+                       <BoxView HeightRequest="2" BackgroundColor="#91c602" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Grid.Row="1" WidthRequest="100" x:Name="BoxViewDocuments" IsVisible="false"/>
                     </Grid>
                 </StackLayout>
                 <ScrollView Grid.Row="2">
-                    <StackLayout Padding="45,0,0,0">
-                        <!-- IsVisible="{Binding visibily1}" -->
-                        <ListView x:Name="listView" ItemsSource="{Binding ordonnances}" SeparatorVisibility="Default" RowHeight="60">
+                    <StackLayout Padding="45,0,0,0" >
+                        <ListView  ItemsSource="{Binding ordonnances}" x:Name="stackOrdonnance" SeparatorVisibility="Default" RowHeight="60" IsVisible="true" >
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>
@@ -74,21 +82,46 @@
                                             </Grid.RowDefinitions>
                                             <Label Text="{Binding Reference, StringFormat='Ordonnance {0}'}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
                                             <Label Text="{Binding AddDate}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
-                                            <Button Text="{Binding Status}" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="#d1d1d1" TextColor="#ffffff" Grid.RowSpan="2" Grid.Column="1" BorderRadius="50" />
+                                            <Button Text="{Binding Status}" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="#d1d1d1" TextColor="#ffffff" Grid.RowSpan="2" Grid.Column="1" BorderRadius="1" />
                                             <Image Source="back_arrow_green.png" HorizontalOptions="Start" VerticalOptions="Center" Grid.RowSpan="2" Grid.Column="2" />
                                         </Grid>
                                     </ViewCell>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </StackLayout>
+                        <ListView  ItemsSource="{Binding documents}" x:Name="stackDocument" IsVisible="false" SeparatorVisibility="Default" RowHeight="60">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="90*" />
+                                                <ColumnDefinition Width="10*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="60*" />
+                                                <RowDefinition Height="40*" />
+                                            </Grid.RowDefinitions>
+                                            <Label Text="{Binding Reference, StringFormat='Document {0}'}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
+                                            <Label Text="{Binding AddDate}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
+                                            <Image Source="back_arrow_green.png" HorizontalOptions="Start" VerticalOptions="Center" Grid.RowSpan="2" Grid.Column="1" />
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout> 
+                      
                 </ScrollView>
             </Grid>
         </ContentView>
     </custom:BasePage.ContentPresenter>
     <custom:BasePage.Footer>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
-            <Label Text="+ Ajoutez une ordonnance" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource FooterLabel}" />
+            <Label x:Name="Label" Text="+ Ajoutez une ordonnance" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource FooterLabel}" />
+            <ContentView.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="AddOrdonnance_Tapped" />
+                    </ContentView.GestureRecognizers>
         </ContentView>
     </custom:BasePage.Footer>
 </custom:BasePage>

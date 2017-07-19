@@ -11,7 +11,7 @@
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Cancel_Tapped" />
                     </Grid.GestureRecognizers>
-                    <Image HorizontalOptions="Center" VerticalOptions="Center" Source="back_arrow.png" />
+                    <Image HorizontalOptions="Center" VerticalOptions="Center" Source="close.png" />
                 </Grid>
                 <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}" Text="Ordonnance" />
             </Grid>
