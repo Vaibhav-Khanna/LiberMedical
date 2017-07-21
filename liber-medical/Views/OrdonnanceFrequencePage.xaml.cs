@@ -7,7 +7,7 @@ namespace libermedical.Views
 {
     public partial class OrdonnanceFrequencePage : BasePage
     {
-        public OrdonnanceFrequencePage() : base(-1, -1, false)
+        public OrdonnanceFrequencePage() : base(-1, 0, false)
         {
             InitializeComponent();
         }

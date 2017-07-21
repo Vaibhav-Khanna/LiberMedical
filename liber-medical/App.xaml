@@ -22,12 +22,34 @@
             <Style x:Key="AppBackgroundColor" TargetType="Page">
                 <Setter Property="BackgroundColor" Value= "#ffffff" />
             </Style>
+            <Style x:Key="AppBackgroundColorBlack" TargetType="Page">
+                <Setter Property="BackgroundColor" Value= "#000000" />
+            </Style>
            <Style x:Key="ModalBackgroundColor" TargetType="Page">
                 <Setter Property="BackgroundColor" Value= "#91c602" />
             </Style>
             <Style x:Key="ModalContentBackgroundColor" TargetType="Page">
                 <Setter Property="BackgroundColor" Value= "#ffffff" />
             </Style>
+            <Style x:Key="HeaderFooterBackground" TargetType="View">
+                <Setter Property="BackgroundColor" Value="{StaticResource HeaderFooterBackgroundColor}" />
+            </Style>
+            <Style x:Key="HeaderFooterBackgroundBlack" TargetType="View">
+                <Setter Property="BackgroundColor" Value="#000000" />
+            </Style>
+            <Style x:Key="HeaderLabel" TargetType="Label">
+                <Setter Property="FontFamily" Value="SFUIText-Semibold.otf" />
+                <Setter Property="FontSize" Value="17" />
+                <Setter Property="TextColor" Value="#ffffff" />
+            </Style>
+            <Style x:Key="HeaderLabelAction" BasedOn="{StaticResource HeaderLabel}" TargetType="Label">
+                <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
+            </Style>
+            <Style x:Key="FooterLabel" BasedOn="{StaticResource HeaderLabel}" TargetType="Label">
+                <Setter Property="FontFamily" Value="SFUIText-Medium.otf" />
+                <Setter Property="FontSize" Value="18" />
+            </Style>
+            
             
             <Style x:Key="LoginPageEntry" TargetType="Entry">
                 <Setter Property="TextColor" Value="{StaticResource PurpleyGrey}" />
@@ -46,21 +68,7 @@
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="TextColor" Value="{StaticResource PurpleyGrey}" />
             </Style>
-            <Style x:Key="HeaderFooterBackground" TargetType="View">
-                <Setter Property="BackgroundColor" Value="{StaticResource HeaderFooterBackgroundColor}" />
-            </Style>
-            <Style x:Key="HeaderLabel" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Semibold.otf" />
-                <Setter Property="FontSize" Value="17" />
-                <Setter Property="TextColor" Value="#ffffff" />
-            </Style>
-            <Style x:Key="HeaderLabelAction" BasedOn="{StaticResource HeaderLabel}" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
-            </Style>
-            <Style x:Key="FooterLabel" BasedOn="{StaticResource HeaderLabel}" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Medium.otf" />
-                <Setter Property="FontSize" Value="18" />
-            </Style>
+
             <Style x:Key="NavigationLink" TargetType="Label">
                 <Setter Property="FontFamily" Value="SFUIText-Semibold.otf" />
                 <Setter Property="FontSize" Value="17" />

@@ -23,5 +23,7 @@ namespace libermedical.Views
         {
             await Navigation.PopModalAsync();
         }
+
+
     }
 }

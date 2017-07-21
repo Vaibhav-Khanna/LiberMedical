@@ -11,9 +11,9 @@
 
           <wp:WheelPicker SelectionLinesColor="Lime"
                                     HorizontalSpaceBetweenWheels="40" 
-
+                                     ItemsSourceSimple="{Binding ItemsSource}" 
                                     SelectedItemsIndex="0,0,0" 
-
+                                    Command="{Binding ItemSelectedCommand}"
                                     HorizontalOptions="Fill">
                                     
                                     <wp:WheelPicker.WheelDefinitions>
@@ -27,7 +27,7 @@
          ItemsSourceMulti="{Binding ItemsSource}" 
                 
         <wp:WheelPicker HorizontalOptions="Fill" SelectedItemsIndex="0"
-                    ItemsSourceSimple="{Binding ItemsSource}" 
+                   
                     Command="{Binding ItemSelectedCommand}">
             <wp:WheelPicker.WheelDefinitions>
                 <wp:WheelDefinition Width="Auto" HorizontalOptions="Left" Alignment="Center" />

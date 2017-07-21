@@ -25,8 +25,8 @@
         </ContentView>
     </custom:BasePage.Header>
     <custom:BasePage.ContentPresenter>
-        <ContentView Padding="0,10,0,0">
-            <TableView Intent="Data" x:Name="Table">
+        <ContentView >
+            <TableView Intent="Settings" x:Name="Table">
                 <TableRoot>
                     <TableSection Title="Matin">
                         <TextCell Text="Cotations" Detail="+ Ajouter" DetailColor="#007aff" Tapped="Cotations_Tapped" />
@@ -48,8 +48,8 @@
                         <ViewCell Tapped="Deplacement_Tapped" x:Name="Depla">
                             <Grid Padding="15,0,0,0">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="88*" />
-                                    <ColumnDefinition Width="12*" />
+                                    <ColumnDefinition Width="85*" />
+                                    <ColumnDefinition Width="15*" />
                                 </Grid.ColumnDefinitions>
                                 <Label Text="Déplacement" VerticalOptions="Center" Grid.Column="0" />
                                 <Picker x:Name="picker" Grid.Column="1" Title="Déplacement">
@@ -68,8 +68,6 @@
                                 </Picker>
                             </Grid>
                         </ViewCell>
-                    </TableSection>
-                    <TableSection>
                         <SwitchCell Text="Nuit" />
                     </TableSection>
                 </TableRoot>

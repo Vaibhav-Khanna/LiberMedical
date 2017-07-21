@@ -5,20 +5,15 @@ using Xamarin.Forms;
 
 namespace libermedical.Views
 {
-    public partial class OrdonnanceDetailPage : BasePage
+    public partial class OrdonnanceViewPage : BasePage
     {
-        public OrdonnanceDetailPage() : base(-1, -1, false)
+        public OrdonnanceViewPage() : base(-1, 0, false)
         {
-
             InitializeComponent();
         }
         async void Back_Tapped(object sender, System.EventArgs e)
         {
             await Navigation.PopModalAsync();
-        }
-        async void Ordonnance_Tapped(object sender, System.EventArgs e)
-        {
-            await Navigation.PushModalAsync(new OrdonnanceViewPage());
         }
     }
 }

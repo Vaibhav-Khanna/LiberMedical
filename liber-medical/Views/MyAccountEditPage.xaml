@@ -47,7 +47,7 @@
                                             <ColumnDefinition Width="88*" />
                                             <ColumnDefinition Width="13" />
                                         </Grid.ColumnDefinitions>
-                                        <Image Source="patients.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Grid.Column="0" />
+                                        <Image Source="contrat.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Grid.Column="0" /> 
                                         <Label Text="Mon contrat" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Grid.Column="1" Style="{StaticResource PlusList}" />
                                         <Image Source="back_arrow_green.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Grid.Column="2" />
                                     </Grid>

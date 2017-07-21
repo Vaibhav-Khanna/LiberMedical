@@ -18,8 +18,8 @@
         </ContentView>
     </custom:BasePage.Header>
     <custom:BasePage.ContentPresenter>
-        <ContentView Padding="0,10,0,0">
-            <TableView Intent="Data" RowHeight="50">
+        <ContentView >
+            <TableView Intent="Settings" RowHeight="50">
                 <TableRoot>
                     <TableSection Title="Choisissez la fréquence d'administration">
                         <TextCell Text="Matin" Tapped="Frequence_Tapped" />

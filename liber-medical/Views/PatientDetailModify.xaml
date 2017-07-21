@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.PatientDetailModify" Style="{StaticResource AppBackgroundColor}">
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="libermedical.Views.PatientDetailModify" Style="{StaticResource ModalBackgroundColor}">
     <custom:BasePage.Header>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
             <Grid Padding="5">
@@ -24,25 +25,24 @@
         </ContentView>
     </custom:BasePage.Header>
     <custom:BasePage.ContentPresenter>
-        <ContentView Padding="20,10,0,10">
-            <TableView Intent="Data" HorizontalOptions="FillAndExpand">
+        <ContentView Padding="20,0,0,10" Style="{StaticResource ModalContentBackgroundColor}">
+            <TableView Intent="Form" HorizontalOptions="FillAndExpand" BackgroundColor="#ffffff" >
                 <TableRoot>
                     <TableSection>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100">
-                                <Entry Text="Bill" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+                                <Entry Text="Bill" Keyboard="Text" Style="{StaticResource PatientNameEntry}" WidthRequest="200" />
                             </StackLayout>
                         </ViewCell>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100">
-                                <Entry Text="Anderson" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+                                <Entry Text="Anderson" Keyboard="Text" Style="{StaticResource PatientNameEntry}" WidthRequest="200"/>
                             </StackLayout>
                         </ViewCell>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100">
                                 <Image Source="delete.png" />
                                 <Label Text="Portable" Style="{StaticResource PortableNumber}" VerticalOptions="Center" />
-                                <BoxView BackgroundColor="#d1d1d1" HeightRequest="15" WidthRequest="2" />
                                 <Image Source="path_5.png" />
                                 <Entry Text="+1 (202) 555-0158" VerticalOptions="Center" Style="{StaticResource PortableNumberBlack}" />
                             </StackLayout>

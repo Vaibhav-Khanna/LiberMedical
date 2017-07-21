@@ -80,25 +80,25 @@ namespace libermedical.Views
 
           };
 
-        // public IList<IList<string>> ItemsSource = new List<IList<string>>();
+        public IList<IList<string>> ItemsSource = new List<IList<string>>();
 
 
 
 
-        //public Command ItemSelectedCommand { get; }
+        public Command ItemSelectedCommand { get; }
 
         public MainPageModel()
         {
-            //    ItemsSource.Add(Wheel1);
-            //    ItemsSource.Add(Wheel2);
-            // ItemsSource.Add(Wheel3);
+            ItemsSource.Add(Wheel1);
+            ItemsSource.Add(Wheel2);
+            ItemsSource.Add(Wheel3);
 
-            /*    ItemSelectedCommand = new Command<Tuple<int, int, IList<int>>>(tuple =>
-                {
-                    var selectedWheelIndex = tuple.Item1;
-                    var selectedItemIndex = tuple.Item2;
-                    var selectedValue = ItemsSource[selectedItemIndex];
-                });  */
+            ItemSelectedCommand = new Command<Tuple<int, int, IList<int>>>(tuple =>
+            {
+                var selectedWheelIndex = tuple.Item1;
+                var selectedItemIndex = tuple.Item2;
+                var selectedValue = ItemsSource[selectedItemIndex];
+            });
         }
     }
 }

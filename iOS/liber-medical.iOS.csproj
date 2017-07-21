@@ -72,11 +72,13 @@
     <MtouchFastDev>true</MtouchFastDev>
     <MtouchFloat32>true</MtouchFloat32>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <IOSDebuggerPort>25131</IOSDebuggerPort>
+    <IOSDebuggerPort>10000</IOSDebuggerPort>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <PlatformTarget>x86</PlatformTarget>
+    <IOSDebugOverWiFi>false</IOSDebugOverWiFi>
+    <MtouchExtraArgs>-v -v -v</MtouchExtraArgs>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -208,6 +210,21 @@
     <BundleResource Include="Resources\send.png" />
     <BundleResource Include="Resources\send%402x.png" />
     <BundleResource Include="Resources\send%403x.png" />
+    <BundleResource Include="Resources\path_5.png" />
+    <BundleResource Include="Resources\path_5%402x.png" />
+    <BundleResource Include="Resources\path_5%403x.png" />
+    <BundleResource Include="Resources\back_arrow_grey.png" />
+    <BundleResource Include="Resources\back_arrow_grey%402x.png" />
+    <BundleResource Include="Resources\back_arrow_grey%403x.png" />
+    <BundleResource Include="Resources\bottom%402x.png" />
+    <BundleResource Include="Resources\bottom.png" />
+    <BundleResource Include="Resources\bottom%403x.png" />
+    <BundleResource Include="Resources\secure%402x.png" />
+    <BundleResource Include="Resources\secure.png" />
+    <BundleResource Include="Resources\secure%403x.png" />
+    <BundleResource Include="Resources\contrat.png" />
+    <BundleResource Include="Resources\contrat%402x.png" />
+    <BundleResource Include="Resources\contrat%403x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

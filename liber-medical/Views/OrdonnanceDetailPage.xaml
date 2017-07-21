@@ -46,6 +46,10 @@
                                 </Grid.ColumnDefinitions>
                                 <Image Source="search.png" VerticalOptions="Center" Grid.Column="0" />
                                 <Label Text="Visualiser l'ordonnance" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Ordonnance_Tapped" />
+                    </Grid.GestureRecognizers>
+                                
                             </Grid>
                         </ViewCell>
                     </TableSection>
@@ -66,7 +70,7 @@
                     <ViewCell Height="50">
                         <StackLayout Orientation="Horizontal" Padding="20,0,10,0">
                              <Label  Text="Afficher le détail de l'ordonnance" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
-                             <Image Source="add.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                             <Image Source="bottom.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
                          </StackLayout> 
                     </ViewCell>    
                 </TableSection>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-    x:Class="libermedical.Views.SecuriseBillsPage" 
     Style="{StaticResource AppBackgroundColorBlack}"
-    Title="Facture à sécuriser">
+    Title="Ordonnance 1"
+    x:Class="libermedical.Views.OrdonnanceViewPage">
  <custom:BasePage.Header>
         <ContentView Style="{StaticResource HeaderFooterBackgroundBlack}">
             <Grid Padding="5">

@@ -7,7 +7,7 @@ namespace libermedical.Views
 {
     public partial class PatientDetailModify : BasePage
     {
-        public PatientDetailModify()
+        public PatientDetailModify() : base(-1, 0, false)
         {
             InitializeComponent();
         }

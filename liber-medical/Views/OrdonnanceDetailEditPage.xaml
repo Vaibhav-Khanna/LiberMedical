@@ -19,17 +19,17 @@
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Save_Tapped" />
                     </Grid.GestureRecognizers>
-                    <Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}" Text="Modifier" />
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}" Text="Enregistrer" />
                 </Grid>
             </Grid>
         </ContentView>
     </custom:BasePage.Header>
     <custom:BasePage.ContentPresenter>
-        <ContentView Padding="0,10,0,0">
-            <TableView Intent="Settings" HasUnevenRows="True">
-                <TableRoot>
-                    <TableSection>
-                        <ViewCell Height="50">
+        <ContentView Padding="0,0,0,0">
+            <TableView Intent="Menu" HasUnevenRows="True"  >
+                <TableRoot >
+                    <TableSection >
+                        <ViewCell Height="60"  >
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="15*" />
@@ -42,7 +42,7 @@
                         </ViewCell>
                     </TableSection>
                     <TableSection>
-                        <ViewCell Height="50">
+                        <ViewCell Height="60">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="15*" />
@@ -53,7 +53,7 @@
                                 <Label Text="Visualiser l'ordonnance" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
                             </Grid>
                         </ViewCell>
-                        <ViewCell Height="50">
+                        <ViewCell Height="60">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="15*" />
@@ -66,7 +66,7 @@
                         </ViewCell>
                     </TableSection>
                     <TableSection>
-                        <ViewCell Height="50">
+                        <ViewCell Height="60">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="15*" />
@@ -79,7 +79,7 @@
                         </ViewCell>
                     </TableSection>
                     <TableSection>
-                        <ViewCell Height="50">
+                        <ViewCell Height="60">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="15*" />

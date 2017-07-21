@@ -48,7 +48,7 @@ namespace libermedical.Views
         }
         async void Save_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushAsync(new HomePage());
+            await Navigation.PopModalAsync();
         }
 
     }

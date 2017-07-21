@@ -7,39 +7,38 @@
                     <RowDefinition Height="70*" />
                     <RowDefinition Height="30*" />
                 </Grid.RowDefinitions>
-                <TableView Intent="Data" HasUnevenRows="True" Grid.Row="0">
+                <TableView Intent="Menu" RowHeight="60" Grid.Row="0" Style="{StaticResource ModalContentBackgroundColor}">
                     <TableRoot>
                         <TableSection>
-                            <ViewCell Height="60">
-                                <StackLayout Orientation="Horizontal" Padding="0,0,21,0">
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="AccountTapped" />
-                                    </StackLayout.GestureRecognizers>
-                                    <Grid>
+                            <ViewCell >
+                                    <Grid HorizontalOptions="FillAndExpand" Padding="0,0,10,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="10*" />
-                                            <ColumnDefinition Width="88*" />
-                                            <ColumnDefinition Width="13" />
+                                            <ColumnDefinition Width="80*" />
+                                            <ColumnDefinition Width="10*" />
                                         </Grid.ColumnDefinitions>
-                                        <Image Source="patients.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Grid.Column="0" />
-                                        <Label Text="Mon compte" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Grid.Column="1" Style="{StaticResource PlusList}" />
-                                        <Image Source="back_arrow_green.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Grid.Column="2" />
-                                    </Grid>
-                                </StackLayout>
+                                        <Image Source="user.png"  VerticalOptions="Center" Grid.Column="0" />
+                                        <Label Text="Mon compte"  VerticalOptions="Center"  Grid.Column="1" Style="{StaticResource PlusList}" />
+                                        <Image Source="back_arrow_green.png"  VerticalOptions="Center" Grid.Column="2" />
+                                    
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="AccountTapped" />
+                                    </Grid.GestureRecognizers>
+                                </Grid>
                             </ViewCell>
-                            <ViewCell Height="60">
+                            <ViewCell>
                                 <StackLayout Orientation="Horizontal" Padding="0,0,21,0">
                                     <Label Text="CGV" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Style="{StaticResource PlusList}" />
                                     <Image Source="back_arrow_green.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
                                 </StackLayout>
                             </ViewCell>
-                            <ViewCell Height="60">
+                            <ViewCell>
                                 <StackLayout Orientation="Horizontal" Padding="0,0,21,0">
                                     <Label Text="CGU" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Style="{StaticResource PlusList}" />
                                     <Image Source="back_arrow_green.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
                                 </StackLayout>
                             </ViewCell>
-                            <ViewCell Height="60">
+                            <ViewCell>
                                 <StackLayout Orientation="Horizontal" Padding="0,0,21,0">
                                     <Label Text="FAQ" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Style="{StaticResource PlusList}" />
                                     <Image Source="back_arrow_green.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
@@ -48,7 +47,7 @@
                         </TableSection>
                     </TableRoot>
                 </TableView>
-                <Button Grid.Row="1" HeightRequest="69" WidthRequest="291" BackgroundColor="White" BorderColor="#91c602" FontFamily="SFUIText-Medium.otf" FontSize="18" TextColor="#91c602" Text="Contacter mon conseiller" VerticalOptions="CenterAndExpand"
+                <Button Grid.Row="1" HeightRequest="69" WidthRequest="291" BackgroundColor="White" BorderWidth="1" BorderColor="#91c602" FontFamily="SFUIText-Medium.otf" FontSize="18" TextColor="#91c602" Text="Contacter mon conseiller" VerticalOptions="CenterAndExpand"
                     HorizontalOptions="CenterAndExpand" Clicked="AddActionSheetSimpleTapped" />
             </Grid>
         </ContentView>

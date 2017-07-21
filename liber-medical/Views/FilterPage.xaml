@@ -25,7 +25,7 @@
         </ContentView>
     </custom:BasePage.Header>
     <custom:BasePage.ContentPresenter>
-        <ContentView Padding="10,0,5,0" Style="{StaticResource HeaderFooterBackground}">
+        <ContentView Padding="0,0,5,0" Style="{StaticResource ModalContentBackgroundColor}">
             <TableView Intent="Settings" HasUnevenRows="True">
                 <TableRoot>
                     <TableSection>
@@ -67,14 +67,14 @@
                                 </Grid.ColumnDefinitions>
                                 <Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
                                 <Label Text="Date de Fin" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
-                                <Image Source="back_arrow_green.png" VerticalOptions="Center" Grid.Column="2" />
+                                <Image Source="back_arrow_grey.png" VerticalOptions="Center" Grid.Column="2" />
                             </Grid>
                         </ViewCell>
                     </TableSection>
                     <TableSection Title="Statut">
-                        <SwitchCell Text="En attente" />
-                        <SwitchCell Text="Traité" />
-                        <SwitchCell Text="Refusé" />
+                        <SwitchCell Text="En attente" x:Name="attente" />
+                        <SwitchCell Text="Traité" x:Name="traite" />
+                        <SwitchCell Text="Refusé" x:Name="refuse"  />
                     </TableSection>
                 </TableRoot>
             </TableView>

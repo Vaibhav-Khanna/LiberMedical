@@ -102,6 +102,9 @@
     <EmbeddedResource Include="Views\FilterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\OrdonnanceViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -189,6 +192,9 @@
     </Compile>
     <Compile Include="Views\FilterPage.xaml.cs">
       <DependentUpon>FilterPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrdonnanceViewPage.xaml.cs">
+      <DependentUpon>OrdonnanceViewPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

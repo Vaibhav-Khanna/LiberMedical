@@ -32,9 +32,7 @@ namespace libermedical.Views
                 }
 
                 var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                {
-                    AllowCropping = true
-                });
+                { });
                 //if photo ok
                 if (file != null)
                 {
@@ -75,9 +73,7 @@ namespace libermedical.Views
                 }
 
                 var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                {
-                    AllowCropping = true
-                });
+                { });
                 if (file != null)
                 {
                     //if document we change typeDoc to document
