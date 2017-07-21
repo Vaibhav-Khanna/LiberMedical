@@ -43,7 +43,7 @@
            <SearchBar Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" /></StackLayout>
 
             
-            <ListView x:Name="PatientView" ItemsSource="{Binding patients}" SeparatorVisibility="Default" Grid.Row="1">
+            <ListView x:Name="PatientView" ItemsSource="{Binding patients}" SeparatorVisibility="Default" Grid.Row="1" ItemSelected="Handle_ItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell Text="{Binding FirstLastName}" TextColor="Black" Tapped="PatientTapped" />    

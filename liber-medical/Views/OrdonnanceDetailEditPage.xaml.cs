@@ -44,7 +44,7 @@ namespace libermedical.Views
 
         async void Cancel_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
         async void Save_Tapped(object sender, System.EventArgs e)
         {

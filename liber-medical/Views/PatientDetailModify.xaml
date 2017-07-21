@@ -31,7 +31,7 @@
                     <TableSection>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100">
-                                <Entry Text="Bill" Keyboard="Text" Style="{StaticResource PatientNameEntry}" WidthRequest="200" />
+                                <Entry Text="Bill" Keyboard="Text" Style="{StaticResource PatientNameEntry}" HorizontalOptions="FillAndExpand" />
                             </StackLayout>
                         </ViewCell>
                         <ViewCell>

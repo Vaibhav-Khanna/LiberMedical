@@ -258,7 +258,10 @@ namespace libermedical.Views
 
             }
             //if normal mode it's an ordoannce 
-            else if (this.navigationAfter == "normal") { Navigation.PushModalAsync(new NavigationPage(new OrdonnanceDetailEditPage())); }
+            else if (this.navigationAfter == "normal")
+            {
+                Navigation.PushAsync(new OrdonnanceDetailEditPage());
+            }
 
             // if patient list navigation from icon menu
 
@@ -267,6 +270,11 @@ namespace libermedical.Views
                 var typeDocument = "ordonnances";
                 Navigation.PushModalAsync(new NavigationPage(new DetailsPatientListPage(typeDocument)));
             }
+        }
+
+        void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+        {
+            ((ListView)sender).SelectedItem = null;
         }
     }
 }
