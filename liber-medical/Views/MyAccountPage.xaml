@@ -24,29 +24,39 @@
     </custom:BasePage.Header>
 
     <custom:BasePage.ContentPresenter >
-        <ContentView Padding="10,0,0,0" Style="{StaticResource ModalContentBackgroundColor}">
-           
-                <TableView Intent="Menu" RowHeight="60"  VerticalOptions="Start" HeightRequest ="300" Style="{StaticResource ModalContentBackgroundColor}" >
-                    <TableRoot>
-                        <TableSection>
-                        <TextCell Text="Lola"  />
-                        <TextCell Text="Powell" />
-                        <TextCell Text="mt89@hotmail.fr" />                        
-                        <ViewCell >
-                                    <Grid HorizontalOptions="FillAndExpand" Padding="0,0,10,0">
+        <ContentView Padding="15,0,0,0" Style="{StaticResource ModalContentBackgroundColor}"> 
+         <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" Grid.Row="0" Style="{StaticResource ModalContentBackgroundColor}">
+                    
+                                 <StackLayout Orientation="Horizontal" Padding="0,0,21,0" HeightRequest="50">
+                                    <Label Text="Lola" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Style="{StaticResource PlusList}" />
+
+                                </StackLayout>  
+                                <BoxView HeightRequest="1" BackgroundColor="{StaticResource GreyBoxViewLine}" HorizontalOptions="FillAndExpand" />
+                                <StackLayout Orientation="Horizontal" Padding="0,0,21,0" HeightRequest="50">
+                                    <Label Text="Powell" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Style="{StaticResource PlusList}" />
+                                </StackLayout>
+                            <BoxView HeightRequest="1" BackgroundColor="{StaticResource GreyBoxViewLine}" HorizontalOptions="FillAndExpand" />
+                                <StackLayout Orientation="Horizontal" Padding="0,0,21,0" HeightRequest="50">
+                                    <Label Text="mt89@hotmail.fr" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Style="{StaticResource PlusList}" />
+                                </StackLayout>
+                           <BoxView HeightRequest="1" BackgroundColor="{StaticResource GreyBoxViewLine}" HorizontalOptions="FillAndExpand" />
+                                <StackLayout Orientation="Horizontal" Padding="0,0,21,0" HeightRequest="50">
+                                    <Label Text="272-936-1576" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Style="{StaticResource PlusList}" />
+                                </StackLayout>
+                            <BoxView HeightRequest="1" BackgroundColor="{StaticResource GreyBoxViewLine}" HorizontalOptions="FillAndExpand" />
+                            <Grid HorizontalOptions="FillAndExpand" Padding="0,0,10,0" HeightRequest="50">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="10*" />
                                             <ColumnDefinition Width="80*" />
                                             <ColumnDefinition Width="10*" />
                                         </Grid.ColumnDefinitions>
-                                        <Image Source="user.png"  VerticalOptions="Center" Grid.Column="0" />
+                                        <Image Source="contrat.png"  VerticalOptions="Center" Grid.Column="0" />
                                         <Label Text="Mon contrat"  VerticalOptions="Center"  Grid.Column="1" Style="{StaticResource PlusList}" />
                                         <Image Source="back_arrow_green.png"  VerticalOptions="Center" Grid.Column="2" />
                                 </Grid>
-                            </ViewCell>
-                        </TableSection>
-                    </TableRoot>
-                </TableView>
+                            <BoxView HeightRequest="1" BackgroundColor="{StaticResource GreyBoxViewLine}" HorizontalOptions="FillAndExpand"/>
+                      </StackLayout>     
+
         </ContentView>
     </custom:BasePage.ContentPresenter>
 </custom:BasePage>

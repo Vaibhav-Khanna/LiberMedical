@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:libermedical.Renderers;" 
     x:Class="libermedical.Views.PatientDetailModify" Style="{StaticResource ModalBackgroundColor}">
     <custom:BasePage.Header>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
@@ -26,36 +29,37 @@
     </custom:BasePage.Header>
     <custom:BasePage.ContentPresenter>
         <ContentView Padding="20,0,0,10" Style="{StaticResource ModalContentBackgroundColor}">
-            <TableView Intent="Form" HorizontalOptions="FillAndExpand" BackgroundColor="#ffffff" >
-                <TableRoot>
-                    <TableSection>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100">
-                                <Entry Text="Bill" Keyboard="Text" Style="{StaticResource PatientNameEntry}" HorizontalOptions="FillAndExpand" />
+            <TableView Intent="Form" HorizontalOptions="FillAndExpand" BackgroundColor="#ffffff">
+            <TableRoot >
+               <TableSection >
+                        <ViewCell  >
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+                               <local:CustomEntry Text="Bill"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
                             </StackLayout>
                         </ViewCell>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100">
-                                <Entry Text="Anderson" Keyboard="Text" Style="{StaticResource PatientNameEntry}" WidthRequest="200"/>
+                        <ViewCell >
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+                                <local:CustomEntry Text="Anderson"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
                             </StackLayout>
                         </ViewCell>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100">
-                                <Image Source="delete.png" />
-                                <Label Text="Portable" Style="{StaticResource PortableNumber}" VerticalOptions="Center" />
-                                <Image Source="path_5.png" />
-                                <Entry Text="+1 (202) 555-0158" VerticalOptions="Center" Style="{StaticResource PortableNumberBlack}" />
+                        <ViewCell >
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  >
+                                    <Image Source="delete.png" />
+                                    <Label Text="Portable" Style="{StaticResource PortableNumber}" VerticalOptions="Center"/>
+                                    <Image Source="path_5.png" />    
+                                    <local:CustomEntry Text="+1 (202) 555-0158" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Style="{StaticResource PortableNumberBlack}" Keyboard="Telephone" />
                             </StackLayout>
-                        </ViewCell>
+                            </ViewCell> 
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100">
-                                <Image Source="add.png" />
-                                <Entry Placeholder="Ajouter un numéro" Style="{StaticResource PhoneNumberEntry}" />
-                            </StackLayout>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100" >
+                            <Image Source="add.png"/>
+                                <local:CustomEntry Placeholder="Ajouter un numéro" Style="{StaticResource PhoneNumberEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Telephone" />
+                        </StackLayout>
                         </ViewCell>
-                    </TableSection>
-                </TableRoot>
-            </TableView>
+                            
+                </TableSection>
+            </TableRoot>
+        </TableView>
         </ContentView>
     </custom:BasePage.ContentPresenter>
 </custom:BasePage>

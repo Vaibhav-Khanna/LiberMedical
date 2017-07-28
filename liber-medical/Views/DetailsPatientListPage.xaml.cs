@@ -98,7 +98,7 @@ namespace libermedical.Views
 
         async void Edit_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushModalAsync(new PatientDetailModify());
+            await Navigation.PushAsync(new PatientDetailModify());
         }
 
         void Ordonnances_Tapped(object sender, System.EventArgs e)
@@ -123,7 +123,11 @@ namespace libermedical.Views
         }
         async void AddOrdonnance_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushModalAsync(new OrdonnanceDetailEditPage());
+            await Navigation.PushAsync(new OrdonnanceDetailEditPage());
+        }
+        void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+        {
+            ((ListView)sender).SelectedItem = null;
         }
     }
 }

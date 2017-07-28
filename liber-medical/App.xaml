@@ -8,6 +8,7 @@
             <Color x:Key="PurpleyGrey">#9b9b9b</Color>
             <Color x:Key="PurpleyGrey2">#9f9f9f</Color>
             <Color x:Key="LightGrey">#d1d1d1</Color>
+            <Color x:Key="GreyBoxViewLine">#c8c7cc</Color>
             <!-- Global Style -->
             <Style x:Key="TabbedPage" TargetType="TabbedPage">
                 <Setter Property="BarBackgroundColor" Value="#4a4a4a" />
@@ -52,7 +53,7 @@
             
             
             <Style x:Key="LoginPageEntry" TargetType="Entry">
-                <Setter Property="TextColor" Value="{StaticResource PurpleyGrey}" />
+                <Setter Property="TextColor" Value="#000000" />
                 <Setter Property="PlaceholderColor" Value="{StaticResource PurpleyGrey}" />
                 <Setter Property="FontFamily" Value="SFUIDisplay-Light.otf" />
                 <Setter Property="FontSize" Value="15" />

@@ -15,16 +15,16 @@ namespace libermedical.Views
         }
         async void Cancel_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
         async void Save_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
 
         }
         async void Cotations_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushModalAsync(new OrdonnanceCotationPage());
+            await Navigation.PushAsync(new OrdonnanceCotationPage());
         }
 
         void Majoration_Tapped(object sender, System.EventArgs e)

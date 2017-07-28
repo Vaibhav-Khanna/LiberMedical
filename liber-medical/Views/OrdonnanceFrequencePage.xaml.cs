@@ -13,12 +13,12 @@ namespace libermedical.Views
         }
         async void Cancel_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
 
         async void Frequence_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushModalAsync(new OrdonnanceFrequence2Page());
+            await Navigation.PushAsync(new OrdonnanceFrequence2Page());
         }
     }
 }

@@ -66,7 +66,7 @@
                 </StackLayout>
                 <ScrollView Grid.Row="2">
                     <StackLayout Padding="45,0,0,0" >
-                        <ListView  ItemsSource="{Binding ordonnances}" x:Name="stackOrdonnance" SeparatorVisibility="Default" RowHeight="60" IsVisible="true" >
+                        <ListView  ItemsSource="{Binding ordonnances}" x:Name="stackOrdonnance" SeparatorVisibility="Default" RowHeight="60" IsVisible="true" ItemSelected="Handle_ItemSelected">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>
@@ -93,7 +93,7 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                        <ListView  ItemsSource="{Binding documents}" x:Name="stackDocument" IsVisible="false" SeparatorVisibility="Default" RowHeight="60">
+                        <ListView  ItemsSource="{Binding documents}" x:Name="stackDocument" IsVisible="false" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>

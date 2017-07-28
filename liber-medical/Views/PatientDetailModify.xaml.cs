@@ -13,11 +13,11 @@ namespace libermedical.Views
         }
         void Cancel_Tapped(object sender, System.EventArgs e)
         {
-            Navigation.PopModalAsync();
+            Navigation.PopAsync();
         }
         void Save_Tapped(object sender, System.EventArgs e)
         {
-            Navigation.PopModalAsync();
+            Navigation.PopAsync();
         }
 
     }

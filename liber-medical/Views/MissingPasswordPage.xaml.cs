@@ -7,7 +7,7 @@ namespace libermedical.Views
 {
     public partial class MissingPasswordPage : BasePage
     {
-        public MissingPasswordPage() : base(-1, -1, false)
+        public MissingPasswordPage() : base(0, 0, true)
         {
             InitializeComponent();
         }

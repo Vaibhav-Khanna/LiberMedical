@@ -18,7 +18,7 @@ namespace libermedical.Views
 
         async void Detail_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushModalAsync(new TeledeclarationDetailPage());
+            await Navigation.PushAsync(new TeledeclarationDetailPage());
         }
     }
 }

@@ -93,12 +93,16 @@ namespace libermedical.Views
 
         async void Teledeclaration_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushModalAsync(new TeledeclarationSecureActionPage());
+            await Navigation.PushModalAsync(new NavigationPage(new TeledeclarationSecureActionPage()));
         }
 
         async void Bill_Tapped(object sender, System.EventArgs e)
         {
             await Navigation.PushModalAsync(new SecuriseBillsPage());
+        }
+        void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+        {
+            ((ListView)sender).SelectedItem = null;
         }
     }
 }

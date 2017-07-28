@@ -14,7 +14,7 @@ namespace libermedical.Views
         }
         async void Back_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
     }
 }

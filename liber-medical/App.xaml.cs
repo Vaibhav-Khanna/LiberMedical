@@ -12,7 +12,7 @@ namespace libermedical
             //MainPage = new NavigationPage(new WheelPicker());
             //MainPage = new NavigationPage(new OrdonnanceCotationPage());
             MainPage = new MainTabPage();
-            //MainPage = new MissingPasswordPage();
+            //MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()

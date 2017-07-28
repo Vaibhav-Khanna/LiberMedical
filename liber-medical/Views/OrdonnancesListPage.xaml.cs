@@ -102,6 +102,10 @@ namespace libermedical.Views
         {
             await Navigation.PushModalAsync(new FilterPage());
         }
+        void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+        {
+            ((ListView)sender).SelectedItem = null;
+        }
 
         async void Add_Clicked(object sender, System.EventArgs e)
         {

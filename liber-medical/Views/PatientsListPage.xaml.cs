@@ -12,7 +12,7 @@ namespace libermedical.Views
         public ObservableCollection<Patient> patients { get; set; }
         private string navigationAfter;
         private string typeDoc;
-        public bool visibility;
+
 
         public PatientsListPage() : base(0, 0)
         {
@@ -229,7 +229,17 @@ namespace libermedical.Views
 
         async void AddUser_Clicked(object sender, System.EventArgs e)
         {
-            await Navigation.PushModalAsync(new NavigationPage(new AddPatient()));
+            //navigation depuis la modal précédente donc en mode navigation
+            if (this.navigationAfter != null)
+            {
+                await Navigation.PushAsync(new AddPatient("navigation"));
+            }
+
+            //navigation direct depuis le tabbedPage on lance la modal
+            else
+            {
+                await Navigation.PushModalAsync(new AddPatient("modal"));
+            }
         }
 
         async void Back_Tapped(object sender, System.EventArgs e)

@@ -39,7 +39,7 @@ namespace libermedical.Views
 
         async void Frequence_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushModalAsync(new OrdonnanceFrequencePage());
+            await Navigation.PushAsync(new OrdonnanceFrequencePage());
         }
 
         async void Cancel_Tapped(object sender, System.EventArgs e)

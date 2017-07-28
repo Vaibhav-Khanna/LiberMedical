@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Views.AddDocument" Style="{StaticResource AppBackgroundColor}">
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:libermedical.Renderers;" 
+    x:Class="libermedical.Views.AddDocument" Style="{StaticResource AppBackgroundColor}">
 	<custom:BasePage.Resources>
 		<ResourceDictionary>
 			<Style x:Key="JoinDocumentLabel" TargetType="Label">
@@ -37,10 +41,10 @@
 				<TableRoot>
 					<TableSection>
 						<ViewCell>
-								<Entry Placeholder="Nom" Keyboard="Text" Style="{StaticResource PatientNameEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+								<local:CustomEntry Placeholder="Nom" Keyboard="Text" Style="{StaticResource PatientNameEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
 						</ViewCell>
 						<ViewCell>
-								<Entry Placeholder="Vendredi 23 Juin" Keyboard="Text" Style="{StaticResource PatientNameEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+								<local:CustomEntry Placeholder="Vendredi 23 Juin" Keyboard="Text" Style="{StaticResource PatientNameEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
 						</ViewCell>
 						<ViewCell>
 							<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
