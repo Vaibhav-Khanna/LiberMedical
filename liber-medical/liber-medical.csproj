@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -8,9 +8,11 @@
     <UseMSBuildEngine>true</UseMSBuildEngine>
     <OutputType>Library</OutputType>
     <RootNamespace>libermedical</RootNamespace>
-    <AssemblyName>liber-medical</AssemblyName>
+    <AssemblyName>libermedical</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,190 +32,110 @@
   <ItemGroup>
     <EmbeddedResource Include="App.xaml" />
     <EmbeddedResource Include="liber-medicalPage.xaml" />
-    <EmbeddedResource Include="Views\LoginPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\MissingPasswordPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\MainTabPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\HomePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\PatientsListPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\OrdonnancesListPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\TeledeclarationsListPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\PlusPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\DetailsPatientListPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\PatientDetailModify.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\AddPatient.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\AddDocument.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\OrdonnanceDetailEditPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\MyAccountPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\SecuriseBillsPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\TeledeclarationSecureActionPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\OrdonnanceDetailPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\WheelPicker.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\OrdonnanceFrequencePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\OrdonnanceFrequence2Page.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\OrdonnanceCotationPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\MyAccountEditPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\TeledeclarationDetailPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\FilterPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\OrdonnanceViewPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Settings.cs" />
     <Compile Include="liber-medicalPage.xaml.cs">
       <DependentUpon>liber-medicalPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CustomControls\BasePage.cs" />
-    <Compile Include="Views\LoginPage.xaml.cs">
-      <DependentUpon>LoginPage.xaml</DependentUpon>
+    <Compile Include="Pages\AddDocumentPage.xaml.cs">
+      <DependentUpon>AddDocumentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MissingPasswordPage.xaml.cs">
-      <DependentUpon>MissingPasswordPage.xaml</DependentUpon>
+    <Compile Include="Pages\AddEditPatientPage.xaml.cs">
+      <DependentUpon>AddEditPatientPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainTabPage.xaml.cs">
-      <DependentUpon>MainTabPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\HomePage.xaml.cs">
-      <DependentUpon>HomePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PatientsListPage.xaml.cs">
-      <DependentUpon>PatientsListPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\OrdonnancesListPage.xaml.cs">
-      <DependentUpon>OrdonnancesListPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TeledeclarationsListPage.xaml.cs">
-      <DependentUpon>TeledeclarationsListPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PlusPage.xaml.cs">
-      <DependentUpon>PlusPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Patient.cs" />
-    <Compile Include="Views\DetailsPatientListPage.xaml.cs">
+    <Compile Include="Pages\DetailsPatientListPage.xaml.cs">
       <DependentUpon>DetailsPatientListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Ordonnance.cs" />
-    <Compile Include="Views\PatientDetailModify.xaml.cs">
-      <DependentUpon>PatientDetailModify.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AddPatient.xaml.cs">
-      <DependentUpon>AddPatient.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AddDocument.xaml.cs">
-      <DependentUpon>AddDocument.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Teledeclaration.cs" />
-    <Compile Include="Views\OrdonnanceDetailEditPage.xaml.cs">
-      <DependentUpon>OrdonnanceDetailEditPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Cotation.cs" />
-    <Compile Include="Views\MyAccountPage.xaml.cs">
-      <DependentUpon>MyAccountPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Document.cs" />
-    <Compile Include="Utility\UtilityClass.cs" />
-    <Compile Include="Views\SecuriseBillsPage.xaml.cs">
-      <DependentUpon>SecuriseBillsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TeledeclarationSecureActionPage.xaml.cs">
-      <DependentUpon>TeledeclarationSecureActionPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\OrdonnanceDetailPage.xaml.cs">
-      <DependentUpon>OrdonnanceDetailPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WheelPicker.xaml.cs">
-      <DependentUpon>WheelPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\OrdonnanceFrequencePage.xaml.cs">
-      <DependentUpon>OrdonnanceFrequencePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\OrdonnanceFrequence2Page.xaml.cs">
-      <DependentUpon>OrdonnanceFrequence2Page.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\OrdonnanceCotationPage.xaml.cs">
-      <DependentUpon>OrdonnanceCotationPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MyAccountEditPage.xaml.cs">
-      <DependentUpon>MyAccountEditPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TeledeclarationDetailPage.xaml.cs">
-      <DependentUpon>TeledeclarationDetailPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FilterPage.xaml.cs">
+    <Compile Include="Pages\FilterPage.xaml.cs">
       <DependentUpon>FilterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\OrdonnanceViewPage.xaml.cs">
+    <Compile Include="Pages\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainTabPage.xaml.cs">
+      <DependentUpon>MainTabPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MissingPasswordPage.xaml.cs">
+      <DependentUpon>MissingPasswordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MyAccountEditPage.xaml.cs">
+      <DependentUpon>MyAccountEditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MyAccountPage.xaml.cs">
+      <DependentUpon>MyAccountPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OrdonnanceCotationPage.xaml.cs">
+      <DependentUpon>OrdonnanceCotationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OrdonnanceDetailEditPage.xaml.cs">
+      <DependentUpon>OrdonnanceDetailEditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OrdonnanceDetailPage.xaml.cs">
+      <DependentUpon>OrdonnanceDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OrdonnanceFrequence2Page.xaml.cs">
+      <DependentUpon>OrdonnanceFrequence2Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OrdonnanceFrequencePage.xaml.cs">
+      <DependentUpon>OrdonnanceFrequencePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OrdonnancesListPage.xaml.cs">
+      <DependentUpon>OrdonnancesListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OrdonnanceViewPage.xaml.cs">
       <DependentUpon>OrdonnanceViewPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PatientDetailModify.xaml.cs">
+      <DependentUpon>PatientDetailModify.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PatientListPage.xaml.cs">
+      <DependentUpon>PatientListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PlusPage.xaml.cs">
+      <DependentUpon>PlusPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SecuriseBillsPage.xaml.cs">
+      <DependentUpon>SecuriseBillsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TeledeclarationDetailPage.xaml.cs">
+      <DependentUpon>TeledeclarationDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TeledeclarationSecureActionPage.xaml.cs">
+      <DependentUpon>TeledeclarationSecureActionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TeledeclarationsListPage.xaml.cs">
+      <DependentUpon>TeledeclarationsListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\WheelPicker.xaml.cs">
+      <DependentUpon>WheelPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CustomControls\BasePage.cs" />
+    <Compile Include="Services\AzureService.cs" />
+    <Compile Include="Services\IAzureService.cs" />
+    <Compile Include="ViewModels\AddDocumentViewModel.cs" />
+    <Compile Include="ViewModels\AddEditPatientViewModel.cs" />
+    <Compile Include="ViewModels\Base\ViewModelBase.cs" />
+    <Compile Include="ViewModels\DetailsPatientListViewModel.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\MainTabViewModel.cs" />
+    <Compile Include="ViewModels\OrdonnanceDetailEditViewModel.cs" />
+    <Compile Include="ViewModels\PatientListViewModel.cs" />
+    <Compile Include="Models\Ordonnance.cs" />
+    <Compile Include="Models\Teledeclaration.cs" />
+    <Compile Include="Models\Cotation.cs" />
+    <Compile Include="Models\Document.cs" />
+    <Compile Include="Utility\UtilityClass.cs" />
     <Compile Include="Renderers\CustomEntry.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Xamarin.Forms.Core">
-      <HintPath>..\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Platform">
-      <HintPath>..\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Xaml">
-      <HintPath>..\packages\Xamarin.Forms.2.3.4.247\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Xaml.dll</HintPath>
-    </Reference>
-    <Reference Include="Plugin.Media.Abstractions">
-      <HintPath>..\packages\Xam.Plugin.Media.3.0.1\lib\netstandard1.0\Plugin.Media.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Plugin.Media">
-      <HintPath>..\packages\Xam.Plugin.Media.3.0.1\lib\netstandard1.0\Plugin.Media.dll</HintPath>
-    </Reference>
     <Reference Include="Vapolia.WheelPickerCore">
       <HintPath>..\packages_external\lib\pcl\Vapolia.WheelPickerCore.dll</HintPath>
     </Reference>
@@ -222,15 +144,130 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CustomControls\" />
-    <Folder Include="Views\" />
-    <Folder Include="Models\" />
-    <Folder Include="Utility\" />
-    <Folder Include="Renderers\" />
+    <None Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\AddDocumentPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\AddEditPatientPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\DetailsPatientListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\FilterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\MainTabPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\MissingPasswordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\MyAccountEditPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\MyAccountPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\OrdonnanceCotationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\OrdonnanceDetailEditPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\OrdonnanceDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\OrdonnanceFrequence2Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\OrdonnanceFrequencePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\OrdonnancesListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\OrdonnanceViewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\PatientDetailModify.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\PatientListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\PlusPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\SecuriseBillsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\TeledeclarationDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\TeledeclarationSecureActionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\TeledeclarationsListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\WheelPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\liber-medical.DTO\liber-medical.DTO.csproj">
+      <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
+      <Name>liber-medical.DTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="..\packages\Fody.2.0.0\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\packages\Fody.2.0.0\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.2.0.0\build\portable-net+sl+win+wpa+wp\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.0.0\build\portable-net+sl+win+wpa+wp\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+    <Error Condition="!Exists('..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
 </Project>

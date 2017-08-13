@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 
 namespace libermedical.Utility
 {
-    public static class UtilityClass
+	public static class UtilityClass
     {
         public static async Task<MediaFile> TakePhoto()
         {

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:wp="clr-namespace:Vapolia.WheelPickerForms;assembly=Vapolia.WheelPickerForms" 
+    x:Class="libermedical.Pages.WheelPicker" Style="{StaticResource AppBackgroundColor}" Title="LiberMedical">
+    <custom:BasePage.ContentPresenter>
+        <ContentView>
+
+        <StackLayout>
+
+          <wp:WheelPicker SelectionLinesColor="Lime"
+                                    HorizontalSpaceBetweenWheels="40" 
+                                     ItemsSourceSimple="{Binding ItemsSource}" 
+                                    SelectedItemsIndex="0,0,0" 
+                                    Command="{Binding ItemSelectedCommand}"
+                                    HorizontalOptions="Fill">
+                                    
+                                    <wp:WheelPicker.WheelDefinitions>
+                                        <wp:WheelDefinition Width="*" HorizontalOptions="Right" />
+                                        <wp:WheelDefinition Width="Auto" HorizontalOptions="Left" />
+                                        <wp:WheelDefinition Width="*" HorizontalOptions="Left" />
+                                    </wp:WheelPicker.WheelDefinitions>
+                                </wp:WheelPicker> 
+         
+         <!--
+         ItemsSourceMulti="{Binding ItemsSource}" 
+                
+        <wp:WheelPicker HorizontalOptions="Fill" SelectedItemsIndex="0"
+                   
+                    Command="{Binding ItemSelectedCommand}">
+            <wp:WheelPicker.WheelDefinitions>
+                <wp:WheelDefinition Width="Auto" HorizontalOptions="Left" Alignment="Center" />
+            </wp:WheelPicker.WheelDefinitions>
+        </wp:WheelPicker> -->
+
+        </StackLayout>        
+        </ContentView>
+    </custom:BasePage.ContentPresenter>
+</custom:BasePage>

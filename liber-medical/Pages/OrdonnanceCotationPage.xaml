@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
+    xmlns:wp="clr-namespace:Vapolia.WheelPickerForms;assembly=Vapolia.WheelPickerForms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="libermedical.Pages.OrdonnanceCotationPage" Style="{StaticResource ModalBackgroundColor}">
+    <custom:BasePage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ButtonCotation" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#d1d1d1" />
+                <Setter Property="WidthRequest" Value="90" />
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="TextColor" Value="#ffffff"/>
+                <Setter Property="Margin" Value="10,10"/>
+            </Style>
+        </ResourceDictionary>
+    </custom:BasePage.Resources>
+
+    <custom:BasePage.Header>
+        <ContentView Style="{StaticResource HeaderFooterBackground}">
+            <Grid Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Cancel_Tapped" />
+                    </Grid.GestureRecognizers>
+                    <Image HorizontalOptions="Center" VerticalOptions="Center" Source="close.png" />
+                </Grid>
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}" Text="Cotations" />
+            </Grid>
+        </ContentView>
+    </custom:BasePage.Header>
+    
+    <custom:BasePage.ContentPresenter>
+        <ContentView Style="{StaticResource ModalContentBackgroundColor}">
+     <!--   <Grid>
+            <Grid.RowDefinitions>
+                 <RowDefinition Height="50*" />
+                 <RowDefinition Height="50*" />
+            </Grid.RowDefinitions> -->
+
+                 <TableView Intent="Data" HasUnevenRows="true"   HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <TableRoot>
+                        <TableSection Title="Sélectionnez votre cotation dans la liste ou choisissez cotation manuelle">
+                            <ViewCell> 
+                                <Grid VerticalOptions="CenterAndExpand" Padding="20,20" Style="{StaticResource ModalContentBackgroundColor}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="33*" />
+                                        <ColumnDefinition Width="33*" />
+                                        <ColumnDefinition Width="33*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60" />
+                                        <RowDefinition Height="60" />
+                                        <RowDefinition Height="60" />
+                                    </Grid.RowDefinitions>
+                                
+                                        <Button Text="1 AMI 1"  Grid.Row="0" Grid.Column="0"  Style="{StaticResource ButtonCotation}" />
+                                        <Button Text="1 AMI 2"  Grid.Row="0" Grid.Column="1"  Style="{StaticResource ButtonCotation}" />
+                                        <Button Text="1 AMI 4" Grid.Row="0" Grid.Column="2"  Style="{StaticResource ButtonCotation}"/>
+                                        <Button Text="1 AMI 1.5"  Grid.Row="1"  Grid.Column="0"  Style="{StaticResource ButtonCotation}"/>
+                                        <Button Text="1 AIS 3"   Grid.Row="1"  Grid.Column="1"  Style="{StaticResource ButtonCotation}"/>
+                                        <Button Text="1 AIS 4"   Grid.Row="1"  Grid.Column="2"  Style="{StaticResource ButtonCotation}" />
+                                        <Button Text="2 AIS 3"   Grid.Row="2"  Grid.Column="0"  Style="{StaticResource ButtonCotation}"/>
+                                        <Button Text="1 AMS 7.5"  Grid.Row="2" Grid.Column="1"  Style="{StaticResource ButtonCotation}"/>
+                                        <Button Text="1 AMS 9.5"  Grid.Row="2" Grid.Column="2"   Style="{StaticResource ButtonCotation}"/>
+                                    
+                                </Grid>
+                         </ViewCell>
+                        </TableSection>
+                         <TableSection >
+                            <SwitchCell Text="Cotation manuelle" Height="40" OnChanged="Handle_OnChanged" x:Name="Switch" On="false"/>
+                            <ViewCell>
+                                <wp:WheelPicker SelectionLinesColor="Navy" HorizontalSpaceBetweenWheels="40"  SelectedItemsIndex="0,0,0" 
+                                    HorizontalOptions="Fill"  x:Name="Picker" IsVisible="true">
+                                    <wp:WheelPicker.WheelDefinitions>
+                                        <wp:WheelDefinition Width="*" HorizontalOptions="Right" />
+                                        <wp:WheelDefinition Width="Auto" HorizontalOptions="Left" />
+                                        <wp:WheelDefinition Width="*" HorizontalOptions="Left" />
+                                    </wp:WheelPicker.WheelDefinitions>
+                                </wp:WheelPicker> 
+                                
+                            </ViewCell> 
+                        </TableSection> 
+                    </TableRoot>
+                </TableView>
+           <!-- </Grid> -->
+        </ContentView>
+    </custom:BasePage.ContentPresenter>
+    <custom:BasePage.Footer>
+        <ContentView Style="{StaticResource HeaderFooterBackground}" IsVisible="false" x:Name="Footer">
+            <Label Text="Ajouter la cotation manuelle" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource FooterLabel}" />
+           <!-- <ContentView.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Bill_Tapped" />
+                    </ContentView.GestureRecognizers> -->
+        </ContentView> 
+    </custom:BasePage.Footer>
+    
+</custom:BasePage>

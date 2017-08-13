@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="libermedical.Pages.OrdonnanceFrequence2Page" Style="{StaticResource AppBackgroundColor}">
+	<custom:BasePage.Header>
+		<ContentView Style="{StaticResource HeaderFooterBackground}">
+			<Grid Padding="5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="80" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="99" />
+				</Grid.ColumnDefinitions>
+				<Grid Grid.Column="0">
+					<Grid.GestureRecognizers>
+						<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Cancel_Tapped" />
+					</Grid.GestureRecognizers>
+					<Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}" Text="Annuler" />
+				</Grid>
+				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3"
+				       Style="{StaticResource HeaderLabel}" Text="Ordonnance" />
+				<Grid Grid.Column="2">
+					<Grid.GestureRecognizers>
+						<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Save_Tapped" />
+					</Grid.GestureRecognizers>
+					<Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}"
+					       Text="Enregistrer" />
+				</Grid>
+			</Grid>
+		</ContentView>
+	</custom:BasePage.Header>
+	<custom:BasePage.ContentPresenter>
+		<ContentView>
+			<TableView Intent="Settings" x:Name="Table">
+				<TableRoot>
+					<TableSection Title="Matin">
+						<TextCell Text="Cotations" Detail="+ Ajouter" DetailColor="#007aff" Tapped="Cotations_Tapped" />
+					</TableSection>
+					<TableSection x:Name="Section">
+						<ViewCell>
+							<Grid Padding="15,0,0,0">
+								<Grid.GestureRecognizers>
+									<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Majoration_Tapped" />
+								</Grid.GestureRecognizers>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="88*" />
+									<ColumnDefinition Width="12*" />
+								</Grid.ColumnDefinitions>
+								<Label Text="Majoration" VerticalOptions="Center" Grid.Column="0" />
+								<Label Text="Non" x:Name="maj" VerticalOptions="Center" Grid.Column="1" />
+
+							</Grid>
+						</ViewCell>
+						<ViewCell Tapped="Deplacement_Tapped" x:Name="Depla">
+							<Grid Padding="15,0,0,0">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="85*" />
+									<ColumnDefinition Width="15*" />
+								</Grid.ColumnDefinitions>
+								<Label Text="Déplacement" VerticalOptions="Center" Grid.Column="0" />
+								<Picker x:Name="picker" Grid.Column="1" Title="Déplacement">
+									<Picker.ItemsSource>
+										<x:Array Type="{x:Type x:String}">
+											<x:String>Non</x:String>
+											<x:String>IFD</x:String>
+											<x:String>IFP</x:String>
+											<x:String>IFO</x:String>
+											<x:String>IFN</x:String>
+											<x:String>IFR</x:String>
+											<x:String>IFS</x:String>
+										</x:Array>
+									</Picker.ItemsSource>
+									<Picker.SelectedIndex>0</Picker.SelectedIndex>
+								</Picker>
+							</Grid>
+						</ViewCell>
+						<SwitchCell Text="Nuit" />
+					</TableSection>
+				</TableRoot>
+			</TableView>
+		</ContentView>
+	</custom:BasePage.ContentPresenter>
+	<custom:BasePage.Footer>
+		<ContentView Style="{StaticResource HeaderFooterBackground}">
+			<Label Text="Enregistrer" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource FooterLabel}" />
+		</ContentView>
+	</custom:BasePage.Footer>
+</custom:BasePage>

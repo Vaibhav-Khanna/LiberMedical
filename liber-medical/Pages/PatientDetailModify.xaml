@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:libermedical.Renderers;" 
+    x:Class="libermedical.Pages.PatientDetailModify" Style="{StaticResource ModalBackgroundColor}">
+    <custom:BasePage.Header>
+        <ContentView Style="{StaticResource HeaderFooterBackground}">
+            <Grid Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="99" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Cancel_Tapped" />
+                    </Grid.GestureRecognizers>
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}" Text="Annuler" />
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Save_Tapped" />
+                    </Grid.GestureRecognizers>
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}" Text="Enregistrer" />
+                </Grid>
+            </Grid>
+        </ContentView>
+    </custom:BasePage.Header>
+    <custom:BasePage.ContentPresenter>
+        <ContentView Padding="20,0,0,10" Style="{StaticResource ModalContentBackgroundColor}">
+            <TableView Intent="Form" HorizontalOptions="FillAndExpand" BackgroundColor="#ffffff">
+            <TableRoot >
+               <TableSection >
+                        <ViewCell  >
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+                               <local:CustomEntry Text="Bill"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+                            </StackLayout>
+                        </ViewCell>
+                        <ViewCell >
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+                                <local:CustomEntry Text="Anderson"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+                            </StackLayout>
+                        </ViewCell>
+                        <ViewCell >
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  >
+                                    <Image Source="delete.png" />
+                                    <Label Text="Portable" Style="{StaticResource PortableNumber}" VerticalOptions="Center"/>
+                                    <Image Source="path_5.png" />    
+                                    <local:CustomEntry Text="+1 (202) 555-0158" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Style="{StaticResource PortableNumberBlack}" Keyboard="Telephone" />
+                            </StackLayout>
+                            </ViewCell> 
+                        <ViewCell>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100" >
+                            <Image Source="add.png"/>
+                                <local:CustomEntry Placeholder="Ajouter un numéro" Style="{StaticResource PhoneNumberEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Telephone" />
+                        </StackLayout>
+                        </ViewCell>
+                            
+                </TableSection>
+            </TableRoot>
+        </TableView>
+        </ContentView>
+    </custom:BasePage.ContentPresenter>
+</custom:BasePage>

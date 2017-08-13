@@ -1,152 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.App">
-    <Application.Resources>
-        <ResourceDictionary>
-            <!-- Application resource dictionary -->
 
-            <Color x:Key="HeaderFooterBackgroundColor">#91c602</Color>
-            <Color x:Key="PurpleyGrey">#9b9b9b</Color>
-            <Color x:Key="PurpleyGrey2">#9f9f9f</Color>
-            <Color x:Key="LightGrey">#d1d1d1</Color>
-            <Color x:Key="GreyBoxViewLine">#c8c7cc</Color>
-            <!-- Global Style -->
-            <Style x:Key="TabbedPage" TargetType="TabbedPage">
-                <Setter Property="BarBackgroundColor" Value="#4a4a4a" />
-               <Setter Property="BarTextColor" Value="{StaticResource HeaderFooterBackgroundColor}" />
-                <Setter Property="BackgroundColor" Value= "#ffffff" />
-            </Style>
-            <Style x:Key="NavigationPage" TargetType="NavigationPage">
-                <Setter Property="BarBackgroundColor" Value="{StaticResource HeaderFooterBackgroundColor}" />
-                <Setter Property="BarTextColor" Value="#ffffff" />
-                <Setter Property="BackgroundColor" Value= "#ffffff" />
-            </Style>
-            <Style x:Key="AppBackgroundColor" TargetType="Page">
-                <Setter Property="BackgroundColor" Value= "#ffffff" />
-            </Style>
-            <Style x:Key="AppBackgroundColorBlack" TargetType="Page">
-                <Setter Property="BackgroundColor" Value= "#000000" />
-            </Style>
-           <Style x:Key="ModalBackgroundColor" TargetType="Page">
-                <Setter Property="BackgroundColor" Value= "#91c602" />
-            </Style>
-            <Style x:Key="ModalContentBackgroundColor" TargetType="Page">
-                <Setter Property="BackgroundColor" Value= "#ffffff" />
-            </Style>
-            <Style x:Key="HeaderFooterBackground" TargetType="View">
-                <Setter Property="BackgroundColor" Value="{StaticResource HeaderFooterBackgroundColor}" />
-            </Style>
-            <Style x:Key="HeaderFooterBackgroundBlack" TargetType="View">
-                <Setter Property="BackgroundColor" Value="#000000" />
-            </Style>
-            <Style x:Key="HeaderLabel" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Semibold.otf" />
-                <Setter Property="FontSize" Value="17" />
-                <Setter Property="TextColor" Value="#ffffff" />
-            </Style>
-            <Style x:Key="HeaderLabelAction" BasedOn="{StaticResource HeaderLabel}" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
-            </Style>
-            <Style x:Key="FooterLabel" BasedOn="{StaticResource HeaderLabel}" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Medium.otf" />
-                <Setter Property="FontSize" Value="18" />
-            </Style>
-            
-            
-            <Style x:Key="LoginPageEntry" TargetType="Entry">
-                <Setter Property="TextColor" Value="#000000" />
-                <Setter Property="PlaceholderColor" Value="{StaticResource PurpleyGrey}" />
-                <Setter Property="FontFamily" Value="SFUIDisplay-Light.otf" />
-                <Setter Property="FontSize" Value="15" />
-            </Style>
-            <Style x:Key="LoginPageButton" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="{StaticResource LightGrey}" />
-                <Setter Property="TextColor" Value="#ffffff" />
-                <Setter Property="FontFamily" Value="SFUIText-Light.otf" />
-                <Setter Property="FontSize" Value="18" />
-            </Style>
-            <Style x:Key="LoginPageForgot" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIDisplay-Light.otf" />
-                <Setter Property="FontSize" Value="14" />
-                <Setter Property="TextColor" Value="{StaticResource PurpleyGrey}" />
-            </Style>
+<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="libermedical.App">
+	<Application.Resources>
+		<ResourceDictionary>
+			<!-- Application resource dictionary -->
 
-            <Style x:Key="NavigationLink" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Semibold.otf" />
-                <Setter Property="FontSize" Value="17" />
-                <Setter Property="TextColor" Value="#ffffff" />
-             </Style>  
-            
-           
-            <Style x:Key="PatientNameTitle" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIDisplay-Regular.otf" />
-                <Setter Property="FontSize" Value="28" />
-                <Setter Property="TextColor" Value="#000000" />
-            </Style>
-            <Style x:Key="PortableTitle" TargetType="Label" BasedOn="{StaticResource PatientNameTitle}">
-                <Setter Property="FontSize" Value="13" />
-            </Style>
-            <Style x:Key="PortableNumber" TargetType="Label" BasedOn="{StaticResource PatientNameTitle}">
-                <Setter Property="FontSize" Value="15" />
-                <Setter Property="TextColor" Value="#007aff" />
-            </Style>
-            <Style x:Key="PortableNumberBlack" TargetType="Entry">
-                <Setter Property="FontFamily" Value="SFUIDisplay-Regular.otf" />
-                <Setter Property="FontSize" Value="15" />
-                <Setter Property="TextColor" Value="#000000" />
-            </Style>
-             <Style x:Key="OrdonnanceDocumentMenu" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIDisplay-Regular.otf" />
-                <Setter Property="FontSize" Value="17" />
-                <Setter Property="TextColor" Value="#4a4a4a" />
-            </Style>
-            <Style x:Key="Ordonnance" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
-                <Setter Property="FontSize" Value="18" />
-                <Setter Property="TextColor" Value="#000000" />
-            </Style>
-            <Style x:Key="OrdonnanceAddDate" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
-                <Setter Property="FontSize" Value="12" />
-                <Setter Property="TextColor" Value="{StaticResource PurpleyGrey}" />
-            </Style>
-            <Style x:Key="PatientNameEntry" TargetType="Entry">
-               <Setter Property="FontFamily" Value="SFUIText-Regular.otf" /> 
-                <Setter Property="FontSize" Value="18" />
-                <Setter Property="TextColor" Value="#4a4a4a" />
-            </Style>
-            <Style x:Key="PhoneNumberEntry" TargetType="Entry" BasedOn="{StaticResource PatientNameEntry}">               
-                <Setter Property="FontSize" Value="15" />
-            </Style>
-            <Style x:Key="BackgroundResearch" TargetType="View">
-                <Setter Property="BackgroundColor" Value="#c8c7cc" />
-            </Style>
-            <Style x:Key="ResearchBar" TargetType="SearchBar">
-                <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
-                <Setter Property="TextColor" Value="#8a8a8f" />
-                <Setter Property="FontSize" Value="14" />
-            </Style>
-            <Style x:Key="PlusList" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
-                <Setter Property="TextColor" Value="{StaticResource PurpleyGrey2}" />
-                <Setter Property="FontSize" Value="18" />
-            </Style>
-            <Style x:Key="TeledeclarationActionAsk" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Semibold.otf" />
-                <Setter Property="TextColor" Value="#4a4a4a" />
-                <Setter Property="FontSize" Value="20" />
-            </Style>
-            <Style x:Key="TeledeclarationCancelAction" TargetType="Label">
-                <Setter Property="FontFamily" Value="SFUIText-Semibold.otf" />
-                <Setter Property="TextColor" Value="#fb001e" />
-                <Setter Property="FontSize" Value="18" />
-            </Style>
-            <Style x:Key="TeledeclarationSendAction" BasedOn="{StaticResource TeledeclarationCancelAction}" TargetType="Label">
-                <Setter Property="TextColor" Value="#91c602" />
-            </Style>
-            <Style x:Key="Button" TargetType="Button">
-                <Setter Property="TextColor" Value="#ffffff" />
-            </Style>
-            
-        </ResourceDictionary>
-    </Application.Resources>
+			<Color x:Key="HeaderFooterBackgroundColor">#91c602</Color>
+			<Color x:Key="PurpleyGrey">#9b9b9b</Color>
+			<Color x:Key="PurpleyGrey2">#9f9f9f</Color>
+			<Color x:Key="LightGrey">#d1d1d1</Color>
+			<Color x:Key="GreyBoxViewLine">#c8c7cc</Color>
+			<!-- Global Style -->
+			<Style x:Key="TabbedPage" TargetType="TabbedPage">
+				<Setter Property="BarBackgroundColor" Value="#4a4a4a" />
+				<Setter Property="BarTextColor" Value="{StaticResource HeaderFooterBackgroundColor}" />
+				<Setter Property="BackgroundColor" Value="#ffffff" />
+			</Style>
+			<Style x:Key="NavigationPage" TargetType="NavigationPage">
+				<Setter Property="BarBackgroundColor" Value="{StaticResource HeaderFooterBackgroundColor}" />
+				<Setter Property="BarTextColor" Value="#ffffff" />
+				<Setter Property="BackgroundColor" Value="#ffffff" />
+			</Style>
+			<Style x:Key="AppBackgroundColor" TargetType="Page">
+				<Setter Property="BackgroundColor" Value="#ffffff" />
+			</Style>
+			<Style x:Key="AppBackgroundColorBlack" TargetType="Page">
+				<Setter Property="BackgroundColor" Value="#000000" />
+			</Style>
+			<Style x:Key="ModalBackgroundColor" TargetType="Page">
+				<Setter Property="BackgroundColor" Value="#91c602" />
+			</Style>
+			<Style x:Key="ModalContentBackgroundColor" TargetType="Page">
+				<Setter Property="BackgroundColor" Value="#ffffff" />
+			</Style>
+			<Style x:Key="HeaderFooterBackground" TargetType="View">
+				<Setter Property="BackgroundColor" Value="{StaticResource HeaderFooterBackgroundColor}" />
+			</Style>
+			<Style x:Key="HeaderFooterBackgroundBlack" TargetType="View">
+				<Setter Property="BackgroundColor" Value="#000000" />
+			</Style>
+			<Style x:Key="HeaderLabel" TargetType="Label">
+				<Setter Property="FontFamily" Value="SFUIText-Semibold.otf" />
+				<Setter Property="FontSize" Value="17" />
+				<Setter Property="TextColor" Value="#ffffff" />
+			</Style>
+			<Style x:Key="HeaderLabelAction" BasedOn="{StaticResource HeaderLabel}" TargetType="Label">
+				<Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
+			</Style>
+			<Style x:Key="FooterLabel" BasedOn="{StaticResource HeaderLabel}" TargetType="Label">
+				<Setter Property="FontFamily" Value="SFUIText-Medium.otf" />
+				<Setter Property="FontSize" Value="18" />
+			</Style>
+
+
+			<Style x:Key="LoginPageEntry" TargetType="Entry">
+				<Setter Property="TextColor" Value="#000000" />
+				<Setter Property="PlaceholderColor" Value="{StaticResource PurpleyGrey}" />
+				<Setter Property="FontFamily" Value="SFUIDisplay-Light.otf" />
+				<Setter Property="FontSize" Value="15" />
+			</Style>
+			<Style x:Key="LoginPageButton" TargetType="Button">
+				<Setter Property="BackgroundColor" Value="{StaticResource LightGrey}" />
+				<Setter Property="TextColor" Value="#ffffff" />
+				<Setter Property="FontFamily" Value="SFUIText-Light.otf" />
+				<Setter Property="FontSize" Value="18" />
+			</Style>
+			<Style x:Key="LoginPageForgot" TargetType="Label">
+				<Setter Property="FontFamily" Value="SFUIDisplay-Light.otf" />
+				<Setter Property="FontSize" Value="14" />
+				<Setter Property="TextColor" Value="{StaticResource PurpleyGrey}" />
+			</Style>
+
+			<Style x:Key="NavigationLink" TargetType="Label">
+				<Setter Property="FontFamily" Value="SFUIText-Semibold.otf" />
+				<Setter Property="FontSize" Value="17" />
+				<Setter Property="TextColor" Value="#ffffff" />
+			</Style>
+
+
+			<Style x:Key="PatientNameTitle" TargetType="Label">
+				<Setter Property="FontFamily" Value="SFUIDisplay-Regular.otf" />
+				<Setter Property="FontSize" Value="28" />
+				<Setter Property="TextColor" Value="#000000" />
+			</Style>
+			<Style x:Key="PortableTitle" TargetType="Label" BasedOn="{StaticResource PatientNameTitle}">
+				<Setter Property="FontSize" Value="13" />
+			</Style>
+			<Style x:Key="PortableNumber" TargetType="Label" BasedOn="{StaticResource PatientNameTitle}">
+				<Setter Property="FontSize" Value="15" />
+				<Setter Property="TextColor" Value="#007aff" />
+			</Style>
+			<Style x:Key="PortableNumberBlack" TargetType="Entry">
+				<Setter Property="FontFamily" Value="SFUIDisplay-Regular.otf" />
+				<Setter Property="FontSize" Value="15" />
+				<Setter Property="TextColor" Value="#000000" />
+			</Style>
+			<Style x:Key="OrdonnanceDocumentMenu" TargetType="Label">
+				<Setter Property="FontFamily" Value="SFUIDisplay-Regular.otf" />
+				<Setter Property="FontSize" Value="17" />
+				<Setter Property="TextColor" Value="#4a4a4a" />
+			</Style>
+			<Style x:Key="Ordonnance" TargetType="Label">
+				<Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
+				<Setter Property="FontSize" Value="18" />
+				<Setter Property="TextColor" Value="#000000" />
+			</Style>
+			<Style x:Key="OrdonnanceAddDate" TargetType="Label">
+				<Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
+				<Setter Property="FontSize" Value="12" />
+				<Setter Property="TextColor" Value="{StaticResource PurpleyGrey}" />
+			</Style>
+			<Style x:Key="PatientNameEntry" TargetType="Entry">
+				<Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
+				<Setter Property="FontSize" Value="18" />
+				<Setter Property="TextColor" Value="#4a4a4a" />
+			</Style>
+			<Style x:Key="PhoneNumberEntry" TargetType="Entry" BasedOn="{StaticResource PatientNameEntry}">
+				<Setter Property="FontSize" Value="15" />
+			</Style>
+			<Style x:Key="BackgroundResearch" TargetType="View">
+				<Setter Property="BackgroundColor" Value="#c8c7cc" />
+			</Style>
+			<Style x:Key="ResearchBar" TargetType="SearchBar">
+				<Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
+				<Setter Property="TextColor" Value="#8a8a8f" />
+				<Setter Property="FontSize" Value="14" />
+			</Style>
+			<Style x:Key="PlusList" TargetType="Label">
+				<Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
+				<Setter Property="TextColor" Value="{StaticResource PurpleyGrey2}" />
+				<Setter Property="FontSize" Value="18" />
+			</Style>
+			<Style x:Key="TeledeclarationActionAsk" TargetType="Label">
+				<Setter Property="FontFamily" Value="SFUIText-Semibold.otf" />
+				<Setter Property="TextColor" Value="#4a4a4a" />
+				<Setter Property="FontSize" Value="20" />
+			</Style>
+			<Style x:Key="TeledeclarationCancelAction" TargetType="Label">
+				<Setter Property="FontFamily" Value="SFUIText-Semibold.otf" />
+				<Setter Property="TextColor" Value="#fb001e" />
+				<Setter Property="FontSize" Value="18" />
+			</Style>
+			<Style x:Key="TeledeclarationSendAction" BasedOn="{StaticResource TeledeclarationCancelAction}" TargetType="Label">
+				<Setter Property="TextColor" Value="#91c602" />
+			</Style>
+			<Style x:Key="Button" TargetType="Button">
+				<Setter Property="TextColor" Value="#ffffff" />
+			</Style>
+			<Style
+				x:Key="StandartListViewStyle"
+				TargetType="{x:Type ListView}">
+				<Setter Property="IsPullToRefreshEnabled" Value="True" />
+				<Setter Property="IsRefreshing" Value="{Binding IsRefreshing}" />
+				<Setter Property="HasUnevenRows" Value="False" />
+				<Setter Property="RefreshCommand" Value="{Binding RefreshCommand}" />
+				<Setter Property="ItemsSource" Value="{Binding ItemsSource}" />
+				<Setter Property="IsVisible" Value="{Binding HasItems}" />
+			</Style>
+		</ResourceDictionary>
+	</Application.Resources>
 </Application>

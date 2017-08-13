@@ -1,7 +1,9 @@
 ﻿using System;
+using libermedical.DTO.Models;
+
 namespace libermedical.Models
 {
-    public class Document
+	public class Document
     {
 
         public int Reference { set; get; }

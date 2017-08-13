@@ -1,4 +1,6 @@
 ﻿using System;
+using libermedical.DTO.Models;
+
 namespace libermedical.Models
 {
     public class Ordonnance
