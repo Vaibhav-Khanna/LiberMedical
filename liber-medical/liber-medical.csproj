@@ -309,16 +309,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\TeledeclarationsListPage.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\WheelPicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\liber-medical.DTO\liber-medical.DTO.csproj">
-      <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
+      <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
       <Name>liber-medical.DTO</Name>
     </ProjectReference>
   </ItemGroup>
