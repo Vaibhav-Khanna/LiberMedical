@@ -18,7 +18,7 @@ namespace libermedical.Services
 	{
 
 		public MobileServiceClient Client { get; set; }
-		IMobileServiceSyncTable<TModel> coffeeTable;
+		IMobileServiceSyncTable<TModel> EntityTable;
 		public static bool UseAuth { get; set; } = false;
 
 		public async Task Initialize()
@@ -27,7 +27,7 @@ namespace libermedical.Services
 				return;
 
 
-			var appUrl = "https://YOUR-BACKEND-URL-HERE.azurewebsites.net";
+			var appUrl = "http://libermedical-test.azurewebsites.net/";
 
 #if AUTH
             Client = new MobileServiceClient(appUrl, new AuthHandler());
@@ -64,7 +64,7 @@ namespace libermedical.Services
 				Debug.WriteLine(e.Message);
 			}
 			//Get our sync table that will call out to azure
-			coffeeTable = Client.GetSyncTable<TModel>();
+			EntityTable = Client.GetSyncTable<TModel>();
 
 
 		}
@@ -76,7 +76,7 @@ namespace libermedical.Services
 				if (!CrossConnectivity.Current.IsConnected)
 					return;
 
-				await coffeeTable.PullAsync("allCoffee", coffeeTable.CreateQuery());
+				await EntityTable.PullAsync("allCoffee", EntityTable.CreateQuery());
 
 				await Client.SyncContext.PushAsync();
 			}
@@ -93,7 +93,7 @@ namespace libermedical.Services
 			await Initialize();
 			await SyncTables();
 
-			return await coffeeTable.OrderBy(c => c.CreatedAt).ToEnumerableAsync();
+			return await EntityTable.OrderBy(c => c.CreatedAt).ToEnumerableAsync();
 		}
 
 		public async Task<TModel> AddAsync(TModel unit)
@@ -101,7 +101,7 @@ namespace libermedical.Services
 			await Initialize();
 
 			unit.CreatedAt = DateTime.UtcNow;
-			await coffeeTable.InsertAsync(unit);
+			await EntityTable.InsertAsync(unit);
 
 			await SyncTables();
 			return unit;

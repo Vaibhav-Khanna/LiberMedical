@@ -1,11 +1,11 @@
-﻿using Microsoft.WindowsAzure.Mobile.Service;
+﻿using Microsoft.Azure.Mobile.Server;
 
-namespace liber_medical.Server.DataObjects
+namespace libermedical.Server.DataObjects
 {
-	public class TodoItem : EntityData
-	{
-		public string Text { get; set; }
+    public class TodoItem : EntityData
+    {
+        public string Text { get; set; }
 
-		public bool Complete { get; set; }
-	}
+        public bool Complete { get; set; }
+    }
 }
