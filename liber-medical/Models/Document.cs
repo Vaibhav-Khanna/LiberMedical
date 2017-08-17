@@ -1,5 +1,5 @@
 ﻿using System;
-using libermedical.DTO.Models;
+using libermedical.Models;
 
 namespace libermedical.Models
 {

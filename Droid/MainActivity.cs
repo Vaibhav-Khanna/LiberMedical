@@ -6,7 +6,7 @@ using Android.OS;
 namespace libermedical.Droid
 {
 	[Activity(Label = "liber-medical.Droid", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
@@ -15,10 +15,7 @@ namespace libermedical.Droid
 
             base.OnCreate(bundle);
             Vapolia.WheelPickerForms.Droid.WheelPickerRenderer.InitializeForms();
-            global::Xamarin.Forms.Forms.Init(this, bundle);
-
-
-	        Microsoft.WindowsAzure.MobileServices.CurrentPlatform.Init();
+            Xamarin.Forms.Forms.Init(this, bundle);
 
 			LoadApplication(new App());
         }

@@ -1,9 +1,8 @@
 ﻿using System;
-using libermedical.DTO.Models;
 
 namespace libermedical.Models
 {
-    public class Ordonnance
+	public class Ordonnance:BaseDTO
     {
 
         public int Reference { set; get; }

@@ -1,4 +1,4 @@
-﻿namespace libermedical.DTO.Requests
+﻿namespace libermedical.Requests
 {
 	public class LoginRequest
 	{

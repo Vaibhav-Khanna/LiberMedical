@@ -71,7 +71,7 @@ namespace libermedical.Helpers
 		{
 			get
 			{
-//				if (!AzureService.UseAuth)
+//				if (!StorageService.UseAuth)
 					return true;
 
 				return !string.IsNullOrWhiteSpace(UserId);

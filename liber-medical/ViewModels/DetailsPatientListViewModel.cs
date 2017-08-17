@@ -1,5 +1,5 @@
 ﻿using FreshMvvm;
-using libermedical.DTO.Models;
+using libermedical.Models;
 
 namespace libermedical.ViewModels
 {

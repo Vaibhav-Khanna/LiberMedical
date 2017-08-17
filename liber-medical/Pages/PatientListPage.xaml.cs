@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using libermedical.DTO.Models;
+using libermedical.Models;
 using libermedical.ViewModels;
 using Xamarin.Forms;
 
@@ -22,11 +22,6 @@ namespace libermedical.Pages
 			InitializeComponent();
 		}
 
-		async void AddUser_Clicked(object sender, System.EventArgs e)
-		{
-			
-		}
-
 		async void Back_Tapped(object sender, System.EventArgs e)
 		{
 			await Navigation.PopModalAsync();
@@ -37,7 +32,7 @@ namespace libermedical.Pages
 			var vm = (PatientListViewModel)BindingContext;
 			var cell = (TextCell)sender;
 			if (cell == null) return;
-			vm.PatientTapCommand.Execute(cell);
+			vm.ListElementTapCommand.Execute(cell);
 		}
 
 		void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
