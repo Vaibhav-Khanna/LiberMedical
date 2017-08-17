@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Input;
 using FreshMvvm;
-using libermedical.DTO.Models;
+using libermedical.Models;
 using libermedical.Services;
 using Xamarin.Forms;
 

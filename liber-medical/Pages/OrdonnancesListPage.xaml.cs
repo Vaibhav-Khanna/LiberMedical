@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using libermedical.CustomControls;
-using libermedical.DTO.Models;
 using libermedical.Models;
 using libermedical.Pages;
 using libermedical.Utility;

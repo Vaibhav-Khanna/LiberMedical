@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using libermedical.DTO.Models;
+using libermedical.Models;
 using libermedical.Services;
 using libermedical.ViewModels.Base;
 using Xamarin.Forms;

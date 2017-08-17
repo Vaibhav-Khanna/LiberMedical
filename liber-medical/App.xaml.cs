@@ -1,5 +1,5 @@
 ﻿using FreshMvvm;
-using libermedical.DTO.Models;
+using libermedical.Models;
 using libermedical.Services;
 using libermedical.ViewModels;
 using Xamarin.Forms;

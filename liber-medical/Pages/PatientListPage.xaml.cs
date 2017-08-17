@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using libermedical.DTO.Models;
+using libermedical.Models;
 using libermedical.ViewModels;
 using Xamarin.Forms;
 
@@ -20,11 +20,6 @@ namespace libermedical.Pages
 		public PatientListPage(string navigationType, string typeDoc) : base(-1, 0, false)
 		{
 			InitializeComponent();
-		}
-
-		async void AddUser_Clicked(object sender, System.EventArgs e)
-		{
-			
 		}
 
 		async void Back_Tapped(object sender, System.EventArgs e)
