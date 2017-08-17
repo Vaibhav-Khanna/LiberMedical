@@ -5,7 +5,7 @@ using libermedical.Models;
 
 namespace libermedical.Services
 {
-	public class AzureService<TModel> : IAzureService<TModel> where TModel : BaseDTO, new()
+	public class StorageService<TModel> : IStorageService<TModel> where TModel : BaseDTO, new()
 	{
 		public Task<TModel> AddAsync(TModel unit)
 		{

@@ -1,4 +1,4 @@
-﻿using libermedical.Models;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace libermedical.Models
@@ -9,6 +9,8 @@ namespace libermedical.Models
 		public string FirstName { set; get; }
 
 		public string LastName { set; get; }
+
+		public List<PhoneNumber> PhoneNumbers { get; set; }
 
 		[JsonIgnore]
 		public string FullName => this.ToString();

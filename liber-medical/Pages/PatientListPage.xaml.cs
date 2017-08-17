@@ -32,7 +32,7 @@ namespace libermedical.Pages
 			var vm = (PatientListViewModel)BindingContext;
 			var cell = (TextCell)sender;
 			if (cell == null) return;
-			vm.PatientTapCommand.Execute(cell);
+			vm.ListElementTapCommand.Execute(cell);
 		}
 
 		void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)

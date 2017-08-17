@@ -11,7 +11,8 @@ namespace libermedical
 		public App()
 		{
 			InitializeComponent();
-			FreshIOC.Container.Register<IAzureService<Patient>, AzureService<Patient>>();
+			FreshIOC.Container.Register<IStorageService<Patient>, StorageService<Patient>>();
+			FreshIOC.Container.Register<IStorageService<Ordonnance>, StorageService<Ordonnance>>();
 			//MainPage = new NavigationPage(new WheelPicker());
 			//MainPage = new NavigationPage(new OrdonnanceCotationPage());
 
@@ -20,19 +21,18 @@ namespace libermedical
 
 			var tabbedNavigation = new FreshTabbedNavigationContainer();
 			tabbedNavigation.Style = Resources["TabbedPage"] as Style;
-
-			tabbedNavigation.AddTab<HomeViewModel>("", "home_green.png", null);
-			tabbedNavigation.AddTab<PatientListViewModel>("", "patients.png", null);
-			tabbedNavigation.AddTab<DetailsPatientListViewModel>("", "ordonnances.png", null);
-			tabbedNavigation.AddTab<PatientListViewModel>("", "teledeclaration.png", null);
-			tabbedNavigation.AddTab<PatientListViewModel>("", "plus_tabbed.png", null);
+//
+			tabbedNavigation.AddTab<HomeViewModel>("", "home_green.png");
+			tabbedNavigation.AddTab<PatientListViewModel>("", "patients.png");
+			tabbedNavigation.AddTab<OrdonnancesListViewModel>("", "ordonnances.png");
+			tabbedNavigation.AddTab<TeledeclarationsListViewModel>("", "teledeclaration.png");
+			tabbedNavigation.AddTab<PlusViewModel>("", "plus_tabbed.png");
 
 			foreach (var tabbedNavigationTabbedPage in tabbedNavigation.TabbedPages)
 			{
 				tabbedNavigationTabbedPage.Style = Resources["NavigationPage"] as Style;
 			}
 			MainPage = tabbedNavigation;
-
 			//			MainPage = new NavigationPage(new LoginPage());
 		}
 

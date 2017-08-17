@@ -10,12 +10,12 @@ namespace libermedical.ViewModels
 {
 	public class AddEditPatientViewModel:FreshBasePageModel
 	{
-		private readonly IAzureService<Patient> _azureService;
+		private readonly IStorageService<Patient> _storageService;
 		public Patient PatientProperty { get; set; }
 
-		public AddEditPatientViewModel(IAzureService<Patient> azureService)
+		public AddEditPatientViewModel(IStorageService<Patient> storageService)
 		{
-			_azureService = azureService;
+			_storageService = storageService;
 		}
 
 		public override void Init(object initData)
@@ -35,7 +35,7 @@ namespace libermedical.ViewModels
 		{
 			try
 			{
-				await _azureService.AddAsync(PatientProperty);
+				await _storageService.AddAsync(PatientProperty);
 			}
 			catch (Exception e)
 			{

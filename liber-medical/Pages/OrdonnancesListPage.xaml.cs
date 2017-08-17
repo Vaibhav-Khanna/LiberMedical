@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using libermedical.CustomControls;
 using libermedical.Models;
-using libermedical.Pages;
 using libermedical.Utility;
 using Plugin.Media;
 using Xamarin.Forms;

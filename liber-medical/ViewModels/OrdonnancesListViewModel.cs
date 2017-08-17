@@ -6,11 +6,9 @@ using Xamarin.Forms;
 
 namespace libermedical.ViewModels
 {
-	public class PatientListViewModel : ListViewModelBase<Patient>
+	public class OrdonnancesListViewModel : ListViewModelBase<Ordonnance>
 	{
-		//IDatabaseService _databaseService;
-
-		public PatientListViewModel(IStorageService<Patient> storageService):base(storageService)
+		public OrdonnancesListViewModel(IStorageService<Ordonnance> storageService) : base(storageService)
 		{
 		}
 

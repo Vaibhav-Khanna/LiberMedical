@@ -4,7 +4,7 @@ using libermedical.Models;
 
 namespace libermedical.Services
 {
-	public interface IAzureService<T> where T:BaseDTO
+	public interface IStorageService<T> where T:BaseDTO
 	{
 		Task<T> AddAsync(T unit);
 		Task<IEnumerable<T>> GetList();
