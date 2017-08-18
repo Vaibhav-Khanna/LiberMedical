@@ -42,7 +42,7 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
-    <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
+    <PlatformTarget>x86</PlatformTarget>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
@@ -82,14 +82,6 @@
     <IOSDebugOverWiFi>false</IOSDebugOverWiFi>
     <MtouchExtraArgs>-v -v -v</MtouchExtraArgs>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'iOS Release|AnyCPU' ">
-    <Optimize>false</Optimize>
-    <OutputPath>bin\iOS Release</OutputPath>
-    <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer</CodesignKey>
-    <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
-    <AssemblyName>liber-medical.iOS</AssemblyName>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'iOS Release|iPhone' ">
     <Optimize>false</Optimize>
     <OutputPath>bin\iPhone\iOS Release</OutputPath>
@@ -100,6 +92,17 @@
     <MtouchFloat32>true</MtouchFloat32>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
+    <AssemblyName>liber-medical.iOS</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'iOS Release|AnyCPU' ">
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iOS Release</OutputPath>
+    <DefineConstants></DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
+    <MtouchLink>SdkOnly</MtouchLink>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <AssemblyName>liber-medical.iOS</AssemblyName>
   </PropertyGroup>

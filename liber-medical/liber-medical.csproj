@@ -29,13 +29,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'iOS Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'iOS Release|iPhone' ">
     <Optimize>true</Optimize>
     <OutputPath>bin\iOS Release</OutputPath>
-    <WarningLevel>4</WarningLevel>
     <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'iOS Release|iPhone' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'iOS Release|AnyCPU' ">
     <Optimize>true</Optimize>
     <OutputPath>bin\iOS Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
