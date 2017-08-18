@@ -46,6 +46,12 @@
     <OutputPath>bin\iOS Release</OutputPath>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'iOS Release|iPhone' ">
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\iOS Release</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <AndroidSupportedAbis>arm64-v8a;armeabi;armeabi-v7a;x86</AndroidSupportedAbis>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FreshIOC">
       <HintPath>..\packages\FreshMvvm.2.2.0\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\FreshIOC.dll</HintPath>

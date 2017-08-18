@@ -90,6 +90,19 @@
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
     <AssemblyName>liber-medical.iOS</AssemblyName>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'iOS Release|iPhone' ">
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\iOS Release</OutputPath>
+    <DefineConstants></DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
+    <MtouchFloat32>true</MtouchFloat32>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
+    <AssemblyName>liber-medical.iOS</AssemblyName>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FreshIOC, Version=1.0.6071.17008, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FreshMvvm.2.2.0\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\FreshIOC.dll</HintPath>

@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'iOS Release|iPhone' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iOS Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml" />
     <EmbeddedResource Include="liber-medicalPage.xaml" />
