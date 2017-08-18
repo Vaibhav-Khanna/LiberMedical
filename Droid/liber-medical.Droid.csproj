@@ -45,7 +45,6 @@
     <Optimize>false</Optimize>
     <OutputPath>bin\iOS Release</OutputPath>
     <WarningLevel>4</WarningLevel>
-    <AndroidSupportedAbis>arm64-v8a;armeabi;armeabi-v7a;x86</AndroidSupportedAbis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FreshIOC">

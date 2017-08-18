@@ -85,7 +85,6 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'iOS Release|AnyCPU' ">
     <Optimize>false</Optimize>
     <OutputPath>bin\iOS Release</OutputPath>
-    <DefineConstants></DefineConstants>
     <WarningLevel>4</WarningLevel>
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
