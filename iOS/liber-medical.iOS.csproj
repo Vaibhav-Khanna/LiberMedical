@@ -83,12 +83,13 @@
     <MtouchExtraArgs>-v -v -v</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'iOS Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\iOS_Release</OutputPath>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iOS Release</OutputPath>
+    <DefineConstants></DefineConstants>
     <WarningLevel>4</WarningLevel>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <MtouchArch>ARMv7, ARM64</MtouchArch>
-    <PlatformTarget>x86</PlatformTarget>
+    <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
+    <AssemblyName>liber-medical.iOS</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FreshIOC, Version=1.0.6071.17008, Culture=neutral, processorArchitecture=MSIL">
