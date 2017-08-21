@@ -27,7 +27,7 @@
             <OnPlatform x:TypeArguments="x:String" iOS="Ordonnances" Android="" />
         </NavigationPage.Title>
         <x:Arguments>
-            <local:OrdonnancesListPage />
+            <page:OrdonnancesListPage />
         </x:Arguments>
     </NavigationPage>
     <NavigationPage Icon="teledeclaration.png" Style="{StaticResource NavigationPage}" >
