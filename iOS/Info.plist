@@ -33,8 +33,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>XSAppIconAssets</key>
-	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Cette app requiere l&apos;accès à l&apos;apareil photo</string>
 	<key>NSPhotoLibraryUsageDescription</key>
