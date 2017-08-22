@@ -15,11 +15,6 @@ namespace libermedical.ViewModels
         public PatientListViewModel(IStorageService<Patient> storageService) : base(storageService)
         {
             _patientsStorage = storageService;
-            BindData();
-        }
-        private async void BindData()
-        {
-            ItemsSource = new ObservableCollection<Patient>(await _patientsStorage.GetList());
         }
 
         protected override async Task TapCommandFunc(Cell cell)
