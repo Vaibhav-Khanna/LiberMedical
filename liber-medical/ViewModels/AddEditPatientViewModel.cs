@@ -41,7 +41,7 @@ namespace libermedical.ViewModels
 			{
 				Debug.WriteLine(e.Message);
 			}
-			await CoreMethods.PopPageModel(true);
+			await CoreMethods.PopPageModel(PatientProperty);
 
 		});
 	}

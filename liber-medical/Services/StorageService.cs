@@ -14,6 +14,8 @@ namespace libermedical.Services
             try
             {
                 item.Id = DateTime.Now.Ticks.ToString();
+                item.CreatedAt = DateTimeOffset.Now;
+                item.UpdatedAt = DateTimeOffset.Now;
                 await BlobCache.UserAccount.InsertObject(item.Id, item);
                 return item;
             }
