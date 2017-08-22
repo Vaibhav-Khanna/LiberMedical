@@ -8,9 +8,10 @@ namespace libermedical.ViewModels
 {
 	public class PatientListViewModel : ListViewModelBase<Patient>
 	{
-		//IDatabaseService _databaseService;
+        //IDatabaseService _databaseService;
 
-		public PatientListViewModel(IStorageService<Patient> storageService):base(storageService)
+        public string ParentScreen { get; set; }
+        public PatientListViewModel(IStorageService<Patient> storageService):base(storageService)
 		{
 		}
 

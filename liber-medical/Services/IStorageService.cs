@@ -9,5 +9,8 @@ namespace libermedical.Services
 		Task<T> AddAsync(T unit);
 		Task<IEnumerable<T>> GetList();
 		Task SyncTables();
-	}
+        Task<T> GetItemAsync(string key);
+        Task<bool> DeleteItemAsync(string key);
+        Task<bool> DeleteAllAsync();
+    }
 }

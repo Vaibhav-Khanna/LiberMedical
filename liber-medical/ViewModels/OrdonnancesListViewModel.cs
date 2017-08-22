@@ -6,16 +6,25 @@ using libermedical.Utility;
 using libermedical.ViewModels.Base;
 using Plugin.Media;
 using Xamarin.Forms;
+using System.Collections.ObjectModel;
 
 namespace libermedical.ViewModels
 {
 	public class OrdonnancesListViewModel : ListViewModelBase<Ordonnance>
 	{
-		public OrdonnancesListViewModel(IStorageService<Ordonnance> storageService) : base(storageService)
+        private IStorageService<Ordonnance> _ordonnanceStorage;
+        public ObservableCollection<Ordonnance> Ordonnances { get; set; }
+        public OrdonnancesListViewModel(IStorageService<Ordonnance> storageService) : base(storageService)
 		{
+            _ordonnanceStorage = storageService;
+            BindData();
 		}
 
-		protected override async Task TapCommandFunc(Cell cell)
+        private async void BindData()
+        {
+            Ordonnances = new ObservableCollection<Ordonnance>(await _ordonnanceStorage.GetList());
+        }
+        protected override async Task TapCommandFunc(Cell cell)
 		{
 			var ctx = cell.BindingContext;
 			await CoreMethods.PushPageModelWithNewNavigation<DetailsPatientListViewModel>(ctx);
@@ -47,11 +56,9 @@ namespace libermedical.ViewModels
 
 						if (action == "Ordonnance rapide") { typeNavigation = "fast"; }
 						if (action == "Ordonnance classique") { typeNavigation = "normal"; }
+                        await CoreMethods.PushPageModelWithNewNavigation<PatientListViewModel>("AddOrdonnance",true);
 
-                        //await CoreMethods.PushPageModel<PatientListPage>(new NavigationPage(new PatientListPage(typeNavigation, typeDoc)),true);
-                       // await CoreMethods.PushPageModelWithNewNavigation<PatientListPage>(null, true);
-
-					}
+                    }
 				}
 				else
 				{

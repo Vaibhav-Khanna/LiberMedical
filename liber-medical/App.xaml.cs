@@ -1,4 +1,5 @@
-﻿using FreshMvvm;
+﻿using Akavache;
+using FreshMvvm;
 using libermedical.Models;
 using libermedical.Services;
 using libermedical.ViewModels;
@@ -7,11 +8,12 @@ using Xamarin.Forms;
 namespace libermedical
 {
 	public partial class App : Application
-	{
+	{        
 		public App()
 		{
 			InitializeComponent();
-			FreshIOC.Container.Register<IStorageService<Patient>, StorageService<Patient>>();
+            BlobCache.ApplicationName = "LiberMedical";
+            FreshIOC.Container.Register<IStorageService<Patient>, StorageService<Patient>>();
 			FreshIOC.Container.Register<IStorageService<Ordonnance>, StorageService<Ordonnance>>();
 			//MainPage = new NavigationPage(new WheelPicker());
 			//MainPage = new NavigationPage(new OrdonnanceCotationPage());
@@ -50,5 +52,7 @@ namespace libermedical
 		{
 			// Handle when your app resumes
 		}
+
+        
 	}
 }
