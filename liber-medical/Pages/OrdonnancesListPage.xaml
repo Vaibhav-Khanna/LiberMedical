@@ -24,7 +24,7 @@
 
            <ScrollView Grid.Row="1" >
                     <StackLayout  Padding="20,0,0,0">
-                        <ListView x:Name="listView"  IsPullToRefreshEnabled="true" ItemsSource="{Binding ordonnances}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected" >
+                        <ListView x:Name="listView"  IsPullToRefreshEnabled="true" ItemsSource="{Binding Ordonnances}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected" >
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell Tapped="Handle_Tapped">
