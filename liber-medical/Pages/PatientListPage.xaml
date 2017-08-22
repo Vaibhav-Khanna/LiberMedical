@@ -47,7 +47,7 @@
 
 				<ListView x:Name="PatientListView" 
 						  SeparatorVisibility="Default" 
-						  Grid.Row="1"
+						  Grid.Row="1" IsRefreshing="{Binding IsRefreshing,Mode=TwoWay}"
 						  Style="{StaticResource StandartListViewStyle}"
 				          ItemSelected="Handle_ItemSelected">
 					<ListView.ItemTemplate>

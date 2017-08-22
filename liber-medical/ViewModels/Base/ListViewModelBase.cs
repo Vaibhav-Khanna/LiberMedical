@@ -29,7 +29,7 @@ namespace libermedical.ViewModels.Base
 		public ICommand RefreshCommand => new Command(async () =>
 		{
 			IsRefreshing = true;
-			await GetDataAsync();
+			await GetDataAsync().ConfigureAwait(false);
 			IsRefreshing = false;
 		});
 
@@ -43,8 +43,8 @@ namespace libermedical.ViewModels.Base
 		{
 			ItemsSource.Clear();
 			var observableCollection = await _storageService.GetList();
-			foreach (var _ in observableCollection)
-				ItemsSource.Add(_);
+			foreach (var item in observableCollection)
+				ItemsSource.Add(item);
 		}
 
 		protected abstract Task TapCommandFunc(Cell cell);

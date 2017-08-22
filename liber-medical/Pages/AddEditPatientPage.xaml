@@ -34,12 +34,12 @@
 					<TableSection >
 						<ViewCell  >
 							<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
-								<local:CustomEntry Text="{Binding PatientProperty.FirstName, Mode=TwoWay}"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+								<local:CustomEntry Text="{Binding PatientProperty.FirstName, Mode=TwoWay}" Placeholder="First Name" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
 							</StackLayout>
 						</ViewCell>
 						<ViewCell >
 							<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
-								<local:CustomEntry Text="{Binding PatientProperty.LastName, Mode=TwoWay}"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+								<local:CustomEntry Text="{Binding PatientProperty.LastName, Mode=TwoWay}" Placeholder="Last Name"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
 							</StackLayout>
 						</ViewCell>
 						<ViewCell >
