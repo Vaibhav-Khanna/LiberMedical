@@ -5,58 +5,60 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  x:Class="libermedical.Pages.PatientListPage"
                  Style="{StaticResource ModalBackgroundColor}">
-<custom:BasePage.ToolbarItems>
-	<ToolbarItem  Order="Primary" Icon="plus.png" Command="{Binding AddUserCommand}"/>
-</custom:BasePage.ToolbarItems>
-	<custom:BasePage.Header>
-		<ContentView Style="{StaticResource HeaderFooterBackground}">
-			<Grid Padding="5">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="40" />
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="50" />
-				</Grid.ColumnDefinitions>
-				<Grid Grid.Column="0">
-					<Grid.GestureRecognizers>
-						<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
-					</Grid.GestureRecognizers>
-					<Image HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center" />
-				</Grid>
+  <custom:BasePage.ToolbarItems>
+    <ToolbarItem  Order="Primary" Icon="plus.png" Command="{Binding AddUserCommand}"/>
+  </custom:BasePage.ToolbarItems>
+  <custom:BasePage.Header>
+    <ContentView Style="{StaticResource HeaderFooterBackground}">
+      <Grid Padding="5">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="40" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="50" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+          <Grid.GestureRecognizers>
+            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
+          </Grid.GestureRecognizers>
+          <Image HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center" />
+        </Grid>
 
-				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3"
+        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3"
 				       Style="{StaticResource HeaderLabel}" Text="Patients" />
-					<Button Grid.Column="2" Image="plus.png" VerticalOptions="Center" Command="{Binding AddCommand}"/>
-			</Grid>
-		</ContentView>
-	</custom:BasePage.Header>
+        <Button Grid.Column="2" Image="plus.png" VerticalOptions="Center" Command="{Binding AddCommand}"/>
+      </Grid>
+    </ContentView>
+  </custom:BasePage.Header>
 
-	<custom:BasePage.ContentPresenter>
-		<ContentView Style="{StaticResource ModalContentBackgroundColor}">
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="50" />
-					<RowDefinition Height="*" />
-				</Grid.RowDefinitions>
+  <custom:BasePage.ContentPresenter>
+    <ContentView Style="{StaticResource ModalContentBackgroundColor}">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="50" />
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-				<StackLayout BackgroundColor="#c8c7cc" Grid.Row="0" Padding="8,7" HorizontalOptions="FillAndExpand"
+        <StackLayout BackgroundColor="#c8c7cc" Grid.Row="0" Padding="8,7" HorizontalOptions="FillAndExpand"
 				             Style="{StaticResource BackgroundResearch}">
-					<SearchBar Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand"
+          <SearchBar Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand"
 					           HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" />
-				</StackLayout>
+        </StackLayout>
 
 
-				<ListView x:Name="PatientListView" 
-						  SeparatorVisibility="Default" 
-						  Grid.Row="1" IsRefreshing="{Binding IsRefreshing,Mode=TwoWay}"
-						  Style="{StaticResource StandartListViewStyle}"
+        <ListView x:Name="PatientListView"
+						      SeparatorVisibility="Default"
+                  IsPullToRefreshEnabled="True"
+						      Grid.Row="1"
+                  IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
+						      Style="{StaticResource StandartListViewStyle}"
 				          ItemSelected="Handle_ItemSelected">
-					<ListView.ItemTemplate>
-						<DataTemplate>
-							<TextCell Text="{Binding FullName}" TextColor="Black" Tapped="PatientTapped" />
-						</DataTemplate>
-					</ListView.ItemTemplate>
-				</ListView>
-			</Grid>
-		</ContentView>
-	</custom:BasePage.ContentPresenter>
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <TextCell Text="{Binding FullName}" TextColor="Black" Tapped="PatientTapped" />
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </Grid>
+    </ContentView>
+  </custom:BasePage.ContentPresenter>
 </custom:BasePage>

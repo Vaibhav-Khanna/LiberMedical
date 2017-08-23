@@ -29,6 +29,7 @@
 	</custom:BasePage.Header>
 	<custom:BasePage.ContentPresenter>
 		<ContentView Padding="20,0,0,10" Style="{StaticResource ModalContentBackgroundColor}">
+      <StackLayout Spacing="0">
 			<TableView Intent="Form" HorizontalOptions="FillAndExpand" BackgroundColor="#ffffff">
 				<TableRoot >
 					<TableSection >
@@ -42,7 +43,7 @@
 								<local:CustomEntry Text="{Binding PatientProperty.LastName, Mode=TwoWay}" Placeholder="Last Name"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
 							</StackLayout>
 						</ViewCell>
-						<ViewCell >
+						<!--<ViewCell >
 							<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  >
 								<Image Source="delete.png" />
 								<Label Text="Portable" Style="{StaticResource PortableNumber}" VerticalOptions="Center"/>
@@ -55,11 +56,35 @@
 								<Image Source="add.png"/>
 								<local:CustomEntry Placeholder="Ajouter un numéro" Style="{StaticResource PhoneNumberEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Telephone" />
 							</StackLayout>
-						</ViewCell>
+						</ViewCell>-->
 
 					</TableSection>
 				</TableRoot>
 			</TableView>
+      <ListView ItemsSource="{Binding PatientProperty.PhoneNumbers}"
+                 SeparatorVisibility="Default"
+                 Style="{StaticResource StandartListViewStyle}">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <ViewCell.ContextActions>
+                <MenuItem Command="{Binding AddPhoneCommand}" CommandParameter="{Binding .}"
+                   Text="Delete" />
+              </ViewCell.ContextActions>
+              <StackLayout>
+                <Label Text="{Binding Number}" TextColor="Black" />
+              </StackLayout>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+        <ListView.Footer>
+          <StackLayout>
+            <Entry Text="{Binding PhoneNo}" Placeholder="Enter phone no" />
+            <Button Text="Add" Command="{Binding AddPhoneCommand}"></Button>
+          </StackLayout>
+        </ListView.Footer>
+      </ListView>
+      </StackLayout>
 		</ContentView>
 	</custom:BasePage.ContentPresenter>
 </custom:BasePage>

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using libermedical.Models;
@@ -36,7 +37,6 @@ namespace libermedical.ViewModels.Base
 		public override async void Init(object initData)
 		{
 			base.Init(initData);
-			await GetDataAsync();
 		}
 
 		protected virtual async Task GetDataAsync()
@@ -47,6 +47,12 @@ namespace libermedical.ViewModels.Base
 				ItemsSource.Add(item);
 		}
 
-		protected abstract Task TapCommandFunc(Cell cell);
+        protected override async void ViewIsAppearing(object sender, EventArgs e)
+        {
+            base.ViewIsAppearing(sender, e);
+            await GetDataAsync();
+        }
+
+        protected abstract Task TapCommandFunc(Cell cell);
 	}
 }
