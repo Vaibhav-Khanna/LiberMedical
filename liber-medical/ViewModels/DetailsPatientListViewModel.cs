@@ -18,7 +18,7 @@ namespace libermedical.ViewModels
             get
             {
                 return new Command(async () => {
-                    await CoreMethods.PushPageModel<DetailsPatientListViewModel>(Patient);
+                    await CoreMethods.PushPageModel<AddEditPatientViewModel>(Patient);
                 });
             }
         }

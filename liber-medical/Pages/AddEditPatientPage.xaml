@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
-                 xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
-                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                 xmlns:local="clr-namespace:libermedical.Renderers;"
-                 x:Class="libermedical.Pages.AddEditPatientPage" Style="{StaticResource ModalBackgroundColor}">
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:libermedical.Renderers;" x:Class="libermedical.Pages.AddEditPatientPage" Style="{StaticResource ModalBackgroundColor}" x:Name="Root">
 	<custom:BasePage.Header>
 		<ContentView Style="{StaticResource HeaderFooterBackground}">
 			<Grid Padding="5">
@@ -29,62 +25,53 @@
 	</custom:BasePage.Header>
 	<custom:BasePage.ContentPresenter>
 		<ContentView Padding="20,0,0,10" Style="{StaticResource ModalContentBackgroundColor}">
-      <StackLayout Spacing="0">
-			<TableView Intent="Form" HorizontalOptions="FillAndExpand" BackgroundColor="#ffffff">
-				<TableRoot >
-					<TableSection >
-						<ViewCell  >
-							<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
-								<local:CustomEntry Text="{Binding PatientProperty.FirstName, Mode=TwoWay}" Placeholder="First Name" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
-							</StackLayout>
+			<StackLayout Spacing="0">
+				<TableView Intent="Form" HorizontalOptions="FillAndExpand" BackgroundColor="#ffffff" HeightRequest="250">
+					<TableRoot>
+						<TableSection>
+							<ViewCell>
+								<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+									<local:CustomEntry Text="{Binding PatientProperty.FirstName, Mode=TwoWay}" Placeholder="First Name" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+								</StackLayout>
+							</ViewCell>
+							<ViewCell>
+								<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+									<local:CustomEntry Text="{Binding PatientProperty.LastName, Mode=TwoWay}" Placeholder="Last Name" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+								</StackLayout>
+							</ViewCell>
+							<ViewCell >
+							<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100">
+							<Image Source="add.png" Margin="10,10,10,10">
+								<Image.GestureRecognizers>
+									<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddPhoneCommand}" />
+								</Image.GestureRecognizers>
+							</Image>
+							<local:CustomEntry Text="{Binding PhoneNo}" Placeholder="Ajouter un numéro" Style="{StaticResource PhoneNumberEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Telephone" />
+						</StackLayout>
 						</ViewCell>
-						<ViewCell >
-							<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
-								<local:CustomEntry Text="{Binding PatientProperty.LastName, Mode=TwoWay}" Placeholder="Last Name"  HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
-							</StackLayout>
-						</ViewCell>
-						<!--<ViewCell >
-							<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  >
-								<Image Source="delete.png" />
-								<Label Text="Portable" Style="{StaticResource PortableNumber}" VerticalOptions="Center"/>
-								<Image Source="path_5.png" />
-								<local:CustomEntry Text="+1 (202) 555-0158" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Style="{StaticResource PortableNumberBlack}" Keyboard="Telephone" />
-							</StackLayout>
-						</ViewCell>
-						<ViewCell>
-							<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100" >
-								<Image Source="add.png"/>
-								<local:CustomEntry Placeholder="Ajouter un numéro" Style="{StaticResource PhoneNumberEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Telephone" />
-							</StackLayout>
-						</ViewCell>-->
-
-					</TableSection>
-				</TableRoot>
-			</TableView>
-      <ListView ItemsSource="{Binding PatientProperty.PhoneNumbers}"
-                 SeparatorVisibility="Default"
-                 Style="{StaticResource StandartListViewStyle}">
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <ViewCell>
-              <ViewCell.ContextActions>
-                <MenuItem Command="{Binding AddPhoneCommand}" CommandParameter="{Binding .}"
-                   Text="Delete" />
-              </ViewCell.ContextActions>
-              <StackLayout>
-                <Label Text="{Binding Number}" TextColor="Black" />
-              </StackLayout>
-            </ViewCell>
-          </DataTemplate>
-        </ListView.ItemTemplate>
-        <ListView.Footer>
-          <StackLayout>
-            <Entry Text="{Binding PhoneNo}" Placeholder="Enter phone no" />
-            <Button Text="Add" Command="{Binding AddPhoneCommand}"></Button>
-          </StackLayout>
-        </ListView.Footer>
-      </ListView>
-      </StackLayout>
+						</TableSection>
+					</TableRoot>
+				</TableView>
+				<ListView ItemsSource="{Binding Phones}" SeparatorVisibility="None" IsPullToRefreshEnabled="false" Style="{StaticResource StandartListViewStyle}">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+									<Image Source="delete.png" Margin="10,10,10,10">
+										<Image.GestureRecognizers>
+											<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding DeletePhoneCommand,}" CommandParameter="{Binding .}"/>
+										</Image.GestureRecognizers>
+									</Image>
+									<Label Text="{Binding Number}" Style="{StaticResource PortableNumber}" VerticalOptions="Center" />
+								</StackLayout>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+					<ListView.Footer>
+						
+					</ListView.Footer>
+				</ListView>
+			</StackLayout>
 		</ContentView>
 	</custom:BasePage.ContentPresenter>
 </custom:BasePage>
