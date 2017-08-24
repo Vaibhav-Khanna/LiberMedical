@@ -3,6 +3,7 @@ using libermedical.Services;
 using libermedical.ViewModels.Base;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -17,6 +18,29 @@ namespace libermedical.ViewModels
             _patientsStorage = storageService;
         }
 
+        private string _searchString;
+        public string SearchString
+        {
+            get { return _searchString; }
+            set
+            {
+                _searchString = value;
+                FilterItems(_searchString);
+                RaisePropertyChanged();
+            }
+        }
+
+        private async void FilterItems(string searchString)
+        {
+            if(!string.IsNullOrEmpty(searchString))
+            {
+                ItemsSource = new ObservableCollection<Patient>(ItemsSource.Where(x => x.FullName.StartsWith(SearchString, StringComparison.OrdinalIgnoreCase)));
+            }
+            else
+            {
+                await GetDataAsync();
+            }
+        }
         protected override async Task TapCommandFunc(Cell cell)
         {
             var ctx = cell.BindingContext;

@@ -22,7 +22,7 @@
 				       Style="{StaticResource HeaderLabel}" Text="Patient" />
 				<Grid Grid.Column="2">
 					<Grid.GestureRecognizers>
-						<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Edit_Tapped" />
+						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding EditPatient}" />
 					</Grid.GestureRecognizers>
 					<Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}"
 					       Text="Editer" />
@@ -43,7 +43,7 @@
 					       Style="{StaticResource PatientNameTitle}" />
 					<Label Margin="0,0,0,0" Text="portable" HorizontalOptions="Center" VerticalOptions="Fill"
 					       Style="{StaticResource PortableTitle}" />
-					<Label Margin="0,0,0,21" Text="+1 (202) 555-0158" HorizontalOptions="Center" VerticalOptions="Fill"
+					<Label Margin="0,0,0,21" Text="{Binding Patient.PhoneNumbers[0].Number}" HorizontalOptions="Center" VerticalOptions="Fill"
 					       Style="{StaticResource PortableNumber}" />
 				</StackLayout>
 				<StackLayout Grid.Row="1" Padding="40,10">

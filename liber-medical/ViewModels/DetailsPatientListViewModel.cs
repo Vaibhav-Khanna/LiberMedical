@@ -1,5 +1,6 @@
 ﻿using FreshMvvm;
 using libermedical.Models;
+using Xamarin.Forms;
 
 namespace libermedical.ViewModels
 {
@@ -11,5 +12,15 @@ namespace libermedical.ViewModels
 			base.Init(initData);
 			this.Patient = (Patient) initData;
 		}
-	}
+
+        public Command EditPatient
+        {
+            get
+            {
+                return new Command(async () => {
+                    await CoreMethods.PushPageModel<AddEditPatientViewModel>(Patient);
+                });
+            }
+        }
+    }
 }
