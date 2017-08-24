@@ -40,7 +40,7 @@
 
         <StackLayout BackgroundColor="#c8c7cc" Grid.Row="0" Padding="8,7" HorizontalOptions="FillAndExpand"
 				             Style="{StaticResource BackgroundResearch}">
-          <SearchBar Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand"
+          <SearchBar Placeholder="Rechercher" Text="{Binding SearchString, Mode=TwoWay}" BackgroundColor="White" VerticalOptions="FillAndExpand"
 					           HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" />
         </StackLayout>
 

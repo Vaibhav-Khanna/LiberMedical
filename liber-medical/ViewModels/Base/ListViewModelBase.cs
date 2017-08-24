@@ -18,11 +18,20 @@ namespace libermedical.ViewModels.Base
 			ItemsSource = new ObservableCollection<TModel>();
 		}
 
+        private bool _isRefreshing;
+		public bool IsRefreshing 
+        {
+            get { return _isRefreshing; }
+            set { _isRefreshing = value; RaisePropertyChanged(); }
+        }
 
-		public bool IsRefreshing { get; set; }
-		public ObservableCollection<TModel> ItemsSource { get; set; }
-
-		public ICommand ListElementTapCommand => new Command<Cell>(async cell => await TapCommandFunc(cell));
+        private ObservableCollection<TModel> _itemsSource;
+        public ObservableCollection<TModel> ItemsSource
+        {
+            get { return _itemsSource; }
+            set { _itemsSource = value; RaisePropertyChanged(); }
+        }
+        public ICommand ListElementTapCommand => new Command<Cell>(async cell => await TapCommandFunc(cell));
 
 		public ICommand AddUserCommand => new Command(
 			async () => await CoreMethods.PushPageModelWithNewNavigation<AddEditPatientViewModel>(null));

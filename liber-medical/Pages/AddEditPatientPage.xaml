@@ -59,9 +59,10 @@
 								<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 									<Image Source="delete.png" Margin="10,10,10,10">
 										<Image.GestureRecognizers>
-											<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding DeletePhoneCommand,}" CommandParameter="{Binding .}"/>
+											<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Path=BindingContext.DeletePhoneCommand, Source={x:Reference Name=Root}}" CommandParameter="{Binding .}"/>
 										</Image.GestureRecognizers>
 									</Image>
+                  <Image Source="path_5.png" />
 									<Label Text="{Binding Number}" Style="{StaticResource PortableNumber}" VerticalOptions="Center" />
 								</StackLayout>
 							</ViewCell>
