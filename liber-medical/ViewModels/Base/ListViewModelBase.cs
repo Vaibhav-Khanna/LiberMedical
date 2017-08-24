@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using libermedical.Models;
@@ -17,11 +18,20 @@ namespace libermedical.ViewModels.Base
 			ItemsSource = new ObservableCollection<TModel>();
 		}
 
+        private bool _isRefreshing;
+		public bool IsRefreshing 
+        {
+            get { return _isRefreshing; }
+            set { _isRefreshing = value; RaisePropertyChanged(); }
+        }
 
-		public bool IsRefreshing { get; set; }
-		public ObservableCollection<TModel> ItemsSource { get; set; }
-
-		public ICommand ListElementTapCommand => new Command<Cell>(async cell => await TapCommandFunc(cell));
+        private ObservableCollection<TModel> _itemsSource;
+        public ObservableCollection<TModel> ItemsSource
+        {
+            get { return _itemsSource; }
+            set { _itemsSource = value; RaisePropertyChanged(); }
+        }
+        public ICommand ListElementTapCommand => new Command<Cell>(async cell => await TapCommandFunc(cell));
 
 		public ICommand AddUserCommand => new Command(
 			async () => await CoreMethods.PushPageModelWithNewNavigation<AddEditPatientViewModel>(null));
@@ -29,24 +39,29 @@ namespace libermedical.ViewModels.Base
 		public ICommand RefreshCommand => new Command(async () =>
 		{
 			IsRefreshing = true;
-			await GetDataAsync();
+			await GetDataAsync().ConfigureAwait(false);
 			IsRefreshing = false;
 		});
 
 		public override async void Init(object initData)
 		{
 			base.Init(initData);
-			await GetDataAsync();
 		}
 
 		protected virtual async Task GetDataAsync()
 		{
 			ItemsSource.Clear();
 			var observableCollection = await _storageService.GetList();
-			foreach (var _ in observableCollection)
-				ItemsSource.Add(_);
+			foreach (var item in observableCollection)
+				ItemsSource.Add(item);
 		}
 
-		protected abstract Task TapCommandFunc(Cell cell);
+        protected override async void ViewIsAppearing(object sender, EventArgs e)
+        {
+            base.ViewIsAppearing(sender, e);
+            await GetDataAsync();
+        }
+
+        protected abstract Task TapCommandFunc(Cell cell);
 	}
 }
