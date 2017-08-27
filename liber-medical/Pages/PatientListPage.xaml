@@ -23,7 +23,7 @@
 		</ContentView>
 	</custom:BasePage.Header>
 	<custom:BasePage.ContentPresenter>
-		<ContentView Style="{StaticResource ModalContentBackgroundColor}" Padding="0,0,0,0">
+		<ContentView Style="{StaticResource ModalContentBackgroundColor}">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="50" />

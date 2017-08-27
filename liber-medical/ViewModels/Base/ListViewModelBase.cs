@@ -7,6 +7,7 @@ using libermedical.Services;
 using Xamarin.Forms;
 using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace libermedical.ViewModels.Base
 {
@@ -92,7 +93,7 @@ namespace libermedical.ViewModels.Base
 			}
 			catch (Exception ex)
 			{
-
+				Debug.WriteLine(ex.Message);
 			}
 		}
 

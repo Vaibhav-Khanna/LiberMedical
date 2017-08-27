@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using System.Diagnostics;
 
 namespace libermedical.ViewModels
 {
@@ -65,7 +66,7 @@ namespace libermedical.ViewModels
 			}
 			catch (Exception ex)
 			{
-
+				Debug.WriteLine(ex.Message);
 			}
 
 		}

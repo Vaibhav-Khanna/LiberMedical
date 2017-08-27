@@ -83,9 +83,5 @@ namespace libermedical.Pages
                 }
             }
         }
-        async void AssistTapped(object sender, EventArgs e)
-        {
-            
-        }
     }
 }
