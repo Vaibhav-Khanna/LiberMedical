@@ -85,7 +85,7 @@ namespace libermedical.Pages
         }
         async void AssistTapped(object sender, EventArgs e)
         {
-            var action = await DisplayActionSheet(null, "Annuler", null, "Appel vocal", "E-mail", "SMS");
+            
         }
     }
 }
