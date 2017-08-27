@@ -1,14 +1,13 @@
-﻿using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
-using Android.Text;
+﻿using libermedical.Droid.Renderers;
 using libermedical.Renderers;
-using libermedical.Droid.Renderers;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(CustomEntry), typeof(CustomEntryRenderer))]
+[assembly: ExportRenderer(typeof(BorderlessEntry), typeof(CustomEntryRenderer))]
 
 namespace libermedical.Droid.Renderers
 {
-    public class CustomEntryRenderer : EntryRenderer
+	public class CustomEntryRenderer : EntryRenderer
     {
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {

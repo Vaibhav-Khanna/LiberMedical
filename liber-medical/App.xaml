@@ -10,8 +10,12 @@
 			<Color x:Key="PurpleyGrey">#9b9b9b</Color>
 			<Color x:Key="PurpleyGrey2">#9f9f9f</Color>
 			<Color x:Key="LightGrey">#d1d1d1</Color>
-			<Color x:Key="GreyBoxViewLine">#c8c7cc</Color>
 			<!-- Global Style -->
+			<Style x:Key="GreyBoxViewLine" TargetType="BoxView">
+				<Setter Property="Color" Value="#c8c7cc"/>
+				<Setter Property="HeightRequest" Value="1"/>
+				<Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+			</Style>
 			<Style x:Key="TabbedPage" TargetType="TabbedPage">
 				<Setter Property="BarBackgroundColor" Value="#4a4a4a" />
 				<Setter Property="BarTextColor" Value="{StaticResource HeaderFooterBackgroundColor}" />

@@ -1,5 +1,7 @@
-﻿using Akavache;
+﻿using System;
+using Akavache;
 using FreshMvvm;
+using libermedical.Helpers;
 using libermedical.Models;
 using libermedical.Services;
 using libermedical.ViewModels;
@@ -20,10 +22,9 @@ namespace libermedical
 
 			//			            MainPage = new MainTabPage();
 
-
-			var tabbedNavigation = new FreshTabbedNavigationContainer();
-			tabbedNavigation.Style = Resources["TabbedPage"] as Style;
-//
+			if(Settings.CurrentUser == null)
+				Settings.CurrentUser = new Profile {CreatedAt = DateTimeOffset.Now, FirstName = "Turanga", LastName = "Leela", EmailAddress = "leela@planetexpress.com", PhoneNumber = "+1 (217) 314-15-92"};
+			var tabbedNavigation = new FreshTabbedNavigationContainer{Style = Resources["TabbedPage"] as Style};
 			tabbedNavigation.AddTab<HomeViewModel>("", "home_green.png");
 			tabbedNavigation.AddTab<PatientListViewModel>("", "patients.png");
 			tabbedNavigation.AddTab<OrdonnancesListViewModel>("", "ordonnances.png");

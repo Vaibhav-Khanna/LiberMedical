@@ -1,64 +1,88 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
-    xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.MyAccountEditPage" 
-    Style="{StaticResource ModalBackgroundColor}" Title="Mon Compte">
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<custom:BasePage
+  x:Class="libermedical.Pages.MyAccountEditPage"
+  xmlns="http://xamarin.com/schemas/2014/forms"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
+  xmlns:renderers="clr-namespace:libermedical.Renderers;assembly=libermedical"
+  Title="Mon Compte"
+  Style="{StaticResource ModalBackgroundColor}">
+	<custom:BasePage.Resources>
+		<ResourceDictionary>
+			<Style x:Key="EntryStyle" TargetType="Entry">
+				<Setter Property="HorizontalOptions" Value="FillAndExpand" />
+				<Setter Property="Margin" Value="15,0,0,0" />
+			</Style>
+		</ResourceDictionary>
+	</custom:BasePage.Resources>
+	<custom:BasePage.Header>
+		<ContentView Style="{StaticResource HeaderFooterBackground}">
+			<Grid Padding="5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
 
-<custom:BasePage.Header>
-        <ContentView Style="{StaticResource HeaderFooterBackground}">
-            <Grid Padding="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="90" />
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" >
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
-                    </Grid.GestureRecognizers>
-                <Image  HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center" />
-                </Grid>    
-               
-                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderLabel}" Text="Mon compte" />
-                <Grid Grid.Column="2" >
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Save_Tapped" />
-                    </Grid.GestureRecognizers>
-                <Label HorizontalOptions="Center" VerticalOptions="Center"  Style="{StaticResource HeaderLabelAction}" Text="Enregistrer" />
-                </Grid>
-            </Grid>
-        </ContentView>
-    </custom:BasePage.Header>
+				<Label
+				  Grid.Column="0"
+				  HorizontalOptions="Center"
+				  Style="{StaticResource HeaderLabelAction}"
+				  Text="Cancel"
+				  VerticalOptions="Center">
+					<View.GestureRecognizers>
+						<TapGestureRecognizer Command="{Binding NavBackCommand}" />
+					</View.GestureRecognizers>
+				</Label>
+				<Grid Grid.Column="2">
+					<Label
+					  HorizontalOptions="Center"
+					  Style="{StaticResource HeaderLabelAction}"
+					  Text="Save"
+					  VerticalOptions="Center">
+						<View.GestureRecognizers>
+							<TapGestureRecognizer Command="{Binding SaveCommand}" />
+						</View.GestureRecognizers>
+					</Label>
+				</Grid>
+			</Grid>
+		</ContentView>
+	</custom:BasePage.Header>
 
-    <custom:BasePage.ContentPresenter>
-        <ContentView Padding="15,0,0,0" Style="{StaticResource ModalContentBackgroundColor}">
-           
-                <TableView Intent="Data" RowHeight="60" >
-                    <TableRoot>
-                        <TableSection>
-                        <EntryCell Text="Lola" />
-                        <EntryCell Text="Powell" />
-                        <EntryCell Text="mt89@hotmail.fr" />                        
-                        <ViewCell >
-                                <StackLayout Orientation="Horizontal" Padding="0,0,21,0">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="10*" />
-                                            <ColumnDefinition Width="88*" />
-                                            <ColumnDefinition Width="13" />
-                                        </Grid.ColumnDefinitions>
-                                        <Image Source="contrat.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Grid.Column="0" /> 
-                                        <Label Text="Mon contrat" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Grid.Column="1" Style="{StaticResource PlusList}" />
-                                        <Image Source="back_arrow_green.png" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Grid.Column="2" />
-                                    </Grid>
-                                </StackLayout>
-                            </ViewCell>
-                        </TableSection>
-                    </TableRoot>
-                </TableView>
-               
-           
-        </ContentView>
-    </custom:BasePage.ContentPresenter>
-</custom:BasePage>    
-    
+	<custom:BasePage.ContentPresenter>
+	  <ContentView>
+		<AbsoluteLayout HorizontalOptions="FillAndExpand"
+		                 VerticalOptions="FillAndExpand">
+		  <ContentView x:Name="actIndBackground"
+		               BackgroundColor="#222222" Opacity="0.5"
+		               AbsoluteLayout.LayoutFlags="All"
+		               AbsoluteLayout.LayoutBounds="0,0,1,1"
+		               IsVisible="True">
+			</ContentView>
+			<ActivityIndicator x:Name="actInd"
+			                   AbsoluteLayout.LayoutFlags="PositionProportional"
+			                   AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
+			                   IsRunning="{Binding IsLoading}"
+			                   IsVisible="True" />
+			<TableView Intent="Data" RowHeight="50">
+				<TableRoot>
+					<TableSection>
+						<ViewCell>
+							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" Text="{Binding CurrentUser.FirstName}" />
+						</ViewCell>
+						<ViewCell>
+							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" Text="{Binding CurrentUser.LastName}" />
+						</ViewCell>
+						<ViewCell>
+							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" Text="{Binding CurrentUser.EmailAddress}" />
+						</ViewCell>
+						<ViewCell>
+							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" Text="{Binding CurrentUser.PhoneNumber}" />
+						</ViewCell>
+					</TableSection>
+				</TableRoot>
+			  </TableView>
+		</AbsoluteLayout>
+	  </ContentView>
+	</custom:BasePage.ContentPresenter>
+</custom:BasePage>

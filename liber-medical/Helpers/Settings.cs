@@ -1,4 +1,5 @@
 using System;
+using libermedical.Models;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 
@@ -77,5 +78,7 @@ namespace libermedical.Helpers
 				return !string.IsNullOrWhiteSpace(UserId);
 			}
 		}
+
+		public static Profile CurrentUser { get; set; }
 	}
 }

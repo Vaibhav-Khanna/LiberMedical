@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using libermedical.CustomControls;
-using Xamarin.Forms;
+﻿using libermedical.CustomControls;
 
 namespace libermedical.Pages
 {
-    public partial class MyAccountPage : BasePage
+	public partial class MyAccountPage : BasePage
     {
         public MyAccountPage() : base(-1, 0, false)
         {
