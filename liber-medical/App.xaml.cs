@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Akavache;
 using FreshMvvm;
 using libermedical.Helpers;
@@ -22,8 +23,10 @@ namespace libermedical
 
 			//			            MainPage = new MainTabPage();
 
-			if(Settings.CurrentUser == null)
-				Settings.CurrentUser = new Profile {CreatedAt = DateTimeOffset.Now, FirstName = "Turanga", LastName = "Leela", EmailAddress = "leela@planetexpress.com", PhoneNumber = "+1 (217) 314-15-92"};
+
+			MessagingCenter.Subscribe<MyAccountEditViewModel>(this, "ProfileUpdate", UpdateProfile);
+			if (Settings.CurrentUser == null)
+				Settings.CurrentUser = new Profile {CreatedAt = DateTimeOffset.Now, LastName = "Turanga", FirstName = "Leela", EmailAddress = "leela@planetexpress.com", PhoneNumber = "+1 (217) 314-15-92"};
 			var tabbedNavigation = new FreshTabbedNavigationContainer{Style = Resources["TabbedPage"] as Style};
 			tabbedNavigation.AddTab<HomeViewModel>("", "home_green.png");
 			tabbedNavigation.AddTab<PatientListViewModel>("", "patients.png");
@@ -54,6 +57,17 @@ namespace libermedical
 			// Handle when your app resumes
 		}
 
-        
+		private Task updateProfile;
+
+		public void UpdateProfile(MyAccountEditViewModel myAccountEditViewModel)
+		{
+			updateProfile = UpdateProfileAsync();
+		}
+
+		private Task UpdateProfileAsync()
+		{
+			//TODO: Send new profile from Settings to server.
+			return null;
+		}
 	}
 }

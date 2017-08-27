@@ -158,6 +158,7 @@
     <Compile Include="Utility\UtilityClass.cs" />
     <Compile Include="Renderers\BorderlessEntry.cs" />
     <Compile Include="ViewModels\PlusViewModel.cs" />
+    <Compile Include="Models\Profile.cs" />
     <Compile Include="ViewModels\TeledeclarationsListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
