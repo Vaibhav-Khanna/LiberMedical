@@ -13,15 +13,14 @@ namespace libermedical.Helpers
 	{
 		private static ISettings AppSettings
 		{
-			get
-			{
-				return CrossSettings.Current;
-			}
+			get { return CrossSettings.Current; }
 		}
 
-		#region Setting Constants
+        #region Setting Constants
 
-		const string LastSyncKey = "last_sync";
+	    private static readonly string stringDefault = string.Empty;
+
+        const string LastSyncKey = "last_sync";
 		static readonly DateTime LastSyncDefault = DateTime.Now.AddDays(-30);
 
 
@@ -40,31 +39,23 @@ namespace libermedical.Helpers
 		const string HasSyncedDataKey = "has_synced";
 		const bool HasSyncedDataDefault = false;
 
+        private const string TokenKey = "Token";
+
+		private const string CurrentUserKey = "currentUserKey";
+		static readonly string CurrentUserDefault = "";
 		#endregion
 
 
 		public static string AuthToken
 		{
-			get
-			{
-				return AppSettings.GetValueOrDefault(AuthTokenKey, AuthTokenDefault);
-			}
-			set
-			{
-				AppSettings.AddOrUpdateValue(AuthTokenKey, value);
-			}
+			get { return AppSettings.GetValueOrDefault(AuthTokenKey, AuthTokenDefault); }
+			set { AppSettings.AddOrUpdateValue(AuthTokenKey, value); }
 		}
 
 		public static string UserId
 		{
-			get
-			{
-				return AppSettings.GetValueOrDefault(UserIdKey, UserIdDefault);
-			}
-			set
-			{
-				AppSettings.AddOrUpdateValue(UserIdKey, value);
-			}
+			get { return AppSettings.GetValueOrDefault(UserIdKey, UserIdDefault); }
+			set { AppSettings.AddOrUpdateValue(UserIdKey, value); }
 		}
 
 		public static bool IsLoggedIn
@@ -72,10 +63,22 @@ namespace libermedical.Helpers
 			get
 			{
 //				if (!StorageService.UseAuth)
-					return true;
+				return true;
 
 				return !string.IsNullOrWhiteSpace(UserId);
 			}
+	    }
+
+	    public static string Token
+	    {
+	        get { return AppSettings.GetValueOrDefault(TokenKey, stringDefault); }
+	        set { AppSettings.AddOrUpdateValue(TokenKey, value); }
+	    }
+
+		public static string CurrentUser
+		{ 
+			get { return AppSettings.GetValueOrDefault(CurrentUserKey, CurrentUserDefault); }
+			set { AppSettings.AddOrUpdateValue(CurrentUserKey, value); }
 		}
 	}
 }

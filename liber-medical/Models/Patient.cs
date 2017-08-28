@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 
 namespace libermedical.Models
@@ -23,5 +24,18 @@ namespace libermedical.Models
 			}
 			return $"{FirstName} {LastName}";
 		}
+
+		[JsonIgnore]
+		public string HeaderKey { set; get; }
+	}
+
+	public class GroupedItem<T> : ObservableCollection<BaseDTO>
+	{
+		public string HeaderKey
+		{
+			get;
+			set;
+		}
+
 	}
 }
