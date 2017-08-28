@@ -266,6 +266,9 @@
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
+    <BundleResource Include="Resources\splashLogo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
   </ItemGroup>
   <ItemGroup>
