@@ -144,7 +144,7 @@ namespace libermedical.Pages
             }
 
             var item = e.SelectedItem as Ordonnance;
-            await Navigation.PushModalAsync(new NavigationPage(new OrdonnanceDetailPage(item)));
+            await Navigation.PushModalAsync(new OrdonnanceDetailPage(item));
 
             // disable the visual selection state.
             ((ListView)sender).SelectedItem = null;
@@ -182,8 +182,7 @@ namespace libermedical.Pages
                             typeNavigation = "normal";
                         }
 
-                        await Navigation.PushModalAsync(
-                            new NavigationPage(new PatientListPage(typeNavigation, typeDoc)));
+                        await Navigation.PushModalAsync(new PatientListPage(typeNavigation, typeDoc));
                     }
                 }
                 else
