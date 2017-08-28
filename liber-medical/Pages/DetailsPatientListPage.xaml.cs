@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using libermedical.Enums;
 using libermedical.Models;
 using Xamarin.Forms;
 
@@ -19,37 +20,37 @@ namespace libermedical.Pages
                     new Ordonnance {
                         Reference= 1,
                         AddDate= new DateTime(2017, 06, 07,10,30,00),
-                        Status = "Traité"
+                        Status = StatusEnum.Traite
                     },
                     new Ordonnance {
                         Reference= 2,
                         AddDate= new DateTime(2017, 06, 15,10,30,00),
-                        Status = "Traité"
+                        Status = StatusEnum.Traite
                     },
                     new Ordonnance {
                         Reference= 3,
                         AddDate= new DateTime(2017, 06, 18,10,30,00),
-                        Status = "Refusé"
+                        Status = StatusEnum.Refuse
                     },
                     new Ordonnance {
                         Reference= 4,
                         AddDate= new DateTime(2017, 06, 29,10,30,00),
-                        Status = "Refusé"
+                        Status = StatusEnum.Refuse
                     },
                     new Ordonnance {
                         Reference= 5,
                         AddDate= new DateTime(2017, 07, 01,10,30,00),
-                        Status = "Traité"
+                        Status = StatusEnum.Traite
                     },
                     new Ordonnance {
                         Reference= 6,
                         AddDate= new DateTime(2017, 07, 02,10,30,00),
-                        Status = "En attente"
+                        Status = StatusEnum.Attente
                     },
                     new Ordonnance {
                         Reference= 7,
                         AddDate= new DateTime(2017, 07, 03,10,30,00),
-                        Status = "En attente"
+                        Status = StatusEnum.Attente
                     }
                 };
 

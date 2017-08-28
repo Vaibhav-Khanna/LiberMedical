@@ -52,6 +52,7 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Converters\BoolConverter.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="liber-medicalPage.xaml.cs">
       <DependentUpon>liber-medicalPage.xaml</DependentUpon>
@@ -59,6 +60,7 @@
     <Compile Include="Managers\IRestService.cs" />
     <Compile Include="Managers\RestService.cs" />
     <Compile Include="Models\BaseDTO.cs" />
+    <Compile Include="Models\Filter.cs" />
     <Compile Include="Models\IDTO.cs" />
     <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\PhoneNumber.cs" />
@@ -144,6 +146,7 @@
     <Compile Include="Responses\PaginationResponse.cs" />
     <Compile Include="Services\StorageService.cs" />
     <Compile Include="Services\IStorageService.cs" />
+    <Compile Include="Enums\StatusEnum.cs" />
     <Compile Include="Utility\EmailValidator.cs" />
     <Compile Include="ViewModels\AddDocumentViewModel.cs" />
     <Compile Include="ViewModels\AddEditPatientViewModel.cs" />

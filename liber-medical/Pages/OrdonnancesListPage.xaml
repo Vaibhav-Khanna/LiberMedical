@@ -31,7 +31,7 @@
                                   SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <ViewCell Tapped="Handle_Tapped">
+                                    <ViewCell>
                                         <Grid Padding="15,0,0,0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="60*" />
@@ -49,7 +49,7 @@
                                                    HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"
                                                    Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1"
                                                    Grid.Column="0" />
-                                            <Button Text="{Binding Status}" HorizontalOptions="Center"
+                                            <Button Text="{Binding StatusString}" HorizontalOptions="Center"
                                                     VerticalOptions="Center" BackgroundColor="#d1d1d1"
                                                     TextColor="#ffffff" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1">
                                                 <Button.HeightRequest>

@@ -33,13 +33,12 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="15*" />
-                                    <ColumnDefinition Width="55*" />
-                                    <ColumnDefinition Width="30*" />
+                                    <ColumnDefinition Width="50*" />
+                                    <ColumnDefinition Width="35*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
                                 <Label Text="Date de Début" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
-                                <!-- <Image Source="back_arrow_green.png" VerticalOptions="Center" Grid.Column="2" /> -->
-                                <DatePicker VerticalOptions="CenterAndExpand" Date="{x:Static sys:DateTime.Now}" Grid.Column="2">
+                                <DatePicker x:Name="StartDatePicker" VerticalOptions="CenterAndExpand" Date="{x:Static sys:DateTime.Now}" Grid.Column="2">
                                     <DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
                                     <DatePicker.MinimumDate>
                                         <sys:DateTime x:FactoryMethod="Parse">
@@ -62,12 +61,28 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="15*" />
-                                    <ColumnDefinition Width="75*" />
-                                    <ColumnDefinition Width="10*" />
+                                    <ColumnDefinition Width="50*" />
+                                    <ColumnDefinition Width="35*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
                                 <Label Text="Date de Fin" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
-                                <Image Source="back_arrow_grey.png" VerticalOptions="Center" Grid.Column="2" />
+                              <DatePicker x:Name="EndDatePicker" VerticalOptions="CenterAndExpand" Date="{x:Static sys:DateTime.Now}" Grid.Column="2">
+                                  <DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
+                                  <DatePicker.MinimumDate>
+                                      <sys:DateTime x:FactoryMethod="Parse">
+                                          <x:Arguments>
+                                              <x:String>Jan 1 2010</x:String>
+                                          </x:Arguments>
+                                      </sys:DateTime>
+                                  </DatePicker.MinimumDate>
+                                  <DatePicker.MaximumDate>
+                                      <sys:DateTime x:FactoryMethod="Parse">
+                                          <x:Arguments>
+                                              <x:String>Dec 31 2030</x:String>
+                                          </x:Arguments>
+                                      </sys:DateTime>
+                                  </DatePicker.MaximumDate>
+                              </DatePicker>
                             </Grid>
                         </ViewCell>
                     </TableSection>
