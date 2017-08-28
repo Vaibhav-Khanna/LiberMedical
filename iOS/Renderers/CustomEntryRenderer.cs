@@ -1,15 +1,14 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using libermedical.iOS.Renderers;
 using libermedical.Renderers;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(CustomEntry), typeof(CustomEntryRenderer))]
+[assembly: ExportRenderer(typeof(BorderlessEntry), typeof(CustomEntryRenderer))]
 namespace libermedical.iOS.Renderers
 {
-    public class CustomEntryRenderer : EntryRenderer
+	public class CustomEntryRenderer : EntryRenderer
     {
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {

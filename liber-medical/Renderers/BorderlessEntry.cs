@@ -2,9 +2,9 @@
 
 namespace libermedical.Renderers
 {
-    public class CustomEntry : Entry
+    public class BorderlessEntry : Entry
     {
-        public CustomEntry()
+        public BorderlessEntry()
         {
         }
     }

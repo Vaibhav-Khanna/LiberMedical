@@ -1,62 +1,91 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
-    xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.MyAccountPage" 
-    Style="{StaticResource ModalBackgroundColor}" Title="Mon Compte">
-
-    <custom:BasePage.Header>
-        <ContentView Style="{StaticResource HeaderFooterBackground}">
-            <Grid Padding="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" >
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
-                    </Grid.GestureRecognizers>
-                <Image  HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center" />
-                </Grid>    
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<custom:BasePage
+  x:Class="libermedical.Pages.MyAccountPage"
+  xmlns="http://xamarin.com/schemas/2014/forms"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
+  Title="Mon Compte"
+  Style="{StaticResource ModalBackgroundColor}">
+	<custom:BasePage.Resources>
+		<ResourceDictionary>
+			  <Style x:Key="LabellabelStyle" TargetType="Label" >
+				  <Setter Property="Margin" Value="15,0,0,0"/>
+				  <Setter Property="VerticalOptions" Value="Center"/>
+			  </Style>
+		</ResourceDictionary>
+	</custom:BasePage.Resources>
+  
+	<custom:BasePage.Header>
+		<ContentView Style="{StaticResource HeaderFooterBackground}">
+			<Grid Padding="5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="40" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+					<Image Grid.Column="0"  HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center">
+						<View.GestureRecognizers>
+							<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding NavBackCommand}" />
+						</View.GestureRecognizers>
+					</Image>
                
-                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}" Text="Mon compte" />
-            </Grid>
-        </ContentView>
-    </custom:BasePage.Header>
-
-    <custom:BasePage.ContentPresenter >
-        <ContentView Padding="15,0,0,0" Style="{StaticResource ModalContentBackgroundColor}"> 
-         <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" Grid.Row="0" Style="{StaticResource ModalContentBackgroundColor}">
-                    
-                                 <StackLayout Orientation="Horizontal" Padding="0,0,21,0" HeightRequest="50">
-                                    <Label Text="Lola" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Style="{StaticResource PlusList}" />
-
-                                </StackLayout>  
-                                <BoxView HeightRequest="1" BackgroundColor="{StaticResource GreyBoxViewLine}" HorizontalOptions="FillAndExpand" />
-                                <StackLayout Orientation="Horizontal" Padding="0,0,21,0" HeightRequest="50">
-                                    <Label Text="Powell" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Style="{StaticResource PlusList}" />
-                                </StackLayout>
-                            <BoxView HeightRequest="1" BackgroundColor="{StaticResource GreyBoxViewLine}" HorizontalOptions="FillAndExpand" />
-                                <StackLayout Orientation="Horizontal" Padding="0,0,21,0" HeightRequest="50">
-                                    <Label Text="mt89@hotmail.fr" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Style="{StaticResource PlusList}" />
-                                </StackLayout>
-                           <BoxView HeightRequest="1" BackgroundColor="{StaticResource GreyBoxViewLine}" HorizontalOptions="FillAndExpand" />
-                                <StackLayout Orientation="Horizontal" Padding="0,0,21,0" HeightRequest="50">
-                                    <Label Text="272-936-1576" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Style="{StaticResource PlusList}" />
-                                </StackLayout>
-                            <BoxView HeightRequest="1" BackgroundColor="{StaticResource GreyBoxViewLine}" HorizontalOptions="FillAndExpand" />
-                            <Grid HorizontalOptions="FillAndExpand" Padding="0,0,10,0" HeightRequest="50">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="10*" />
-                                            <ColumnDefinition Width="80*" />
-                                            <ColumnDefinition Width="10*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Image Source="contrat.png"  VerticalOptions="Center" Grid.Column="0" />
-                                        <Label Text="Mon contrat"  VerticalOptions="Center"  Grid.Column="1" Style="{StaticResource PlusList}" />
-                                        <Image Source="back_arrow_green.png"  VerticalOptions="Center" Grid.Column="2" />
-                                </Grid>
-                            <BoxView HeightRequest="1" BackgroundColor="{StaticResource GreyBoxViewLine}" HorizontalOptions="FillAndExpand"/>
-                      </StackLayout>     
-
-        </ContentView>
-    </custom:BasePage.ContentPresenter>
+				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" FontAttributes="Bold" Style="{StaticResource HeaderLabel}" Text="Mon compte" />
+			
+				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Style="{StaticResource HeaderLabel}" Text="Editer">
+					<View.GestureRecognizers>
+						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding EditCommand}" />
+					</View.GestureRecognizers>
+				</Label>
+			</Grid>
+		</ContentView>
+	</custom:BasePage.Header>
+	  
+	<custom:BasePage.ContentPresenter>
+		<ContentView Style="{StaticResource ModalContentBackgroundColor}">
+			<TableView Intent="Data" RowHeight="50">
+				<TableRoot>
+					<TableSection>
+						<ViewCell>
+							<Label Style="{StaticResource LabellabelStyle}" Text="{Binding FirstName}" />
+						</ViewCell>
+						<ViewCell>
+							<Label Style="{StaticResource LabellabelStyle}" Text="{Binding LastName}" />
+						</ViewCell>
+						<ViewCell>
+							<Label Style="{StaticResource LabellabelStyle}" Text="{Binding EmailAddress}" />
+						</ViewCell>
+						<ViewCell>
+							<Label Style="{StaticResource LabellabelStyle}" Text="{Binding PhoneNumber}" />
+						</ViewCell>
+						<ViewCell>
+							<Grid Margin="15,0,21,0" VerticalOptions="Center">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="10*" />
+									<ColumnDefinition Width="88*" />
+									<ColumnDefinition Width="13" />
+								</Grid.ColumnDefinitions>
+								<Image
+									Grid.Column="0"
+									HorizontalOptions="EndAndExpand"
+									Source="contrat.png"
+									VerticalOptions="Center" />
+								<Label
+									Grid.Column="1"
+									HorizontalOptions="StartAndExpand"
+									Style="{StaticResource PlusList}"
+									Text="Mon contrat"
+									VerticalOptions="Center">
+								</Label>
+								<Image
+									Grid.Column="2"
+									HorizontalOptions="CenterAndExpand"
+									Source="back_arrow_green.png"
+									VerticalOptions="Center" />
+							</Grid>
+						</ViewCell>
+					</TableSection>
+				</TableRoot>
+			</TableView>
+		</ContentView>
+		</custom:BasePage.ContentPresenter>
 </custom:BasePage>

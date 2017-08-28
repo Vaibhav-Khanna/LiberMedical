@@ -31,12 +31,12 @@
 						<TableSection>
 							<ViewCell>
 								<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-									<local:CustomEntry Text="{Binding PatientProperty.FirstName, Mode=TwoWay}" Placeholder="First Name" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+									<local:BorderlessEntry Text="{Binding PatientProperty.FirstName, Mode=TwoWay}" Placeholder="First Name" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
 								</StackLayout>
 							</ViewCell>
 							<ViewCell>
 								<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-									<local:CustomEntry Text="{Binding PatientProperty.LastName, Mode=TwoWay}" Placeholder="Last Name" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+									<local:BorderlessEntry Text="{Binding PatientProperty.LastName, Mode=TwoWay}" Placeholder="Last Name" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
 								</StackLayout>
 							</ViewCell>
 							<ViewCell >
@@ -46,7 +46,7 @@
 									<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddPhoneCommand}" />
 								</Image.GestureRecognizers>
 							</Image>
-							<local:CustomEntry Text="{Binding PhoneNo}" Placeholder="Ajouter un numéro" Style="{StaticResource PhoneNumberEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Telephone" />
+							<local:BorderlessEntry Text="{Binding PhoneNo}" Placeholder="Ajouter un numéro" Style="{StaticResource PhoneNumberEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Telephone" />
 						</StackLayout>
 						</ViewCell>
 						</TableSection>

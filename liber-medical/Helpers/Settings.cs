@@ -13,10 +13,7 @@ namespace libermedical.Helpers
 	{
 		private static ISettings AppSettings
 		{
-			get
-			{
-				return CrossSettings.Current;
-			}
+			get { return CrossSettings.Current; }
 		}
 
         #region Setting Constants
@@ -44,31 +41,21 @@ namespace libermedical.Helpers
 
         private const string TokenKey = "Token";
 
-        #endregion
+		private const string CurrentUserKey = "currentUserKey";
+		static readonly string CurrentUserDefault = "";
+		#endregion
 
 
-        public static string AuthToken
+		public static string AuthToken
 		{
-			get
-			{
-				return AppSettings.GetValueOrDefault(AuthTokenKey, AuthTokenDefault);
-			}
-			set
-			{
-				AppSettings.AddOrUpdateValue(AuthTokenKey, value);
-			}
+			get { return AppSettings.GetValueOrDefault(AuthTokenKey, AuthTokenDefault); }
+			set { AppSettings.AddOrUpdateValue(AuthTokenKey, value); }
 		}
 
 		public static string UserId
 		{
-			get
-			{
-				return AppSettings.GetValueOrDefault(UserIdKey, UserIdDefault);
-			}
-			set
-			{
-				AppSettings.AddOrUpdateValue(UserIdKey, value);
-			}
+			get { return AppSettings.GetValueOrDefault(UserIdKey, UserIdDefault); }
+			set { AppSettings.AddOrUpdateValue(UserIdKey, value); }
 		}
 
 		public static bool IsLoggedIn
@@ -76,7 +63,7 @@ namespace libermedical.Helpers
 			get
 			{
 //				if (!StorageService.UseAuth)
-					return true;
+				return true;
 
 				return !string.IsNullOrWhiteSpace(UserId);
 			}
@@ -87,5 +74,11 @@ namespace libermedical.Helpers
 	        get { return AppSettings.GetValueOrDefault(TokenKey, stringDefault); }
 	        set { AppSettings.AddOrUpdateValue(TokenKey, value); }
 	    }
-    }
+
+		public static string CurrentUser
+		{ 
+			get { return AppSettings.GetValueOrDefault(CurrentUserKey, CurrentUserDefault); }
+			set { AppSettings.AddOrUpdateValue(CurrentUserKey, value); }
+		}
+	}
 }

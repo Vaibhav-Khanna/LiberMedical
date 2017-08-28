@@ -13,7 +13,6 @@ namespace libermedical.iOS
 			// you can specify it here.
 	        try
 	        {
-
 				UIApplication.Main(args, null, "AppDelegate");
 	        }
 	        catch (Exception e)
