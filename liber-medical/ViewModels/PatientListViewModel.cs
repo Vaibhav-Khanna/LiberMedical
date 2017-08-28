@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Diagnostics;
+using System.Windows.Input;
 
 namespace libermedical.ViewModels
 {
@@ -33,7 +34,9 @@ namespace libermedical.ViewModels
 			}
 		}
 
-		private async void FilterGroupItems(string searchString)
+        public ICommand BackArrowCommand => new Command(
+            async () => await CoreMethods.PopModalNavigationService());
+        private async void FilterGroupItems(string searchString)
 		{
 			try
 			{
