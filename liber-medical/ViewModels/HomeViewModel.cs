@@ -76,7 +76,7 @@ namespace libermedical.ViewModels
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "normal";
 
-                    await CoreMethods.PushPageModel<PatientListViewModel>(null,true);
+                    await CoreMethods.PushPageModel<PatientListViewModel>("SelectPatient",true);
 
                     //var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
                     //var basicNavContainer = new FreshNavigationContainer(page, "SelectPatient");

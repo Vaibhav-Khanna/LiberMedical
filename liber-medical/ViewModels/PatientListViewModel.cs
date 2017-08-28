@@ -15,7 +15,7 @@ namespace libermedical.ViewModels
 	{
 		private ObservableCollection<GroupedItem<Patient>> _filteredPatients;
 		private IStorageService<Patient> _patientsStorage;
-		public string ParentScreen { get; set; }
+		private string NavigationType;
 
 		public PatientListViewModel(IStorageService<Patient> storageService) : base(storageService)
 		{
@@ -34,9 +34,9 @@ namespace libermedical.ViewModels
 			}
 		}
 
-        public ICommand BackArrowCommand => new Command(
-            async () => await CoreMethods.PopModalNavigationService());
-        private async void FilterGroupItems(string searchString)
+		public ICommand BackArrowCommand => new Command(
+			async () => await CoreMethods.PopModalNavigationService());
+		private async void FilterGroupItems(string searchString)
 		{
 			try
 			{
@@ -75,10 +75,24 @@ namespace libermedical.ViewModels
 		}
 		protected override async Task TapCommandFunc(Cell cell)
 		{
-			var ctx = cell.BindingContext;
-			await CoreMethods.PushPageModelWithNewNavigation<DetailsPatientListViewModel>(ctx);
+			if (NavigationType=="SelectPatient")
+			{
+				await Application.Current.MainPage.Navigation.PopModalAsync();
+			}
+			else
+			{
+				var ctx = cell.BindingContext;
+				await CoreMethods.PushPageModelWithNewNavigation<DetailsPatientListViewModel>(ctx);
+			}
+
 		}
 
+		public override async void Init(object initData)
+		{
+			base.Init(initData);
+			if (initData != null)
+				NavigationType = initData.ToString();
+		}
 		protected override void ViewIsAppearing(object sender, EventArgs e)
 		{
 			base.ViewIsAppearing(sender, e);
