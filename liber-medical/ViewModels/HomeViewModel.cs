@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using libermedical.Pages;
+using FreshMvvm;
 
 namespace libermedical.ViewModels
 {
@@ -57,7 +58,10 @@ namespace libermedical.ViewModels
                 {
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "normal";
-                    await CoreMethods.PushPageModelWithNewNavigation<PatientListViewModel>(null);
+
+                    var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
+                    var basicNavContainer = new FreshNavigationContainer(page, "SelectPatient");
+                    await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
                 }
             }
             if (action == "Bibliothèque photo")
@@ -71,7 +75,13 @@ namespace libermedical.ViewModels
                 {
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "normal";
-                    await CoreMethods.PushPageModel<PatientListViewModel, PatientListPage>(null);
+
+                    await CoreMethods.PushPageModel<PatientListViewModel>(null,true);
+
+                    //var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
+                    //var basicNavContainer = new FreshNavigationContainer(page, "SelectPatient");
+                    //await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
+
                 }
             }
         });
@@ -100,7 +110,10 @@ namespace libermedical.ViewModels
 
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "fast";
-                    await CoreMethods.PushPageModelWithNewNavigation<PatientListViewModel>(null);
+
+                    var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
+                    var basicNavContainer = new FreshNavigationContainer(page, "SelectPatient");
+                    await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
                 }
             }
         });
