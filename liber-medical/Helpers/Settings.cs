@@ -19,9 +19,11 @@ namespace libermedical.Helpers
 			}
 		}
 
-		#region Setting Constants
+        #region Setting Constants
 
-		const string LastSyncKey = "last_sync";
+	    private static readonly string stringDefault = string.Empty;
+
+        const string LastSyncKey = "last_sync";
 		static readonly DateTime LastSyncDefault = DateTime.Now.AddDays(-30);
 
 
@@ -40,10 +42,12 @@ namespace libermedical.Helpers
 		const string HasSyncedDataKey = "has_synced";
 		const bool HasSyncedDataDefault = false;
 
-		#endregion
+        private const string TokenKey = "Token";
+
+        #endregion
 
 
-		public static string AuthToken
+        public static string AuthToken
 		{
 			get
 			{
@@ -76,6 +80,12 @@ namespace libermedical.Helpers
 
 				return !string.IsNullOrWhiteSpace(UserId);
 			}
-		}
-	}
+	    }
+
+	    public static string Token
+	    {
+	        get { return AppSettings.GetValueOrDefault(TokenKey, stringDefault); }
+	        set { AppSettings.AddOrUpdateValue(TokenKey, value); }
+	    }
+    }
 }
