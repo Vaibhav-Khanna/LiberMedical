@@ -64,7 +64,7 @@
 			                   AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
 			                   IsRunning="{Binding IsLoading}"
 			                   IsVisible="True" />
-			<TableView Intent="Data" RowHeight="50">
+			<TableView Intent="Form" RowHeight="50">
 				<TableRoot>
 					<TableSection>
 						<ViewCell>
@@ -80,6 +80,29 @@
 							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" Text="{Binding CurrentUser.PhoneNumber}" />
 						</ViewCell>
 					</TableSection>
+				  <TableSection Title="Change password">
+					<ViewCell>
+					  <renderers:BorderlessEntry 
+						Style="{StaticResource EntryStyle}" 
+						Text="{Binding OldPassword}" 
+						IsPassword="True"
+						Placeholder="Old password"/>
+					</ViewCell>
+					<ViewCell>
+					  <renderers:BorderlessEntry 
+						Style="{StaticResource EntryStyle}" 
+						Text="{Binding NewPassword}" 
+						IsPassword="True"
+						Placeholder="New password"/>
+					</ViewCell>
+					<ViewCell>
+					  <renderers:BorderlessEntry 
+						Style="{StaticResource EntryStyle}" 
+						Text="{Binding ConfirmPassword}"
+						IsPassword="True"
+						Placeholder="Confirm password"/>
+					</ViewCell>
+				  </TableSection>
 				</TableRoot>
 			  </TableView>
 		</AbsoluteLayout>

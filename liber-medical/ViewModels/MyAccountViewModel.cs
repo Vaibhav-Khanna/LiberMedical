@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Windows.Input;
 using libermedical.Helpers;
+using libermedical.Models;
 using libermedical.ViewModels.Base;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace libermedical.ViewModels
@@ -15,21 +17,24 @@ namespace libermedical.ViewModels
 
 		public MyAccountViewModel()
 		{
-			FirstName = Settings.CurrentUser.FirstName;
-			LastName = Settings.CurrentUser.LastName;
-			PhoneNumber = Settings.CurrentUser.PhoneNumber;
-			EmailAddress = Settings.CurrentUser.EmailAddress;
+			GetUserFromSettings();
 		}
+
+		private void GetUserFromSettings()
+		{
+			var p = JsonConvert.DeserializeObject<Profile>(Settings.CurrentUser);
+			FirstName = p.FirstName;
+			LastName = p.LastName;
+			PhoneNumber = p.PhoneNumber;
+			EmailAddress = p.EmailAddress;
+		}
+
 		public ICommand EditCommand => new Command(async () =>
 			await CoreMethods.PushPageModel<MyAccountEditViewModel>(null, true));
 
 		protected override void ViewIsAppearing(object sender, EventArgs e)
 		{
-
-			FirstName = Settings.CurrentUser.FirstName;
-			LastName = Settings.CurrentUser.LastName;
-			PhoneNumber = Settings.CurrentUser.PhoneNumber;
-			EmailAddress = Settings.CurrentUser.EmailAddress;
+			GetUserFromSettings();
 			base.ViewIsAppearing(sender, e);
 		}
 	}

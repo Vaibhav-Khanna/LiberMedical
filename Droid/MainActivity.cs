@@ -1,4 +1,5 @@
 ﻿
+using Acr.UserDialogs;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
@@ -17,6 +18,8 @@ namespace libermedical.Droid
             Vapolia.WheelPickerForms.Droid.WheelPickerRenderer.InitializeForms();
             Xamarin.Forms.Forms.Init(this, bundle);
 
+
+	        UserDialogs.Init(this);
 			LoadApplication(new App());
         }
     }

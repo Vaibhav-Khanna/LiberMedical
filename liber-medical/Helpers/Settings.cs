@@ -1,5 +1,4 @@
 using System;
-using libermedical.Models;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 
@@ -14,10 +13,7 @@ namespace libermedical.Helpers
 	{
 		private static ISettings AppSettings
 		{
-			get
-			{
-				return CrossSettings.Current;
-			}
+			get { return CrossSettings.Current; }
 		}
 
 		#region Setting Constants
@@ -41,31 +37,22 @@ namespace libermedical.Helpers
 		const string HasSyncedDataKey = "has_synced";
 		const bool HasSyncedDataDefault = false;
 
+		private const string CurrentUserKey = "currentUserKey";
+		static readonly string CurrentUserDefault = string.Empty;
+
 		#endregion
 
 
 		public static string AuthToken
 		{
-			get
-			{
-				return AppSettings.GetValueOrDefault(AuthTokenKey, AuthTokenDefault);
-			}
-			set
-			{
-				AppSettings.AddOrUpdateValue(AuthTokenKey, value);
-			}
+			get { return AppSettings.GetValueOrDefault(AuthTokenKey, AuthTokenDefault); }
+			set { AppSettings.AddOrUpdateValue(AuthTokenKey, value); }
 		}
 
 		public static string UserId
 		{
-			get
-			{
-				return AppSettings.GetValueOrDefault(UserIdKey, UserIdDefault);
-			}
-			set
-			{
-				AppSettings.AddOrUpdateValue(UserIdKey, value);
-			}
+			get { return AppSettings.GetValueOrDefault(UserIdKey, UserIdDefault); }
+			set { AppSettings.AddOrUpdateValue(UserIdKey, value); }
 		}
 
 		public static bool IsLoggedIn
@@ -73,12 +60,16 @@ namespace libermedical.Helpers
 			get
 			{
 //				if (!StorageService.UseAuth)
-					return true;
+				return true;
 
 				return !string.IsNullOrWhiteSpace(UserId);
 			}
 		}
 
-		public static Profile CurrentUser { get; set; }
+		public static string CurrentUser
+		{ 
+			get { return AppSettings.GetValueOrDefault(CurrentUserKey, CurrentUserDefault); }
+			set { AppSettings.AddOrUpdateValue(CurrentUserKey, value); }
+		}
 	}
 }
