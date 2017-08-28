@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using libermedical.CustomControls;
+using libermedical.Models;
 using Xamarin.Forms;
 
 namespace libermedical.Pages
 {
     public partial class OrdonnanceDetailPage : BasePage
     {
-        public OrdonnanceDetailPage() : base(-1, -1, false)
+        public OrdonnanceDetailPage(Ordonnance ordonnance) : base(-1, -1, false)
         {
-
             InitializeComponent();
         }
         async void Back_Tapped(object sender, System.EventArgs e)
