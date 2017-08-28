@@ -41,10 +41,12 @@ namespace libermedical.Helpers
 
         private const string TokenKey = "Token";
 
-        #endregion
+		private const string CurrentUserKey = "currentUserKey";
+		static readonly string CurrentUserDefault = "";
+		#endregion
 
 
-        public static string AuthToken
+		public static string AuthToken
 		{
 			get { return AppSettings.GetValueOrDefault(AuthTokenKey, AuthTokenDefault); }
 			set { AppSettings.AddOrUpdateValue(AuthTokenKey, value); }
@@ -72,9 +74,6 @@ namespace libermedical.Helpers
 	        get { return AppSettings.GetValueOrDefault(TokenKey, stringDefault); }
 	        set { AppSettings.AddOrUpdateValue(TokenKey, value); }
 	    }
-    }
-}
-		}
 
 		public static string CurrentUser
 		{ 

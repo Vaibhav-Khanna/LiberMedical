@@ -50,20 +50,7 @@
 	</custom:BasePage.Header>
 
 	<custom:BasePage.ContentPresenter>
-	  <ContentView>
-		<AbsoluteLayout HorizontalOptions="FillAndExpand"
-		                 VerticalOptions="FillAndExpand">
-		  <ContentView x:Name="actIndBackground"
-		               BackgroundColor="#222222" Opacity="0.5"
-		               AbsoluteLayout.LayoutFlags="All"
-		               AbsoluteLayout.LayoutBounds="0,0,1,1"
-		               IsVisible="True">
-			</ContentView>
-			<ActivityIndicator x:Name="actInd"
-			                   AbsoluteLayout.LayoutFlags="PositionProportional"
-			                   AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"
-			                   IsRunning="{Binding IsLoading}"
-			                   IsVisible="True" />
+	  <ContentView BackgroundColor="White">
 			<TableView Intent="Form" RowHeight="50">
 				<TableRoot>
 					<TableSection>
@@ -105,7 +92,6 @@
 				  </TableSection>
 				</TableRoot>
 			  </TableView>
-		</AbsoluteLayout>
 	  </ContentView>
 	</custom:BasePage.ContentPresenter>
 </custom:BasePage>
