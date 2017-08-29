@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Diagnostics;
+using System.Windows.Input;
 
 namespace libermedical.ViewModels
 {
@@ -14,8 +15,9 @@ namespace libermedical.ViewModels
 	{
 		private ObservableCollection<GroupedItem<Patient>> _filteredPatients;
 		private IStorageService<Patient> _patientsStorage;
-		public string ParentScreen { get; set; }
-
+		private string NavigationType;
+        private string ParentScreen;
+        private string DocType;
 		public PatientListViewModel(IStorageService<Patient> storageService) : base(storageService)
 		{
 			_patientsStorage = storageService;
@@ -33,6 +35,8 @@ namespace libermedical.ViewModels
 			}
 		}
 
+		public ICommand BackArrowCommand => new Command(
+			async () => await CoreMethods.PopModalNavigationService());
 		private async void FilterGroupItems(string searchString)
 		{
 			try
@@ -72,10 +76,30 @@ namespace libermedical.ViewModels
 		}
 		protected override async Task TapCommandFunc(Cell cell)
 		{
-			var ctx = cell.BindingContext;
-			await CoreMethods.PushPageModelWithNewNavigation<DetailsPatientListViewModel>(ctx);
+			if (ParentScreen == "SelectPatient")
+			{
+				await Application.Current.MainPage.Navigation.PopModalAsync();
+                MessagingCenter.Send(this,"Patient-Ordonnance", cell.BindingContext as Patient);
+			}
+			else
+			{
+				var ctx = cell.BindingContext;
+				await CoreMethods.PushPageModelWithNewNavigation<DetailsPatientListViewModel>(ctx);
+			}
+
 		}
 
+		public override async void Init(object initData)
+		{
+			base.Init(initData);
+			if (initData != null)
+            {
+                var values = initData as string[];
+                NavigationType = values[1];
+                ParentScreen = values[0];
+                DocType = values[2];
+            }
+        }
 		protected override void ViewIsAppearing(object sender, EventArgs e)
 		{
 			base.ViewIsAppearing(sender, e);

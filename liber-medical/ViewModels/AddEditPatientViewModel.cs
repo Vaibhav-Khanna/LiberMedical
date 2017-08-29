@@ -90,6 +90,8 @@ namespace libermedical.ViewModels
 				
 				if (ValidateForm())
 				{
+                    PatientProperty.CreatedAt = DateTimeOffset.Now;
+                    PatientProperty.UpdatedAt = DateTimeOffset.Now;
 					await _storageService.AddAsync(PatientProperty);
 					await CoreMethods.PopPageModel(PatientProperty);
 				}

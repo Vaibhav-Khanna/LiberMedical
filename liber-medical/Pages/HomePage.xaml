@@ -27,7 +27,7 @@
                 <StackLayout HorizontalOptions="FillAndExpand" Grid.Row="1">
                     <Image Source="addnormal.png" Margin="0,10,0,0">
                         <Image.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="AddOrdonnanceTapped" />
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddOrdonnanceCommand}" />
                         </Image.GestureRecognizers>
                     </Image>
                     <Label Margin="0,5,0,0" Text="Ajouter une ordonnance" HorizontalOptions="Center" Style="{StaticResource HomePageTask}" />
@@ -35,7 +35,7 @@
                 <StackLayout HorizontalOptions="FillAndExpand" Grid.Row="2">
                     <Image Source="addfast.png" Margin="0,10,0,0">
                         <Image.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="FastTapped" />
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding FastCommand}" />
                         </Image.GestureRecognizers>
                     </Image>
                     <Label Margin="0,5,0,0" Text="Ajout rapide" HorizontalOptions="Center" Style="{StaticResource HomePageTask}" />

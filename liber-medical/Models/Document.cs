@@ -3,7 +3,7 @@ using libermedical.Models;
 
 namespace libermedical.Models
 {
-	public class Document
+	public class Document : BaseDTO
     {
 
         public int Reference { set; get; }
