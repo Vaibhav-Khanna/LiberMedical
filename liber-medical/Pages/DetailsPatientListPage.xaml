@@ -60,27 +60,27 @@
 							<Label Text="Ordonnances" HorizontalOptions="Center" VerticalOptions="Center"
 							       Style="{StaticResource OrdonnanceDocumentMenu}" />
 							<Grid.GestureRecognizers>
-								<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Ordonnances_Tapped" />
+								<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding OrdonnancesCommand}" />
 							</Grid.GestureRecognizers>
 						</Grid>
 						<BoxView HeightRequest="2" BackgroundColor="#91c602" HorizontalOptions="Center" VerticalOptions="Center"
-						         Grid.Column="0" Grid.Row="1" WidthRequest="110" x:Name="BoxViewOrdonnances" IsVisible="true" />
+						         Grid.Column="0" Grid.Row="1" WidthRequest="110" x:Name="BoxViewOrdonnances" IsVisible="{Binding ShowBoxViewOrdonnances}" />
 
 						<Grid Grid.Column="1" Grid.Row="0">
 							<Label Text="Documents" HorizontalOptions="Center" VerticalOptions="Center"
 							       Style="{StaticResource OrdonnanceDocumentMenu}" />
 							<Grid.GestureRecognizers>
-								<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Documents_Tapped" />
+								<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding DocumentsCommand}" />
 							</Grid.GestureRecognizers>
 						</Grid>
 						<BoxView HeightRequest="2" BackgroundColor="#91c602" HorizontalOptions="Center" VerticalOptions="Center"
-						         Grid.Column="1" Grid.Row="1" WidthRequest="100" x:Name="BoxViewDocuments" IsVisible="false" />
+						         Grid.Column="1" Grid.Row="1" WidthRequest="100" x:Name="BoxViewDocuments" IsVisible="{Binding ShowBoxViewDocuments}" />
 					</Grid>
 				</StackLayout>
 				<ScrollView Grid.Row="2">
 					<StackLayout Padding="45,0,0,0">
-						<ListView ItemsSource="{Binding ordonnances}" x:Name="stackOrdonnance" SeparatorVisibility="Default"
-						          RowHeight="60" IsVisible="true" ItemSelected="Handle_ItemSelected">
+						<ListView ItemsSource="{Binding Ordonnances}" x:Name="stackOrdonnance" SeparatorVisibility="Default"
+						          RowHeight="60" IsVisible="{Binding ShowStackOrdonnance}">
 							<ListView.ItemTemplate>
 								<DataTemplate>
 									<ViewCell>
@@ -94,7 +94,7 @@
 												<RowDefinition Height="60*" />
 												<RowDefinition Height="40*" />
 											</Grid.RowDefinitions>
-											<Label Text="{Binding Reference, StringFormat='Ordonnance {0}'}" HorizontalOptions="StartAndExpand"
+											<Label Text="{Binding Reference}" HorizontalOptions="StartAndExpand"
 											       VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
 											<Label Text="{Binding AddDate}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"
 											       Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
@@ -117,7 +117,7 @@
 								</DataTemplate>
 							</ListView.ItemTemplate>
 						</ListView>
-						<ListView ItemsSource="{Binding documents}" x:Name="stackDocument" IsVisible="false"
+						<ListView ItemsSource="{Binding Documents}" x:Name="stackDocument" IsVisible="{Binding ShowStackDocument}"
 						          SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected">
 							<ListView.ItemTemplate>
 								<DataTemplate>
@@ -143,17 +143,16 @@
 							</ListView.ItemTemplate>
 						</ListView>
 					</StackLayout>
-
 				</ScrollView>
 			</Grid>
 		</ContentView>
 	</custom:BasePage.ContentPresenter>
 	<custom:BasePage.Footer>
 		<ContentView Style="{StaticResource HeaderFooterBackground}">
-			<Label x:Name="Label" Text="+ Ajoutez une ordonnance" HorizontalOptions="Center" VerticalOptions="Center"
+			<Label x:Name="Label" Text="{Binding BottomTitle}" HorizontalOptions="Center" VerticalOptions="Center"
 			       Style="{StaticResource FooterLabel}" />
 			<ContentView.GestureRecognizers>
-				<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="AddOrdonnance_Tapped" />
+				<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddOrdonnanceCommand}" />
 			</ContentView.GestureRecognizers>
 		</ContentView>
 	</custom:BasePage.Footer>

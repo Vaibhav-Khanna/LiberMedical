@@ -24,9 +24,7 @@ namespace libermedical.Models
 			}
 			return $"{FirstName} {LastName}";
 		}
-
-		[JsonIgnore]
-		public string HeaderKey { set; get; }
+		
 	}
 
 	public class GroupedItem<T> : ObservableCollection<BaseDTO>
