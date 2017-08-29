@@ -5,6 +5,10 @@ using Plugin.Media;
 using Plugin.Media.Abstractions;
 using libermedical.Pages;
 using FreshMvvm;
+using libermedical.Models;
+using System.Threading.Tasks;
+using System;
+using libermedical.Services;
 
 namespace libermedical.ViewModels
 {
@@ -15,7 +19,7 @@ namespace libermedical.ViewModels
         private string typeDoc = "ordonnance";
         public HomeViewModel()
         {
-
+            SubscribeToMessages();
         }
         public ICommand AssistCommand => new Command(async () =>
         {
@@ -59,9 +63,11 @@ namespace libermedical.ViewModels
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "normal";
 
-                    var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
-                    var basicNavContainer = new FreshNavigationContainer(page, "SelectPatient");
-                    await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
+                    await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "SelectPatient", typeNavigation, typeDoc }, true);
+
+                    //var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
+                    //var basicNavContainer = new FreshNavigationContainer(page, "SelectPatient");
+                    //await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
                 }
             }
             if (action == "Bibliothèque photo")
@@ -76,7 +82,7 @@ namespace libermedical.ViewModels
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "normal";
 
-                    await CoreMethods.PushPageModel<PatientListViewModel>("SelectPatient",true);
+                    await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "SelectPatient", typeNavigation, typeDoc },true);
 
                     //var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
                     //var basicNavContainer = new FreshNavigationContainer(page, "SelectPatient");
@@ -111,13 +117,39 @@ namespace libermedical.ViewModels
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "fast";
 
-                    var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
-                    var basicNavContainer = new FreshNavigationContainer(page, "SelectPatient");
-                    await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
+                    await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "SelectPatient", typeNavigation, typeDoc }, true);
+
+                    //var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
+                    //var basicNavContainer = new FreshNavigationContainer(page, "SelectPatient");
+                    //await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
                 }
             }
         });
 
+        private void SubscribeToMessages()
+        {
+            MessagingCenter.Subscribe<PatientListViewModel, Patient>(this, "Patient-Ordonnance", async(sender,args) => {
 
+                if(args!=null)
+                {
+                    await AddPrescription(args);
+                }
+            });
+        }
+
+        private async Task AddPrescription(Patient patient)
+        {
+            var ordannance = new Ordonnance()
+            {
+                Reference = DateTime.Now.Ticks,
+                AddDate = DateTime.Now,
+                Patient = patient,
+                Status = "Waiting",
+                Id = DateTime.Now.Ticks.ToString(),
+                CreatedAt = DateTimeOffset.Now,
+
+            };
+            await new StorageService<Ordonnance>().AddAsync(ordannance);
+        }
     }
 }

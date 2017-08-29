@@ -72,7 +72,7 @@
     <DefineConstants>DEBUG;ENABLE_TEST_CLOUD;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: manuel LLOP (WBF5L6BU5J)</CodesignKey>
     <DeviceSpecificBuild>true</DeviceSpecificBuild>
     <MtouchDebug>true</MtouchDebug>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
@@ -86,8 +86,8 @@
     <PlatformTarget>x86</PlatformTarget>
     <IOSDebugOverWiFi>false</IOSDebugOverWiFi>
     <MtouchExtraArgs>-v -v -v</MtouchExtraArgs>
-    <CodesignProvision></CodesignProvision>
     <MtouchTlsProvider>Default</MtouchTlsProvider>
+    <CodesignProvision>34ca4491-d0e4-45c2-8d62-0d74b1178297</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'iOS Release|iPhone' ">
     <Optimize>false</Optimize>

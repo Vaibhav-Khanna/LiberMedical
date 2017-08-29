@@ -16,7 +16,8 @@ namespace libermedical.ViewModels
 		private ObservableCollection<GroupedItem<Patient>> _filteredPatients;
 		private IStorageService<Patient> _patientsStorage;
 		private string NavigationType;
-
+        private string ParentScreen;
+        private string DocType;
 		public PatientListViewModel(IStorageService<Patient> storageService) : base(storageService)
 		{
 			_patientsStorage = storageService;
@@ -75,9 +76,10 @@ namespace libermedical.ViewModels
 		}
 		protected override async Task TapCommandFunc(Cell cell)
 		{
-			if (NavigationType=="SelectPatient")
+			if (ParentScreen == "SelectPatient")
 			{
 				await Application.Current.MainPage.Navigation.PopModalAsync();
+                MessagingCenter.Send(this,"Patient-Ordonnance", cell.BindingContext as Patient);
 			}
 			else
 			{
@@ -91,8 +93,13 @@ namespace libermedical.ViewModels
 		{
 			base.Init(initData);
 			if (initData != null)
-				NavigationType = initData.ToString();
-		}
+            {
+                var values = initData as string[];
+                NavigationType = values[1];
+                ParentScreen = values[0];
+                DocType = values[2];
+            }
+        }
 		protected override void ViewIsAppearing(object sender, EventArgs e)
 		{
 			base.ViewIsAppearing(sender, e);
