@@ -144,7 +144,7 @@ namespace libermedical.ViewModels
                 Reference = DateTime.Now.Ticks,
                 AddDate = DateTime.Now,
                 Patient = patient,
-                Status = "Waiting",
+                Status = Enums.StatusEnum.Traite,
                 Id = DateTime.Now.Ticks.ToString(),
                 CreatedAt = DateTimeOffset.Now,
 
