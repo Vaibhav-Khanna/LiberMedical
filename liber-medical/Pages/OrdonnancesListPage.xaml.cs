@@ -156,43 +156,46 @@ namespace libermedical.Pages
             var typeDoc = "ordonnance";
             string typeNavigation = "";
 
-            if ((action != null) && (action != "Annuler"))
+            if (action != null && action != "Annuler")
             {
-                //init du plugin photo 
-                await CrossMedia.Current.Initialize();
-
-                if (UtilityClass.CameraAvailable())
+                if (action == "Ordonnance rapide")
                 {
-                    var file = await CrossMedia.Current.TakePhotoAsync(
-                        new Plugin.Media.Abstractions.StoreCameraMediaOptions()
-                        {
-                            AllowCropping = true
-                        });
+                    //init du plugin photo 
+                    await CrossMedia.Current.Initialize();
 
-                    if (file != null)
+                    if (UtilityClass.CameraAvailable())
                     {
-                        var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                        var file = await CrossMedia.Current.TakePhotoAsync(
+                            new Plugin.Media.Abstractions.StoreCameraMediaOptions()
+                            {
+                                AllowCropping = true
+                            });
 
-                        if (action == "Ordonnance rapide")
+                        if (file != null)
                         {
-                            typeNavigation = "fast";
-                        }
-                        if (action == "Ordonnance classique")
-                        {
-                            typeNavigation = "normal";
-                        }
+                            var profilePicture = ImageSource.FromStream(() => file.GetStream());
 
-                        await Navigation.PushModalAsync(new PatientListPage(typeNavigation, typeDoc));
+                            if (action == "Ordonnance rapide")
+                            {
+                                typeNavigation = "fast";
+                            }
+                            if (action == "Ordonnance classique")
+                            {
+                                typeNavigation = "normal";
+                            }
+
+                            await Navigation.PushModalAsync(new PatientListPage(typeNavigation, typeDoc));
+                        }
+                    }
+                    else
+                    {
+                        await DisplayAlert("No Camera", ":( No camera available.", "OK");
                     }
                 }
                 else
                 {
-                    await DisplayAlert("No Camera", ":( No camera available.", "OK");
+                    await Navigation.PushModalAsync(new OrdonnanceDetailEditPage());
                 }
-            }
-            else
-            {
-                return;
             }
         }
 

@@ -63,12 +63,12 @@
                                     <ColumnDefinition Width="10*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
-                                <Label Text="Crée le 17/06/2017" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+                                <Label Text="{Binding Ordonnance.AddDate, StringFormat='Crée le {0:dd-MM-yyyy}'}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
                             </Grid>
                         </ViewCell>
                     </TableSection>
                     <TableSection>
-                        <ViewCell Height="60">
+                        <ViewCell Height="60" Tapped="StatusCell_Tapped">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="15*" />
@@ -76,12 +76,12 @@
                                     <ColumnDefinition Width="10*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="clock.png" VerticalOptions="Center" Grid.Column="0" />
-                                <Label Text="Statut en attente..." VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+                                <Label x:Name="StatusLabel" Text="Statut en attente..." VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
                             </Grid>
                         </ViewCell>
                     </TableSection>
                     <TableSection>
-                        <ViewCell Height="60">
+                        <ViewCell Height="60" Tapped="DatePicker_Tapped">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="15*" />
@@ -89,6 +89,7 @@
                                     <ColumnDefinition Width="10*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
+                                <DatePicker x:Name="MyDatePicker" IsVisible="False" Grid.Column="1"/>
                                 <Label Text="Date de premier soin" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
                                 <Image Source="back_arrow_green.png" VerticalOptions="Center" Grid.Column="2" />
                             </Grid>

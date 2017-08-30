@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using libermedical.CustomControls;
+﻿using libermedical.CustomControls;
 using libermedical.Models;
-using Xamarin.Forms;
 
 namespace libermedical.Pages
 {
