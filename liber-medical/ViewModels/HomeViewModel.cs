@@ -9,6 +9,7 @@ using libermedical.Models;
 using System.Threading.Tasks;
 using System;
 using libermedical.Services;
+using System.Collections.Generic;
 
 namespace libermedical.ViewModels
 {
@@ -17,6 +18,7 @@ namespace libermedical.ViewModels
         //type of photo, most of the time ordonannces but we can also have document
         //so we initialize typeDoc to "ordonnace"
         private string typeDoc = "ordonnance";
+		private string _documentPath = string.Empty;
         public HomeViewModel()
         {
             SubscribeToMessages();
@@ -74,14 +76,14 @@ namespace libermedical.ViewModels
             {
                 await CrossMedia.Current.Initialize();
 
-                var pickerOptions = new PickMediaOptions();
+				var pickerOptions = new PickMediaOptions();
 
                 var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
                 if (file != null)
                 {
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "normal";
-
+					_documentPath = file.Path;
                     await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "SelectPatient", typeNavigation, typeDoc },true);
 
                     //var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
@@ -108,7 +110,7 @@ namespace libermedical.ViewModels
                 }
 
                 var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                { });
+				{ Directory="Docs",Name=DateTime.Now.Ticks.ToString() });
                 if (file != null)
                 {
                     //if document we change typeDoc to document
@@ -116,7 +118,7 @@ namespace libermedical.ViewModels
 
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "fast";
-
+					_documentPath = file.Path;
                     await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "SelectPatient", typeNavigation, typeDoc }, true);
 
                     //var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
@@ -147,7 +149,7 @@ namespace libermedical.ViewModels
                 Status = Enums.StatusEnum.Traite,
                 Id = DateTime.Now.Ticks.ToString(),
                 CreatedAt = DateTimeOffset.Now,
-
+				Attachments = new List<string>() { _documentPath },
             };
             await new StorageService<Ordonnance>().AddAsync(ordannance);
         }
