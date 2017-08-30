@@ -6,14 +6,16 @@ namespace libermedical.Models
 {
 	public class Patient:BaseDTO
 	{
-
+        [JsonProperty("firstname")]
 		public string FirstName { set; get; }
+        [JsonProperty("lastname")]
+        public string LastName { set; get; }
+        [JsonProperty("phones")]
+        public List<PhoneNumber> PhoneNumbers { get; set; }
+        [JsonProperty("nurse_id")]
+        public string NurseId { get; set; }
 
-		public string LastName { set; get; }
-
-		public List<PhoneNumber> PhoneNumbers { get; set; }
-
-		[JsonIgnore]
+        [JsonIgnore]
 		public string FullName => this.ToString();
 
 		public override string ToString()
@@ -24,9 +26,7 @@ namespace libermedical.Models
 			}
 			return $"{FirstName} {LastName}";
 		}
-
-		[JsonIgnore]
-		public string HeaderKey { set; get; }
+		
 	}
 
 	public class GroupedItem<T> : ObservableCollection<BaseDTO>

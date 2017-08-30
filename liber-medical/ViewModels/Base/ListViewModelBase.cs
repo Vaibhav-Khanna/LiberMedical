@@ -47,10 +47,7 @@ namespace libermedical.ViewModels.Base
 			IsRefreshing = false;
 		});
 
-		public override async void Init(object initData)
-		{
-			base.Init(initData);
-		}
+
 
 		protected virtual async Task GetDataAsync()
 		{
