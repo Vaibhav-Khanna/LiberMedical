@@ -1,55 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using libermedical.CustomControls;
 using libermedical.Enums;
-using libermedical.Models;
 using Xamarin.Forms;
+using libermedical.ViewModels;
 
 namespace libermedical.Pages
 {
-    public partial class OrdonnanceDetailEditPage : BasePage
+    public partial class OrdonnanceDetailEditPage
     {
-        public Ordonnance Ordonnance { get; set; }
-
-        public ObservableCollection<Cotation> cotation { get; set; }
-
         public OrdonnanceDetailEditPage() : base(-1, 64, false)
         {
-            Ordonnance = new Ordonnance
-            {
-                AddDate = DateTime.Today
-            };
-
-            BindingContext = this;
-            cotation = new ObservableCollection<Cotation>
-                {
-                new Cotation {
-                    FirstCode=1,
-                    SecondCode= "AMI",
-                    ThirdCode= 2
-                },
-                new Cotation {
-                    FirstCode=2,
-                    SecondCode= "AMI",
-                    ThirdCode= 1
-                },
-                new Cotation {
-                    FirstCode=3,
-                    SecondCode= "AMK",
-                    ThirdCode= 5
-                }
-            };
-
             InitializeComponent();
+
+            var a = this.BindingContext;
 
             MyDatePicker.Date = DateTime.Today;
             MyDatePicker.DateSelected += MyDatePickerOnDateSelected;
+
+            MyEditor.Text = "Ecrivez quelque chose";
+            MyEditor.TextColor = Color.Gray;
         }
 
         private void MyDatePickerOnDateSelected(object sender, DateChangedEventArgs dateChangedEventArgs)
         {
-            //
+            (this.BindingContext as OrdonnanceDetailEditViewModel).Ordonnance.FirstCareAt = dateChangedEventArgs.NewDate;
         }
 
         async void Frequence_Tapped(object sender, EventArgs e)
@@ -68,19 +41,19 @@ namespace libermedical.Pages
 
         private async void StatusCell_Tapped(object sender, EventArgs e)
         {
-            var status = await DisplayActionSheet("Select status", "Annuler", null, "En attente", "Traité", "Refusé");
+            var status = await DisplayActionSheet("Sélectionnez un statut", "Annuler", null, "En attente", "Traité", "Refusé");
             if (status != null && status != "Annuler")
             {
                 switch (status)
                 {
                     case "En attente":
-                        Ordonnance.Status = StatusEnum.Attente;
+                        (this.BindingContext as OrdonnanceDetailEditViewModel).Ordonnance.Status = StatusEnum.waiting;
                         break;
                     case "Traité":
-                        Ordonnance.Status = StatusEnum.Traite;
+                        (this.BindingContext as OrdonnanceDetailEditViewModel).Ordonnance.Status = StatusEnum.valid;
                         break;
                     case "Refusé":
-                        Ordonnance.Status = StatusEnum.Refuse;
+                        (this.BindingContext as OrdonnanceDetailEditViewModel).Ordonnance.Status = StatusEnum.refused;
                         break;
                 }
 
@@ -91,6 +64,35 @@ namespace libermedical.Pages
         private void DatePicker_Tapped(object sender, EventArgs e)
         {
             MyDatePicker.Focus();
+        }
+
+        private void Patient_Tapped(object sender, EventArgs e)
+        {
+            var c = BindingContext;
+            var vm = c as OrdonnanceDetailEditViewModel;
+            vm.SelectPatientCommand.Execute(sender);
+        }
+
+        private void Editor_Focused(object sender, FocusEventArgs e)
+        {
+            if (MyEditor.Text.Equals("Ecrivez quelque chose"))
+            {
+                MyEditor.Text = "";
+                MyEditor.TextColor = Color.Black;
+            }
+        }
+
+        private void Editor_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (MyEditor.Text.Equals(""))
+            {
+                MyEditor.Text = "Ecrivez quelque chose";
+                MyEditor.TextColor = Color.Gray;
+            }
+            else
+            {
+                (this.BindingContext as OrdonnanceDetailEditViewModel).Ordonnance.Comments = MyEditor.Text;
+            }
         }
     }
 }

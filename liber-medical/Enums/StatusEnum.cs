@@ -2,8 +2,8 @@
 {
     public enum StatusEnum
     {
-        Attente,
-        Traite,
-        Refuse
+        waiting,
+        valid,
+        refused
     }
 }

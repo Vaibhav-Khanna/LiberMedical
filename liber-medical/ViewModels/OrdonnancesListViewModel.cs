@@ -26,5 +26,10 @@ namespace libermedical.ViewModels
 			var ctx = cell.BindingContext;
 			await CoreMethods.PushPageModelWithNewNavigation<DetailsPatientListViewModel>(ctx);
 		}
+
+	    public async void CreatePrescription()
+	    {
+	        await CoreMethods.PushPageModel<OrdonnanceDetailEditViewModel>(null, true);
+	    }
 	}
 }

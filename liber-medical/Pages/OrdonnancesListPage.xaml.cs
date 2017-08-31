@@ -6,6 +6,7 @@ using libermedical.CustomControls;
 using libermedical.Enums;
 using libermedical.Models;
 using libermedical.Utility;
+using libermedical.ViewModels;
 using Plugin.Media;
 using Xamarin.Forms;
 
@@ -27,71 +28,71 @@ namespace libermedical.Pages
                 {
                     Reference = 1,
                     Patient = new Patient {FirstName = "Fred", LastName = "Pearson"},
-                    AddDate = new DateTime(2017, 04, 02),
-                    Status = StatusEnum.Traite
+                    FirstCareAt = new DateTime(2017, 04, 02),
+                    Status = StatusEnum.valid
                 },
                 new Ordonnance
                 {
                     Reference = 2,
                     Patient = new Patient {FirstName = "Jonanthan", LastName = "Vaughn"},
-                    AddDate = new DateTime(2017, 11, 10),
-                    Status = StatusEnum.Traite
+                    FirstCareAt = new DateTime(2017, 11, 10),
+                    Status = StatusEnum.valid
                 },
                 new Ordonnance
                 {
                     Reference = 3,
                     Patient = new Patient {FirstName = "Alexander", LastName = "Zimmerman"},
-                    AddDate = new DateTime(2017, 02, 06),
-                    Status = StatusEnum.Refuse
+                    FirstCareAt = new DateTime(2017, 02, 06),
+                    Status = StatusEnum.refused
                 },
                 new Ordonnance
                 {
                     Reference = 4,
                     Patient = new Patient {FirstName = "Keith", LastName = "Kelley"},
-                    AddDate = new DateTime(2017, 09, 17),
-                    Status = StatusEnum.Refuse
+                    FirstCareAt = new DateTime(2017, 09, 17),
+                    Status = StatusEnum.refused
                 },
                 new Ordonnance
                 {
                     Reference = 5,
                     Patient = new Patient {FirstName = "Justin", LastName = "Sims"},
-                    AddDate = new DateTime(2017, 03, 04),
-                    Status = StatusEnum.Traite
+                    FirstCareAt = new DateTime(2017, 03, 04),
+                    Status = StatusEnum.valid
                 },
                 new Ordonnance
                 {
                     Reference = 6,
                     Patient = new Patient {FirstName = "Franklin", LastName = "Howard"},
-                    AddDate = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.Attente
+                    FirstCareAt = new DateTime(2017, 09, 29),
+                    Status = StatusEnum.waiting
                 },
                 new Ordonnance
                 {
                     Reference = 8,
                     Patient = new Patient {FirstName = "Mickael", LastName = "Green"},
-                    AddDate = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.Attente
+                    FirstCareAt = new DateTime(2017, 09, 29),
+                    Status = StatusEnum.waiting
                 },
                 new Ordonnance
                 {
                     Reference = 9,
                     Patient = new Patient {FirstName = "Paul", LastName = "Howard"},
-                    AddDate = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.Traite
+                    FirstCareAt = new DateTime(2017, 09, 29),
+                    Status = StatusEnum.valid
                 },
                 new Ordonnance
                 {
                     Reference = 10,
                     Patient = new Patient {FirstName = "Justin", LastName = "Howard"},
-                    AddDate = new DateTime(2017, 10, 29),
-                    Status = StatusEnum.Attente
+                    FirstCareAt = new DateTime(2017, 10, 29),
+                    Status = StatusEnum.waiting
                 },
                 new Ordonnance
                 {
                     Reference = 11,
                     Patient = new Patient {FirstName = "John", LastName = "Obama"},
-                    AddDate = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.Attente
+                    FirstCareAt = new DateTime(2017, 09, 29),
+                    Status = StatusEnum.waiting
                 }
             };
 
@@ -115,8 +116,8 @@ namespace libermedical.Pages
                 foreach (var status in filter.Statuses)
                 {
                     var foundItems =
-                        Ordonnances.Where(x => x.Status == status && x.AddDate >= filter.StartDate &&
-                                                                     x.AddDate <= filter.EndDate);
+                        Ordonnances.Where(x => x.Status == status && x.FirstCareAt >= filter.StartDate &&
+                                                                     x.FirstCareAt <= filter.EndDate);
                     filteredItems.AddRange(foundItems);
                 }
 
@@ -194,7 +195,8 @@ namespace libermedical.Pages
                 }
                 else
                 {
-                    await Navigation.PushModalAsync(new OrdonnanceDetailEditPage());
+                    (BindingContext as OrdonnancesListViewModel).CreatePrescription();
+                    //await Navigation.PushModalAsync(new OrdonnanceDetailEditPage());
                 }
             }
         }
