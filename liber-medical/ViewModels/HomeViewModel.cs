@@ -141,17 +141,34 @@ namespace libermedical.ViewModels
 
         private async Task AddPrescription(Patient patient)
         {
-            var ordannance = new Ordonnance()
+            if(typeDoc== "ordonnance")
             {
-                Reference = DateTime.Now.Ticks,
-                AddDate = DateTime.Now,
-                Patient = patient,
-                Status = Enums.StatusEnum.Traite,
-                Id = DateTime.Now.Ticks.ToString(),
-                CreatedAt = DateTimeOffset.Now,
-				Attachments = new List<string>() { _documentPath },
-            };
-            await new StorageService<Ordonnance>().AddAsync(ordannance);
+                var ordannance = new Ordonnance()
+                {
+                    Reference = DateTime.Now.Ticks,
+                    AddDate = DateTime.Now,
+                    Patient = patient,
+                    Status = Enums.StatusEnum.Traite,
+                    Id = DateTime.Now.Ticks.ToString(),
+                    CreatedAt = DateTimeOffset.Now,
+                    Attachments = new List<string>() { _documentPath },
+                };
+                await new StorageService<Ordonnance>().AddAsync(ordannance);
+            }
+            else
+            {
+                var document = new Document()
+                {
+                    Reference = DateTime.Now.Ticks,
+                    AddDate = DateTime.Now,
+                    Patient = patient,
+                    FilePath = _documentPath,
+                    Id = DateTime.Now.Ticks.ToString(),
+                    CreatedAt = DateTimeOffset.Now,
+                };
+                await new StorageService<Document>().AddAsync(document);
+            }
+            
         }
     }
 }

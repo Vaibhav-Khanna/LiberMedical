@@ -5,9 +5,10 @@ namespace libermedical.Models
     public class Document : BaseDTO
     {
 
-        public int Reference { set; get; }
+        public long Reference { set; get; }
         public DateTime AddDate { set; get; }
         public Patient Patient { set; get; }
+        public string FilePath { get; set; }
 
     }
 }
