@@ -37,11 +37,11 @@ namespace libermedical.ViewModels
             BindData();
         }
 
-        private  async void BindData()
+        private async void BindData()
         {
             ShowStackOrdonnance = ShowBoxViewOrdonnances = true;
             BottomTitle = "+ Ajoutez une ordonnance";
-            Ordonnances = new ObservableCollection<Ordonnance>((await new StorageService<Ordonnance>().GetList()).Where(x=>x.Patient.Id == Patient.Id));
+            Ordonnances = new ObservableCollection<Ordonnance>((await new StorageService<Ordonnance>().GetList()).Where(x => x.Patient.Id == Patient.Id));
             Documents = new ObservableCollection<Document>((await new StorageService<Document>().GetList()).Where(x => x.Patient.Id == Patient.Id));
         }
         public Command EditPatient
@@ -85,7 +85,23 @@ namespace libermedical.ViewModels
             }
         }
 
-        public ICommand AddOrdonnanceCommand => new Command(
-            async () => await CoreMethods.PushPageModel<OrdonnanceDetailEditViewModel>());
+        public Command AddOrdonnanceCommand
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    if (BottomTitle == "+ Ajoutez une ordonnance")
+                    {
+                         await CoreMethods.PushPageModel<OrdonnanceDetailEditViewModel>();
+                    }
+                    else
+                    {
+                        await CoreMethods.PushPageModel<AddDocumentViewModel>();
+                    }
+                });
+            }
+        }
+
     }
 }

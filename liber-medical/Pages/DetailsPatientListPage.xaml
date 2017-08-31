@@ -94,7 +94,7 @@
 												<RowDefinition Height="60*" />
 												<RowDefinition Height="40*" />
 											</Grid.RowDefinitions>
-											<Label Text="{Binding Reference}" HorizontalOptions="StartAndExpand"
+											<Label Text="{Binding Reference, StringFormat='Ordo {0}'}" HorizontalOptions="StartAndExpand"
 											       VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
 											<Label Text="{Binding AddDate}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"
 											       Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
