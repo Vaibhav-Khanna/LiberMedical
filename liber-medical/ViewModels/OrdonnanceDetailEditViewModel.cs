@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
 using libermedical.Models;
 using libermedical.Services;
@@ -16,33 +15,13 @@ namespace libermedical.ViewModels
         public string PatientLabel { get; set; } = "Choisissez un patient";
         public Ordonnance Ordonnance { get; set; }
 
-        public ObservableCollection<Cotation> cotation { get; set; }
-
         public OrdonnanceDetailEditViewModel()
         {
             Ordonnance = new Ordonnance
             {
+                Id = Guid.NewGuid().ToString(),
                 CreatedAt = DateTime.Today,
                 Attachments = new List<string>()
-            };
-
-            cotation = new ObservableCollection<Cotation>
-            {
-                new Cotation {
-                    FirstCode=1,
-                    SecondCode= "AMI",
-                    ThirdCode= 2
-                },
-                new Cotation {
-                    FirstCode=2,
-                    SecondCode= "AMI",
-                    ThirdCode= 1
-                },
-                new Cotation {
-                    FirstCode=3,
-                    SecondCode= "AMK",
-                    ThirdCode= 5
-                }
             };
 
             MessagingCenter.Subscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance, async (sender, patient) => {
@@ -55,6 +34,15 @@ namespace libermedical.ViewModels
             });
         }
 
+        public override void Init(object initData)
+        {
+            base.Init(initData);
+            if (initData != null)
+            {
+                Ordonnance.Attachments.Add(initData as string);
+            }
+        }
+
         public ICommand SelectPatientCommand => new Command(async () =>
         {
             await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "OrdonanceSelectPatient", "normal", "ordonnance" }, true);
@@ -62,8 +50,10 @@ namespace libermedical.ViewModels
 
         public ICommand SaveCommand => new Command(async () =>
         {
-            Ordonnance.Id = Guid.NewGuid().ToString();
             await new StorageService<Ordonnance>().AddAsync(Ordonnance);
+
+            //TODO: Display success toast
+
             await CoreMethods.PopPageModel(null, true);
         });
 

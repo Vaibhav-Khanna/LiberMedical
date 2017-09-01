@@ -5,9 +5,6 @@ using System.Linq;
 using libermedical.CustomControls;
 using libermedical.Enums;
 using libermedical.Models;
-using libermedical.Utility;
-using libermedical.ViewModels;
-using Plugin.Media;
 using Xamarin.Forms;
 
 namespace libermedical.Pages
@@ -150,57 +147,7 @@ namespace libermedical.Pages
             // disable the visual selection state.
             ((ListView)sender).SelectedItem = null;
         }
-
-        async void Add_Clicked(object sender, System.EventArgs e)
-        {
-            var action = await DisplayActionSheet(null, "Annuler", null, "Ordonnance rapide", "Ordonnance classique");
-            var typeDoc = "ordonnance";
-            string typeNavigation = "";
-
-            if (action != null && action != "Annuler")
-            {
-                if (action == "Ordonnance rapide")
-                {
-                    //init du plugin photo 
-                    await CrossMedia.Current.Initialize();
-
-                    if (UtilityClass.CameraAvailable())
-                    {
-                        var file = await CrossMedia.Current.TakePhotoAsync(
-                            new Plugin.Media.Abstractions.StoreCameraMediaOptions()
-                            {
-                                AllowCropping = true
-                            });
-
-                        if (file != null)
-                        {
-                            var profilePicture = ImageSource.FromStream(() => file.GetStream());
-
-                            if (action == "Ordonnance rapide")
-                            {
-                                typeNavigation = "fast";
-                            }
-                            if (action == "Ordonnance classique")
-                            {
-                                typeNavigation = "normal";
-                            }
-
-                            await Navigation.PushModalAsync(new PatientListPage(typeNavigation, typeDoc));
-                        }
-                    }
-                    else
-                    {
-                        await DisplayAlert("No Camera", ":( No camera available.", "OK");
-                    }
-                }
-                else
-                {
-                    (BindingContext as OrdonnancesListViewModel).CreatePrescription();
-                    //await Navigation.PushModalAsync(new OrdonnanceDetailEditPage());
-                }
-            }
-        }
-
+        
         private void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (!string.IsNullOrEmpty(e.NewTextValue))
