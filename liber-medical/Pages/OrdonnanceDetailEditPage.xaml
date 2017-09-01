@@ -22,7 +22,7 @@
                        Style="{StaticResource HeaderLabel}" Text="Ordonnance" />
                 <Grid Grid.Column="2">
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Save_Tapped" />
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SaveCommand}"/>
                     </Grid.GestureRecognizers>
                     <Label HorizontalOptions="Center" VerticalOptions="Center"
                            Style="{StaticResource HeaderLabelAction}" Text="Enregistrer" />
@@ -43,7 +43,7 @@
                                     <ColumnDefinition Width="10*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="user.png" VerticalOptions="Center" Grid.Column="0" />
-                                <Label Text="Choisissez un patient" VerticalOptions="Center"
+                                <Label Text="{Binding PatientLabel}" VerticalOptions="Center"
                                        HorizontalOptions="FillAndExpand" Grid.Column="1" />
                             </Grid>
                         </ViewCell>
@@ -109,7 +109,8 @@
                                   Height="70" Tapped="Frequence_Tapped" />
                     </TableSection>
                     <TableSection>
-                        <TextCell Text="Pièce jointe" Detail="+ Ajouter" Height="70" DetailColor="#007aff" />
+                        <TextCell Text="Pièce jointe" Detail="+ Ajouter" Height="70" DetailColor="#007aff"
+                                  Command="{Binding AddAttachmentCommand}" />
                     </TableSection>
                     <TableSection>
                         <ViewCell Height="200">
@@ -118,7 +119,7 @@
                                 <Editor x:Name="MyEditor" BackgroundColor="#f0f0f0"
                                         FontFamily="SFUIText-Regular.otf" FontSize="12"
                                         HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
-                                        Focused="Editor_Focused" Unfocused="Editor_Unfocused"/>
+                                        Focused="Editor_Focused" Unfocused="Editor_Unfocused" />
                             </StackLayout>
                         </ViewCell>
                     </TableSection>
@@ -128,6 +129,9 @@
     </custom:BasePage.ContentPresenter>
     <custom:BasePage.Footer>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
+            <ContentView.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SaveCommand}"/>
+            </ContentView.GestureRecognizers>
             <Label Text="Enregistrer" HorizontalOptions="Center" VerticalOptions="Center"
                    Style="{StaticResource FooterLabel}" />
         </ContentView>

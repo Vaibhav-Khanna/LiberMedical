@@ -55,8 +55,7 @@ namespace libermedical.ViewModels
                     return;
                 }
 
-                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                { });
+                var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
                 //if photo ok
                 if (file != null)
                 {
@@ -70,7 +69,7 @@ namespace libermedical.ViewModels
                     //await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
                 }
             }
-            if (action == "Bibliothèque photo")
+            else if (action == "Bibliothèque photo")
             {
                 await CrossMedia.Current.Initialize();
 

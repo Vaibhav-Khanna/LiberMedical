@@ -11,8 +11,6 @@ namespace libermedical.Pages
         {
             InitializeComponent();
 
-            var a = this.BindingContext;
-
             MyDatePicker.Date = DateTime.Today;
             MyDatePicker.DateSelected += MyDatePickerOnDateSelected;
 
@@ -31,10 +29,6 @@ namespace libermedical.Pages
         }
 
         async void Cancel_Tapped(object sender, EventArgs e)
-        {
-            await Navigation.PopModalAsync();
-        }
-        async void Save_Tapped(object sender, EventArgs e)
         {
             await Navigation.PopModalAsync();
         }
@@ -68,9 +62,7 @@ namespace libermedical.Pages
 
         private void Patient_Tapped(object sender, EventArgs e)
         {
-            var c = BindingContext;
-            var vm = c as OrdonnanceDetailEditViewModel;
-            vm.SelectPatientCommand.Execute(sender);
+            (BindingContext as OrdonnanceDetailEditViewModel).SelectPatientCommand.Execute(sender);
         }
 
         private void Editor_Focused(object sender, FocusEventArgs e)
