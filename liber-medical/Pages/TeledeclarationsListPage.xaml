@@ -22,7 +22,7 @@
             </StackLayout> 
                 <ScrollView Grid.Row="1">
                     <StackLayout Padding="20,0,0,0">
-                        <ListView x:Name="listView" ItemsSource="{Binding teledeclarations}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected">
+                        <ListView x:Name="listView" ItemsSource="{Binding Teledeclarations}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell Tapped="Teledeclaration_Tapped">
