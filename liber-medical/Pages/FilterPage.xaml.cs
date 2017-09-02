@@ -9,11 +9,12 @@ namespace libermedical.Pages
     public partial class FilterPage : BasePage
     {
         private Filter _filter;
+		private string _parentScreen;
 
-        public FilterPage(Filter filter = null) : base(-1, 64, false)
+        public FilterPage(string parentScreen,Filter filter = null) : base(-1, 64, false)
         {
             InitializeComponent();
-
+			_parentScreen = parentScreen;
             if (filter != null)
             {
                 StartDatePicker.Date = filter.StartDate;
@@ -69,6 +70,8 @@ namespace libermedical.Pages
             }
 
             MessagingCenter.Send(this, Events.UpdatePrescriptionFilters, _filter);
+			if(_parentScreen=="Teledeclarations")
+			MessagingCenter.Send(this, Events.UpdateTeledeclarationsFilters, _filter);
 
             await Navigation.PopModalAsync();
         }

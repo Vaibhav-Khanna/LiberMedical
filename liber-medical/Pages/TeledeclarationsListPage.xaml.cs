@@ -18,15 +18,11 @@ namespace libermedical.Pages
             InitializeComponent();
         }
 
-        async void Filter_Clicked(object sender, System.EventArgs e)
-        {
-            await Navigation.PushModalAsync(new FilterPage());
-        }
-
-        async void Teledeclaration_Tapped(object sender, System.EventArgs e)
-        {
-            await Navigation.PushModalAsync(new NavigationPage(new TeledeclarationSecureActionPage()));
-        }
+		void Handle_ItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
+		{
+			((ListView)sender).SelectedItem = null;
+		}
+       
 
         async void Bill_Tapped(object sender, System.EventArgs e)
         {
@@ -34,7 +30,7 @@ namespace libermedical.Pages
         }
         void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
         {
-            ((ListView)sender).SelectedItem = null;
+            //((ListView)sender).SelectedItem = null;
         }
     }
 }
