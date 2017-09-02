@@ -13,75 +13,7 @@ namespace libermedical.Pages
         public TeledeclarationsListPage() : base(0, 64)
         {
             BindingContext = this;
-            teledeclarations = new ObservableCollection<Teledeclaration>
-            {
-                new Teledeclaration {
-                    Reference= 1,
-                    AddDate= new DateTime(2017, 04, 02),
-                    TotalAccount= 92.76,
-                    Status = "Traité"
-                },
-                new Teledeclaration {
-                    Reference= 1,
-                    AddDate= new DateTime(2017, 11, 08),
-                    TotalAccount= 67.64,
-                    Status = "Traité"
-                },
-                new Teledeclaration {
-                    Reference= 1,
-                    AddDate= new DateTime(2017, 04, 02),
-                    TotalAccount= 92.76,
-                    Status = "Traité"
-                },
-                new Teledeclaration {
-                    Reference= 1,
-                    AddDate= new DateTime(2017, 04, 02),
-                    TotalAccount= 92.76,
-                    Status = "Traité"
-                },
-                new Teledeclaration {
-                    Reference= 1,
-                    AddDate= new DateTime(2017, 04, 02),
-                    TotalAccount= 92.76,
-                    Status = "Traité"
-                },
-                new Teledeclaration {
-                    Reference= 1,
-                    AddDate= new DateTime(2017, 05, 24),
-                    TotalAccount= 92.76,
-                    Status = "Traité"
-                },
-                new Teledeclaration {
-                    Reference= 1,
-                    AddDate= new DateTime(2016, 07, 02),
-                    TotalAccount= 92.76,
-                    Status = "Traité"
-                },
-                new Teledeclaration {
-                    Reference= 1,
-                    AddDate= new DateTime(2017, 02, 11),
-                    TotalAccount= 92.76,
-                    Status = "Traité"
-                },
-                new Teledeclaration {
-                    Reference= 1,
-                    AddDate= new DateTime(2017, 03, 30),
-                    TotalAccount= 92.76,
-                    Status = "Traité"
-                },
-                new Teledeclaration {
-                    Reference= 1,
-                    AddDate= new DateTime(2017, 10, 22),
-                    TotalAccount= 12.64,
-                    Status = "Traité"
-                },
-                new Teledeclaration {
-                    Reference= 1,
-                    AddDate= new DateTime(2017, 08, 02),
-                    TotalAccount= 145.32,
-                    Status = "Traité"
-                }
-            };
+            
 
             InitializeComponent();
         }
