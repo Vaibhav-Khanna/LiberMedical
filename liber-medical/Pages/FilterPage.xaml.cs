@@ -19,15 +19,15 @@ namespace libermedical.Pages
             {
                 StartDatePicker.Date = filter.StartDate;
                 EndDatePicker.Date = filter.EndDate;
-                if (filter.Statuses.Contains(StatusEnum.Attente))
+                if (filter.Statuses.Contains(StatusEnum.waiting))
                 {
                     attente.On = true;
                 }
-                if (filter.Statuses.Contains(StatusEnum.Traite))
+                if (filter.Statuses.Contains(StatusEnum.valid))
                 {
                     traite.On = true;
                 }
-                if (filter.Statuses.Contains(StatusEnum.Refuse))
+                if (filter.Statuses.Contains(StatusEnum.refused))
                 {
                     refuse.On = true;
                 }
@@ -58,15 +58,15 @@ namespace libermedical.Pages
             };
             if (attente.On)
             {
-                _filter.Statuses.Add(StatusEnum.Attente);
+                _filter.Statuses.Add(StatusEnum.waiting);
             }
             if (traite.On)
             {
-                _filter.Statuses.Add(StatusEnum.Traite);
+                _filter.Statuses.Add(StatusEnum.valid);
             }
             if (refuse.On)
             {
-                _filter.Statuses.Add(StatusEnum.Refuse);
+                _filter.Statuses.Add(StatusEnum.refused);
             }
 
             MessagingCenter.Send(this, Events.UpdatePrescriptionFilters, _filter);

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using libermedical.CustomControls;
-using Xamarin.Forms;
+﻿using libermedical.CustomControls;
 
 namespace libermedical.Pages
 {
@@ -13,12 +10,12 @@ namespace libermedical.Pages
         }
         async void Cancel_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PopAsync();
+            await Navigation.PopModalAsync();
         }
 
         async void Frequence_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushAsync(new OrdonnanceFrequence2Page());
+            await Navigation.PushModalAsync(new OrdonnanceFrequence2Page());
         }
     }
 }

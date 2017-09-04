@@ -5,10 +5,9 @@
                  x:Class="libermedical.Pages.OrdonnancesListPage"
                  Style="{StaticResource AppBackgroundColor}"
                  Title="Ordonnances">
-
     <custom:BasePage.ToolbarItems>
         <ToolbarItem Name="Ordonnances" Icon="filters.png" Clicked="Filter_Clicked" />
-        <ToolbarItem Name="Ordonnances" Icon="plus.png" Command="{Binding OpenCameraCommand}" />
+        <ToolbarItem Name="Ordonnances" Icon="plus.png" Command="{Binding AddCommand}" />
     </custom:BasePage.ToolbarItems>
     <custom:BasePage.ContentPresenter>
         <ContentView>
@@ -45,7 +44,7 @@
                                             <Label Text="{Binding Patient.FullName}" HorizontalOptions="StartAndExpand"
                                                    VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}"
                                                    Grid.Row="0" Grid.Column="0" />
-                                            <Label Text="{Binding AddDate, StringFormat='{0:dd-MM-yyyy}'}"
+                                            <Label Text="{Binding FirstCareAt, StringFormat='{0:dd-MM-yyyy}'}"
                                                    HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"
                                                    Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1"
                                                    Grid.Column="0" />

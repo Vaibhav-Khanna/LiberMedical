@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.OrdonnanceDetailEditPage" 
-    Style="{StaticResource AppBackgroundColor}">
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="libermedical.Pages.OrdonnanceDetailEditPage"
+                 Style="{StaticResource AppBackgroundColor}">
     <custom:BasePage.Header>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
             <Grid Padding="5">
@@ -16,22 +18,24 @@
                     </Grid.GestureRecognizers>
                     <Image HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center" />
                 </Grid>
-                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderLabel}" Text="Ordonnance" />
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3"
+                       Style="{StaticResource HeaderLabel}" Text="Ordonnance" />
                 <Grid Grid.Column="2">
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Save_Tapped" />
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SaveCommand}"/>
                     </Grid.GestureRecognizers>
-                    <Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}" Text="Enregistrer" />
+                    <Label HorizontalOptions="Center" VerticalOptions="Center"
+                           Style="{StaticResource HeaderLabelAction}" Text="Enregistrer" />
                 </Grid>
             </Grid>
         </ContentView>
     </custom:BasePage.Header>
     <custom:BasePage.ContentPresenter>
         <ContentView Padding="0,0,0,0">
-            <TableView Intent="Menu" HasUnevenRows="True"  >
-                <TableRoot >
-                    <TableSection >
-                        <ViewCell Height="60"  >
+            <TableView Intent="Menu" HasUnevenRows="True">
+                <TableRoot>
+                    <TableSection>
+                        <ViewCell Height="60" Tapped="Patient_Tapped">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="15*" />
@@ -39,7 +43,8 @@
                                     <ColumnDefinition Width="10*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="user.png" VerticalOptions="Center" Grid.Column="0" />
-                                <Label Text="Bill Anderson" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+                                <Label Text="{Binding PatientLabel}" VerticalOptions="Center"
+                                       HorizontalOptions="FillAndExpand" Grid.Column="1" />
                             </Grid>
                         </ViewCell>
                     </TableSection>
@@ -52,7 +57,8 @@
                                     <ColumnDefinition Width="10*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="search.png" VerticalOptions="Center" Grid.Column="0" />
-                                <Label Text="Visualiser l'ordonnance" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+                                <Label Text="Visualiser l'ordonnance" VerticalOptions="Center"
+                                       HorizontalOptions="FillAndExpand" Grid.Column="1" />
                             </Grid>
                         </ViewCell>
                         <ViewCell Height="60">
@@ -63,12 +69,13 @@
                                     <ColumnDefinition Width="10*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
-                                <Label Text="Crée le 17/06/2017" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+                                <Label Text="{Binding Ordonnance.CreatedAt, StringFormat='Crée le {0:dd-MM-yyyy}'}"
+                                       VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
                             </Grid>
                         </ViewCell>
                     </TableSection>
                     <TableSection>
-                        <ViewCell Height="60">
+                        <ViewCell Height="60" Tapped="StatusCell_Tapped">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="15*" />
@@ -76,12 +83,13 @@
                                     <ColumnDefinition Width="10*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="clock.png" VerticalOptions="Center" Grid.Column="0" />
-                                <Label Text="Statut en attente..." VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+                                <Label x:Name="StatusLabel" Text="Statut en attente..." VerticalOptions="Center"
+                                       HorizontalOptions="FillAndExpand" Grid.Column="1" />
                             </Grid>
                         </ViewCell>
                     </TableSection>
                     <TableSection>
-                        <ViewCell Height="60">
+                        <ViewCell Height="60" Tapped="DatePicker_Tapped">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="15*" />
@@ -89,22 +97,29 @@
                                     <ColumnDefinition Width="10*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
-                                <Label Text="Date de premier soin" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+                                <DatePicker x:Name="MyDatePicker" IsVisible="False" Grid.Column="1" />
+                                <Label Text="Date de premier soin" VerticalOptions="Center"
+                                       HorizontalOptions="FillAndExpand" Grid.Column="1" />
                                 <Image Source="back_arrow_green.png" VerticalOptions="Center" Grid.Column="2" />
                             </Grid>
                         </ViewCell>
                     </TableSection>
                     <TableSection>
-                        <TextCell Text="Frequence d'administration" Detail="+ Ajouter" DetailColor="#007aff" Height="70" Tapped="Frequence_Tapped" />
+                        <TextCell Text="Frequence d'administration" Detail="+ Ajouter" DetailColor="#007aff"
+                                  Height="70" Tapped="Frequence_Tapped" />
                     </TableSection>
                     <TableSection>
-                        <TextCell Text="Pièce jointe" Detail="+ Ajouter" Height="70" DetailColor="#007aff" />
+                        <TextCell Text="Pièce jointe" Detail="+ Ajouter" Height="70" DetailColor="#007aff"
+                                  Command="{Binding AddAttachmentCommand}" />
                     </TableSection>
                     <TableSection>
                         <ViewCell Height="200">
                             <StackLayout Padding="18,10,20,10" Orientation="Vertical">
                                 <Label Text="Commentaire" TextColor="#000000" />
-                                <Editor Text="Ecrivez quelque chose" BackgroundColor="#f0f0f0" FontFamily="SFUIText-Regular.otf" FontSize="12" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+                                <Editor x:Name="MyEditor" BackgroundColor="#f0f0f0"
+                                        FontFamily="SFUIText-Regular.otf" FontSize="12"
+                                        HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                                        Focused="Editor_Focused" Unfocused="Editor_Unfocused" />
                             </StackLayout>
                         </ViewCell>
                     </TableSection>
@@ -114,7 +129,11 @@
     </custom:BasePage.ContentPresenter>
     <custom:BasePage.Footer>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
-            <Label Text="Enregistrer" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource FooterLabel}" />
+            <ContentView.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SaveCommand}"/>
+            </ContentView.GestureRecognizers>
+            <Label Text="Enregistrer" HorizontalOptions="Center" VerticalOptions="Center"
+                   Style="{StaticResource FooterLabel}" />
         </ContentView>
     </custom:BasePage.Footer>
 </custom:BasePage>
