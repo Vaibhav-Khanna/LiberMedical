@@ -76,17 +76,21 @@ namespace libermedical.ViewModels
 		}
 		protected override async Task TapCommandFunc(Cell cell)
 		{
-			if (ParentScreen == "SelectPatient")
+			if (ParentScreen == "HomeSelectPatient")
 			{
-				await Application.Current.MainPage.Navigation.PopModalAsync();
-                MessagingCenter.Send(this,"Patient-Ordonnance", cell.BindingContext as Patient);
+			    MessagingCenter.Send(this, Events.HomePageSetPatientForOrdonnance, cell.BindingContext as Patient);
+                await Application.Current.MainPage.Navigation.PopModalAsync();
+			}
+            else if (ParentScreen == "OrdonanceSelectPatient")
+			{
+			    MessagingCenter.Send(this, Events.OrdonnancePageSetPatientForOrdonnance, cell.BindingContext as Patient);
+			    await Application.Current.MainPage.Navigation.PopModalAsync();
 			}
 			else
 			{
 				var ctx = cell.BindingContext;
 				await CoreMethods.PushPageModelWithNewNavigation<DetailsPatientListViewModel>(ctx);
 			}
-
 		}
 
 		public override async void Init(object initData)

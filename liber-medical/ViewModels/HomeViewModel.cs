@@ -3,8 +3,6 @@ using libermedical.ViewModels.Base;
 using Xamarin.Forms;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
-using libermedical.Pages;
-using FreshMvvm;
 using libermedical.Models;
 using System.Threading.Tasks;
 using System;
@@ -57,22 +55,21 @@ namespace libermedical.ViewModels
                     return;
                 }
 
-                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                { });
+                var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
                 //if photo ok
                 if (file != null)
                 {
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "normal";
 
-                    await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "SelectPatient", typeNavigation, typeDoc }, true);
+                    await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "HomeSelectPatient", typeNavigation, typeDoc }, true);
 
                     //var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
-                    //var basicNavContainer = new FreshNavigationContainer(page, "SelectPatient");
+                    //var basicNavContainer = new FreshNavigationContainer(page, "HomeSelectPatient");
                     //await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
                 }
             }
-            if (action == "Bibliothèque photo")
+            else if (action == "Bibliothèque photo")
             {
                 await CrossMedia.Current.Initialize();
 
@@ -84,10 +81,10 @@ namespace libermedical.ViewModels
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "normal";
 					_documentPath = file.Path;
-                    await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "SelectPatient", typeNavigation, typeDoc },true);
+                    await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "HomeSelectPatient", typeNavigation, typeDoc },true);
 
                     //var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
-                    //var basicNavContainer = new FreshNavigationContainer(page, "SelectPatient");
+                    //var basicNavContainer = new FreshNavigationContainer(page, "HomeSelectPatient");
                     //await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
 
                 }
@@ -119,10 +116,10 @@ namespace libermedical.ViewModels
                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                     var typeNavigation = "fast";
 					_documentPath = file.Path;
-                    await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "SelectPatient", typeNavigation, typeDoc }, true);
+                    await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "HomeSelectPatient", typeNavigation, typeDoc }, true);
 
                     //var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
-                    //var basicNavContainer = new FreshNavigationContainer(page, "SelectPatient");
+                    //var basicNavContainer = new FreshNavigationContainer(page, "HomeSelectPatient");
                     //await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
                 }
             }
@@ -130,13 +127,14 @@ namespace libermedical.ViewModels
 
         private void SubscribeToMessages()
         {
-            MessagingCenter.Subscribe<PatientListViewModel, Patient>(this, "Patient-Ordonnance", async(sender,args) => {
-
-                if(args!=null)
+            MessagingCenter.Subscribe<PatientListViewModel, Patient>(this, Events.HomePageSetPatientForOrdonnance,
+                async (sender, patient) =>
                 {
-                    await AddPrescription(args);
-                }
-            });
+                    if (patient != null)
+                    {
+                        await AddPrescription(patient);
+                    }
+                });
         }
 
         private async Task AddPrescription(Patient patient)
@@ -146,9 +144,9 @@ namespace libermedical.ViewModels
                 var ordannance = new Ordonnance()
                 {
                     Reference = DateTime.Now.Ticks,
-                    AddDate = DateTime.Now,
+                    FirstCareAt = DateTime.Now,
                     Patient = patient,
-                    Status = Enums.StatusEnum.Traite,
+                    Status = Enums.StatusEnum.valid,
                     Id = DateTime.Now.Ticks.ToString(),
                     CreatedAt = DateTimeOffset.Now,
                     Attachments = new List<string>() { _documentPath },

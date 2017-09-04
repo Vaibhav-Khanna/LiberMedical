@@ -5,8 +5,6 @@ using System.Linq;
 using libermedical.CustomControls;
 using libermedical.Enums;
 using libermedical.Models;
-using libermedical.Utility;
-using Plugin.Media;
 using Xamarin.Forms;
 
 namespace libermedical.Pages
@@ -27,71 +25,71 @@ namespace libermedical.Pages
                 {
                     Reference = 1,
                     Patient = new Patient {FirstName = "Fred", LastName = "Pearson"},
-                    AddDate = new DateTime(2017, 04, 02),
-                    Status = StatusEnum.Traite
+                    FirstCareAt = new DateTime(2017, 04, 02),
+                    Status = StatusEnum.valid
                 },
                 new Ordonnance
                 {
                     Reference = 2,
                     Patient = new Patient {FirstName = "Jonanthan", LastName = "Vaughn"},
-                    AddDate = new DateTime(2017, 11, 10),
-                    Status = StatusEnum.Traite
+                    FirstCareAt = new DateTime(2017, 11, 10),
+                    Status = StatusEnum.valid
                 },
                 new Ordonnance
                 {
                     Reference = 3,
                     Patient = new Patient {FirstName = "Alexander", LastName = "Zimmerman"},
-                    AddDate = new DateTime(2017, 02, 06),
-                    Status = StatusEnum.Refuse
+                    FirstCareAt = new DateTime(2017, 02, 06),
+                    Status = StatusEnum.refused
                 },
                 new Ordonnance
                 {
                     Reference = 4,
                     Patient = new Patient {FirstName = "Keith", LastName = "Kelley"},
-                    AddDate = new DateTime(2017, 09, 17),
-                    Status = StatusEnum.Refuse
+                    FirstCareAt = new DateTime(2017, 09, 17),
+                    Status = StatusEnum.refused
                 },
                 new Ordonnance
                 {
                     Reference = 5,
                     Patient = new Patient {FirstName = "Justin", LastName = "Sims"},
-                    AddDate = new DateTime(2017, 03, 04),
-                    Status = StatusEnum.Traite
+                    FirstCareAt = new DateTime(2017, 03, 04),
+                    Status = StatusEnum.valid
                 },
                 new Ordonnance
                 {
                     Reference = 6,
                     Patient = new Patient {FirstName = "Franklin", LastName = "Howard"},
-                    AddDate = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.Attente
+                    FirstCareAt = new DateTime(2017, 09, 29),
+                    Status = StatusEnum.waiting
                 },
                 new Ordonnance
                 {
                     Reference = 8,
                     Patient = new Patient {FirstName = "Mickael", LastName = "Green"},
-                    AddDate = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.Attente
+                    FirstCareAt = new DateTime(2017, 09, 29),
+                    Status = StatusEnum.waiting
                 },
                 new Ordonnance
                 {
                     Reference = 9,
                     Patient = new Patient {FirstName = "Paul", LastName = "Howard"},
-                    AddDate = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.Traite
+                    FirstCareAt = new DateTime(2017, 09, 29),
+                    Status = StatusEnum.valid
                 },
                 new Ordonnance
                 {
                     Reference = 10,
                     Patient = new Patient {FirstName = "Justin", LastName = "Howard"},
-                    AddDate = new DateTime(2017, 10, 29),
-                    Status = StatusEnum.Attente
+                    FirstCareAt = new DateTime(2017, 10, 29),
+                    Status = StatusEnum.waiting
                 },
                 new Ordonnance
                 {
                     Reference = 11,
                     Patient = new Patient {FirstName = "John", LastName = "Obama"},
-                    AddDate = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.Attente
+                    FirstCareAt = new DateTime(2017, 09, 29),
+                    Status = StatusEnum.waiting
                 }
             };
 
@@ -115,8 +113,8 @@ namespace libermedical.Pages
                 foreach (var status in filter.Statuses)
                 {
                     var foundItems =
-                        Ordonnances.Where(x => x.Status == status && x.AddDate >= filter.StartDate &&
-                                                                     x.AddDate <= filter.EndDate);
+                        Ordonnances.Where(x => x.Status == status && x.FirstCareAt >= filter.StartDate &&
+                                                                     x.FirstCareAt <= filter.EndDate);
                     filteredItems.AddRange(foundItems);
                 }
 
@@ -144,59 +142,12 @@ namespace libermedical.Pages
             }
 
             var item = e.SelectedItem as Ordonnance;
-            await Navigation.PushModalAsync(new NavigationPage(new OrdonnanceDetailPage(item)));
+            await Navigation.PushModalAsync(new OrdonnanceDetailPage(item));
 
             // disable the visual selection state.
             ((ListView)sender).SelectedItem = null;
         }
-
-        async void Add_Clicked(object sender, System.EventArgs e)
-        {
-            var action = await DisplayActionSheet(null, "Annuler", null, "Ordonnance rapide", "Ordonnance classique");
-            var typeDoc = "ordonnance";
-            string typeNavigation = "";
-
-            if ((action != null) && (action != "Annuler"))
-            {
-                //init du plugin photo 
-                await CrossMedia.Current.Initialize();
-
-                if (UtilityClass.CameraAvailable())
-                {
-                    var file = await CrossMedia.Current.TakePhotoAsync(
-                        new Plugin.Media.Abstractions.StoreCameraMediaOptions()
-                        {
-                            AllowCropping = true
-                        });
-
-                    if (file != null)
-                    {
-                        var profilePicture = ImageSource.FromStream(() => file.GetStream());
-
-                        if (action == "Ordonnance rapide")
-                        {
-                            typeNavigation = "fast";
-                        }
-                        if (action == "Ordonnance classique")
-                        {
-                            typeNavigation = "normal";
-                        }
-
-                        await Navigation.PushModalAsync(
-                            new NavigationPage(new PatientListPage(typeNavigation, typeDoc)));
-                    }
-                }
-                else
-                {
-                    await DisplayAlert("No Camera", ":( No camera available.", "OK");
-                }
-            }
-            else
-            {
-                return;
-            }
-        }
-
+        
         private void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (!string.IsNullOrEmpty(e.NewTextValue))

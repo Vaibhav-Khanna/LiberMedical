@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using libermedical.CustomControls;
-using libermedical.Models;
-using Xamarin.Forms;
 
 namespace libermedical.Pages
 {
@@ -61,23 +57,28 @@ namespace libermedical.Pages
                       ThirdCode= 5
                   }
               }; */
-            BindingContext = this;
-            InitializeComponent();
 
+            InitializeComponent();
+            BindingContext = this;
         }
 
         void Handle_OnChanged(object sender, Xamarin.Forms.ToggledEventArgs e)
         {
-            if (Switch.On == true) { Picker.IsVisible = true; Footer.IsVisible = true; }
-            else { Picker.IsVisible = false; Footer.IsVisible = false; }
+            if (Switch.On == true)
+            {
+                Picker.IsVisible = true;
+                Footer.IsVisible = true;
+            }
+            else
+            {
+                Picker.IsVisible = false;
+                Footer.IsVisible = false;
+            }
         }
 
         async void Cancel_Tapped(object sender, System.EventArgs e)
         {
             await Navigation.PopAsync();
         }
-
-
-
     }
 }
