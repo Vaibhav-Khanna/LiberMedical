@@ -10,9 +10,9 @@ namespace libermedical.Models
         public double TotalAccount { set; get; }
         public StatusEnum Status { set; get; }
 
-		public string StatusString => Status == StatusEnum.Attente
+		public string StatusString => Status == StatusEnum.waiting
 			? "En attente"
-			: Status == StatusEnum.Traite
+			: Status == StatusEnum.valid
 				? "Traité"
 				: "Refusé";
     }
