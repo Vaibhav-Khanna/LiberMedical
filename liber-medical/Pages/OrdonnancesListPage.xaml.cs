@@ -131,7 +131,7 @@ namespace libermedical.Pages
         
         async void Filter_Clicked(object sender, System.EventArgs e)
         {
-            await Navigation.PushModalAsync(new FilterPage(_filter));
+			await Navigation.PushModalAsync(new FilterPage("Ordonnance",_filter));
         }
 
         async void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
