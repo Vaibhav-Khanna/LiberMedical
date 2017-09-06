@@ -1,13 +1,13 @@
-﻿using libermedical.Models;
-using libermedical.Services;
-using libermedical.ViewModels.Base;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Xamarin.Forms;
-using System.Diagnostics;
 using System.Windows.Input;
+using libermedical.Models;
+using libermedical.Services;
+using libermedical.ViewModels.Base;
+using Xamarin.Forms;
 
 namespace libermedical.ViewModels
 {
@@ -37,6 +37,13 @@ namespace libermedical.ViewModels
 
 		public ICommand BackArrowCommand => new Command(
 			async () => await CoreMethods.PopModalNavigationService());
+		public ICommand AddUserCommand => new Command(
+			async () =>
+			{
+				await PushPageModelWithNewNavigation<AddEditPatientViewModel>(null);
+
+			});
+
 		private async void FilterGroupItems(string searchString)
 		{
 			try

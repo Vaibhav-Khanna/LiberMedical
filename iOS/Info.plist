@@ -1,11 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleDisplayName</key>
-	<string>liber-medical</string>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+    <key>CFBundleDisplayName</key>
+	<string>LiberMedical</string>
 	<key>CFBundleName</key>
-	<string>liber-medical</string>
+	<string>LIberMedical</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.matsiya.libermedical</string>
 	<key>LSRequiresIPhoneOS</key>

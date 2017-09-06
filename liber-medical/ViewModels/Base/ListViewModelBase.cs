@@ -37,9 +37,6 @@ namespace libermedical.ViewModels.Base
 		}
 		public ICommand ListElementTapCommand => new Command<Cell>(async cell => await TapCommandFunc(cell));
 
-		public ICommand AddUserCommand => new Command(
-			async () => await CoreMethods.PushPageModelWithNewNavigation<AddEditPatientViewModel>(null));
-
 		public ICommand RefreshCommand => new Command(async () =>
 		{
 			IsRefreshing = true;
