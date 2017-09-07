@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using libermedical.CustomControls;
 using libermedical.Enums;
 using libermedical.Models;
 using Xamarin.Forms;
 
 namespace libermedical.Pages
 {
-    public partial class OrdonnancesListPage : BasePage
+	public partial class OrdonnancesListPage
     {
         public ObservableCollection<Ordonnance> Ordonnances { get; set; }
         private ObservableCollection<Ordonnance> _filteredItems { get; set; }
 
         private Filter _filter;
 
-        public OrdonnancesListPage() : base(0, 0)
+        public OrdonnancesListPage()
         {
             BindingContext = this;
             Ordonnances = new ObservableCollection<Ordonnance>
@@ -129,7 +128,7 @@ namespace libermedical.Pages
             }
         }
         
-        async void Filter_Clicked(object sender, System.EventArgs e)
+        async void Filter_Clicked(object sender, EventArgs e)
         {
 			await Navigation.PushModalAsync(new FilterPage("Ordonnance",_filter));
         }

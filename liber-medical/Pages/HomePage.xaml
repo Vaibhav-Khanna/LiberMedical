@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.HomePage" Style="{StaticResource AppBackgroundColor}" Title="LiberMedical">
-    <custom:BasePage.Resources>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.HomePage" Style="{StaticResource AppBackgroundColor}" Title="LiberMedical">
+    <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="HomePageAsk" TargetType="Label">
                 <Setter Property="FontFamily" Value="SFUIText-Regular.otf" />
@@ -13,8 +13,7 @@
                 <Setter Property="TextColor" Value="{StaticResource PurpleyGrey2}" />
             </Style>
         </ResourceDictionary>
-    </custom:BasePage.Resources>
-    <custom:BasePage.ContentPresenter>
+    </ContentPage.Resources>
         <ContentView>
             <Grid RowSpacing="0">
                 <Grid.RowDefinitions>
@@ -50,5 +49,4 @@
                 </StackLayout>
             </Grid>
         </ContentView>
-    </custom:BasePage.ContentPresenter>
-</custom:BasePage>
+</ContentPage>

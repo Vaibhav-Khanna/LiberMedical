@@ -21,11 +21,6 @@ namespace libermedical
             FreshIOC.Container.Register<IStorageService<Patient>, StorageService<Patient>>();
 			FreshIOC.Container.Register<IStorageService<Ordonnance>, StorageService<Ordonnance>>();
 			FreshIOC.Container.Register(UserDialogs.Instance);
-			//MainPage = new NavigationPage(new WheelPicker());
-			//MainPage = new NavigationPage(new OrdonnanceCotationPage());
-
-			//			            MainPage = new MainTabPage();
-
 
 			MessagingCenter.Subscribe<MyAccountEditViewModel>(this, "ProfileUpdate", UpdateProfile);
 			if (string.IsNullOrEmpty(Settings.CurrentUser))
@@ -33,7 +28,8 @@ namespace libermedical
 				var s = new Profile {CreatedAt = DateTimeOffset.Now, LastName = "Turanga", FirstName = "Leela", EmailAddress = "leela@planetexpress.com", PhoneNumber = "+1 (217) 314-15-92"};
 				Settings.CurrentUser = JsonConvert.SerializeObject(s);
 			}
-			var tabbedNavigation = new FreshTabbedNavigationContainer{Style = Resources["TabbedPage"] as Style};
+
+			var tabbedNavigation = new LibermedicalTabbedNavigation { Style = Resources["TabbedPage"] as Style };
 			tabbedNavigation.AddTab<HomeViewModel>("", "home_green.png");
 			tabbedNavigation.AddTab<PatientListViewModel>("", "patients.png");
 			tabbedNavigation.AddTab<OrdonnancesListViewModel>("", "ordonnances.png");
@@ -45,7 +41,7 @@ namespace libermedical
 				tabbedNavigationTabbedPage.Style = Resources["NavigationPage"] as Style;
 			}
 			MainPage = tabbedNavigation;
-			//			MainPage = new NavigationPage(new LoginPage());
+//			MainPage = new NavigationPage(new LoginPage()){ BarTextColor = Color.White};
 		}
 
 		protected override void OnStart()

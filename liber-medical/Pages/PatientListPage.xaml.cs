@@ -9,22 +9,12 @@ namespace libermedical.Pages
 	{
 		public ObservableCollection<Patient> patients { get; set; }
 
-		public PatientListPage() : base(0, 0)
+		public PatientListPage()
 		{
 			//ToolItemBarConstruction because we arrive from TabbedPage Directely
 
 			Title = "Patients";
 			InitializeComponent();
-		}
-
-		public PatientListPage(string navigationType, string typeDoc) : base(-1, 0, false)
-		{
-			InitializeComponent();
-		}
-
-		async void Back_Tapped(object sender, System.EventArgs e)
-		{
-			await Navigation.PopModalAsync();
 		}
 
 		void PatientTapped(object sender, System.EventArgs e)
@@ -35,7 +25,7 @@ namespace libermedical.Pages
 			vm.ListElementTapCommand.Execute(cell);
 		}
 
-		void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+		void Handle_ItemSelected(object sender, SelectedItemChangedEventArgs e)
 		{
 			((ListView) sender).SelectedItem = null;
 		}

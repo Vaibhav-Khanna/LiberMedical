@@ -57,6 +57,7 @@
     <Compile Include="liber-medicalPage.xaml.cs">
       <DependentUpon>liber-medicalPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\LibermedicalTabbedNavigation.cs" />
     <Compile Include="Managers\IRestService.cs" />
     <Compile Include="Managers\RestService.cs" />
     <Compile Include="Models\BaseDTO.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Request\LoginRequest.cs" />
     <Compile Include="Responses\ErrorResponse.cs" />
     <Compile Include="Responses\PaginationResponse.cs" />
+    <Compile Include="Services\CustomNavigationContainer.cs" />
     <Compile Include="Services\StorageService.cs" />
     <Compile Include="Services\IStorageService.cs" />
     <Compile Include="Enums\StatusEnum.cs" />

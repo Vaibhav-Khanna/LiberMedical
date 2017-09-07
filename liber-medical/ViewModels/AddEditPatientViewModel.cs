@@ -43,7 +43,7 @@ namespace libermedical.ViewModels
             _storageService = storageService;
         }
 
-        public override void Init(object initData)
+	    public override void Init(object initData)
         {
             base.Init(initData);
             if (initData == null)
