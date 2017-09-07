@@ -18,6 +18,7 @@ namespace libermedical.ViewModels
 		private string NavigationType;
         private string ParentScreen;
         private string DocType;
+		
 		public PatientListViewModel(IStorageService<Patient> storageService) : base(storageService)
 		{
 			_patientsStorage = storageService;

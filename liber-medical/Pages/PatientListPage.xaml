@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.PatientListPage" Style="{StaticResource ModalBackgroundColor}">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.PatientListPage" Title="Patients" Style="{StaticResource ModalBackgroundColor}">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Order="Primary" Icon="plus.png" Command="{Binding AddUserCommand}" />
 	</ContentPage.ToolbarItems>

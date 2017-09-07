@@ -6,7 +6,8 @@ namespace libermedical.ViewModels
 {
 	public class PlusViewModel: ViewModelBase
 	{
-		public ICommand GoToProfileCommand => new Command(() => CoreMethods.PushPageModel<MyAccountViewModel>(null, true));
+		public ICommand GoToProfileCommand => new Command(async () => 
+			await CoreMethods.PushPageModel<MyAccountViewModel>(null, true));
 
 		public ICommand ConnectCommand => new Command(() =>
 		{

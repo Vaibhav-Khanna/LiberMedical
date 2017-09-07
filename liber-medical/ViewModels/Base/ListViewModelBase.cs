@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using libermedical.Models;
 using libermedical.Services;
 using Xamarin.Forms;
-using System.Linq;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace libermedical.ViewModels.Base
 {
@@ -65,23 +65,25 @@ namespace libermedical.ViewModels.Base
 		{
 			try
 			{
-				var groupedList = new ObservableCollection<GroupedItem<Patient>>();
+				var groupedList = new ObservableCollection<GroupedItem<TModel>>();
 
 				var patientsList = observableCollection.Cast<Patient>().ToList();
-				var headers = patientsList.Select(x => x.LastName.Substring(0, 1)).Distinct().OrderBy(x=>x);
+				var headers = patientsList.Select(x => x.LastName.Substring(0, 1));
+
+				headers = headers.Select(h => char.ToUpper(h[0]).ToString()).Distinct().OrderBy(x => x);
+
 				foreach (var headerkey in headers)
 				{
-					var patientGroup = new GroupedItem<Patient>();
-					patientGroup.HeaderKey = headerkey;
+					var patientGroup = new GroupedItem<TModel> {HeaderKey = headerkey};
 					foreach (var item in patientsList.Where(x => x.LastName.StartsWith(headerkey, StringComparison.OrdinalIgnoreCase)).ToList())
 					{
 						patientGroup.Add(item);
 					}
-					groupedList.Add((GroupedItem<Patient>)(object)patientGroup);
+					groupedList.Add(patientGroup);
 				}
 
 
-				ItemsSource = (ObservableCollection<GroupedItem<TModel>>)(object)groupedList;
+				ItemsSource = groupedList;
 
 
 			}
