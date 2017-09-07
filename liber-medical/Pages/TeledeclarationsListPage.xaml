@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
-    xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
     x:Class="libermedical.Pages.TeledeclarationsListPage" 
     Style="{StaticResource AppBackgroundColor}"
     Title="Télédéclarations">
     
-    <custom:BasePage.ToolbarItems>
+    <ContentPage.ToolbarItems>
         <ToolbarItem Name="Télédéclarations" Icon="filters.png" Clicked="Filter_Clicked"/>
-    </custom:BasePage.ToolbarItems>
-    
-    <custom:BasePage.ContentPresenter>
-        <ContentView>
+    </ContentPage.ToolbarItems>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="50" />
                 </Grid.RowDefinitions>
                 <StackLayout BackgroundColor="#c8c7cc" Grid.Row="0"   Padding="8,7" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
            <SearchBar Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" />
@@ -52,16 +49,12 @@
                         </ListView>
                     </StackLayout>
                 </ScrollView>
-            </Grid>
-        </ContentView>
-    </custom:BasePage.ContentPresenter>
-    <custom:BasePage.Footer>
-        <ContentView Style="{StaticResource HeaderFooterBackground}" >
+        <StackLayout Grid.Row="2" HorizontalOptions="Center" Orientation="Horizontal" Style="{StaticResource HeaderFooterBackground}">
             <Image Source="secure.png"/>
             <Label Text="Mes factures à sécuriser" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource FooterLabel}" />
-            <ContentView.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Bill_Tapped" />
-                    </ContentView.GestureRecognizers>
-        </ContentView>
-    </custom:BasePage.Footer>
-</custom:BasePage>
+            <StackLayout.GestureRecognizers>
+              <TapGestureRecognizer Tapped="Bill_Tapped" />
+            </StackLayout.GestureRecognizers>
+        </StackLayout>
+			  </Grid>
+</ContentPage>

@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                  xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  x:Class="libermedical.Pages.OrdonnancesListPage"
                  Style="{StaticResource AppBackgroundColor}"
                  Title="Ordonnances">
-    <custom:BasePage.ToolbarItems>
+    <ContentPage.ToolbarItems>
         <ToolbarItem Name="Ordonnances" Icon="filters.png" Clicked="Filter_Clicked" />
         <ToolbarItem Name="Ordonnances" Icon="plus.png" Command="{Binding AddCommand}" />
-    </custom:BasePage.ToolbarItems>
-    <custom:BasePage.ContentPresenter>
+    </ContentPage.ToolbarItems>
         <ContentView>
             <Grid>
                 <Grid.RowDefinitions>
@@ -82,5 +81,4 @@
                 </ScrollView>
             </Grid>
         </ContentView>
-    </custom:BasePage.ContentPresenter>
-</custom:BasePage>
+</ContentPage>
