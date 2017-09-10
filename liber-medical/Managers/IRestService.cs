@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using libermedical.Request;
 using libermedical.Responses;
 
 namespace libermedical.Managers
@@ -12,7 +13,13 @@ namespace libermedical.Managers
         Task<T> GetSingleDataAsync(string id);
 
         Task<PaginationResponse<T>> GetAdditionalDataAsStringAsync(string otherType, string otherId);
-        
+
+        Task<TokenResponse> GetLoginToken(LoginRequest login);
+
+        Task<TokenResponse> RegenerateLoginToken();
+
+        Task RequestNewPassword(ForgotPasswordRequest request);
+
         Task<T> SaveItemAsync(T item, string id = "", bool isNewItem = false);
 
         Task DeleteItemAsync(string id);

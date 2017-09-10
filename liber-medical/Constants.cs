@@ -2,7 +2,6 @@
 {
     public class Constants
     {
-        // TODO to add url to web service
-        public static string RestUrl = "";
+        public static string RestUrl = "http://apiuat.matsiya.net/libermedical/v1/";
     }
 }

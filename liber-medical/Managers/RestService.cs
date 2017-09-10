@@ -4,7 +4,9 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using libermedical.CustomExceptions;
 using libermedical.Helpers;
+using libermedical.Request;
 using libermedical.Responses;
 using Newtonsoft.Json;
 
@@ -134,6 +136,76 @@ namespace libermedical.Managers
             }
 
             return Items;
+        }
+
+        public async Task<TokenResponse> GetLoginToken(LoginRequest login)
+        {
+            TokenResponse resp = null;
+
+            var uri = new Uri(string.Format(Constants.RestUrl + "login", string.Empty));
+
+            try
+            {
+                var json = JsonConvert.SerializeObject(login);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _client.PostAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content2 = await response.Content.ReadAsStringAsync();
+                    resp = JsonConvert.DeserializeObject<TokenResponse>(content2);
+                    Debug.WriteLine(@"				Item successfully saved.");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"				ERROR {0}", ex.Message);
+            }
+
+            return resp;
+        }
+
+        public async Task<TokenResponse> RegenerateLoginToken()
+        {
+            var uri = new Uri(string.Format(Constants.RestUrl + "regenerate" + "?" + _auth));
+            var response = await _client.GetAsync(uri);
+            var content = await response.Content.ReadAsStringAsync();
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.OK:
+                    var resp = JsonConvert.DeserializeObject<TokenResponse>(content);
+                    return resp;
+                case HttpStatusCode.BadRequest:
+                    var r = JsonConvert.DeserializeObject<ErrorResponse>(content);
+                    throw new Exception(r.Error);
+                default:
+                    throw new Exception();
+            }
+        }
+        
+        public async Task RequestNewPassword(ForgotPasswordRequest request)
+        {
+            var uri = new Uri(string.Format(Constants.RestUrl + "forgot", string.Empty));
+
+            try
+            {
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _client.PostAsync(uri, content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new BadResponseException("Error retrieving password");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"				ERROR {0}", ex.Message);
+            }
         }
 
         public async Task<T> SaveItemAsync(T item, string id = "", bool isNewItem = false)
