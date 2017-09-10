@@ -23,11 +23,6 @@ namespace libermedical.Pages
             (this.BindingContext as OrdonnanceDetailEditViewModel).Ordonnance.FirstCareAt = dateChangedEventArgs.NewDate;
         }
 
-        async void Frequence_Tapped(object sender, EventArgs e)
-        {
-            await Navigation.PushModalAsync(new OrdonnanceFrequencePage());
-        }
-
         async void Cancel_Tapped(object sender, EventArgs e)
         {
             await Navigation.PopModalAsync();

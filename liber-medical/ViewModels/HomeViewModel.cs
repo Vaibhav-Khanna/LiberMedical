@@ -150,6 +150,7 @@ namespace libermedical.ViewModels
                     Id = DateTime.Now.Ticks.ToString(),
                     CreatedAt = DateTimeOffset.Now,
                     Attachments = new List<string>() { _documentPath },
+                    Frequencies = new List<Frequency>()
                 };
                 await new StorageService<Ordonnance>().AddAsync(ordannance);
             }

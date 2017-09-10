@@ -52,11 +52,14 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Converters\BoolConverter.cs" />
+    <Compile Include="Enums\IncreaseEnum.cs" />
+    <Compile Include="Enums\PeriodEnum.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="liber-medicalPage.xaml.cs">
       <DependentUpon>liber-medicalPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Frequency.cs" />
     <Compile Include="Services\LibermedicalTabbedNavigation.cs" />
     <Compile Include="Managers\IRestService.cs" />
     <Compile Include="Managers\RestService.cs" />
@@ -159,7 +162,10 @@
     <Compile Include="ViewModels\MainTabViewModel.cs" />
     <Compile Include="ViewModels\MyAccountEditViewModel.cs" />
     <Compile Include="ViewModels\MyAccountViewModel.cs" />
+    <Compile Include="ViewModels\OrdonnanceCotationViewModel.cs" />
     <Compile Include="ViewModels\OrdonnanceDetailEditViewModel.cs" />
+    <Compile Include="ViewModels\OrdonnanceFrequence2ViewModel.cs" />
+    <Compile Include="ViewModels\OrdonnanceFrequenceViewModel.cs" />
     <Compile Include="ViewModels\OrdonnancesListViewModel.cs" />
     <Compile Include="ViewModels\PatientListViewModel.cs" />
     <Compile Include="Models\Ordonnance.cs" />

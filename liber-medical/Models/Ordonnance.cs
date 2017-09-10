@@ -21,6 +21,8 @@ namespace libermedical.Models
         public string RefusedReason { get; set; }
         [JsonProperty("attachments")]
         public List<string> Attachments { get; set; }
+        [JsonProperty("frequencies")]
+        public List<Frequency> Frequencies { get; set; }
 
         public long Reference { set; get; }
         public Patient Patient { set; get; }

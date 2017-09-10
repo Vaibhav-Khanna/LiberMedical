@@ -12,10 +12,5 @@ namespace libermedical.Pages
         {
             await Navigation.PopModalAsync();
         }
-
-        async void Frequence_Tapped(object sender, System.EventArgs e)
-        {
-            await Navigation.PushModalAsync(new OrdonnanceFrequence2Page());
-        }
     }
 }

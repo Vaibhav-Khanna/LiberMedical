@@ -106,7 +106,7 @@
                     </TableSection>
                     <TableSection>
                         <TextCell Text="Frequence d'administration" Detail="+ Ajouter" DetailColor="#007aff"
-                                  Height="70" Tapped="Frequence_Tapped" />
+                                  Height="70" Command="{Binding FrequenceTappedCommand}" />
                     </TableSection>
                     <TableSection>
                         <TextCell Text="Pièce jointe" Detail="+ Ajouter" Height="70" DetailColor="#007aff"

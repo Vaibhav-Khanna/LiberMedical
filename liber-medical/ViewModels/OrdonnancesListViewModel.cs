@@ -84,7 +84,8 @@ namespace libermedical.ViewModels
                     var ordonnance = new Ordonnance
                     {
                         Id = Guid.NewGuid().ToString(),
-                        Attachments = new List<string> { filePath }
+                        Attachments = new List<string> { filePath },
+                        Frequencies = new List<Frequency>()
                     };
 
                     if (action == "Ordonnance rapide")

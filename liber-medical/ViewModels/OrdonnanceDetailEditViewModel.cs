@@ -21,7 +21,8 @@ namespace libermedical.ViewModels
             {
                 Id = Guid.NewGuid().ToString(),
                 CreatedAt = DateTime.Today,
-                Attachments = new List<string>()
+                Attachments = new List<string>(),
+                Frequencies = new List<Frequency>()
             };
 
             MessagingCenter.Subscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance, async (sender, patient) => {
@@ -84,6 +85,13 @@ namespace libermedical.ViewModels
                     Ordonnance.Attachments.Add(file.Path);
                 }
             }
+        });
+
+        public ICommand FrequenceTappedCommand => new Command(async () =>
+        {
+            var frequency = new Frequency();
+            Ordonnance.Frequencies.Add(frequency);
+            await CoreMethods.PushPageModel<OrdonnanceFrequenceViewModel>(frequency, true);
         });
     }
 }

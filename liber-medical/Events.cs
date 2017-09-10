@@ -7,5 +7,6 @@ namespace libermedical
 		public static string UpdateTeledeclarationsFilters = "UpdateTeledeclarationsFilters";
         public static string HomePageSetPatientForOrdonnance = "HomePageSetPatientForOrdonnance";
         public static string OrdonnancePageSetPatientForOrdonnance = "OrdonnancePageSetPatientForOrdonnance";
+        public static string SetInitialPickerValue = "SetInitialPickerValue";
     }
 }
