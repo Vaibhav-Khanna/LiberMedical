@@ -19,54 +19,25 @@ namespace libermedical.Helpers
         #region Setting Constants
 
 	    private static readonly string stringDefault = string.Empty;
+	    private static readonly int intDefault = 0;
+	    public static readonly bool booleanDefault = false;
+
+	    const bool NeedsSyncDefault = true;
 
         const string LastSyncKey = "last_sync";
 		static readonly DateTime LastSyncDefault = DateTime.Now.AddDays(-30);
 
+	    private const string IsLoggedInKey = "IsLoggedIn";
+	    private const string TokenKey = "Token";
+	    private const string TokenExpirationKey = "TokenExpiration";
+	    private const string UserKey = "UserKey";
 
-		const string UserIdKey = "userid";
-		static readonly string UserIdDefault = string.Empty;
+        #endregion
 
-		const string AuthTokenKey = "authtoken";
-		static readonly string AuthTokenDefault = string.Empty;
-
-		const string LoginAttemptsKey = "login_attempts";
-		const int LoginAttemptsDefault = 0;
-
-		const string NeedsSyncKey = "needs_sync";
-		const bool NeedsSyncDefault = true;
-
-		const string HasSyncedDataKey = "has_synced";
-		const bool HasSyncedDataDefault = false;
-
-        private const string TokenKey = "Token";
-
-		private const string CurrentUserKey = "currentUserKey";
-		static readonly string CurrentUserDefault = "";
-		#endregion
-
-
-		public static string AuthToken
-		{
-			get { return AppSettings.GetValueOrDefault(AuthTokenKey, AuthTokenDefault); }
-			set { AppSettings.AddOrUpdateValue(AuthTokenKey, value); }
-		}
-
-		public static string UserId
-		{
-			get { return AppSettings.GetValueOrDefault(UserIdKey, UserIdDefault); }
-			set { AppSettings.AddOrUpdateValue(UserIdKey, value); }
-		}
-
-		public static bool IsLoggedIn
-		{
-			get
-			{
-//				if (!StorageService.UseAuth)
-				return true;
-
-				return !string.IsNullOrWhiteSpace(UserId);
-			}
+	    public static bool IsLoggedIn
+	    {
+	        get { return AppSettings.GetValueOrDefault(IsLoggedInKey, booleanDefault); }
+	        set { AppSettings.AddOrUpdateValue(IsLoggedInKey, value); }
 	    }
 
 	    public static string Token
@@ -75,10 +46,16 @@ namespace libermedical.Helpers
 	        set { AppSettings.AddOrUpdateValue(TokenKey, value); }
 	    }
 
-		public static string CurrentUser
-		{ 
-			get { return AppSettings.GetValueOrDefault(CurrentUserKey, CurrentUserDefault); }
-			set { AppSettings.AddOrUpdateValue(CurrentUserKey, value); }
-		}
+	    public static int TokenExpiration
+	    {
+	        get { return AppSettings.GetValueOrDefault(TokenExpirationKey, intDefault); }
+	        set { AppSettings.AddOrUpdateValue(TokenExpirationKey, value); }
+	    }
+
+	    public static string CurrentUser
+	    {
+	        get { return AppSettings.GetValueOrDefault(UserKey, stringDefault); }
+	        set { AppSettings.AddOrUpdateValue(UserKey, value); }
+	    }
 	}
 }

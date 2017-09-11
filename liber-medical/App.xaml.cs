@@ -1,10 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Acr.UserDialogs;
 using Akavache;
 using FreshMvvm;
 using libermedical.Helpers;
+using libermedical.Managers;
 using libermedical.Models;
+using libermedical.Pages;
+using libermedical.Request;
 using libermedical.Services;
 using libermedical.ViewModels;
 using Newtonsoft.Json;
@@ -13,8 +15,12 @@ using Xamarin.Forms;
 namespace libermedical
 {
 	public partial class App : Application
-	{        
-		public App()
+    {
+        private static ILoginManager _loginManager;
+
+        public static LibermedicalTabbedNavigation tabbedNavigation;
+
+        public App()
 		{
 			InitializeComponent();
             BlobCache.ApplicationName = "LiberMedical";
@@ -23,13 +29,8 @@ namespace libermedical
 			FreshIOC.Container.Register(UserDialogs.Instance);
 
 			MessagingCenter.Subscribe<MyAccountEditViewModel>(this, "ProfileUpdate", UpdateProfile);
-			if (string.IsNullOrEmpty(Settings.CurrentUser))
-			{
-				var s = new Profile {CreatedAt = DateTimeOffset.Now, LastName = "Turanga", FirstName = "Leela", EmailAddress = "leela@planetexpress.com", PhoneNumber = "+1 (217) 314-15-92"};
-				Settings.CurrentUser = JsonConvert.SerializeObject(s);
-			}
 
-			var tabbedNavigation = new LibermedicalTabbedNavigation { Style = Resources["TabbedPage"] as Style };
+			tabbedNavigation = new LibermedicalTabbedNavigation { Style = Resources["TabbedPage"] as Style };
 			tabbedNavigation.AddTab<HomeViewModel>("", "home_green.png");
 			tabbedNavigation.AddTab<PatientListViewModel>("", "patients.png");
 			tabbedNavigation.AddTab<OrdonnancesListViewModel>("", "ordonnances.png");
@@ -40,8 +41,15 @@ namespace libermedical
 			{
 				tabbedNavigationTabbedPage.Style = Resources["NavigationPage"] as Style;
 			}
-			MainPage = tabbedNavigation;
-//			MainPage = new NavigationPage(new LoginPage()){ BarTextColor = Color.White};
+
+		    if (Settings.IsLoggedIn)
+		    {
+		        MainPage = tabbedNavigation;
+		    }
+		    else
+		    {
+		        MainPage = new NavigationPage(new LoginPage());// { BarTextColor = Color.White };
+		    }
 		}
 
 		protected override void OnStart()
@@ -71,5 +79,8 @@ namespace libermedical
 			//TODO: Send new profile from Settings to server.
 			return null;
 		}
-	}
+
+        public static ILoginManager LoginManager => _loginManager ??
+                                                    (_loginManager = new LoginManager(new RestService<LoginRequest>("")));
+    }
 }

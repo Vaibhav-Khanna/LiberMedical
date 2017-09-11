@@ -22,10 +22,10 @@
             <TableView Intent="Settings" RowHeight="50">
                 <TableRoot>
                     <TableSection Title="Choisissez la fréquence d'administration">
-                        <TextCell Text="Matin" Tapped="Frequence_Tapped" />
-                        <TextCell Text="Midi" Tapped="Frequence_Tapped" />
-                        <TextCell Text="Après-midi" Tapped="Frequence_Tapped" />
-                        <TextCell Text="Soir" Tapped="Frequence_Tapped" />
+                        <TextCell Text="Matin" Command="{Binding MoringTappedCommand}" />
+                        <TextCell Text="Midi" Command="{Binding LunchTappedCommand}" />
+                        <TextCell Text="Après-midi" Command="{Binding AfternoonTappedCommand}" />
+                        <TextCell Text="Soir" Command="{Binding EveningTappedCommand}" />
                     </TableSection>
                 </TableRoot>
             </TableView>

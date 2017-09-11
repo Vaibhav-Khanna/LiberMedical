@@ -1,49 +1,81 @@
-﻿using libermedical.CustomControls;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using libermedical.CustomControls;
+using libermedical.Enums;
+using libermedical.ViewModels;
+using Xamarin.Forms;
 
 namespace libermedical.Pages
 {
     public partial class OrdonnanceFrequence2Page : BasePage
     {
+        public List<string> Movements { get; set; }
 
         public OrdonnanceFrequence2Page() : base(-1, 64, false)
         {
-            BindingContext = this;
             InitializeComponent();
+
+            Movements = new List<string>
+            {
+                "Non", "IFD", "IFP", "IFO", "IFN", "IFR", "IFS"
+            };
+
+            MovementPicker.ItemsSource = Movements;
+
+            MessagingCenter.Subscribe<OrdonnanceFrequence2ViewModel>(this, Events.SetInitialPickerValue, async (sender) =>
+            {
+                while (this.BindingContext == null)
+                {
+                    await Task.Delay(100);
+                }
+                MovementPicker.SelectedIndex = 0;
+            });
         }
+
         async void Cancel_Tapped(object sender, System.EventArgs e)
         {
             await Navigation.PopModalAsync();
         }
-        async void Save_Tapped(object sender, System.EventArgs e)
-        {
-            await Navigation.PopModalAsync();
-
-        }
-        async void Cotations_Tapped(object sender, System.EventArgs e)
-        {
-            await Navigation.PushModalAsync(new OrdonnanceCotationPage());
-        }
 
         void Majoration_Tapped(object sender, System.EventArgs e)
         {
-
             //Changement des majorations à la tap sur la zone
-            string[] tab = { "Non", "MAU", "MCI" };
+            string[] tab = {"Non", "MAU", "MCI"};
             var cot = maj.Text;
 
             for (var i = 0; i < tab.Length; i++)
             {
-                if ((cot == tab[i]) && (i < tab.Length - 1)) { maj.Text = tab[i + 1]; }
-                if ((cot == tab[i]) && (i == tab.Length - 1)) { maj.Text = tab[0]; }
-
+                if (cot == tab[i] && i < tab.Length - 1)
+                {
+                    maj.Text = tab[i + 1];
+                }
+                if (cot == tab[i] && i == tab.Length - 1)
+                {
+                    maj.Text = tab[0];
+                }
             }
-
-
+            (this.BindingContext as OrdonnanceFrequence2ViewModel).Frequency.Increase = maj.Text == tab[0]
+                ? IncreaseEnum.Non
+                : maj.Text == tab[1]
+                    ? IncreaseEnum.MAU
+                    : IncreaseEnum.MCI;
         }
 
         void Deplacement_Tapped(object sender, System.EventArgs e)
         {
+            MovementPicker.Focus();
+        }
 
+        private void NightOnChanged(object sender, ToggledEventArgs e)
+        {
+            (this.BindingContext as OrdonnanceFrequence2ViewModel).Frequency.Night = e.Value;
+        }
+
+        private void Picker_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            (this.BindingContext as OrdonnanceFrequence2ViewModel).Frequency.Movement =
+                Movements[MovementPicker.SelectedIndex];
         }
     }
 }

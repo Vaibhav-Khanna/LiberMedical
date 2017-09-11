@@ -1,5 +1,4 @@
-﻿using System;
-using libermedical.CustomControls;
+﻿using libermedical.CustomControls;
 
 namespace libermedical.Pages
 {
@@ -59,12 +58,11 @@ namespace libermedical.Pages
               }; */
 
             InitializeComponent();
-            BindingContext = this;
         }
 
         void Handle_OnChanged(object sender, Xamarin.Forms.ToggledEventArgs e)
         {
-            if (Switch.On == true)
+            if (Switch.On)
             {
                 Picker.IsVisible = true;
                 Footer.IsVisible = true;
@@ -78,7 +76,7 @@ namespace libermedical.Pages
 
         async void Cancel_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PopAsync();
+            await Navigation.PopModalAsync();
         }
     }
 }

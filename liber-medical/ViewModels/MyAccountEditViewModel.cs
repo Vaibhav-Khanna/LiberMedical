@@ -17,13 +17,13 @@ namespace libermedical.ViewModels
 		public MyAccountEditViewModel(IUserDialogs dialogs)
 		{
 			_dialogs = dialogs;
-			CurrentUser = JsonConvert.DeserializeObject<Profile>(Settings.CurrentUser);
+			CurrentUser = JsonConvert.DeserializeObject<User>(Settings.CurrentUser);
 		}
 
 		public ICommand SaveCommand => new Command(async () => await SaveProfile());
 
 
-		public Profile CurrentUser { get; set; }
+		public User CurrentUser { get; set; }
 
 		public string OldPassword { get; set; } = string.Empty;
 		public string NewPassword { get; set; } = string.Empty;
@@ -31,7 +31,7 @@ namespace libermedical.ViewModels
 
 		private async Task SaveProfile()
 		{
-			if (!EmailValidator.EmailIsValid(CurrentUser.EmailAddress))
+			if (!EmailValidator.EmailIsValid(CurrentUser.Email))
 			{
 				await CoreMethods.DisplayAlert("Email", "Please use a valid Email address", "OK");
 				return;

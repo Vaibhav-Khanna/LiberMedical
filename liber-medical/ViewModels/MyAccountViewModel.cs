@@ -22,11 +22,11 @@ namespace libermedical.ViewModels
 
 		private void GetUserFromSettings()
 		{
-			var p = JsonConvert.DeserializeObject<Profile>(Settings.CurrentUser);
-			FirstName = p.FirstName;
-			LastName = p.LastName;
-			PhoneNumber = p.PhoneNumber;
-			EmailAddress = p.EmailAddress;
+			var p = JsonConvert.DeserializeObject<User>(Settings.CurrentUser);
+			FirstName = p.Firstname;
+			LastName = p.Lastname;
+			PhoneNumber = p.Phone;
+			EmailAddress = p.Email;
 		}
 
 		public ICommand EditCommand => new Command(async () =>
