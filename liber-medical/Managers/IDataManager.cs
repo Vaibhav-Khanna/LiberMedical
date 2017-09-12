@@ -11,7 +11,7 @@ namespace libermedical.Managers
 {
     public interface IDataManager<TModel> where TModel : class, new()
     {
-        Task<PaginationResponse<TModel>> GetListAsync(IGetListRequest<TModel> request);
+        Task<PaginationResponse<TModel>> GetListAsync(GetListRequest request);
         
         Task<PaginationResponse<TModel>> GetListAsync();
 

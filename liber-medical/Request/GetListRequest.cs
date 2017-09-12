@@ -2,7 +2,7 @@
 
 namespace libermedical.Request
 {
-    public class GetListRequest<TEntity> : IGetListRequest<TEntity> where TEntity : class
+    public class GetListRequest
     {
         public GetListRequest(int limit, int page, string searchValue = "", string searchFields = "", string sortField = "", SortDirectionEnum sortDirection = SortDirectionEnum.Asc)
         {

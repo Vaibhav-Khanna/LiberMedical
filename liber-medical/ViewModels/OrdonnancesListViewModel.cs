@@ -7,6 +7,7 @@ using libermedical.ViewModels.Base;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using libermedical.Request;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 
@@ -25,7 +26,17 @@ namespace libermedical.ViewModels
 
         private async void BindData()
         {
-            Ordonnances = new ObservableCollection<Ordonnance>(await _ordonnanceStorage.GetList());
+            if (App.IsConnected())
+            {
+                var request = new GetListRequest(20, 0);
+                Ordonnances =
+                    new ObservableCollection<Ordonnance>((await App.OrdonnanceManager.GetListAsync(request)).rows);
+                //TODO update items in _ordonnanceStorage
+            }
+            else
+            {
+                Ordonnances = new ObservableCollection<Ordonnance>(await _ordonnanceStorage.GetList());
+            }
         }
 
         protected override async Task TapCommandFunc(Cell cell)

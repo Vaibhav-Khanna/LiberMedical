@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using libermedical.Enums;
 using libermedical.Models;
+using libermedical.Request;
 using Xamarin.Forms;
 
 namespace libermedical.Pages
@@ -17,84 +18,83 @@ namespace libermedical.Pages
 
         public OrdonnancesListPage()
         {
-            BindingContext = this;
-            Ordonnances = new ObservableCollection<Ordonnance>
-            {
-                new Ordonnance
-                {
-                    Reference = 1,
-                    Patient = new Patient {FirstName = "Fred", LastName = "Pearson"},
-                    FirstCareAt = new DateTime(2017, 04, 02),
-                    Status = StatusEnum.valid
-                },
-                new Ordonnance
-                {
-                    Reference = 2,
-                    Patient = new Patient {FirstName = "Jonanthan", LastName = "Vaughn"},
-                    FirstCareAt = new DateTime(2017, 11, 10),
-                    Status = StatusEnum.valid
-                },
-                new Ordonnance
-                {
-                    Reference = 3,
-                    Patient = new Patient {FirstName = "Alexander", LastName = "Zimmerman"},
-                    FirstCareAt = new DateTime(2017, 02, 06),
-                    Status = StatusEnum.refused
-                },
-                new Ordonnance
-                {
-                    Reference = 4,
-                    Patient = new Patient {FirstName = "Keith", LastName = "Kelley"},
-                    FirstCareAt = new DateTime(2017, 09, 17),
-                    Status = StatusEnum.refused
-                },
-                new Ordonnance
-                {
-                    Reference = 5,
-                    Patient = new Patient {FirstName = "Justin", LastName = "Sims"},
-                    FirstCareAt = new DateTime(2017, 03, 04),
-                    Status = StatusEnum.valid
-                },
-                new Ordonnance
-                {
-                    Reference = 6,
-                    Patient = new Patient {FirstName = "Franklin", LastName = "Howard"},
-                    FirstCareAt = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.waiting
-                },
-                new Ordonnance
-                {
-                    Reference = 8,
-                    Patient = new Patient {FirstName = "Mickael", LastName = "Green"},
-                    FirstCareAt = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.waiting
-                },
-                new Ordonnance
-                {
-                    Reference = 9,
-                    Patient = new Patient {FirstName = "Paul", LastName = "Howard"},
-                    FirstCareAt = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.valid
-                },
-                new Ordonnance
-                {
-                    Reference = 10,
-                    Patient = new Patient {FirstName = "Justin", LastName = "Howard"},
-                    FirstCareAt = new DateTime(2017, 10, 29),
-                    Status = StatusEnum.waiting
-                },
-                new Ordonnance
-                {
-                    Reference = 11,
-                    Patient = new Patient {FirstName = "John", LastName = "Obama"},
-                    FirstCareAt = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.waiting
-                }
-            };
+            //Ordonnances = new ObservableCollection<Ordonnance>
+            //{
+            //    new Ordonnance
+            //    {
+            //        Reference = 1,
+            //        Patient = new Patient {FirstName = "Fred", LastName = "Pearson"},
+            //        FirstCareAt = new DateTime(2017, 04, 02),
+            //        Status = StatusEnum.valid
+            //    },
+            //    new Ordonnance
+            //    {
+            //        Reference = 2,
+            //        Patient = new Patient {FirstName = "Jonanthan", LastName = "Vaughn"},
+            //        FirstCareAt = new DateTime(2017, 11, 10),
+            //        Status = StatusEnum.valid
+            //    },
+            //    new Ordonnance
+            //    {
+            //        Reference = 3,
+            //        Patient = new Patient {FirstName = "Alexander", LastName = "Zimmerman"},
+            //        FirstCareAt = new DateTime(2017, 02, 06),
+            //        Status = StatusEnum.refused
+            //    },
+            //    new Ordonnance
+            //    {
+            //        Reference = 4,
+            //        Patient = new Patient {FirstName = "Keith", LastName = "Kelley"},
+            //        FirstCareAt = new DateTime(2017, 09, 17),
+            //        Status = StatusEnum.refused
+            //    },
+            //    new Ordonnance
+            //    {
+            //        Reference = 5,
+            //        Patient = new Patient {FirstName = "Justin", LastName = "Sims"},
+            //        FirstCareAt = new DateTime(2017, 03, 04),
+            //        Status = StatusEnum.valid
+            //    },
+            //    new Ordonnance
+            //    {
+            //        Reference = 6,
+            //        Patient = new Patient {FirstName = "Franklin", LastName = "Howard"},
+            //        FirstCareAt = new DateTime(2017, 09, 29),
+            //        Status = StatusEnum.waiting
+            //    },
+            //    new Ordonnance
+            //    {
+            //        Reference = 8,
+            //        Patient = new Patient {FirstName = "Mickael", LastName = "Green"},
+            //        FirstCareAt = new DateTime(2017, 09, 29),
+            //        Status = StatusEnum.waiting
+            //    },
+            //    new Ordonnance
+            //    {
+            //        Reference = 9,
+            //        Patient = new Patient {FirstName = "Paul", LastName = "Howard"},
+            //        FirstCareAt = new DateTime(2017, 09, 29),
+            //        Status = StatusEnum.valid
+            //    },
+            //    new Ordonnance
+            //    {
+            //        Reference = 10,
+            //        Patient = new Patient {FirstName = "Justin", LastName = "Howard"},
+            //        FirstCareAt = new DateTime(2017, 10, 29),
+            //        Status = StatusEnum.waiting
+            //    },
+            //    new Ordonnance
+            //    {
+            //        Reference = 11,
+            //        Patient = new Patient {FirstName = "John", LastName = "Obama"},
+            //        FirstCareAt = new DateTime(2017, 09, 29),
+            //        Status = StatusEnum.waiting
+            //    }
+            //};
 
             InitializeComponent();
 
-            MyListView.ItemsSource = Ordonnances;
+            //MyListView.ItemsSource = Ordonnances;
 
             MessagingCenter.Subscribe<FilterPage, Filter>(this, Events.UpdatePrescriptionFilters, (sender, filter) =>
             {
@@ -103,6 +103,21 @@ namespace libermedical.Pages
                 ApplyFilter(filter);
             });
         }
+
+        //private async void DoAsyncActions()
+        //{
+        //    if (App.IsConnected())
+        //    {
+        //        var request = new GetListRequest(20, 0);
+        //        Ordonnances =
+        //            new ObservableCollection<Ordonnance>((await App.OrdonnanceManager.GetListAsync(request)).rows);
+        //        //TODO update items in _ordonnanceStorage
+        //    }
+        //    else
+        //    {
+        //        Ordonnances = new ObservableCollection<Ordonnance>(await _ordonnanceStorage.GetList());
+        //    }
+        //}
 
         private void ApplyFilter(Filter filter)
         {

@@ -20,7 +20,7 @@ namespace libermedical.Managers
             _restService = service;
         }
 
-        public virtual async Task<PaginationResponse<TModel>> GetListAsync(IGetListRequest<TModel> request)
+        public virtual async Task<PaginationResponse<TModel>> GetListAsync(GetListRequest request)
         {
             var res = new PaginationResponse<TModel>();
             try

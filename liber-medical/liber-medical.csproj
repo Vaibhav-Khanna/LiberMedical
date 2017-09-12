@@ -72,7 +72,6 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Request\ForgotPasswordRequest.cs" />
     <Compile Include="Request\GetListRequest.cs" />
-    <Compile Include="Request\IGetListRequest.cs" />
     <Compile Include="Responses\TokenResponse.cs" />
     <Compile Include="Services\LibermedicalTabbedNavigation.cs" />
     <Compile Include="Managers\IRestService.cs" />

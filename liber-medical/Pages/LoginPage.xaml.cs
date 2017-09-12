@@ -117,6 +117,8 @@ namespace libermedical.Pages
                 };
                 Settings.CurrentUser = JsonConvert.SerializeObject(user);
 
+                MessagingCenter.Send(this, Events.CreateTabbedPage);
+
                 await Navigation.PushModalAsync(App.tabbedNavigation);
             }
             else
