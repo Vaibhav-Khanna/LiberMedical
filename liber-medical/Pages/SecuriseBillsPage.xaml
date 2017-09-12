@@ -3,6 +3,7 @@
     xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
     x:Class="libermedical.Pages.SecuriseBillsPage" 
+    xmlns:syncfusion="clr-namespace:Syncfusion.SfPdfViewer.XForms;assembly=Syncfusion.SfPdfViewer.XForms"
     Style="{StaticResource AppBackgroundColorBlack}"
     Title="Facture à sécuriser">
  <custom:BasePage.Header>
@@ -14,7 +15,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0" >
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding BackCommand}" />
                     </Grid.GestureRecognizers>
                 <Image  HorizontalOptions="Center" Source="close.png" VerticalOptions="Center" />
                 </Grid>    
@@ -22,5 +23,18 @@
             </Grid>
         </ContentView>
     </custom:BasePage.Header>
+  <custom:BasePage.ContentPresenter>
+    <ContentView>
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <syncfusion:SfPdfViewer x:Name="pdfViewerControl" InputFileStream="{Binding PdfDocumentStream}"/>
+      </Grid>
+    </ContentView>
+  </custom:BasePage.ContentPresenter>
    
     </custom:BasePage>

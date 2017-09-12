@@ -2,6 +2,7 @@
 using Foundation;
 using UIKit;
 using Xamarin.Forms.Platform.iOS;
+using Syncfusion.SfPdfViewer.XForms.iOS;
 
 namespace libermedical.iOS
 {
@@ -20,7 +21,7 @@ namespace libermedical.iOS
 			UINavigationBar.Appearance.TitleTextAttributes = new UIStringAttributes {ForegroundColor = UIColor.White}; //Tint color of button items
 	        UISwitch.Appearance.OnTintColor = color;
 	        UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.LightContent, true);
-            
+            new SfPdfDocumentViewRenderer();
             LoadApplication(application);
 			return base.FinishedLaunching(app, options);
         }
