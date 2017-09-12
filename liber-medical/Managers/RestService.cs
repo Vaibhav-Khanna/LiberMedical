@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using libermedical.CustomExceptions;
+using libermedical.Enums;
 using libermedical.Helpers;
 using libermedical.Request;
 using libermedical.Responses;
@@ -54,7 +55,9 @@ namespace libermedical.Managers
             return Items;
         }
 
-        public async Task<PaginationResponse<T>> GetAllDataAsyncWithParameters(int limit, int page, string searchValue = "", string searchFields = "")
+        public async Task<PaginationResponse<T>> GetAllDataAsyncWithParameters(
+            int limit, int page, string searchValue = "", string searchFields = "",
+            string sortField = "", SortDirectionEnum direction = SortDirectionEnum.Asc)
         {
             var parameters = "?limit=" + limit + "&page=" + page;
             if (!string.IsNullOrEmpty(searchValue))
@@ -64,6 +67,10 @@ namespace libermedical.Managers
             if (!string.IsNullOrEmpty(searchFields))
             {
                 parameters += "&searchFields=" + searchFields;
+            }
+            if (!string.IsNullOrEmpty(sortField))
+            {
+                parameters += "&sortField=" + sortField;
             }
 
             parameters += "&" + _auth;
@@ -88,7 +95,7 @@ namespace libermedical.Managers
                     throw new Exception();
             }
         }
-
+        
         public async Task<T> GetSingleDataAsync(string id)
         {
             T item = default(T);

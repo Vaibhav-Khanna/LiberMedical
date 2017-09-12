@@ -28,7 +28,7 @@ namespace libermedical.Pages
             await Navigation.PushAsync(new MissingPasswordPage(_email));
         }
 
-        void Login_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
+        void Login_TextChanged(object sender, TextChangedEventArgs e)
         {
             //email entered by user
             _email = ((Entry) sender).Text;
@@ -65,7 +65,7 @@ namespace libermedical.Pages
             }
         }
 
-        void Password_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
+        void Password_TextChanged(object sender, TextChangedEventArgs e)
         {
             //password entered by user
             _pass = ((Entry) sender).Text;

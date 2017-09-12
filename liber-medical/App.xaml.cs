@@ -9,7 +9,6 @@ using libermedical.Pages;
 using libermedical.Request;
 using libermedical.Services;
 using libermedical.ViewModels;
-using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace libermedical
@@ -17,6 +16,7 @@ namespace libermedical
 	public partial class App : Application
     {
         private static ILoginManager _loginManager;
+        private static IOrdonnanceManager _ordonnanceManager;
 
         public static LibermedicalTabbedNavigation tabbedNavigation;
 
@@ -82,5 +82,8 @@ namespace libermedical
 
         public static ILoginManager LoginManager => _loginManager ??
                                                     (_loginManager = new LoginManager(new RestService<LoginRequest>("")));
+
+        public static IOrdonnanceManager OrdonnanceManager => _ordonnanceManager ??
+                                                              (_ordonnanceManager = new OrdonnanceManager(new RestService<Ordonnance>("ordonnances")));
     }
 }
