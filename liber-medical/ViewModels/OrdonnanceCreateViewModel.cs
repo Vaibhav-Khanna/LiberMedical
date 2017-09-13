@@ -10,12 +10,12 @@ using Xamarin.Forms;
 
 namespace libermedical.ViewModels
 {
-    public class OrdonnanceDetailEditViewModel : ViewModelBase
+    public class OrdonnanceCreateViewModel : ViewModelBase
     {
         public string PatientLabel { get; set; } = "Choisissez un patient";
         public Ordonnance Ordonnance { get; set; }
 
-        public OrdonnanceDetailEditViewModel()
+        public OrdonnanceCreateViewModel()
         {
             Ordonnance = new Ordonnance
             {
@@ -30,7 +30,7 @@ namespace libermedical.ViewModels
                 if (patient != null)
                 {
                     Ordonnance.PatientId = patient.Id;
-                    PatientLabel = patient.FullName;
+                    PatientLabel = patient.Fullname;
                 }
             });
         }

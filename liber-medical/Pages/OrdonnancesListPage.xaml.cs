@@ -2,99 +2,30 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using libermedical.Enums;
 using libermedical.Models;
+using libermedical.ViewModels;
 using Xamarin.Forms;
 
 namespace libermedical.Pages
 {
 	public partial class OrdonnancesListPage
     {
-        public ObservableCollection<Ordonnance> Ordonnances { get; set; }
+        //public ObservableCollection<Ordonnance> Ordonnances { get; set; }
         private ObservableCollection<Ordonnance> _filteredItems { get; set; }
 
         private Filter _filter;
 
         public OrdonnancesListPage()
         {
-            BindingContext = this;
-            Ordonnances = new ObservableCollection<Ordonnance>
-            {
-                new Ordonnance
-                {
-                    Reference = 1,
-                    Patient = new Patient {FirstName = "Fred", LastName = "Pearson"},
-                    FirstCareAt = new DateTime(2017, 04, 02),
-                    Status = StatusEnum.valid
-                },
-                new Ordonnance
-                {
-                    Reference = 2,
-                    Patient = new Patient {FirstName = "Jonanthan", LastName = "Vaughn"},
-                    FirstCareAt = new DateTime(2017, 11, 10),
-                    Status = StatusEnum.valid
-                },
-                new Ordonnance
-                {
-                    Reference = 3,
-                    Patient = new Patient {FirstName = "Alexander", LastName = "Zimmerman"},
-                    FirstCareAt = new DateTime(2017, 02, 06),
-                    Status = StatusEnum.refused
-                },
-                new Ordonnance
-                {
-                    Reference = 4,
-                    Patient = new Patient {FirstName = "Keith", LastName = "Kelley"},
-                    FirstCareAt = new DateTime(2017, 09, 17),
-                    Status = StatusEnum.refused
-                },
-                new Ordonnance
-                {
-                    Reference = 5,
-                    Patient = new Patient {FirstName = "Justin", LastName = "Sims"},
-                    FirstCareAt = new DateTime(2017, 03, 04),
-                    Status = StatusEnum.valid
-                },
-                new Ordonnance
-                {
-                    Reference = 6,
-                    Patient = new Patient {FirstName = "Franklin", LastName = "Howard"},
-                    FirstCareAt = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.waiting
-                },
-                new Ordonnance
-                {
-                    Reference = 8,
-                    Patient = new Patient {FirstName = "Mickael", LastName = "Green"},
-                    FirstCareAt = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.waiting
-                },
-                new Ordonnance
-                {
-                    Reference = 9,
-                    Patient = new Patient {FirstName = "Paul", LastName = "Howard"},
-                    FirstCareAt = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.valid
-                },
-                new Ordonnance
-                {
-                    Reference = 10,
-                    Patient = new Patient {FirstName = "Justin", LastName = "Howard"},
-                    FirstCareAt = new DateTime(2017, 10, 29),
-                    Status = StatusEnum.waiting
-                },
-                new Ordonnance
-                {
-                    Reference = 11,
-                    Patient = new Patient {FirstName = "John", LastName = "Obama"},
-                    FirstCareAt = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.waiting
-                }
-            };
+            //BindingContext = this;
+            
 
             InitializeComponent();
 
-            MyListView.ItemsSource = Ordonnances;
+            
+            //MyListView.ItemsSource = Ordonnances;
 
             MessagingCenter.Subscribe<FilterPage, Filter>(this, Events.UpdatePrescriptionFilters, (sender, filter) =>
             {
@@ -102,6 +33,18 @@ namespace libermedical.Pages
 
                 ApplyFilter(filter);
             });
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            while (this.BindingContext == null)
+            {
+                await Task.Delay(100);
+            }
+
+            MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
         }
 
         private void ApplyFilter(Filter filter)
@@ -112,7 +55,7 @@ namespace libermedical.Pages
                 foreach (var status in filter.Statuses)
                 {
                     var foundItems =
-                        Ordonnances.Where(x => x.Status == status && x.FirstCareAt >= filter.StartDate &&
+                        (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.Status == status && x.FirstCareAt >= filter.StartDate &&
                                                                      x.FirstCareAt <= filter.EndDate);
                     filteredItems.AddRange(foundItems);
                 }
@@ -124,7 +67,7 @@ namespace libermedical.Pages
             {
                 _filteredItems = null;
 
-                MyListView.ItemsSource = Ordonnances;
+                MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
             }
         }
         
@@ -141,7 +84,8 @@ namespace libermedical.Pages
             }
 
             var item = e.SelectedItem as Ordonnance;
-            await Navigation.PushModalAsync(new OrdonnanceDetailPage(item));
+            (BindingContext as OrdonnancesListViewModel).SelectItemCommand.Execute(item);
+            //await Navigation.PushModalAsync(new OrdonnanceDetailPage(item));
 
             // disable the visual selection state.
             ((ListView)sender).SelectedItem = null;
@@ -156,18 +100,18 @@ namespace libermedical.Pages
                 if (_filteredItems != null)
                 {
                     foundItems =
-                        _filteredItems.Where(x => x.Patient.FullName.ToLower().Contains(e.NewTextValue.ToLower()));
+                        _filteredItems.Where(x => x.Patient.Fullname.ToLower().Contains(e.NewTextValue.ToLower()));
                 }
                 else
                 {
                     foundItems =
-                        Ordonnances.Where(x => x.Patient.FullName.ToLower().Contains(e.NewTextValue.ToLower()));
+                        (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.Patient.Fullname.ToLower().Contains(e.NewTextValue.ToLower()));
                 }
                 MyListView.ItemsSource = foundItems;
             }
             else
             {
-                MyListView.ItemsSource = _filteredItems ?? Ordonnances;
+                MyListView.ItemsSource = _filteredItems ?? (BindingContext as OrdonnancesListViewModel).Ordonnances;
             }
         }
     }

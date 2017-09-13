@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.OrdonnanceDetailPage" Style="{StaticResource AppBackgroundColor}">
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.OrdonnanceDetailPage" Style="{StaticResource NavigationPage}">
 <custom:BasePage.Header>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
             <Grid Padding="5">
@@ -32,7 +32,7 @@
                                     <ColumnDefinition Width="10*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="user.png" VerticalOptions="Center" Grid.Column="0" />
-                                <Label Text="Fred Pearson" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+                                <Label Text="{Binding Ordonnance.Patient.FullName}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
                             </Grid>
                         </ViewCell>
                     </TableSection>
@@ -67,7 +67,7 @@
                         </ViewCell>
                     </TableSection>
                     <TableSection>
-                    <ViewCell Height="50">
+                    <ViewCell Height="50" Tapped="Edit_OnTapped">
                         <StackLayout Orientation="Horizontal" Padding="20,0,10,0">
                              <Label  Text="Afficher le détail de l'ordonnance" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
                              <Image Source="bottom.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>

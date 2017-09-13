@@ -93,7 +93,7 @@ namespace libermedical.ViewModels
                 {
                     if (BottomTitle == "+ Ajoutez une ordonnance")
                     {
-                         await CoreMethods.PushPageModel<OrdonnanceDetailEditViewModel>();
+                         await CoreMethods.PushPageModel<OrdonnanceCreateViewModel>();
                     }
                     else
                     {

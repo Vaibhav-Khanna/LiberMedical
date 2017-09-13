@@ -25,7 +25,11 @@ namespace libermedical.Models
         public List<Frequency> Frequencies { get; set; }
 
         public long Reference { set; get; }
-        public Patient Patient { set; get; }
+        public Patient Patient { set; get; } = new Patient
+        {
+            FirstName = "Fred",
+            LastName = "Pearson"
+        };
         
         public string StatusString => Status == StatusEnum.waiting
             ? "En attente"

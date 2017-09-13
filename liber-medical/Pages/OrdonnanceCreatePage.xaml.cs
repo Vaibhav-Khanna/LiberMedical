@@ -5,9 +5,9 @@ using libermedical.ViewModels;
 
 namespace libermedical.Pages
 {
-    public partial class OrdonnanceDetailEditPage
+    public partial class OrdonnanceCreatePage
     {
-        public OrdonnanceDetailEditPage() : base(-1, 64, false)
+        public OrdonnanceCreatePage() : base(-1, 64, false)
         {
             InitializeComponent();
 
@@ -20,7 +20,7 @@ namespace libermedical.Pages
 
         private void MyDatePickerOnDateSelected(object sender, DateChangedEventArgs dateChangedEventArgs)
         {
-            (this.BindingContext as OrdonnanceDetailEditViewModel).Ordonnance.FirstCareAt = dateChangedEventArgs.NewDate;
+            (this.BindingContext as OrdonnanceCreateViewModel).Ordonnance.FirstCareAt = dateChangedEventArgs.NewDate;
         }
 
         async void Cancel_Tapped(object sender, EventArgs e)
@@ -36,13 +36,13 @@ namespace libermedical.Pages
                 switch (status)
                 {
                     case "En attente":
-                        (this.BindingContext as OrdonnanceDetailEditViewModel).Ordonnance.Status = StatusEnum.waiting;
+                        (this.BindingContext as OrdonnanceCreateViewModel).Ordonnance.Status = StatusEnum.waiting;
                         break;
                     case "Traité":
-                        (this.BindingContext as OrdonnanceDetailEditViewModel).Ordonnance.Status = StatusEnum.valid;
+                        (this.BindingContext as OrdonnanceCreateViewModel).Ordonnance.Status = StatusEnum.valid;
                         break;
                     case "Refusé":
-                        (this.BindingContext as OrdonnanceDetailEditViewModel).Ordonnance.Status = StatusEnum.refused;
+                        (this.BindingContext as OrdonnanceCreateViewModel).Ordonnance.Status = StatusEnum.refused;
                         break;
                 }
 
@@ -57,7 +57,7 @@ namespace libermedical.Pages
 
         private void Patient_Tapped(object sender, EventArgs e)
         {
-            (BindingContext as OrdonnanceDetailEditViewModel).SelectPatientCommand.Execute(sender);
+            (BindingContext as OrdonnanceCreateViewModel).SelectPatientCommand.Execute(sender);
         }
 
         private void Editor_Focused(object sender, FocusEventArgs e)
@@ -78,7 +78,7 @@ namespace libermedical.Pages
             }
             else
             {
-                (this.BindingContext as OrdonnanceDetailEditViewModel).Ordonnance.Comments = MyEditor.Text;
+                (this.BindingContext as OrdonnanceCreateViewModel).Ordonnance.Comments = MyEditor.Text;
             }
         }
     }

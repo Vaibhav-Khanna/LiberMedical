@@ -2,8 +2,8 @@
 <custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
                  xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                 x:Class="libermedical.Pages.OrdonnanceDetailEditPage"
-                 Style="{StaticResource AppBackgroundColor}">
+                 x:Class="libermedical.Pages.OrdonnanceCreatePage"
+                 Style="{StaticResource NavigationPage}">
     <custom:BasePage.Header>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
             <Grid Padding="5">
