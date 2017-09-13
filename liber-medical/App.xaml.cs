@@ -35,7 +35,6 @@ namespace libermedical
                 CreateTabbedPage();
             });
             
-
             if (Settings.IsLoggedIn)
             {
                 CreateTabbedPage();

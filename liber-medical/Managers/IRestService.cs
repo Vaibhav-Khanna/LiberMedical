@@ -12,6 +12,7 @@ namespace libermedical.Managers
         Task<PaginationResponse<T>> GetAllDataAsyncWithParameters(int limit, int page, string searchValue = "", string searchFields = "", string sortField = "", SortDirectionEnum direction = SortDirectionEnum.Asc);
 
         Task<T> GetSingleDataAsync(string id);
+        Task<T> GetSingleDataAsyncCached(string id);
 
         Task<PaginationResponse<T>> GetAdditionalDataAsStringAsync(string otherType, string otherId);
 

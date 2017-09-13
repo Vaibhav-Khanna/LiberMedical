@@ -6,6 +6,7 @@ using libermedical.Services;
 using libermedical.ViewModels.Base;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using libermedical.Request;
 using Plugin.Media;
@@ -31,7 +32,10 @@ namespace libermedical.ViewModels
                 var request = new GetListRequest(20, 0);
                 Ordonnances =
                     new ObservableCollection<Ordonnance>((await App.OrdonnanceManager.GetListAsync(request)).rows);
-                //TODO update items in _ordonnanceStorage
+
+                //Updating records in local cache
+                await _ordonnanceStorage.DeleteAllAsync();
+                await _ordonnanceStorage.AddManyAsync(Ordonnances.ToList());
             }
             else
             {
