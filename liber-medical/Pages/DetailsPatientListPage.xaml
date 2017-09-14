@@ -39,7 +39,7 @@
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 				<StackLayout BackgroundColor="#f0f0f0" Grid.Row="0">
-					<Label Margin="0,20,0,0" Text="{Binding Patient.FullName}" HorizontalOptions="Center" VerticalOptions="Fill"
+					<Label Margin="0,20,0,0" Text="{Binding Patient.Fullname}" HorizontalOptions="Center" VerticalOptions="Fill"
 					       Style="{StaticResource PatientNameTitle}" />
 					<Label Margin="0,0,0,0" Text="portable" HorizontalOptions="Center" VerticalOptions="Fill"
 					       Style="{StaticResource PortableTitle}" />

@@ -32,7 +32,7 @@
                                     <ColumnDefinition Width="10*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="user.png" VerticalOptions="Center" Grid.Column="0" />
-                                <Label Text="{Binding Ordonnance.Patient.FullName}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+                                <Label Text="{Binding Ordonnance.Patient.Fullname}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
                             </Grid>
                         </ViewCell>
                     </TableSection>

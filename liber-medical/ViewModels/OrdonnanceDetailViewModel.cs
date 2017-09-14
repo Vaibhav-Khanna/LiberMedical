@@ -1,5 +1,7 @@
-﻿using libermedical.Models;
+﻿using System.Windows.Input;
+using libermedical.Models;
 using libermedical.ViewModels.Base;
+using Xamarin.Forms;
 
 namespace libermedical.ViewModels
 {
@@ -20,5 +22,10 @@ namespace libermedical.ViewModels
                 Ordonnance = initData as Ordonnance;
             }
         }
+
+        public ICommand SelectPatientCommand => new Command(async () =>
+        {
+            await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(Ordonnance, true);
+        });
     }
 }

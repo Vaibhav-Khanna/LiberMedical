@@ -35,70 +35,117 @@ namespace libermedical.ViewModels
                     Reference = 1,
                     Patient = new Patient {FirstName = "Fred", LastName = "Pearson"},
                     FirstCareAt = new DateTime(2017, 04, 02),
-                    Status = StatusEnum.valid
+                    CreatedAt = new DateTime(2017, 08, 01),
+                    Status = StatusEnum.valid,
+                    Comments = "Some comments",
+                    Frequencies = new List<Frequency>
+                    {
+                        new Frequency
+                        {
+                            Increase = IncreaseEnum.MAU,
+                            Movement = "movement1",
+                            Night = false,
+                            Period = PeriodEnum.morning
+                        },
+                        new Frequency
+                        {
+                            Increase = IncreaseEnum.MCI,
+                            Movement = "movement2",
+                            Night = false,
+                            Period = PeriodEnum.lunch
+                        }
+                    }
                 },
                 new Ordonnance
                 {
                     Reference = 2,
                     Patient = new Patient {FirstName = "Jonanthan", LastName = "Vaughn"},
                     FirstCareAt = new DateTime(2017, 11, 10),
-                    Status = StatusEnum.valid
+                    CreatedAt = new DateTime(2017, 08, 01),
+                    Status = StatusEnum.valid,
+                    Comments = "Some comments",
+                    Frequencies = new List<Frequency>(),
+                    Attachments = new List<string>()
                 },
                 new Ordonnance
                 {
                     Reference = 3,
                     Patient = new Patient {FirstName = "Alexander", LastName = "Zimmerman"},
                     FirstCareAt = new DateTime(2017, 02, 06),
-                    Status = StatusEnum.refused
+                    CreatedAt = new DateTime(2017, 08, 01),
+                    Status = StatusEnum.refused,
+                    Frequencies = new List<Frequency>(),
+                    Attachments = new List<string>()
                 },
                 new Ordonnance
                 {
                     Reference = 4,
                     Patient = new Patient {FirstName = "Keith", LastName = "Kelley"},
                     FirstCareAt = new DateTime(2017, 09, 17),
-                    Status = StatusEnum.refused
+                    CreatedAt = new DateTime(2017, 08, 01),
+                    Status = StatusEnum.refused,
+                    Frequencies = new List<Frequency>(),
+                    Attachments = new List<string>()
                 },
                 new Ordonnance
                 {
                     Reference = 5,
                     Patient = new Patient {FirstName = "Justin", LastName = "Sims"},
                     FirstCareAt = new DateTime(2017, 03, 04),
-                    Status = StatusEnum.valid
+                    CreatedAt = new DateTime(2017, 08, 01),
+                    Status = StatusEnum.valid,
+                    Frequencies = new List<Frequency>(),
+                    Attachments = new List<string>()
                 },
                 new Ordonnance
                 {
                     Reference = 6,
                     Patient = new Patient {FirstName = "Franklin", LastName = "Howard"},
                     FirstCareAt = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.waiting
+                    CreatedAt = new DateTime(2017, 08, 01),
+                    Status = StatusEnum.waiting,
+                    Frequencies = new List<Frequency>(),
+                    Attachments = new List<string>()
                 },
                 new Ordonnance
                 {
                     Reference = 8,
                     Patient = new Patient {FirstName = "Mickael", LastName = "Green"},
                     FirstCareAt = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.waiting
+                    CreatedAt = new DateTime(2017, 08, 01),
+                    Status = StatusEnum.waiting,
+                    Frequencies = new List<Frequency>(),
+                    Attachments = new List<string>()
                 },
                 new Ordonnance
                 {
                     Reference = 9,
                     Patient = new Patient {FirstName = "Paul", LastName = "Howard"},
                     FirstCareAt = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.valid
+                    CreatedAt = new DateTime(2017, 08, 01),
+                    Status = StatusEnum.valid,
+                    Frequencies = new List<Frequency>(),
+                    Attachments = new List<string>()
                 },
                 new Ordonnance
                 {
                     Reference = 10,
                     Patient = new Patient {FirstName = "Justin", LastName = "Howard"},
                     FirstCareAt = new DateTime(2017, 10, 29),
-                    Status = StatusEnum.waiting
+                    CreatedAt = new DateTime(2017, 08, 01),
+                    Status = StatusEnum.waiting,
+                    Frequencies = new List<Frequency>(),
+                    Attachments = new List<string>()
                 },
                 new Ordonnance
                 {
                     Reference = 11,
                     Patient = new Patient {FirstName = "John", LastName = "Obama"},
                     FirstCareAt = new DateTime(2017, 09, 29),
-                    Status = StatusEnum.waiting
+                    CreatedAt = new DateTime(2017, 08, 01),
+                    Status = StatusEnum.waiting,
+                    Frequencies = new List<Frequency>(),
+                    Attachments = new List<string>()
                 }
             };
         }
@@ -111,7 +158,7 @@ namespace libermedical.ViewModels
 
         public async void CreatePrescription(string filePath)
         {
-            await CoreMethods.PushPageModel<OrdonnanceCreateViewModel>(filePath, true);
+            await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(filePath, true);
         }
 
         public ICommand SelectItemCommand => new Command(async (item) =>

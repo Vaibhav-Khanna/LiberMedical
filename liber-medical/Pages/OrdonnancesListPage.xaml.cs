@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using libermedical.Enums;
 using libermedical.Models;
 using libermedical.ViewModels;
 using Xamarin.Forms;
@@ -12,20 +11,15 @@ namespace libermedical.Pages
 {
 	public partial class OrdonnancesListPage
     {
-        //public ObservableCollection<Ordonnance> Ordonnances { get; set; }
         private ObservableCollection<Ordonnance> _filteredItems { get; set; }
 
         private Filter _filter;
 
         public OrdonnancesListPage()
         {
-            //BindingContext = this;
-            
-
             InitializeComponent();
 
-            
-            //MyListView.ItemsSource = Ordonnances;
+            DoAsyncActions();
 
             MessagingCenter.Subscribe<FilterPage, Filter>(this, Events.UpdatePrescriptionFilters, (sender, filter) =>
             {
@@ -35,10 +29,8 @@ namespace libermedical.Pages
             });
         }
 
-        protected override async void OnAppearing()
+        private async void DoAsyncActions()
         {
-            base.OnAppearing();
-
             while (this.BindingContext == null)
             {
                 await Task.Delay(100);
@@ -76,7 +68,7 @@ namespace libermedical.Pages
 			await Navigation.PushModalAsync(new FilterPage("Ordonnance",_filter));
         }
 
-        async void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+        void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
             {
@@ -85,7 +77,6 @@ namespace libermedical.Pages
 
             var item = e.SelectedItem as Ordonnance;
             (BindingContext as OrdonnancesListViewModel).SelectItemCommand.Execute(item);
-            //await Navigation.PushModalAsync(new OrdonnanceDetailPage(item));
 
             // disable the visual selection state.
             ((ListView)sender).SelectedItem = null;

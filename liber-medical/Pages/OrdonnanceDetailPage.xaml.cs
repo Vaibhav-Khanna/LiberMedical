@@ -1,6 +1,6 @@
 ﻿using System;
 using libermedical.CustomControls;
-using libermedical.Models;
+using libermedical.ViewModels;
 
 namespace libermedical.Pages
 {
@@ -19,9 +19,9 @@ namespace libermedical.Pages
             await Navigation.PushModalAsync(new OrdonnanceViewPage());
         }
 
-        private async void Edit_OnTapped(object sender, EventArgs e)
+        private void Edit_OnTapped(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new OrdonnanceCreatePage());
+            (BindingContext as OrdonnanceDetailViewModel).SelectPatientCommand.Execute(sender);
         }
     }
 }
