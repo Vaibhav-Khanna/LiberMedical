@@ -15,7 +15,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0" >
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding BackCommand}" />
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
                     </Grid.GestureRecognizers>
                 <Image  HorizontalOptions="Center" Source="close.png" VerticalOptions="Center" />
                 </Grid>    

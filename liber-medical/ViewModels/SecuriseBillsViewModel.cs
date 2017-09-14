@@ -1,11 +1,16 @@
 ﻿using libermedical.ViewModels.Base;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace libermedical.ViewModels
 {
-    public class SecuriseBillsViewModel : ViewModelBase
+    class SecuriseBillsViewModel : ViewModelBase
     {
         private Stream m_pdfDocumentStream;
         public Stream PdfDocumentStream
@@ -28,4 +33,3 @@ namespace libermedical.ViewModels
         public ICommand BackCommand => new Command(async () => await Application.Current.MainPage.Navigation.PopModalAsync());
     }
 }
-
