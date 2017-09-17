@@ -66,7 +66,7 @@ namespace libermedical.ViewModels
             {
                 var action2 =
                     await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Appareil photo", "Bibliothèque photo");
-                if (action2 != null && action != "Annuler")
+                if (action2 != null && action2 != "Annuler")
                 {
                     await CrossMedia.Current.Initialize();
                     if (action2 == "Appareil photo")
