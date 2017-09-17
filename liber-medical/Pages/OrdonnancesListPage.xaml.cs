@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using libermedical.Enums;
 using libermedical.Models;
-using libermedical.Request;
 using Xamarin.Forms;
 
 namespace libermedical.Pages
@@ -94,8 +92,6 @@ namespace libermedical.Pages
 
             InitializeComponent();
 
-            //MyListView.ItemsSource = Ordonnances;
-
             MessagingCenter.Subscribe<FilterPage, Filter>(this, Events.UpdatePrescriptionFilters, (sender, filter) =>
             {
                 _filter = filter;
@@ -103,21 +99,6 @@ namespace libermedical.Pages
                 ApplyFilter(filter);
             });
         }
-
-        //private async void DoAsyncActions()
-        //{
-        //    if (App.IsConnected())
-        //    {
-        //        var request = new GetListRequest(20, 0);
-        //        Ordonnances =
-        //            new ObservableCollection<Ordonnance>((await App.OrdonnanceManager.GetListAsync(request)).rows);
-        //        //TODO update items in _ordonnanceStorage
-        //    }
-        //    else
-        //    {
-        //        Ordonnances = new ObservableCollection<Ordonnance>(await _ordonnanceStorage.GetList());
-        //    }
-        //}
 
         private void ApplyFilter(Filter filter)
         {
@@ -148,7 +129,7 @@ namespace libermedical.Pages
 			await Navigation.PushModalAsync(new FilterPage("Ordonnance",_filter));
         }
 
-        async void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+        async void Handle_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
             {
@@ -171,12 +152,12 @@ namespace libermedical.Pages
                 if (_filteredItems != null)
                 {
                     foundItems =
-                        _filteredItems.Where(x => x.Patient.FullName.ToLower().Contains(e.NewTextValue.ToLower()));
+                        _filteredItems.Where(x => x.PatientName.ToLower().Contains(e.NewTextValue.ToLower()));
                 }
                 else
                 {
                     foundItems =
-                        Ordonnances.Where(x => x.Patient.FullName.ToLower().Contains(e.NewTextValue.ToLower()));
+                        Ordonnances.Where(x => x.PatientName.ToLower().Contains(e.NewTextValue.ToLower()));
                 }
                 MyListView.ItemsSource = foundItems;
             }

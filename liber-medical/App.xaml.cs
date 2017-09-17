@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Acr.UserDialogs;
 using Akavache;
 using FreshMvvm;
@@ -67,6 +68,13 @@ namespace libermedical
             {
                 return connectivity.IsConnected;
             }
+        }
+
+        public static long ConvertToUnixTimestamp(DateTime date)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            TimeSpan diff = date.ToUniversalTime() - origin;
+            return long.Parse(diff.TotalSeconds.ToString());
         }
 
         protected override void OnStart()
