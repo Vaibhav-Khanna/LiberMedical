@@ -40,7 +40,7 @@
                                                 <RowDefinition Height="60*" />
                                                 <RowDefinition Height="40*" />
                                             </Grid.RowDefinitions>
-                                            <Label Text="{Binding Patient.Fullname}" HorizontalOptions="StartAndExpand"
+                                            <Label Text="{Binding PatientName}" HorizontalOptions="StartAndExpand"
                                                    VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}"
                                                    Grid.Row="0" Grid.Column="0" />
                                             <Label Text="{Binding FirstCareAt, StringFormat='{0:dd-MM-yyyy}'}"

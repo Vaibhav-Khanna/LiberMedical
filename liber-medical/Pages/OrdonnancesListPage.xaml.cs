@@ -91,12 +91,12 @@ namespace libermedical.Pages
                 if (_filteredItems != null)
                 {
                     foundItems =
-                        _filteredItems.Where(x => x.Patient.Fullname.ToLower().Contains(e.NewTextValue.ToLower()));
+                        _filteredItems.Where(x => x.PatientName.ToLower().Contains(e.NewTextValue.ToLower()));
                 }
                 else
                 {
                     foundItems =
-                        (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.Patient.Fullname.ToLower().Contains(e.NewTextValue.ToLower()));
+                        Ordonnances.Where(x => x.PatientName.ToLower().Contains(e.NewTextValue.ToLower()));
                 }
                 MyListView.ItemsSource = foundItems;
             }

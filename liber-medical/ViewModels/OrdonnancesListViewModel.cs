@@ -6,8 +6,10 @@ using libermedical.Services;
 using libermedical.ViewModels.Base;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using libermedical.Enums;
+using libermedical.Request;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 
@@ -26,128 +28,20 @@ namespace libermedical.ViewModels
 
         private async void BindData()
         {
-            //Ordonnances = new ObservableCollection<Ordonnance>(await _ordonnanceStorage.GetList());
-
-            Ordonnances = new ObservableCollection<Ordonnance>
+            if (App.IsConnected())
             {
-                new Ordonnance
-                {
-                    Reference = 1,
-                    Patient = new Patient {FirstName = "Fred", LastName = "Pearson"},
-                    FirstCareAt = new DateTime(2017, 04, 02),
-                    CreatedAt = new DateTime(2017, 08, 01),
-                    Status = StatusEnum.valid,
-                    Comments = "Some comments",
-                    Frequencies = new List<Frequency>
-                    {
-                        new Frequency
-                        {
-                            Increase = IncreaseEnum.MAU,
-                            Movement = "movement1",
-                            Night = false,
-                            Period = PeriodEnum.morning
-                        },
-                        new Frequency
-                        {
-                            Increase = IncreaseEnum.MCI,
-                            Movement = "movement2",
-                            Night = false,
-                            Period = PeriodEnum.lunch
-                        }
-                    }
-                },
-                new Ordonnance
-                {
-                    Reference = 2,
-                    Patient = new Patient {FirstName = "Jonanthan", LastName = "Vaughn"},
-                    FirstCareAt = new DateTime(2017, 11, 10),
-                    CreatedAt = new DateTime(2017, 08, 01),
-                    Status = StatusEnum.valid,
-                    Comments = "Some comments",
-                    Frequencies = new List<Frequency>(),
-                    Attachments = new List<string>()
-                },
-                new Ordonnance
-                {
-                    Reference = 3,
-                    Patient = new Patient {FirstName = "Alexander", LastName = "Zimmerman"},
-                    FirstCareAt = new DateTime(2017, 02, 06),
-                    CreatedAt = new DateTime(2017, 08, 01),
-                    Status = StatusEnum.refused,
-                    Frequencies = new List<Frequency>(),
-                    Attachments = new List<string>()
-                },
-                new Ordonnance
-                {
-                    Reference = 4,
-                    Patient = new Patient {FirstName = "Keith", LastName = "Kelley"},
-                    FirstCareAt = new DateTime(2017, 09, 17),
-                    CreatedAt = new DateTime(2017, 08, 01),
-                    Status = StatusEnum.refused,
-                    Frequencies = new List<Frequency>(),
-                    Attachments = new List<string>()
-                },
-                new Ordonnance
-                {
-                    Reference = 5,
-                    Patient = new Patient {FirstName = "Justin", LastName = "Sims"},
-                    FirstCareAt = new DateTime(2017, 03, 04),
-                    CreatedAt = new DateTime(2017, 08, 01),
-                    Status = StatusEnum.valid,
-                    Frequencies = new List<Frequency>(),
-                    Attachments = new List<string>()
-                },
-                new Ordonnance
-                {
-                    Reference = 6,
-                    Patient = new Patient {FirstName = "Franklin", LastName = "Howard"},
-                    FirstCareAt = new DateTime(2017, 09, 29),
-                    CreatedAt = new DateTime(2017, 08, 01),
-                    Status = StatusEnum.waiting,
-                    Frequencies = new List<Frequency>(),
-                    Attachments = new List<string>()
-                },
-                new Ordonnance
-                {
-                    Reference = 8,
-                    Patient = new Patient {FirstName = "Mickael", LastName = "Green"},
-                    FirstCareAt = new DateTime(2017, 09, 29),
-                    CreatedAt = new DateTime(2017, 08, 01),
-                    Status = StatusEnum.waiting,
-                    Frequencies = new List<Frequency>(),
-                    Attachments = new List<string>()
-                },
-                new Ordonnance
-                {
-                    Reference = 9,
-                    Patient = new Patient {FirstName = "Paul", LastName = "Howard"},
-                    FirstCareAt = new DateTime(2017, 09, 29),
-                    CreatedAt = new DateTime(2017, 08, 01),
-                    Status = StatusEnum.valid,
-                    Frequencies = new List<Frequency>(),
-                    Attachments = new List<string>()
-                },
-                new Ordonnance
-                {
-                    Reference = 10,
-                    Patient = new Patient {FirstName = "Justin", LastName = "Howard"},
-                    FirstCareAt = new DateTime(2017, 10, 29),
-                    CreatedAt = new DateTime(2017, 08, 01),
-                    Status = StatusEnum.waiting,
-                    Frequencies = new List<Frequency>(),
-                    Attachments = new List<string>()
-                },
-                new Ordonnance
-                {
-                    Reference = 11,
-                    Patient = new Patient {FirstName = "John", LastName = "Obama"},
-                    FirstCareAt = new DateTime(2017, 09, 29),
-                    CreatedAt = new DateTime(2017, 08, 01),
-                    Status = StatusEnum.waiting,
-                    Frequencies = new List<Frequency>(),
-                    Attachments = new List<string>()
-                }
-            };
+                var request = new GetListRequest(20, 0);
+                Ordonnances =
+                    new ObservableCollection<Ordonnance>((await App.OrdonnanceManager.GetListAsync(request)).rows);
+
+                //Updating records in local cache
+                await _ordonnanceStorage.DeleteAllAsync();
+                await _ordonnanceStorage.AddManyAsync(Ordonnances.ToList());
+            }
+            else
+            {
+                Ordonnances = new ObservableCollection<Ordonnance>(await _ordonnanceStorage.GetList());
+            }
         }
 
         protected override async Task TapCommandFunc(Cell cell)
@@ -178,7 +72,7 @@ namespace libermedical.ViewModels
             {
                 var action2 =
                     await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Appareil photo", "Bibliothèque photo");
-                if (action2 != null && action != "Annuler")
+                if (action2 != null && action2 != "Annuler")
                 {
                     await CrossMedia.Current.Initialize();
                     if (action2 == "Appareil photo")

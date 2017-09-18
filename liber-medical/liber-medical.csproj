@@ -56,17 +56,24 @@
     <Compile Include="Enums\IncreaseEnum.cs" />
     <Compile Include="Enums\PeriodEnum.cs" />
     <Compile Include="Enums\RoleEnum.cs" />
+    <Compile Include="Enums\SortDirectionEnum.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="liber-medicalPage.xaml.cs">
       <DependentUpon>liber-medicalPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Managers\IDataManager.cs" />
+    <Compile Include="Managers\DataManager.cs" />
     <Compile Include="Managers\ILoginManager.cs" />
+    <Compile Include="Managers\IOrdonnanceManager.cs" />
     <Compile Include="Managers\LoginManager.cs" />
+    <Compile Include="Managers\OrdonnanceManager.cs" />
     <Compile Include="Models\Frequency.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Request\ForgotPasswordRequest.cs" />
+    <Compile Include="Request\GetListRequest.cs" />
     <Compile Include="Responses\TokenResponse.cs" />
+    <Compile Include="Services\IPDFStream.cs" />
     <Compile Include="Services\LibermedicalTabbedNavigation.cs" />
     <Compile Include="Managers\IRestService.cs" />
     <Compile Include="Managers\RestService.cs" />
@@ -183,6 +190,7 @@
     <Compile Include="Utility\UtilityClass.cs" />
     <Compile Include="Renderers\BorderlessEntry.cs" />
     <Compile Include="ViewModels\PlusViewModel.cs" />
+    <Compile Include="ViewModels\SecuriseBillsViewModel.cs" />
     <Compile Include="ViewModels\TeledeclarationsListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +264,18 @@
     </Reference>
     <Reference Include="SQLitePCLRaw.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
       <HintPath>..\packages\SQLitePCLRaw.core.1.1.0\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Compression.Portable, Version=15.3451.0.29, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Xamarin.Compression.15.3.0.29\lib\portable-win+net45+wp80+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Syncfusion.Compression.Portable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Pdf.Portable, Version=15.3451.0.29, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Xamarin.Pdf.15.3.0.29\lib\portable-win+net45+wp80+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Syncfusion.Pdf.Portable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.SfPdfViewer.XForms, Version=15.3451.0.29, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Xamarin.SfPdfViewer.15.3.0.29\lib\portable-win+net45+wp80+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Syncfusion.SfPdfViewer.XForms.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

@@ -144,7 +144,7 @@ namespace libermedical.ViewModels
                 var ordannance = new Ordonnance()
                 {
                     Reference = DateTime.Now.Ticks,
-                    FirstCareAt = DateTime.Now,
+                    First_Care_At = App.ConvertToUnixTimestamp(DateTime.Now),
                     Patient = patient,
                     Status = Enums.StatusEnum.valid,
                     Id = DateTime.Now.Ticks.ToString(),

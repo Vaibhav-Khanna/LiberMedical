@@ -55,7 +55,7 @@ namespace libermedical.Pages
 
         private void MyDatePickerOnDateSelected(object sender, DateChangedEventArgs dateChangedEventArgs)
         {
-            (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.FirstCareAt = dateChangedEventArgs.NewDate;
+            (this.BindingContext as OrdonnanceDetailEditViewModel).Ordonnance.First_Care_At = App.ConvertToUnixTimestamp(dateChangedEventArgs.NewDate);
         }
 
         async void Cancel_Tapped(object sender, EventArgs e)
