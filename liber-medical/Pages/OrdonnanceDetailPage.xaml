@@ -32,7 +32,7 @@
                                     <ColumnDefinition Width="10*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="user.png" VerticalOptions="Center" Grid.Column="0" />
-                                <Label Text="{Binding Ordonnance.Patient.Fullname}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+                                <Label Text="{Binding Ordonnance.PatientName}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
                             </Grid>
                         </ViewCell>
                     </TableSection>
@@ -62,7 +62,7 @@
                                     <ColumnDefinition Width="10*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
-                                <Label Text="Traité le 12/07/2017" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+                                <Label Text="{Binding Ordonnance.StatusChangedAt, StringFormat='Traité le {0:dd-MM-yyyy}'}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
                             </Grid>
                         </ViewCell>
                     </TableSection>

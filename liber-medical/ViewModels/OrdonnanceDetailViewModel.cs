@@ -23,7 +23,7 @@ namespace libermedical.ViewModels
             }
         }
 
-        public ICommand SelectPatientCommand => new Command(async () =>
+        public ICommand CreateOrdonnanceCommand => new Command(async () =>
         {
             await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(Ordonnance, true);
         });

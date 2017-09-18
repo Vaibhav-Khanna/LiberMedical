@@ -10,18 +10,18 @@ namespace libermedical.Pages
         {
             InitializeComponent();
         }
-        async void Back_Tapped(object sender, System.EventArgs e)
+        async void Back_Tapped(object sender, EventArgs e)
         {
             await Navigation.PopModalAsync();
         }
-        async void Ordonnance_Tapped(object sender, System.EventArgs e)
+        async void Ordonnance_Tapped(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(new OrdonnanceViewPage());
         }
 
         private void Edit_OnTapped(object sender, EventArgs e)
         {
-            (BindingContext as OrdonnanceDetailViewModel).SelectPatientCommand.Execute(sender);
+            (BindingContext as OrdonnanceDetailViewModel).CreateOrdonnanceCommand.Execute(sender);
         }
     }
 }

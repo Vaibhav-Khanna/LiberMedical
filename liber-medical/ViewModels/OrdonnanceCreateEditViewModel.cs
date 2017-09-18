@@ -26,7 +26,7 @@ namespace libermedical.ViewModels
                 CreatedAt = DateTime.Today,
                 Attachments = new List<string>(),
                 Frequencies = new List<Frequency>(),
-                FirstCareAt = DateTime.Today
+                First_Care_At = App.ConvertToUnixTimestamp(DateTime.Now)
             };
 
             MessagingCenter.Subscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance, (sender, patient) => 
@@ -53,7 +53,7 @@ namespace libermedical.ViewModels
                 else
                 {
                     Ordonnance = initData as Ordonnance;
-                    PatientLabel = Ordonnance?.Patient.Fullname;
+                    PatientLabel = Ordonnance?.PatientName;
                     Creating = false;
                     SaveLabel = "Modifier";
                 }
@@ -105,10 +105,15 @@ namespace libermedical.ViewModels
             }
         });
 
-        public ICommand FrequenceTappedCommand => new Command(async () =>
+        public ICommand AddFrequenceTappedCommand => new Command(async () =>
         {
             var frequency = new Frequency();
             Ordonnance.Frequencies.Add(frequency);
+            await CoreMethods.PushPageModel<OrdonnanceFrequenceViewModel>(frequency, true);
+        });
+
+        public ICommand ModifyFrequenceTappedCommand => new Command(async frequency =>
+        {
             await CoreMethods.PushPageModel<OrdonnanceFrequenceViewModel>(frequency, true);
         });
     }

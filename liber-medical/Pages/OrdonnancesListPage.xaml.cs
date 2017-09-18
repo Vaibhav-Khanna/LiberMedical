@@ -31,7 +31,7 @@ namespace libermedical.Pages
 
         private async void DoAsyncActions()
         {
-            while (this.BindingContext == null)
+            while ((BindingContext as OrdonnancesListViewModel)?.Ordonnances == null)
             {
                 await Task.Delay(100);
             }
@@ -96,7 +96,7 @@ namespace libermedical.Pages
                 else
                 {
                     foundItems =
-                        Ordonnances.Where(x => x.PatientName.ToLower().Contains(e.NewTextValue.ToLower()));
+                        (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.PatientName.ToLower().Contains(e.NewTextValue.ToLower()));
                 }
                 MyListView.ItemsSource = foundItems;
             }

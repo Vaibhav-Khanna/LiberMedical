@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using libermedical.Enums;
+using libermedical.Models;
 using Xamarin.Forms;
 using libermedical.ViewModels;
 
@@ -55,7 +56,7 @@ namespace libermedical.Pages
 
         private void MyDatePickerOnDateSelected(object sender, DateChangedEventArgs dateChangedEventArgs)
         {
-            (this.BindingContext as OrdonnanceDetailEditViewModel).Ordonnance.First_Care_At = App.ConvertToUnixTimestamp(dateChangedEventArgs.NewDate);
+            (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.First_Care_At = App.ConvertToUnixTimestamp(dateChangedEventArgs.NewDate);
         }
 
         async void Cancel_Tapped(object sender, EventArgs e)
@@ -117,9 +118,18 @@ namespace libermedical.Pages
             }
         }
 
-        private void Cell_OnTapped(object sender, EventArgs e)
+        private void FrequencesListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            DisplayAlert("Tapped", "", "OK");
+            if (e.SelectedItem == null)
+            {
+                return; //ItemSelected is called on deselection, which results in SelectedItem being set to null
+            }
+
+            (BindingContext as OrdonnanceCreateEditViewModel).ModifyFrequenceTappedCommand
+                .Execute(e.SelectedItem as Frequency);
+
+            // disable the visual selection state.
+            ((ListView)sender).SelectedItem = null;
         }
     }
 }

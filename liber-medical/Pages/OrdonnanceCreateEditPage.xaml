@@ -106,16 +106,13 @@
                     </TableSection>
                     <TableSection>
                       <TextCell Text="Frequence d'administration" Detail="+ Ajouter" DetailColor="#007aff"
-                                  Height="70" Command="{Binding FrequenceTappedCommand}" />
+                                  Height="70" Command="{Binding AddFrequenceTappedCommand}" />
                       <ViewCell x:Name="FrequenciesViewCell">
-                          <ListView x:Name="FrequencesListView" SeparatorVisibility="None" VerticalOptions="Start">
+                          <ListView x:Name="FrequencesListView" SeparatorVisibility="None" VerticalOptions="Start" ItemSelected="FrequencesListView_OnItemSelected">
                               <ListView.ItemTemplate>
                                   <DataTemplate>
                                     <ViewCell>
                                         <Grid>
-                                            <Grid.GestureRecognizers>
-                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Cell_OnTapped"/>
-                                            </Grid.GestureRecognizers>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="90*" />
                                                 <ColumnDefinition Width="10*" />
