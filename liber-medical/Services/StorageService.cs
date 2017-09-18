@@ -9,16 +9,37 @@ namespace libermedical.Services
 {
     public class StorageService<TModel> : IStorageService<TModel> where TModel : BaseDTO, new()
     {
-        public async Task<TModel> AddAsync(TModel item)
+        public async Task<bool> AddAsync(TModel item)
         {
             try
             {
-                await BlobCache.UserAccount.InsertObject(item.Id, item);
-                return item;
+                var key = typeof(TModel).Name + "_" + item.Id;
+                await BlobCache.UserAccount.InsertObject(key, item);
+                return true;
             }
-            catch (KeyNotFoundException ex)
+            catch (Exception)
             {
-                return item;
+                return false;
+            }
+        }
+
+        public async Task<bool> AddManyAsync(List<TModel> items)
+        {
+            try
+            {
+                var dic = new Dictionary<string, TModel>();
+                foreach (var item in items)
+                {
+                    var key = typeof(TModel).Name + "_" + item.Id;
+
+                    dic.Add(key, item);
+                }
+                await BlobCache.UserAccount.InsertObjects(dic);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 
@@ -29,12 +50,13 @@ namespace libermedical.Services
                 await BlobCache.UserAccount.InvalidateAllObjects<TModel>();
                 return true;
             }
-            catch (KeyNotFoundException ex)
+            catch (Exception)
             {
                 return false;
             }
         }
 
+        // The structure of Key: typeof(TModel).Name + "_" + item.Id
         public async Task<bool> DeleteItemAsync(string key)
         {
             try
@@ -42,21 +64,22 @@ namespace libermedical.Services
                 await BlobCache.UserAccount.Invalidate(key);
                 return true;
             }
-            catch (KeyNotFoundException ex)
+            catch (Exception)
             {
                 return false;
             }
         }
 
+        // The structure of Key: typeof(TModel).Name + "_" + item.Id
         public async Task<TModel> GetItemAsync(string key)
         {
             try
             {
                 return await BlobCache.UserAccount.GetObject<TModel>(key);
             }
-            catch (KeyNotFoundException ex)
+            catch (Exception)
             {
-                return new TModel();
+                return null;
             }
         }
 
@@ -66,9 +89,9 @@ namespace libermedical.Services
             {
                 return await BlobCache.UserAccount.GetAllObjects<TModel>();
             }
-            catch (KeyNotFoundException ex)
+            catch (Exception)
             {
-                return new List<TModel>();
+                return null;
             }
         }
 
