@@ -14,6 +14,8 @@ namespace libermedical.Pages
             InitializeComponent();
 
             DoAsyncActions();
+
+            //TODO subscribe to changes of frequencies
         }
 
         private async void DoAsyncActions()
