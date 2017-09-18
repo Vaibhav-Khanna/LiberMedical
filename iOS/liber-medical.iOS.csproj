@@ -47,10 +47,11 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: manuel LLOP (WBF5L6BU5J)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchFastDev>false</MtouchFastDev>
+    <CodesignProvision>34ca4491-d0e4-45c2-8d62-0d74b1178297</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -94,6 +95,7 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\CustomEntryRenderer.cs" />
     <Compile Include="Renderers\TabbedPageRenderer.cs" />
+    <Compile Include="Services\PDFStream.cs" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
@@ -197,6 +199,22 @@
     <Reference Include="SQLitePCLRaw.provider.internal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=89ae75803b2c608d, processorArchitecture=MSIL">
       <HintPath>..\packages\SQLitePCLRaw.provider.internal.ios_unified.1.1.0\lib\Xamarin.iOS10\SQLitePCLRaw.provider.internal.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Compression.Portable, Version=15.3451.0.29, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages_external\lib\ios-unified\Syncfusion.Compression.Portable.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Pdf.Portable, Version=15.3451.0.29, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages_external\lib\ios-unified\Syncfusion.Pdf.Portable.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfPdfViewer.XForms, Version=15.3451.0.29, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages_external\lib\ios-unified\Syncfusion.SfPdfViewer.XForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfPdfViewer.XForms.iOS, Version=15.3451.0.29, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages_external\lib\ios-unified\Syncfusion.SfPdfViewer.XForms.iOS.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
