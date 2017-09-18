@@ -56,16 +56,22 @@
     <Compile Include="Enums\IncreaseEnum.cs" />
     <Compile Include="Enums\PeriodEnum.cs" />
     <Compile Include="Enums\RoleEnum.cs" />
+    <Compile Include="Enums\SortDirectionEnum.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="liber-medicalPage.xaml.cs">
       <DependentUpon>liber-medicalPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Managers\IDataManager.cs" />
+    <Compile Include="Managers\DataManager.cs" />
     <Compile Include="Managers\ILoginManager.cs" />
+    <Compile Include="Managers\IOrdonnanceManager.cs" />
     <Compile Include="Managers\LoginManager.cs" />
+    <Compile Include="Managers\OrdonnanceManager.cs" />
     <Compile Include="Models\Frequency.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Request\ForgotPasswordRequest.cs" />
+    <Compile Include="Request\GetListRequest.cs" />
     <Compile Include="Responses\TokenResponse.cs" />
     <Compile Include="Services\LibermedicalTabbedNavigation.cs" />
     <Compile Include="Managers\IRestService.cs" />

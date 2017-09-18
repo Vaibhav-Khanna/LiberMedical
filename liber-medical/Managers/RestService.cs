@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
+using System.Reactive;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Akavache;
 using libermedical.CustomExceptions;
+using libermedical.Enums;
 using libermedical.Helpers;
 using libermedical.Request;
 using libermedical.Responses;
@@ -54,7 +59,9 @@ namespace libermedical.Managers
             return Items;
         }
 
-        public async Task<PaginationResponse<T>> GetAllDataAsyncWithParameters(int limit, int page, string searchValue = "", string searchFields = "")
+        public async Task<PaginationResponse<T>> GetAllDataAsyncWithParameters(
+            int limit, int page, string searchValue = "", string searchFields = "",
+            string sortField = "", SortDirectionEnum direction = SortDirectionEnum.Asc)
         {
             var parameters = "?limit=" + limit + "&page=" + page;
             if (!string.IsNullOrEmpty(searchValue))
@@ -64,6 +71,10 @@ namespace libermedical.Managers
             if (!string.IsNullOrEmpty(searchFields))
             {
                 parameters += "&searchFields=" + searchFields;
+            }
+            if (!string.IsNullOrEmpty(sortField))
+            {
+                parameters += "&sortField=" + sortField;
             }
 
             parameters += "&" + _auth;
@@ -88,7 +99,7 @@ namespace libermedical.Managers
                     throw new Exception();
             }
         }
-
+        
         public async Task<T> GetSingleDataAsync(string id)
         {
             T item = default(T);
@@ -112,6 +123,29 @@ namespace libermedical.Managers
                 default:
                     throw new Exception();
             }
+        }
+
+        public async Task<T> GetSingleDataAsyncCached(string id)
+        {
+            T result = default(T);
+            var cache = BlobCache.UserAccount;
+            var key = typeof(T).Name + "_" + id;
+            var cachedPostsPromise = cache.GetAndFetchLatest(
+                key,
+                () => GetSingleDataAsync(id),
+                offset =>
+                {
+                    TimeSpan elapsed = DateTimeOffset.Now - offset;
+                    return elapsed > new TimeSpan(days: 0, hours: 8, minutes: 0, seconds: 0);
+                });
+
+            cachedPostsPromise.Subscribe(subscribedPosts => {
+                Debug.WriteLine("Subscribed Posts ready");
+                result = subscribedPosts;
+            });
+
+            result = await cachedPostsPromise.LastOrDefaultAsync();
+            return result;
         }
 
         public async Task<PaginationResponse<T>> GetAdditionalDataAsStringAsync(string otherType, string otherId)
