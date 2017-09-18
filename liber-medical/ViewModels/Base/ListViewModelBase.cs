@@ -8,6 +8,7 @@ using System.Windows.Input;
 using libermedical.Models;
 using libermedical.Services;
 using Xamarin.Forms;
+using libermedical.Request;
 
 namespace libermedical.ViewModels.Base
 {
@@ -48,7 +49,18 @@ namespace libermedical.ViewModels.Base
 
 		protected virtual async Task GetDataAsync()
 		{
-			ItemsSource.Clear();
+            
+            if (App.IsConnected())
+            {
+                var request = new GetListRequest(20, 0);
+                var patients =
+                    new ObservableCollection<Patient>((await App.PatientsManager.GetListAsync(request)).rows);
+
+                //Updating records in local cache
+                await _storageService.DeleteAllAsync();
+                await _storageService.AddManyAsync((List<TModel>)(object)patients.ToList());
+            }
+            ItemsSource.Clear();
 			var observableCollection = await _storageService.GetList();
 			GroupItems(observableCollection.ToList());
 		}

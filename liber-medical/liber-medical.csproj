@@ -68,6 +68,7 @@
     <Compile Include="Managers\IOrdonnanceManager.cs" />
     <Compile Include="Managers\LoginManager.cs" />
     <Compile Include="Managers\OrdonnanceManager.cs" />
+    <Compile Include="Managers\PatientsManager.cs" />
     <Compile Include="Models\Frequency.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Request\ForgotPasswordRequest.cs" />

@@ -19,6 +19,7 @@ namespace libermedical
     {
         private static ILoginManager _loginManager;
         private static IOrdonnanceManager _ordonnanceManager;
+        private static IPatientsManager _patientsManager;
 
         public static LibermedicalTabbedNavigation tabbedNavigation;
 
@@ -110,5 +111,8 @@ namespace libermedical
 
         public static IOrdonnanceManager OrdonnanceManager => _ordonnanceManager ??
                                                               (_ordonnanceManager = new OrdonnanceManager(new RestService<Ordonnance>("ordonnances")));
+
+        public static IPatientsManager PatientsManager => _patientsManager ??
+                                                              (_patientsManager = new PatientsManager(new RestService<Patient>("patients")));
     }
 }

@@ -41,8 +41,8 @@ namespace libermedical.ViewModels
         {
             ShowStackOrdonnance = ShowBoxViewOrdonnances = true;
             BottomTitle = "+ Ajoutez une ordonnance";
-            Ordonnances = new ObservableCollection<Ordonnance>((await new StorageService<Ordonnance>().GetList()).Where(x => x.Patient.Id == Patient.Id));
-            Documents = new ObservableCollection<Document>((await new StorageService<Document>().GetList()).Where(x => x.Patient.Id == Patient.Id));
+            Ordonnances = new ObservableCollection<Ordonnance>((await new StorageService<Ordonnance>().GetList()).Where(x =>  x.PatientId == Patient.Id));
+            Documents = new ObservableCollection<Document>((await new StorageService<Document>().GetList()).Where(x => x.PatientId == Patient.Id));
         }
         public Command EditPatient
         {

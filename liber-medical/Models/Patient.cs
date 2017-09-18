@@ -11,7 +11,7 @@ namespace libermedical.Models
         [JsonProperty("lastname")]
         public string LastName { set; get; }
         [JsonProperty("phones")]
-        public List<PhoneNumber> PhoneNumbers { get; set; }
+        public List<string> PhoneNumbers { get; set; }
         [JsonProperty("nurse_id")]
         public string NurseId { get; set; }
 
