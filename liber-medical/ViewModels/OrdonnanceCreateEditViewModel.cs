@@ -10,27 +10,31 @@ using Xamarin.Forms;
 
 namespace libermedical.ViewModels
 {
-    public class OrdonnanceDetailEditViewModel : ViewModelBase
+    public class OrdonnanceCreateEditViewModel : ViewModelBase
     {
         public string PatientLabel { get; set; } = "Choisissez un patient";
         public Ordonnance Ordonnance { get; set; }
 
-        public OrdonnanceDetailEditViewModel()
+        public bool Creating;
+        public string SaveLabel { get; set; } = "Enregistrer";
+
+        public OrdonnanceCreateEditViewModel()
         {
             Ordonnance = new Ordonnance
             {
                 Id = Guid.NewGuid().ToString(),
                 CreatedAt = DateTime.Today,
                 Attachments = new List<string>(),
-                Frequencies = new List<Frequency>()
+                Frequencies = new List<Frequency>(),
+                First_Care_At = App.ConvertToUnixTimestamp(DateTime.Now)
             };
 
-            MessagingCenter.Subscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance, async (sender, patient) => {
-
+            MessagingCenter.Subscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance, (sender, patient) => 
+            {
                 if (patient != null)
                 {
                     Ordonnance.PatientId = patient.Id;
-                    PatientLabel = patient.FullName;
+                    PatientLabel = patient.Fullname;
                 }
             });
         }
@@ -40,18 +44,32 @@ namespace libermedical.ViewModels
             base.Init(initData);
             if (initData != null)
             {
-                Ordonnance.Attachments.Add(initData as string);
+                if (initData is string)
+                {
+                    Ordonnance.Attachments.Add((string) initData);
+                    Creating = true;
+                    SaveLabel = "Enregistrer";
+                }
+                else
+                {
+                    Ordonnance = initData as Ordonnance;
+                    PatientLabel = Ordonnance?.PatientName;
+                    Creating = false;
+                    SaveLabel = "Modifier";
+                }
             }
         }
 
         public ICommand SelectPatientCommand => new Command(async () =>
         {
-            await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "OrdonanceSelectPatient", "normal", "ordonnance" }, true);
+            await CoreMethods.PushPageModel<PatientListViewModel>(new [] { "OrdonanceSelectPatient", "normal", "ordonnance" }, true);
         });
 
         public ICommand SaveCommand => new Command(async () =>
         {
-            await new StorageService<Ordonnance>().AddAsync(Ordonnance);
+            var storageService = new StorageService<Ordonnance>();
+            await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + Ordonnance.Id);
+            await storageService.AddAsync(Ordonnance);
 
             //TODO: Display success toast
 
@@ -87,10 +105,15 @@ namespace libermedical.ViewModels
             }
         });
 
-        public ICommand FrequenceTappedCommand => new Command(async () =>
+        public ICommand AddFrequenceTappedCommand => new Command(async () =>
         {
             var frequency = new Frequency();
             Ordonnance.Frequencies.Add(frequency);
+            await CoreMethods.PushPageModel<OrdonnanceFrequenceViewModel>(frequency, true);
+        });
+
+        public ICommand ModifyFrequenceTappedCommand => new Command(async frequency =>
+        {
             await CoreMethods.PushPageModel<OrdonnanceFrequenceViewModel>(frequency, true);
         });
     }

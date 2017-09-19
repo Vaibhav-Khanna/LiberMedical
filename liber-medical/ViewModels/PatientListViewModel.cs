@@ -53,7 +53,7 @@ namespace libermedical.ViewModels
 				{
 					var groupedList = new ObservableCollection<GroupedItem<Patient>>();
 
-					var patientsList = (await _patientsStorage.GetList()).Where(x => x.FullName.StartsWith(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+					var patientsList = (await _patientsStorage.GetList()).Where(x => x.Fullname.StartsWith(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
 					var headers = patientsList.Select(x => x.LastName.Substring(0, 1)).Distinct().OrderBy(x => x);
 					foreach (var headerkey in headers)
 					{

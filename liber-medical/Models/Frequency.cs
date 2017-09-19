@@ -16,5 +16,14 @@ namespace libermedical.Models
         public string Movement { get; set; } = "Non";
         [JsonProperty("night")]
         public bool Night { get; set; }
+
+        [JsonIgnore]
+        public string PeriodString => Period == PeriodEnum.morning
+            ? "Matin"
+            : Period == PeriodEnum.lunch
+                ? "Midi"
+                : Period == PeriodEnum.afternoon
+                    ? "Après-midi"
+                    : "Soir";
     }
 }

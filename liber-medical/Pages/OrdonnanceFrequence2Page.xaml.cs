@@ -29,7 +29,31 @@ namespace libermedical.Pages
                 {
                     await Task.Delay(100);
                 }
-                MovementPicker.SelectedIndex = 0;
+
+                if (!string.IsNullOrEmpty((BindingContext as OrdonnanceFrequence2ViewModel).Frequency.Movement))
+                {
+                    MovementPicker.SelectedIndex =
+                        Movements.IndexOf((BindingContext as OrdonnanceFrequence2ViewModel).Frequency.Movement);
+                }
+                else
+                {
+                    MovementPicker.SelectedIndex = 0;
+                }
+
+                NightSwitch.On = (BindingContext as OrdonnanceFrequence2ViewModel).Frequency.Night;
+
+                if ((BindingContext as OrdonnanceFrequence2ViewModel).Frequency.Increase == IncreaseEnum.Non)
+                {
+                    maj.Text = "Non";
+                }
+                else if ((BindingContext as OrdonnanceFrequence2ViewModel).Frequency.Increase == IncreaseEnum.MAU)
+                {
+                    maj.Text = "MAU";
+                }
+                else
+                {
+                    maj.Text = "MCI";
+                }
             });
         }
 

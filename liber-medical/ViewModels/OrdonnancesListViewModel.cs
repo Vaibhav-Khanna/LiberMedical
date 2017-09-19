@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using libermedical.Enums;
 using libermedical.Request;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
@@ -51,8 +52,13 @@ namespace libermedical.ViewModels
 
         public async void CreatePrescription(string filePath)
         {
-            await CoreMethods.PushPageModel<OrdonnanceDetailEditViewModel>(filePath, true);
+            await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(filePath, true);
         }
+
+        public ICommand SelectItemCommand => new Command(async (item) =>
+        {
+            await CoreMethods.PushPageModel<OrdonnanceDetailViewModel>(item, true);
+        });
 
         public ICommand AddCommand => new Command(async () =>
         {

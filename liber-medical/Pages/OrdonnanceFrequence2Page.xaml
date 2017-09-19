@@ -66,7 +66,7 @@
                                 </Picker>
                             </Grid>
                         </ViewCell>
-                        <SwitchCell Text="Nuit" OnChanged="NightOnChanged" />
+                        <SwitchCell x:Name="NightSwitch" Text="Nuit" OnChanged="NightOnChanged" />
                     </TableSection>
                 </TableRoot>
             </TableView>
@@ -75,7 +75,7 @@
     <custom:BasePage.Footer>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
             <ContentView.GestureRecognizers>
-                <TapGestureRecognizer Command="SaveTappedCommand" NumberOfTapsRequired="1" />
+                <TapGestureRecognizer Command="{Binding SaveTappedCommand}" NumberOfTapsRequired="1" />
             </ContentView.GestureRecognizers>
             <Label Text="Enregistrer" HorizontalOptions="Center" VerticalOptions="Center"
                    Style="{StaticResource FooterLabel}" />
