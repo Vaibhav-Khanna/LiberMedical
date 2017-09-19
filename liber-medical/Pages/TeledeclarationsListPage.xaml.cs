@@ -7,9 +7,7 @@ namespace libermedical.Pages
 	{
 		public TeledeclarationsListPage()
 		{
-			BindingContext = this;
-
-
+			//BindingContext = this;
 			InitializeComponent();
 		}
 

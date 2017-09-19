@@ -192,6 +192,8 @@
     <Compile Include="ViewModels\PlusViewModel.cs" />
     <Compile Include="ViewModels\SecuriseBillsViewModel.cs" />
     <Compile Include="ViewModels\TeledeclarationsListViewModel.cs" />
+    <Compile Include="Managers\TeledeclarationsManager.cs" />
+    <Compile Include="ViewModels\TeledeclarationSecureActionViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Acr.UserDialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

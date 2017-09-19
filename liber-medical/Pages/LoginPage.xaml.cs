@@ -115,7 +115,7 @@ namespace libermedical.Pages
                 {
                     Email = _email
                 };
-                Settings.CurrentUser = JsonConvert.SerializeObject(user);
+                
 
                 MessagingCenter.Send(this, Events.CreateTabbedPage);
 
