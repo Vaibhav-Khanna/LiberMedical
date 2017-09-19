@@ -22,7 +22,7 @@
 					</ListView.GroupHeaderTemplate>
 					<ListView.ItemTemplate>
 						<DataTemplate>
-							<TextCell Text="{Binding FullName}" TextColor="Black" Tapped="PatientTapped" />
+							<TextCell Text="{Binding Fullname}" TextColor="Black" Tapped="PatientTapped" />
 						</DataTemplate>
 					</ListView.ItemTemplate>
 				</ListView>

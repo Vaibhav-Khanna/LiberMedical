@@ -3,7 +3,7 @@
                  xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  x:Class="libermedical.Pages.OrdonnancesListPage"
-                 Style="{StaticResource AppBackgroundColor}"
+                 Style="{StaticResource NavigationPage}"
                  Title="Ordonnances">
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="Ordonnances" Icon="filters.png" Clicked="Filter_Clicked" />
@@ -25,7 +25,7 @@
 
                 <ScrollView Grid.Row="1">
                     <StackLayout>
-                    <ListView x:Name="MyListView" IsPullToRefreshEnabled="true" ItemsSource="{Binding Ordonnances}"
+                    <ListView x:Name="MyListView" IsPullToRefreshEnabled="true"
                                   SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected">
                             <ListView.ItemTemplate>
                                 <DataTemplate>

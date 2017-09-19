@@ -116,8 +116,8 @@
     <Compile Include="Pages\OrdonnanceCotationPage.xaml.cs">
       <DependentUpon>OrdonnanceCotationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\OrdonnanceDetailEditPage.xaml.cs">
-      <DependentUpon>OrdonnanceDetailEditPage.xaml</DependentUpon>
+    <Compile Include="Pages\OrdonnanceCreateEditPage.xaml.cs">
+      <DependentUpon>OrdonnanceCreateEditPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\OrdonnanceDetailPage.xaml.cs">
       <DependentUpon>OrdonnanceDetailPage.xaml</DependentUpon>
@@ -178,7 +178,8 @@
     <Compile Include="ViewModels\MyAccountEditViewModel.cs" />
     <Compile Include="ViewModels\MyAccountViewModel.cs" />
     <Compile Include="ViewModels\OrdonnanceCotationViewModel.cs" />
-    <Compile Include="ViewModels\OrdonnanceDetailEditViewModel.cs" />
+    <Compile Include="ViewModels\OrdonnanceCreateEditViewModel.cs" />
+    <Compile Include="ViewModels\OrdonnanceDetailViewModel.cs" />
     <Compile Include="ViewModels\OrdonnanceFrequence2ViewModel.cs" />
     <Compile Include="ViewModels\OrdonnanceFrequenceViewModel.cs" />
     <Compile Include="ViewModels\OrdonnancesListViewModel.cs" />
@@ -364,7 +365,7 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\OrdonnanceDetailEditPage.xaml">
+    <EmbeddedResource Include="Pages\OrdonnanceCreateEditPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

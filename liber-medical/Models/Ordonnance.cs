@@ -12,7 +12,7 @@ namespace libermedical.Models
         [JsonProperty("first_care_at")]
         public long First_Care_At { get; set; }
         [JsonProperty("statusChangedAt")]
-        public long StatusChangedAt { get; set; }
+        public int Status_Changed_At { get; set; }
         [JsonProperty("comments")]
         public string Comments { get; set; }
         [JsonProperty("patient_id")]
@@ -42,6 +42,9 @@ namespace libermedical.Models
 
         [JsonIgnore]
         public DateTime FirstCareAt => ConvertFromUnixTimestamp(First_Care_At);
+
+        [JsonIgnore]
+        public DateTime StatusChangedAt => ConvertFromUnixTimestamp(Status_Changed_At);
 
         public static DateTime ConvertFromUnixTimestamp(double timestamp)
         {

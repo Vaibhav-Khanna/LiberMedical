@@ -2,8 +2,8 @@
 <custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
                  xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                 x:Class="libermedical.Pages.OrdonnanceDetailEditPage"
-                 Style="{StaticResource AppBackgroundColor}">
+                 x:Class="libermedical.Pages.OrdonnanceCreateEditPage"
+                 Style="{StaticResource NavigationPage}">
     <custom:BasePage.Header>
         <ContentView Style="{StaticResource HeaderFooterBackground}">
             <Grid Padding="5">
@@ -25,7 +25,7 @@
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SaveCommand}"/>
                     </Grid.GestureRecognizers>
                     <Label HorizontalOptions="Center" VerticalOptions="Center"
-                           Style="{StaticResource HeaderLabelAction}" Text="Enregistrer" />
+                           Style="{StaticResource HeaderLabelAction}" Text="{Binding SaveLabel}" />
                 </Grid>
             </Grid>
         </ContentView>
@@ -105,8 +105,27 @@
                         </ViewCell>
                     </TableSection>
                     <TableSection>
-                        <TextCell Text="Frequence d'administration" Detail="+ Ajouter" DetailColor="#007aff"
-                                  Height="70" Command="{Binding FrequenceTappedCommand}" />
+                      <TextCell Text="Frequence d'administration" Detail="+ Ajouter" DetailColor="#007aff"
+                                  Height="70" Command="{Binding AddFrequenceTappedCommand}" />
+                      <ViewCell x:Name="FrequenciesViewCell">
+                          <ListView x:Name="FrequencesListView" SeparatorVisibility="None" VerticalOptions="Start" ItemSelected="FrequencesListView_OnItemSelected">
+                              <ListView.ItemTemplate>
+                                  <DataTemplate>
+                                    <ViewCell>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="90*" />
+                                                <ColumnDefinition Width="10*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Label Text="{Binding PeriodString}" VerticalOptions="Center" Margin="15,0,0,0" FontSize="16"
+                                                   HorizontalOptions="FillAndExpand" Grid.Column="0" />
+                                            <Image Source="back_arrow_grey.png" VerticalOptions="Center" Grid.Column="1" />
+                                        </Grid>
+                                    </ViewCell>
+                                  </DataTemplate>
+                                </ListView.ItemTemplate>
+                              </ListView>
+                            </ViewCell>
                     </TableSection>
                     <TableSection>
                         <TextCell Text="Pièce jointe" Detail="+ Ajouter" Height="70" DetailColor="#007aff"
@@ -132,7 +151,7 @@
             <ContentView.GestureRecognizers>
                 <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SaveCommand}"/>
             </ContentView.GestureRecognizers>
-            <Label Text="Enregistrer" HorizontalOptions="Center" VerticalOptions="Center"
+            <Label Text="{Binding SaveLabel}" HorizontalOptions="Center" VerticalOptions="Center"
                    Style="{StaticResource FooterLabel}" />
         </ContentView>
     </custom:BasePage.Footer>

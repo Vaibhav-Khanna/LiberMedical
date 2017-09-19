@@ -16,7 +16,7 @@ namespace libermedical.Models
         public string NurseId { get; set; }
 
         [JsonIgnore]
-		public string FullName => this.ToString();
+		public string Fullname => this.ToString();
 
 		public override string ToString()
 		{
