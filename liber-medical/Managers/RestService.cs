@@ -11,9 +11,11 @@ using Akavache;
 using libermedical.CustomExceptions;
 using libermedical.Enums;
 using libermedical.Helpers;
+using libermedical.Models;
 using libermedical.Request;
 using libermedical.Responses;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace libermedical.Managers
 {
@@ -187,7 +189,10 @@ namespace libermedical.Managers
                 if (response.IsSuccessStatusCode)
                 {
                     var content2 = await response.Content.ReadAsStringAsync();
+					var user = JsonConvert.DeserializeObject<User>(JObject.Parse(content2)["user"].ToString());
+					Settings.CurrentUser = JsonConvert.SerializeObject(user);
                     resp = JsonConvert.DeserializeObject<TokenResponse>(content2);
+
                     Debug.WriteLine(@"				Item successfully saved.");
                 }
                 else

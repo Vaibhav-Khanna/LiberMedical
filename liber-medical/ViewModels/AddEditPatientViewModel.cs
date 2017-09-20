@@ -17,9 +17,9 @@ namespace libermedical.ViewModels
         public Patient PatientProperty { get; set; }
 
 
-        private ObservableCollection<PhoneNumber> _phones;
+        private ObservableCollection<string> _phones;
 
-        public ObservableCollection<PhoneNumber> Phones
+        public ObservableCollection<string> Phones
         {
             get { return _phones; }
             set
@@ -49,30 +49,30 @@ namespace libermedical.ViewModels
             if (initData == null)
             {
                 PatientProperty = new Patient();
-                PatientProperty.PhoneNumbers = new List<PhoneNumber>();
+                PatientProperty.PhoneNumbers = new List<string>();
                 PatientProperty.Id = DateTime.Now.Ticks.ToString();
-                Phones = new ObservableCollection<PhoneNumber>();
+                Phones = new ObservableCollection<string>();
 
             }
             else
             {
                 PatientProperty = initData as Patient;
-                Phones = new ObservableCollection<PhoneNumber>(PatientProperty.PhoneNumbers);
+                Phones = new ObservableCollection<string>(PatientProperty.PhoneNumbers);
             }
         }
 
         public ICommand AddPhoneCommand => new Command(() =>
         {
             if (!string.IsNullOrEmpty(PhoneNo))
-                PatientProperty.PhoneNumbers = new List<PhoneNumber>() { new PhoneNumber() { Number = PhoneNo, PatientId = PatientProperty.Id } };
+                PatientProperty.PhoneNumbers = new List<string>() {  PhoneNo };
             PhoneNo = string.Empty;
         });
 
         public ICommand DeletePhoneCommand => new Command((args) =>
         {
             if (PatientProperty.PhoneNumbers != null)
-                PatientProperty.PhoneNumbers.Remove(args as PhoneNumber);
-            Phones.Remove(args as PhoneNumber);
+                PatientProperty.PhoneNumbers.Remove(args as string);
+            Phones.Remove(args as string);
         });
 
         public ICommand CancelCommand => new Command(async () =>
@@ -86,7 +86,7 @@ namespace libermedical.ViewModels
             try
             {
                 if (!string.IsNullOrEmpty(PhoneNo))
-                    PatientProperty.PhoneNumbers = new List<PhoneNumber>() { new PhoneNumber() { Number = PhoneNo, PatientId = PatientProperty.Id } };
+                    PatientProperty.PhoneNumbers = new List<string>() { PhoneNo };
 
                 if (ValidateForm())
                 {

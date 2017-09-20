@@ -8,6 +8,7 @@ using System.Windows.Input;
 using libermedical.Models;
 using libermedical.Services;
 using Xamarin.Forms;
+using libermedical.Request;
 
 namespace libermedical.ViewModels.Base
 {
@@ -28,7 +29,6 @@ namespace libermedical.ViewModels.Base
 			set { _isRefreshing = value; RaisePropertyChanged(); }
 		}
 
-
 		private ObservableCollection<GroupedItem<TModel>> _itemsSource;
 		public ObservableCollection<GroupedItem<TModel>> ItemsSource
 		{
@@ -44,13 +44,9 @@ namespace libermedical.ViewModels.Base
 			IsRefreshing = false;
 		});
 
-
-
 		protected virtual async Task GetDataAsync()
 		{
-			ItemsSource.Clear();
-			var observableCollection = await _storageService.GetList();
-			GroupItems(observableCollection.ToList());
+
 		}
 
 		protected override async void ViewIsAppearing(object sender, EventArgs e)
@@ -61,37 +57,7 @@ namespace libermedical.ViewModels.Base
 
 		protected abstract Task TapCommandFunc(Cell cell);
 
-		private void GroupItems(List<TModel> observableCollection)
-		{
-			try
-			{
-				var groupedList = new ObservableCollection<GroupedItem<TModel>>();
 
-				var patientsList = observableCollection.Cast<Patient>().ToList();
-				var headers = patientsList.Select(x => x.LastName.Substring(0, 1));
-
-				headers = headers.Select(h => char.ToUpper(h[0]).ToString()).Distinct().OrderBy(x => x);
-
-				foreach (var headerkey in headers)
-				{
-					var patientGroup = new GroupedItem<TModel> {HeaderKey = headerkey};
-					foreach (var item in patientsList.Where(x => x.LastName.StartsWith(headerkey, StringComparison.OrdinalIgnoreCase)).ToList())
-					{
-						patientGroup.Add(item);
-					}
-					groupedList.Add(patientGroup);
-				}
-
-
-				ItemsSource = groupedList;
-
-
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.Message);
-			}
-		}
 
 
 	}

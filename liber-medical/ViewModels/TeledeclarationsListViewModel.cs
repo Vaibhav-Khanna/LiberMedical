@@ -8,11 +8,15 @@ using Xamarin.Forms;
 using libermedical.Enums;
 using System.Collections.Generic;
 using System.Linq;
+using libermedical.Request;
+using libermedical.Services;
+using System.Threading.Tasks;
 
 namespace libermedical.ViewModels
 {
-	public class TeledeclarationsListViewModel : ViewModelBase
+	public class TeledeclarationsListViewModel : ListViewModelBase<Teledeclaration>
 	{
+		private IStorageService<Teledeclaration> _teledeclarationsStorage;
 		private Filter _filter;
 		private ObservableCollection<Teledeclaration> _teledeclarationsAll;
 		private ObservableCollection<Teledeclaration> _teledeclarations;
@@ -36,12 +40,13 @@ namespace libermedical.ViewModels
 				RaisePropertyChanged();
 
 				if (value != null)
-					TeledeclarationTappedCommand.Execute(null);
+					TeledeclarationTappedCommand.Execute(_selectedTeledeclaration);
 			}
 		}
 
-		public TeledeclarationsListViewModel()
+		public TeledeclarationsListViewModel(IStorageService<Teledeclaration> storageService) : base(storageService)
 		{
+			_teledeclarationsStorage = storageService;
 			BindData();
 		}
 
@@ -53,8 +58,8 @@ namespace libermedical.ViewModels
 				foreach (var status in filter.Statuses)
 				{
 					var foundItems =
-						_teledeclarationsAll.Where(x => x.Status == status && x.AddDate >= filter.StartDate &&
-																	 x.AddDate <= filter.EndDate);
+						_teledeclarationsAll.Where(x => x.Status == status && x.CreatedAt >= filter.StartDate &&
+																	 x.CreatedAt <= filter.EndDate);
 					filteredItems.AddRange(foundItems);
 				}
 
@@ -68,89 +73,40 @@ namespace libermedical.ViewModels
 
 		private async void BindData()
 		{
-			Teledeclarations = new ObservableCollection<Teledeclaration>
+			if (App.IsConnected())
 			{
-				new Teledeclaration {
-					Reference= 1,
-					AddDate= new DateTime(2017, 04, 02),
-					TotalAccount= 92.76,
-					Status = StatusEnum.waiting
-				},
-				new Teledeclaration {
-					Reference= 1,
-					AddDate= new DateTime(2017, 11, 08),
-					TotalAccount= 67.64,
-					Status = StatusEnum.waiting
-				},
-				new Teledeclaration {
-					Reference= 1,
-					AddDate= new DateTime(2017, 04, 02),
-					TotalAccount= 92.76,
-					Status = StatusEnum.refused
-				},
-				new Teledeclaration {
-					Reference= 1,
-					AddDate= new DateTime(2017, 04, 02),
-					TotalAccount= 92.76,
-					Status = StatusEnum.waiting
-				},
-				new Teledeclaration {
-					Reference= 1,
-					AddDate= new DateTime(2017, 04, 02),
-					TotalAccount= 92.76,
-					Status = StatusEnum.refused
-				},
-				new Teledeclaration {
-					Reference= 1,
-					AddDate= new DateTime(2017, 05, 24),
-					TotalAccount= 92.76,
-					Status = StatusEnum.refused
-				},
-				new Teledeclaration {
-					Reference= 1,
-					AddDate= new DateTime(2016, 07, 02),
-					TotalAccount= 92.76,
-					Status = StatusEnum.waiting
-				},
-				new Teledeclaration {
-					Reference= 1,
-					AddDate= new DateTime(2017, 02, 11),
-					TotalAccount= 92.76,
-					Status = StatusEnum.waiting
-				},
-				new Teledeclaration {
-					Reference= 1,
-					AddDate= new DateTime(2017, 03, 30),
-					TotalAccount= 92.76,
-					Status = StatusEnum.waiting
-				},
-				new Teledeclaration {
-					Reference= 1,
-					AddDate= new DateTime(2017, 10, 22),
-					TotalAccount= 12.64,
-					Status = StatusEnum.waiting
-				},
-				new Teledeclaration {
-					Reference= 1,
-					AddDate= new DateTime(2017, 08, 02),
-					TotalAccount= 145.32,
-					Status = StatusEnum.waiting
-				}
-			};
+				var request = new GetListRequest(20, 0);
+				Teledeclarations =
+					new ObservableCollection<Teledeclaration>((await App.TeledeclarationsManager.GetListAsync(request)).rows);
+
+				//Updating records in local cache
+				await _teledeclarationsStorage.DeleteAllAsync();
+				await _teledeclarationsStorage.AddManyAsync(Teledeclarations.ToList());
+			}
+			else
+			{
+				Teledeclarations = new ObservableCollection<Teledeclaration>(await _teledeclarationsStorage.GetList());
+			}
 			_teledeclarationsAll = Teledeclarations;
 			MessagingCenter.Subscribe<FilterPage, Filter>(this, Events.UpdatePrescriptionFilters, (sender, filter) =>
 		   {
 			   _filter = filter;
-
 			   ApplyFilter(filter);
 		   });
+		}
+
+		protected override async Task TapCommandFunc(Cell cell)
+		{
+			//var ctx = cell.BindingContext;
+			//await CoreMethods.PushPageModelWithNewNavigation<TeledeclarationSecureActionViewModel>(ctx);
 		}
 
 		public ICommand BillTappedCommand => new Command(
 			async () => await Application.Current.MainPage.Navigation.PushModalAsync(new SecuriseBillsPage()));
 
 		public ICommand TeledeclarationTappedCommand => new Command(
-			async () => await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new TeledeclarationSecureActionPage())));
+			async (args) => await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new TeledeclarationSecureActionPage() { BindingContext = new TeledeclarationSecureActionViewModel() { Teledeclaration = args as Teledeclaration } }))
+		);
 
 		public ICommand FilterTappedCommand => new Command(
 			async () =>

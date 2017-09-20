@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using libermedical.Models;
+using libermedical.Request;
 using libermedical.Services;
 using libermedical.ViewModels.Base;
 using Xamarin.Forms;
@@ -14,6 +16,7 @@ namespace libermedical.ViewModels
 	public class PatientListViewModel : ListViewModelBase<Patient>
 	{
 		private ObservableCollection<GroupedItem<Patient>> _filteredPatients;
+		private ObservableCollection<GroupedItem<Patient>> Patients;
 		private IStorageService<Patient> _patientsStorage;
 		private string NavigationType;
         private string ParentScreen;
@@ -22,6 +25,53 @@ namespace libermedical.ViewModels
 		public PatientListViewModel(IStorageService<Patient> storageService) : base(storageService)
 		{
 			_patientsStorage = storageService;
+			BindData();
+		}
+
+		private async void BindData()
+		{
+			if (App.IsConnected())
+			{
+				var request = new GetListRequest(20, 0);
+				var patients =
+					new ObservableCollection<Patient>((await App.PatientsManager.GetListAsync(request)).rows);
+
+				//Updating records in local cache
+				await _storageService.DeleteAllAsync();
+				await _storageService.AddManyAsync(patients.ToList());
+			}
+			ItemsSource.Clear();
+			var observableCollection = await _storageService.GetList();
+			GroupItems(observableCollection.ToList());
+		}
+
+		private void GroupItems(List<Patient> observableCollection)
+		{
+			try
+			{
+				var groupedList = new ObservableCollection<GroupedItem<Patient>>();
+
+				var patientsList = observableCollection.Cast<Patient>().ToList();
+				var headers = patientsList.Select(x => x.LastName.Substring(0, 1));
+
+				headers = headers.Select(h => char.ToUpper(h[0]).ToString()).Distinct().OrderBy(x => x);
+
+				foreach (var headerkey in headers)
+				{
+					var patientGroup = new GroupedItem<Patient> { HeaderKey = headerkey };
+					foreach (var item in patientsList.Where(x => x.LastName.StartsWith(headerkey, StringComparison.OrdinalIgnoreCase)).ToList())
+					{
+						patientGroup.Add(item);
+					}
+					groupedList.Add(patientGroup);
+				}
+
+				ItemsSource = groupedList;
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.Message);
+			}
 		}
 
 		private string _searchString;

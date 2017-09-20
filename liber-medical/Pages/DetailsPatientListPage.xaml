@@ -43,7 +43,7 @@
 					       Style="{StaticResource PatientNameTitle}" />
 					<Label Margin="0,0,0,0" Text="portable" HorizontalOptions="Center" VerticalOptions="Fill"
 					       Style="{StaticResource PortableTitle}" />
-					<Label Margin="0,0,0,21" Text="{Binding Patient.PhoneNumbers[0].Number}" HorizontalOptions="Center" VerticalOptions="Fill"
+					<Label Margin="0,0,0,21" Text="{Binding Patient.PhoneNumbers[0]}" HorizontalOptions="Center" VerticalOptions="Fill"
 					       Style="{StaticResource PortableNumber}" />
 				</StackLayout>
 				<StackLayout Grid.Row="1" Padding="40,10">

@@ -29,8 +29,8 @@
             <TableView Intent="Data" RowHeight="50" Grid.Row="0">
                 <TableRoot>
                     <TableSection>
-                        <TextCell Text="En attente..."  />
-                        <TextCell Text="01-04-2017"  />
+                        <TextCell Text="{Binding Teledeclaration.Label}"  />
+                        <TextCell Text="{Binding Teledeclaration.CreatedAt, StringFormat='{0:dd-MM-yyyy}'}"  />
                         <ViewCell Tapped="Detail_Tapped">
                             <StackLayout Orientation="Horizontal" Padding="10,0,10,0" >
                                 <Label Text="Détails déclaration" HorizontalOptions="StartAndExpand" VerticalOptions="Center" />

@@ -1,17 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<ContentPage
-  x:Class="libermedical.Pages.TeledeclarationsListPage"
-  xmlns="http://xamarin.com/schemas/2014/forms"
-  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
-  Title="Télédéclarations"
-  Style="{StaticResource AppBackgroundColor}">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage x:Class="libermedical.Pages.TeledeclarationsListPage" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" Title="Télédéclarations" Style="{StaticResource AppBackgroundColor}">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem
-		  Name="Télédéclarations"
-		  Command="{Binding FilterTappedCommand}"
-		  Icon="filters.png" />
+		<ToolbarItem Name="Télédéclarations" Command="{Binding FilterTappedCommand}" Icon="filters.png" />
 	</ContentPage.ToolbarItems>
 	<ContentView>
 		<Grid>
@@ -20,29 +10,12 @@
 				<RowDefinition Height="*" />
 				<RowDefinition Height="50" />
 			</Grid.RowDefinitions>
-			<StackLayout
-			  Grid.Row="0"
-			  Padding="8,7"
-			  BackgroundColor="#c8c7cc"
-			  HorizontalOptions="FillAndExpand"
-			  Style="{StaticResource BackgroundResearch}">
-				<SearchBar
-				  BackgroundColor="White"
-				  HeightRequest="30"
-				  HorizontalOptions="FillAndExpand"
-				  Placeholder="Rechercher"
-				  Style="{StaticResource ResearchBar}"
-				  VerticalOptions="FillAndExpand" />
+			<StackLayout Grid.Row="0" Padding="8,7" BackgroundColor="#c8c7cc" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
+				<SearchBar BackgroundColor="White" HeightRequest="30" HorizontalOptions="FillAndExpand" Placeholder="Rechercher" Style="{StaticResource ResearchBar}" VerticalOptions="FillAndExpand" />
 			</StackLayout>
 			<ScrollView Grid.Row="1">
 				<StackLayout Padding="20,0,0,0">
-					<ListView x:Name="listView"
-					  ItemSelected="Handle_ItemSelected"
-					  ItemTapped="Handle_ItemTapped"
-					  ItemsSource="{Binding Teledeclarations}"
-					  RowHeight="60"
-					  SelectedItem="{Binding SelectedTeledeclaration}"
-					  SeparatorVisibility="Default">
+					<ListView x:Name="listView" ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" RowHeight="60" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default">
 						<ListView.ItemTemplate>
 							<DataTemplate>
 								<ViewCell>
@@ -56,54 +29,20 @@
 											<RowDefinition Height="60*" />
 											<RowDefinition Height="40*" />
 										</Grid.RowDefinitions>
-										<Label
-										  Grid.Row="0"
-										  Grid.Column="0"
-										  HorizontalOptions="StartAndExpand"
-										  Style="{StaticResource Ordonnance}"
-										  Text="{Binding AddDate, StringFormat='{0:dd-MM-yyyy}'}"
-										  VerticalOptions="EndAndExpand" />
-										<Label
-										  Grid.Row="1"
-										  Grid.Column="0"
-										  HorizontalOptions="StartAndExpand"
-										  Style="{StaticResource OrdonnanceAddDate}"
-										  Text="{Binding TotalAccount, StringFormat='€ {0}'}"
-										  VerticalOptions="StartAndExpand" />
-										<Button
-										  Grid.RowSpan="2"
-										  Grid.Column="1"
-										  BackgroundColor="#d1d1d1"
-										  HorizontalOptions="Center"
-										  Text="{Binding Status}"
-										  TextColor="#ffffff"
-										  VerticalOptions="Center">
+										<Label Grid.Row="0" Grid.Column="0" HorizontalOptions="StartAndExpand" Style="{StaticResource Ordonnance}" Text="{Binding CreatedAt, StringFormat='{0:dd-MM-yyyy}'}" VerticalOptions="EndAndExpand" />
+										<Label Grid.Row="1" Grid.Column="0" HorizontalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Text="{Binding TotalAccount, StringFormat='€ {0}'}" VerticalOptions="StartAndExpand" />
+										<Button Grid.RowSpan="2" Grid.Column="1" BackgroundColor="#d1d1d1" HorizontalOptions="Center" Text="{Binding Status}" TextColor="#ffffff" VerticalOptions="Center">
 											<Button.HeightRequest>
-												<OnPlatform
-												  x:TypeArguments="x:Double"
-												  Android="40"
-												  iOS="20" />
+												<OnPlatform x:TypeArguments="x:Double" Android="40" iOS="20" />
 											</Button.HeightRequest>
 											<Button.WidthRequest>
-												<OnPlatform
-												  x:TypeArguments="x:Double"
-												  Android="100"
-												  iOS="90" />
+												<OnPlatform x:TypeArguments="x:Double" Android="100" iOS="90" />
 											</Button.WidthRequest>
 											<Button.BorderRadius>
-												<OnPlatform
-												  x:TypeArguments="x:Int32"
-												  Android="0"
-												  iOS="10" />
+												<OnPlatform x:TypeArguments="x:Int32" Android="0" iOS="10" />
 											</Button.BorderRadius>
 										</Button>
-
-										<Image
-										  Grid.RowSpan="2"
-										  Grid.Column="2"
-										  HorizontalOptions="Start"
-										  Source="back_arrow_green.png"
-										  VerticalOptions="Center" />
+										<Image Grid.RowSpan="2" Grid.Column="2" HorizontalOptions="Start" Source="back_arrow_green.png" VerticalOptions="Center" />
 									</Grid>
 								</ViewCell>
 							</DataTemplate>
@@ -111,21 +50,10 @@
 					</ListView>
 				</StackLayout>
 			</ScrollView>
-			<ContentView
-			  Grid.Row="2"
-			  HorizontalOptions="FillAndExpand"
-			  Style="{StaticResource HeaderFooterBackground}"
-			  VerticalOptions="FillAndExpand">
-				<StackLayout 
-					HorizontalOptions="Center"
-					VerticalOptions="Center"
-					Orientation="Horizontal">
+			<ContentView Grid.Row="2" HorizontalOptions="FillAndExpand" Style="{StaticResource HeaderFooterBackground}" VerticalOptions="FillAndExpand">
+				<StackLayout HorizontalOptions="Center" VerticalOptions="Center" Orientation="Horizontal">
 					<Image Source="secure.png" />
-					<Label
-					  HorizontalOptions="Center"
-					  Style="{StaticResource FooterLabel}"
-					  Text="Mes factures à sécuriser"
-					  VerticalOptions="Center" />
+					<Label HorizontalOptions="Center" Style="{StaticResource FooterLabel}" Text="Mes factures à sécuriser" VerticalOptions="Center" />
 				</StackLayout>
 				<ContentView.GestureRecognizers>
 					<TapGestureRecognizer Tapped="Bill_Tapped" />

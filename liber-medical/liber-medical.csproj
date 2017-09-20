@@ -68,6 +68,7 @@
     <Compile Include="Managers\IOrdonnanceManager.cs" />
     <Compile Include="Managers\LoginManager.cs" />
     <Compile Include="Managers\OrdonnanceManager.cs" />
+    <Compile Include="Managers\PatientsManager.cs" />
     <Compile Include="Models\Frequency.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Request\ForgotPasswordRequest.cs" />
@@ -192,6 +193,8 @@
     <Compile Include="ViewModels\PlusViewModel.cs" />
     <Compile Include="ViewModels\SecuriseBillsViewModel.cs" />
     <Compile Include="ViewModels\TeledeclarationsListViewModel.cs" />
+    <Compile Include="Managers\TeledeclarationsManager.cs" />
+    <Compile Include="ViewModels\TeledeclarationSecureActionViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Acr.UserDialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

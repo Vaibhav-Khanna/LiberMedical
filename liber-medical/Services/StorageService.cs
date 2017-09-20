@@ -37,7 +37,7 @@ namespace libermedical.Services
                 await BlobCache.UserAccount.InsertObjects(dic);
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }

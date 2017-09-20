@@ -63,7 +63,7 @@
 										</Image.GestureRecognizers>
 									</Image>
                   <Image Source="path_5.png" />
-									<Label Text="{Binding Number}" Style="{StaticResource PortableNumber}" VerticalOptions="Center" />
+									<Label Text="{Binding .}" Style="{StaticResource PortableNumber}" VerticalOptions="Center" />
 								</StackLayout>
 							</ViewCell>
 						</DataTemplate>
