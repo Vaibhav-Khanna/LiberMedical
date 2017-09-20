@@ -10,6 +10,7 @@ namespace libermedical.ViewModels
 {
 	public class MyAccountViewModel : ViewModelBase
 	{
+		private User _userInfo;
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string PhoneNumber { get; set; }
@@ -22,15 +23,15 @@ namespace libermedical.ViewModels
 
 		private void GetUserFromSettings()
 		{
-			var p = JsonConvert.DeserializeObject<User>(Settings.CurrentUser);
-			FirstName = p.Firstname;
-			LastName = p.Lastname;
-			PhoneNumber = p.Phone;
-			EmailAddress = p.Email;
+			_userInfo = JsonConvert.DeserializeObject<User>(Settings.CurrentUser);
+			FirstName = _userInfo.Firstname;
+			LastName = _userInfo.Lastname;
+			PhoneNumber = _userInfo.Phone;
+			EmailAddress = _userInfo.Email;
 		}
 
 		public ICommand EditCommand => new Command(async () =>
-			await CoreMethods.PushPageModel<MyAccountEditViewModel>(null, true));
+		                                           await CoreMethods.PushPageModel<MyAccountEditViewModel>(null, true));
 
 		protected override void ViewIsAppearing(object sender, EventArgs e)
 		{

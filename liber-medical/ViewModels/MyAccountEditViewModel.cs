@@ -12,6 +12,7 @@ namespace libermedical.ViewModels
 {
 	public class MyAccountEditViewModel : ViewModelBase
 	{
+		public User UserInfo;
 		private readonly IUserDialogs _dialogs;
 
 		public MyAccountEditViewModel(IUserDialogs dialogs)
@@ -19,6 +20,7 @@ namespace libermedical.ViewModels
 			_dialogs = dialogs;
 			CurrentUser = JsonConvert.DeserializeObject<User>(Settings.CurrentUser);
 		}
+
 
 		public ICommand SaveCommand => new Command(async () => await SaveProfile());
 
@@ -42,17 +44,18 @@ namespace libermedical.ViewModels
 				Settings.CurrentUser = JsonConvert.SerializeObject(CurrentUser);
 				MessagingCenter.Send(this, "ProfileUpdate");
 				var passwd = await ChangePassword();
-				if(passwd)
+				if (passwd)
 					NavBackCommand.Execute(null);
 			}
 		}
+
 
 		private async Task<bool> ChangePassword()
 		{
 			if (string.IsNullOrEmpty(NewPassword + OldPassword + ConfirmPassword)) return true;
 			if (NewPassword.Length < 6)
 			{
-				await CoreMethods.DisplayAlert("Wrong password","Password should be at least 6 characters long", "OK");
+				await CoreMethods.DisplayAlert("Wrong password", "Password should be at least 6 characters long", "OK");
 				return false;
 			}
 			if (NewPassword != ConfirmPassword)
