@@ -41,8 +41,7 @@ namespace libermedical.ViewModels
 				await _storageService.AddManyAsync(patients.ToList());
 			}
 			ItemsSource.Clear();
-			var observableCollection = await _storageService.GetList();
-			GroupItems(observableCollection.ToList());
+			GroupItems((await _storageService.GetList()).ToList());
 		}
 
 		private void GroupItems(List<Patient> observableCollection)
@@ -162,10 +161,11 @@ namespace libermedical.ViewModels
                 DocType = values[2];
             }
         }
-		protected override void ViewIsAppearing(object sender, EventArgs e)
+		protected override async void ViewIsAppearing(object sender, EventArgs e)
 		{
 			base.ViewIsAppearing(sender, e);
 			SearchString = string.Empty;
+			GroupItems((await _storageService.GetList()).ToList());
 		}
 
 	}

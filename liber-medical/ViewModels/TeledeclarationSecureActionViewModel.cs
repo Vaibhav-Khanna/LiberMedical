@@ -9,16 +9,26 @@ namespace libermedical.ViewModels
 	{
 		private readonly IStorageService<Teledeclaration> _teledeclarationService;
 
-		public Teledeclaration Teledeclaration { get; set; }
+		private Teledeclaration _teledeclaration;
+
+		public Teledeclaration Teledeclaration
+		{
+			get { return _teledeclaration;}
+			set
+			{
+				_teledeclaration = value;
+				if (_teledeclaration != null)
+					CanValidate = _teledeclaration.Status == Enums.StatusEnum.waiting ? true : false;
+				RaisePropertyChanged();
+			}
+		}
+		public bool CanValidate { get; set; }
 
 		public override void Init(object initData)
 		{
 			base.Init(initData);
-			if (initData != null)
-			{
-				//Teledeclaration = initData as Teledeclaration;
 
-			}
+
 		}
 
 	}

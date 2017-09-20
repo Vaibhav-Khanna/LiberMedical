@@ -40,7 +40,7 @@
                     </TableSection>
                 </TableRoot>
             </TableView>
-            <StackLayout Grid.Row="1" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >            
+            <StackLayout Grid.Row="1" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsVisible="{Binding CanValidate}">            
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="50*"/>
