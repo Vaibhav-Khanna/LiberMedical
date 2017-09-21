@@ -1,5 +1,8 @@
 ﻿using System.Windows.Input;
+using libermedical.Helpers;
+using libermedical.Models;
 using libermedical.ViewModels.Base;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace libermedical.ViewModels
@@ -11,6 +14,8 @@ namespace libermedical.ViewModels
 
 		public ICommand ConnectCommand => new Command(async () =>
 		{
+			var userInfo = await App.UserManager(JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id,"advisor").GetListAsync();
+			
 			var action = await CoreMethods.DisplayActionSheet("Contacter mon conseiller via:", "Annuler", null, "Appel vocal", "SMS");
             switch (action)
             {

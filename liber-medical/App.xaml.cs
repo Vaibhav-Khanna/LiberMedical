@@ -15,9 +15,10 @@ using Xamarin.Forms;
 
 namespace libermedical
 {
-	
+
 	public partial class App : Application
 	{
+		private static IUserManager _userManager;
 		private static ILoginManager _loginManager;
 		private static IOrdonnanceManager _ordonnanceManager;
 		private static IPatientsManager _patientsManager;
@@ -108,6 +109,13 @@ namespace libermedical
 			return null;
 		}
 
+		public static IUserManager UserManager(string id, string route)
+		{
+			if (!string.IsNullOrEmpty(route))
+				return _userManager = new UserManager(new RestService<User>($"{id}{route}"));
+			return _userManager = new UserManager(new RestService<User>($"{id}"));
+		}
+
 		public static ILoginManager LoginManager => _loginManager ??
 													(_loginManager = new LoginManager(new RestService<LoginRequest>("")));
 
@@ -119,6 +127,7 @@ namespace libermedical
 
 		public static ITeledeclarationsManager TeledeclarationsManager => _teledeclarationsManager ??
 																			(_teledeclarationsManager = new TeledeclarationsManager(new RestService<Teledeclaration>("teledeclarations")));
+
 
 
 	}
