@@ -94,6 +94,7 @@
 					<BoxView Style="{StaticResource GreyBoxViewLine}"/>
 				</StackLayout>
 				<Button
+          IsEnabled="{Binding ShouldShowContact}"
 				  Grid.Row="1"
 				  BackgroundColor="White"
 				  BorderColor="#91c602"

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using System;
 using libermedical.Services;
 using System.Collections.Generic;
+using libermedical.Helpers;
+using Newtonsoft.Json;
+using libermedical.Request;
 
 namespace libermedical.ViewModels
 {
@@ -17,9 +20,13 @@ namespace libermedical.ViewModels
         //so we initialize typeDoc to "ordonnace"
         private string typeDoc = "ordonnance";
 		private string _documentPath = string.Empty;
+        private string AdvisorContact = string.Empty;
+
+
         public HomeViewModel()
         {
             SubscribeToMessages();
+            CheckForAdvisor();
         }
         public ICommand AssistCommand => new Command(async () =>
         {
@@ -27,19 +34,28 @@ namespace libermedical.ViewModels
             switch (action)
             {
                 case "Appel vocal":
-                    Device.OpenUri(new System.Uri("tel:+33559311824"));
+                    Device.OpenUri(new System.Uri($"tel:{Settings.AdvisorContact}"));
                     break;
 
                 case "E-mail":
-                    Device.OpenUri(new System.Uri("mailto:contact@libermedical.com"));
+                    Device.OpenUri(new System.Uri($"mailto:{Settings.AdvisorEmail}"));
                     break;
 
                 case "SMS":
-                    Device.OpenUri(new System.Uri("sms:+33559311824"));
+                    Device.OpenUri(new System.Uri($"sms:{Settings.AdvisorContact}"));
                     break;
             }
 
         });
+
+        private async Task CheckForAdvisor()
+        {
+            var request = new GetListRequest(20, 0);
+            var userInfo = await App.UserManager.GetAsync($"{JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id}/advisor");
+            Settings.AdvisorContact = AdvisorContact = userInfo != null ? userInfo.Phone : string.Empty;
+            Settings.AdvisorEmail = userInfo != null ? userInfo.Email : string.Empty;
+
+        }
 
         //This concern only ordonances  in normal process
         public ICommand AddOrdonnanceCommand => new Command(async () =>

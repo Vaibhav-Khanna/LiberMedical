@@ -31,10 +31,12 @@ namespace libermedical.Helpers
 	    private const string TokenKey = "Token";
 	    private const string TokenExpirationKey = "TokenExpiration";
 	    private const string UserKey = "UserKey";
+        private const string AdvisorPhone = "AdvisorPhone";
+        private const string AdvisorMail = "AdvisorMail";
 
         #endregion
 
-	    public static bool IsLoggedIn
+        public static bool IsLoggedIn
 	    {
 	        get { return AppSettings.GetValueOrDefault(IsLoggedInKey, booleanDefault); }
 	        set { AppSettings.AddOrUpdateValue(IsLoggedInKey, value); }
@@ -57,5 +59,17 @@ namespace libermedical.Helpers
 	        get { return AppSettings.GetValueOrDefault(UserKey, stringDefault); }
 	        set { AppSettings.AddOrUpdateValue(UserKey, value); }
 	    }
-	}
+
+        public static string AdvisorContact
+        {
+            get { return AppSettings.GetValueOrDefault(AdvisorPhone, stringDefault); }
+            set { AppSettings.AddOrUpdateValue(AdvisorPhone, value); }
+        }
+
+        public static string AdvisorEmail
+        {
+            get { return AppSettings.GetValueOrDefault(AdvisorMail, stringDefault); }
+            set { AppSettings.AddOrUpdateValue(AdvisorMail, value); }
+        }
+    }
 }
