@@ -34,6 +34,7 @@ namespace libermedical.ViewModels
                 if (patient != null)
                 {
                     Ordonnance.PatientId = patient.Id;
+                    Ordonnance.PatientName = patient.Fullname;
                     PatientLabel = patient.Fullname;
                 }
             });
