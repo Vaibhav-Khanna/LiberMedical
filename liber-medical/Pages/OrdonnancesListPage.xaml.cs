@@ -19,8 +19,6 @@ namespace libermedical.Pages
         {
             InitializeComponent();
 
-            DoAsyncActions();
-
             MessagingCenter.Subscribe<FilterPage, Filter>(this, Events.UpdatePrescriptionFilters, (sender, filter) =>
             {
                 _filter = filter;
@@ -31,12 +29,12 @@ namespace libermedical.Pages
 
         private async void DoAsyncActions()
         {
-            while ((BindingContext as OrdonnancesListViewModel)?.Ordonnances == null)
-            {
-                await Task.Delay(100);
-            }
+            //while ((BindingContext as OrdonnancesListViewModel)?.Ordonnances == null)
+            //{
+            //    await Task.Delay(100);
+            //}
 
-            MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
+            //MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
         }
 
         private void ApplyFilter(Filter filter)
@@ -78,7 +76,7 @@ namespace libermedical.Pages
             var item = e.SelectedItem as Ordonnance;
             (BindingContext as OrdonnancesListViewModel).SelectItemCommand.Execute(item);
 
-            // disable the visual selection state.
+            //// disable the visual selection state.
             ((ListView)sender).SelectedItem = null;
         }
         

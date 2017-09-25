@@ -46,8 +46,7 @@ namespace libermedical.ViewModels.Base
 
 		protected virtual async Task GetDataAsync()
 		{
-
-		}
+		} 
 
 		protected override async void ViewIsAppearing(object sender, EventArgs e)
 		{
