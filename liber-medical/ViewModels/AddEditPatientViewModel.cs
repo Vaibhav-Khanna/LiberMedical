@@ -93,12 +93,14 @@ namespace libermedical.ViewModels
 				if (!string.IsNullOrEmpty(PhoneNo))
 					PatientProperty.PhoneNumbers = new List<string>() { PhoneNo };
 
-				if (ValidateForm())
-				{
-					if (Phones.Count > 0)
+				if (Phones.Count > 0)
 						PatientProperty.PhoneNumbers = Phones.ToList();
+				
+				if (ValidateForm())
+				{	
 					PatientProperty.CreatedAt = DateTimeOffset.Now;
 					PatientProperty.UpdatedAt = DateTimeOffset.Now;
+					PatientProperty.IsSynced = false;
 					await _storageService.AddAsync(PatientProperty);
 					await CoreMethods.PopPageModel(PatientProperty);
 				}

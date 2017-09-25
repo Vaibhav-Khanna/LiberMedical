@@ -37,7 +37,7 @@ namespace libermedical.ViewModels
 					new ObservableCollection<Patient>((await App.PatientsManager.GetListAsync(request)).rows);
 
 				//Updating records in local cache
-				await _storageService.DeleteAllAsync();
+				await _storageService.InvalidateSyncedItems();
 				await _storageService.AddManyAsync(patients.ToList());
 			}
 			ItemsSource.Clear();

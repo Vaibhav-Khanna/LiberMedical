@@ -19,5 +19,8 @@ namespace libermedical.Models
 
         [JsonConverter(typeof(BoolConverter))]
         public bool Deleted { get; set; }
+
+		[JsonIgnore]
+		public bool IsSynced { get; set; } 
     }
 }

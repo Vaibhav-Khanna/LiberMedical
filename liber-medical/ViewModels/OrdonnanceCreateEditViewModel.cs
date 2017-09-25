@@ -33,7 +33,9 @@ namespace libermedical.ViewModels
             {
                 if (patient != null)
                 {
+					Ordonnance.Patient = patient;
                     Ordonnance.PatientId = patient.Id;
+                    Ordonnance.PatientName = patient.Fullname;
                     PatientLabel = patient.Fullname;
                 }
             });
@@ -69,6 +71,7 @@ namespace libermedical.ViewModels
         {
             var storageService = new StorageService<Ordonnance>();
             await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + Ordonnance.Id);
+			Ordonnance.IsSynced = false;
             await storageService.AddAsync(Ordonnance);
 
             //TODO: Display success toast
