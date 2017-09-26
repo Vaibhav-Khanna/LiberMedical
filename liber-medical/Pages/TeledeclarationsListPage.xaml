@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage x:Class="libermedical.Pages.TeledeclarationsListPage" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" Title="Télédéclarations" Style="{StaticResource AppBackgroundColor}">
+<ContentPage x:Class="libermedical.Pages.TeledeclarationsListPage" 
+	xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
+	xmlns:converter="clr-namespace:libermedical.Converters;assembly=libermedical"
+	Title="Télédéclarations" Style="{StaticResource AppBackgroundColor}">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Name="Télédéclarations" Command="{Binding FilterTappedCommand}" Icon="filters.png" />
 	</ContentPage.ToolbarItems>
@@ -31,7 +36,7 @@
 										</Grid.RowDefinitions>
 										<Label Grid.Row="0" Grid.Column="0" HorizontalOptions="StartAndExpand" Style="{StaticResource Ordonnance}" Text="{Binding CreatedAt, StringFormat='{0:dd-MM-yyyy}'}" VerticalOptions="EndAndExpand" />
 										<Label Grid.Row="1" Grid.Column="0" HorizontalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Text="{Binding TotalAccount, StringFormat='€ {0}'}" VerticalOptions="StartAndExpand" />
-										<Button Grid.RowSpan="2" Grid.Column="1" BackgroundColor="#d1d1d1" HorizontalOptions="Center" Text="{Binding Status}" TextColor="#ffffff" VerticalOptions="Center">
+										<Button Grid.RowSpan="2" Grid.Column="1" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" HorizontalOptions="Center" Text="{Binding Status}" TextColor="#ffffff" VerticalOptions="Center">
 											<Button.HeightRequest>
 												<OnPlatform x:TypeArguments="x:Double" Android="40" iOS="20" />
 											</Button.HeightRequest>
