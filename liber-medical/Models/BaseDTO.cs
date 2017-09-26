@@ -20,7 +20,7 @@ namespace libermedical.Models
         [JsonConverter(typeof(BoolConverter))]
         public bool Deleted { get; set; }
 
-		[JsonIgnore]
+		[JsonConverter(typeof(BoolSyncConverter))]	
 		public bool IsSynced { get; set; } 
     }
 }

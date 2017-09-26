@@ -196,6 +196,8 @@
     <Compile Include="Managers\TeledeclarationsManager.cs" />
     <Compile Include="ViewModels\TeledeclarationSecureActionViewModel.cs" />
     <Compile Include="Managers\UserManager.cs" />
+    <Compile Include="Converters\BooleanNegativeConverter.cs" />
+    <Compile Include="Converters\StatusColorConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Acr.UserDialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

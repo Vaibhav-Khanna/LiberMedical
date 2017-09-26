@@ -6,68 +6,68 @@
 	x:Class="libermedical.Pages.OrdonnancesListPage" 
 	Style="{StaticResource NavigationPage}" 
 	Title="Ordonnances">
-	<ContentPage.ToolbarItems>
-		<ToolbarItem Name="Ordonnances" Icon="filters.png" Clicked="Filter_Clicked" />
-		<ToolbarItem Name="Ordonnances" Icon="plus.png" Command="{Binding AddCommand}" />
-	</ContentPage.ToolbarItems>
-	<ContentView>
-		<Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="50" />
-				<RowDefinition Height="*" />
-			</Grid.RowDefinitions>
-			<StackLayout BackgroundColor="#c8c7cc" Grid.Row="0" Padding="8,7" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
-				<SearchBar Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" TextChanged="SearchBar_OnTextChanged" />
-			</StackLayout>
-			<ScrollView Grid.Row="1">
-				<StackLayout>
-					<ListView x:Name="MyListView" IsPullToRefreshEnabled="true" ItemsSource="{Binding Ordonnances}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected">
-						<ListView.ItemTemplate>
-							<DataTemplate>
-								<ViewCell>
-									<Grid Padding="15,0,0,0">
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="60*" />
-											<ColumnDefinition Width="30*" />
-											<ColumnDefinition Width="10*" />
-										</Grid.ColumnDefinitions>
-										<Grid.RowDefinitions>
-											<RowDefinition Height="60*" />
-											<RowDefinition Height="40*" />
-										</Grid.RowDefinitions>
-										<Label Text="{Binding PatientName}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
-										<Label Text="{Binding FirstCareAt, StringFormat='{0:dd-MM-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
-										<StackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="1">
-											<Button Text="{Binding StatusString}" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="#d1d1d1" TextColor="#ffffff">
-												<Button.HeightRequest>
-													<OnPlatform x:TypeArguments="x:Double">
-														<On Platform="Android" Value="40" />
-														<On Platform="iOS" Value="20" />
-													</OnPlatform>
-												</Button.HeightRequest>
-												<Button.WidthRequest>
-													<OnPlatform x:TypeArguments="x:Double">
-														<On Platform="Android" Value="100" />
-														<On Platform="iOS" Value="90" />
-													</OnPlatform>
-												</Button.WidthRequest>
-												<Button.BorderRadius>
-													<OnPlatform x:TypeArguments="x:Int32">
-														<On Platform="Android" Value="0" />
-														<On Platform="iOS" Value="10" />
-													</OnPlatform>
-												</Button.BorderRadius>
-											</Button>
-											<!--<Image Source="back_arrow_green.png"></Image>-->
-										</StackLayout>
-										<Image Source="back_arrow_green.png" HorizontalOptions="Start" VerticalOptions="Center" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" />
-									</Grid>
-								</ViewCell>
-							</DataTemplate>
-						</ListView.ItemTemplate>
-					</ListView>
-				</StackLayout>
-			</ScrollView>
-		</Grid>
-	</ContentView>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Ordonnances" Icon="filters.png" Clicked="Filter_Clicked" />
+        <ToolbarItem Name="Ordonnances" Icon="plus.png" Command="{Binding AddCommand}" />
+    </ContentPage.ToolbarItems>
+    <ContentView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackLayout BackgroundColor="#c8c7cc" Grid.Row="0" Padding="8,7" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
+                <SearchBar Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" TextChanged="SearchBar_OnTextChanged" />
+            </StackLayout>
+            <ScrollView Grid.Row="1">
+                <StackLayout>
+                    <ListView x:Name="MyListView" IsPullToRefreshEnabled="true" ItemsSource="{Binding Ordonnances}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Padding="15,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="60*" />
+                                            <ColumnDefinition Width="30*" />
+                                            <ColumnDefinition Width="10*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="60*" />
+                                            <RowDefinition Height="40*" />
+                                        </Grid.RowDefinitions>
+                                        <Label Text="{Binding PatientName}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
+                                        <Label Text="{Binding FirstCareAt, StringFormat='{0:dd-MM-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
+                                        <StackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Orientation="Horizontal">
+                                            <Button Text="{Binding StatusString}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" TextColor="#ffffff" IsVisible="{Binding IsSynced}">
+                                                <Button.HeightRequest>
+                                                    <OnPlatform x:TypeArguments="x:Double">
+                                                        <On Platform="Android" Value="40" />
+                                                        <On Platform="iOS" Value="20" />
+                                                    </OnPlatform>
+                                                </Button.HeightRequest>
+                                                <Button.WidthRequest>
+                                                    <OnPlatform x:TypeArguments="x:Double">
+                                                        <On Platform="Android" Value="100" />
+                                                        <On Platform="iOS" Value="90" />
+                                                    </OnPlatform>
+                                                </Button.WidthRequest>
+                                                <Button.BorderRadius>
+                                                    <OnPlatform x:TypeArguments="x:Int32">
+                                                        <On Platform="Android" Value="0" />
+                                                        <On Platform="iOS" Value="10" />
+                                                    </OnPlatform>
+                                                </Button.BorderRadius>
+                                            </Button>
+                                            <Image Source="sync.png" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsSynced,Converter={converter:BooleanNegativeConverter}}"></Image>
+                                        </StackLayout>
+                                        <Image Source="back_arrow_green.png" HorizontalOptions="Start" VerticalOptions="Center" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" />
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentView>
 </ContentPage>
