@@ -24,8 +24,16 @@ namespace libermedical.ViewModels
 
 		public ICommand SaveCommand => new Command(async () => await SaveProfile());
 
-
-		public User CurrentUser { get; set; }
+		private User _currentUser;
+		public User CurrentUser
+		{
+			get { return _currentUser; }
+			set
+			{
+				_currentUser = value;
+				RaisePropertyChanged();
+			}
+		}
 
 		public string OldPassword { get; set; } = string.Empty;
 		public string NewPassword { get; set; } = string.Empty;
@@ -44,8 +52,11 @@ namespace libermedical.ViewModels
 				Settings.CurrentUser = JsonConvert.SerializeObject(CurrentUser);
 				MessagingCenter.Send(this, "ProfileUpdate");
 				var passwd = await ChangePassword();
+				if (App.IsConnected())
+					await App.UserManager.SaveOrUpdateAsync(CurrentUser.Id, CurrentUser, false);
 				if (passwd)
 					NavBackCommand.Execute(null);
+
 			}
 		}
 
@@ -63,6 +74,7 @@ namespace libermedical.ViewModels
 				await CoreMethods.DisplayAlert("Wrong password", "Entered passwords don't match", "OK");
 				return false;
 			}
+
 			//TODO: Change password through API
 			await Task.Delay(2000);
 			return true;
