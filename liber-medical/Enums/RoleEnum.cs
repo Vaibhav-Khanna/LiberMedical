@@ -1,9 +1,19 @@
-﻿namespace libermedical.Enums
+﻿
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace libermedical.Enums
 {
-    public enum RoleEnum
-    {
-        admin,
-        nurse,
-        employee
-    }
+	[JsonConverter(typeof(StringEnumConverter))]
+
+	public enum RoleEnum
+	{
+		[EnumMember(Value ="admin")]
+		admin,
+		[EnumMember(Value ="nurse")]
+		nurse,
+		[EnumMember(Value ="employee")]
+		employee
+	}
 }
