@@ -6,7 +6,6 @@ using Newtonsoft.Json.Converters;
 namespace libermedical.Enums
 {
 	[JsonConverter(typeof(StringEnumConverter))]
-
 	public enum RoleEnum
 	{
 		[EnumMember(Value ="admin")]
