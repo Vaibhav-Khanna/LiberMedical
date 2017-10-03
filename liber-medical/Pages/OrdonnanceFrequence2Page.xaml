@@ -36,8 +36,31 @@
             <TableView Intent="Settings" x:Name="Table">
                 <TableRoot>
                     <TableSection Title="Matin">
+                      <ViewCell>
                         <TextCell Text="Cotations" Detail="+ Ajouter" DetailColor="#007aff"
                                   Command="{Binding CotationsTappedCommand}" />
+                        
+                        <ListView ItemsSource="{Binding Frequency.Quotations}" SeparatorVisibility="None" IsPullToRefreshEnabled="false" Style="{StaticResource StandartListViewStyle}">
+                          <ListView.ItemTemplate>
+                            <DataTemplate>
+                              <ViewCell>
+                                <Grid>
+                                  <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <!--<ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />-->
+                                  </Grid.ColumnDefinitions>
+                                  <Label Text="{Binding .}"></Label>
+                                </Grid>
+                              </ViewCell>
+                            </DataTemplate>
+                          </ListView.ItemTemplate>
+                          <ListView.Footer>
+                          </ListView.Footer>
+                        </ListView>
+                      </ViewCell>
+                        
+                      
                     </TableSection>
                     <TableSection x:Name="Section">
                         <ViewCell>

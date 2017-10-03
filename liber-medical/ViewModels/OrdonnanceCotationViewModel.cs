@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using libermedical.Models;
 using libermedical.ViewModels.Base;
 using Xamarin.Forms;
+using System.Windows.Input;
 
 namespace libermedical.ViewModels
 {
     public class OrdonnanceCotationViewModel : ViewModelBase
     {
+        private bool _shouldEnableAdd;
+        public bool ShouldEnableAdd
+        {
+            get { return _shouldEnableAdd; }
+            set
+            {
+                _shouldEnableAdd = value;
+                RaisePropertyChanged();
+            }
+        }
         public Frequency Frequency { get; set; }
         public IList<string> ItemsSource { get; } = new List<string>
         {
@@ -38,6 +49,35 @@ namespace libermedical.ViewModels
             if (initData != null)
             {
                 Frequency = initData as Frequency;
+            }
+        }
+
+        public ICommand SelectCotationCommand
+        {
+            get
+            {
+                return new Command((args) =>
+                {
+                    if (Frequency == null || Frequency.Quotations==null)
+                    {
+                        Frequency = new Frequency();
+                        Frequency.Quotations = new List<string>();
+                    }
+                    Frequency.Quotations.Add((string)args);
+                    ShouldEnableAdd = true;
+                });
+            }
+        }
+
+        public ICommand AddCommand
+        {
+            get
+            {
+                return new Command(async() =>
+                {
+                    MessagingCenter.Send(this, Events.UpdateCotations, Frequency);
+                    await App.Current.MainPage.Navigation.PopModalAsync(true);
+                });
             }
         }
     }

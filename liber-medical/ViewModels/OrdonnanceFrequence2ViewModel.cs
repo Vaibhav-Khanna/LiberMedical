@@ -7,12 +7,30 @@ namespace libermedical.ViewModels
 {
     public class OrdonnanceFrequence2ViewModel : ViewModelBase
     {
-        public Frequency Frequency { get; set; }
+        private Frequency _frequency;
+        public Frequency Frequency
+        {
+            get { return _frequency; }
+            set
+            {
+                _frequency = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public OrdonnanceFrequence2ViewModel()
         {
+            SubscribeMessage();
         }
 
+        private void SubscribeMessage()
+        {
+            MessagingCenter.Subscribe<OrdonnanceCotationViewModel,Frequency>(this, Events.UpdateCotations, ((sender,args) => {
+
+                if (args != null)
+                    Frequency = args as Frequency;
+            }));
+        }
         public override void Init(object initData)
         {
             base.Init(initData);

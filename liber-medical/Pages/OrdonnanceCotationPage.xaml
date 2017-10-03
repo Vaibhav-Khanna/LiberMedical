@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
                  xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
+                 xmlns:behaviours="clr-namespace:libermedical.Behaviours;assembly=libermedical"
                  xmlns:wp="clr-namespace:Vapolia.WheelPickerForms;assembly=Vapolia.WheelPickerForms"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  x:Class="libermedical.Pages.OrdonnanceCotationPage" Style="{StaticResource ModalBackgroundColor}">
@@ -60,24 +61,60 @@
                                     <RowDefinition Height="60" />
                                     <RowDefinition Height="60" />
                                 </Grid.RowDefinitions>
-                                <Button Text="1 AMI 1" Grid.Row="0" Grid.Column="0"
-                                        Style="{StaticResource ButtonCotation}" />
+                              <Button Text="1 AMI 1" Grid.Row="0" Grid.Column="0"
+                                      Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 1" Command="{Binding SelectCotationCommand}">
+                                <Button.Behaviors>
+                                  <behaviours:ButtonCotationBehaviour/>
+                                </Button.Behaviors>
+                              </Button>
                                 <Button Text="1 AMI 2" Grid.Row="0" Grid.Column="1"
-                                        Style="{StaticResource ButtonCotation}" />
+                                        Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 2" Command="{Binding SelectCotationCommand}">
+                                  <Button.Behaviors>
+                                    <behaviours:ButtonCotationBehaviour/>
+                                  </Button.Behaviors>
+                                </Button>
                                 <Button Text="1 AMI 4" Grid.Row="0" Grid.Column="2"
-                                        Style="{StaticResource ButtonCotation}" />
+                                        Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 4" Command="{Binding SelectCotationCommand}">
+                                <Button.Behaviors>
+                                  <behaviours:ButtonCotationBehaviour/>
+                                </Button.Behaviors>
+                              </Button>
                                 <Button Text="1 AMI 1.5" Grid.Row="1" Grid.Column="0"
-                                        Style="{StaticResource ButtonCotation}" />
+                                        Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 1.5" Command="{Binding SelectCotationCommand}">
+                                  <Button.Behaviors>
+                                    <behaviours:ButtonCotationBehaviour/>
+                                  </Button.Behaviors>
+                                </Button>
                                 <Button Text="1 AIS 3" Grid.Row="1" Grid.Column="1"
-                                        Style="{StaticResource ButtonCotation}" />
+                                        Style="{StaticResource ButtonCotation}" CommandParameter="1 AIS 3" Command="{Binding SelectCotationCommand}">
+                                  <Button.Behaviors>
+                                    <behaviours:ButtonCotationBehaviour/>
+                                  </Button.Behaviors>
+                                </Button>
                                 <Button Text="1 AIS 4" Grid.Row="1" Grid.Column="2"
-                                        Style="{StaticResource ButtonCotation}" />
+                                        Style="{StaticResource ButtonCotation}" CommandParameter="1 AIS 4" Command="{Binding SelectCotationCommand}">
+                                  <Button.Behaviors>
+                                    <behaviours:ButtonCotationBehaviour/>
+                                  </Button.Behaviors>
+                                </Button>
                                 <Button Text="2 AIS 3" Grid.Row="2" Grid.Column="0"
-                                        Style="{StaticResource ButtonCotation}" />
+                                        Style="{StaticResource ButtonCotation}" CommandParameter="2 AIS 3" Command="{Binding SelectCotationCommand}">
+                                  <Button.Behaviors>
+                                    <behaviours:ButtonCotationBehaviour/>
+                                  </Button.Behaviors>
+                                </Button>
                                 <Button Text="1 AMS 7.5" Grid.Row="2" Grid.Column="1"
-                                        Style="{StaticResource ButtonCotation}" />
+                                        Style="{StaticResource ButtonCotation}" CommandParameter="1 AMS 7.5" Command="{Binding SelectCotationCommand}">
+                                  <Button.Behaviors>
+                                    <behaviours:ButtonCotationBehaviour/>
+                                  </Button.Behaviors>
+                                </Button>
                                 <Button Text="1 AMS 9.5" Grid.Row="2" Grid.Column="2"
-                                        Style="{StaticResource ButtonCotation}" />
+                                        Style="{StaticResource ButtonCotation}" CommandParameter="1 AMS 9.5" Command="{Binding SelectCotationCommand}">
+                                  <Button.Behaviors>
+                                    <behaviours:ButtonCotationBehaviour/>
+                                  </Button.Behaviors>
+                                </Button>
                             </Grid>
                         </ViewCell>
                     </TableSection>
@@ -102,12 +139,12 @@
         </ContentView>
     </custom:BasePage.ContentPresenter>
     <custom:BasePage.Footer>
-        <ContentView Style="{StaticResource HeaderFooterBackground}" IsVisible="false" x:Name="Footer">
+        <ContentView Style="{StaticResource HeaderFooterBackground}" IsVisible="{Binding ShouldEnableAdd}" x:Name="Footer">
             <Label Text="Ajouter la cotation manuelle" HorizontalOptions="Center" VerticalOptions="Center"
                    Style="{StaticResource FooterLabel}" />
-            <!-- <ContentView.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Bill_Tapped" />
-                    </ContentView.GestureRecognizers> -->
+             <ContentView.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddCommand}" />
+                    </ContentView.GestureRecognizers> 
         </ContentView>
     </custom:BasePage.Footer>
 </custom:BasePage>
