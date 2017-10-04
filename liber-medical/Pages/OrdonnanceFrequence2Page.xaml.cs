@@ -5,6 +5,7 @@ using libermedical.CustomControls;
 using libermedical.Enums;
 using libermedical.ViewModels;
 using Xamarin.Forms;
+using System.Collections.ObjectModel;
 
 namespace libermedical.Pages
 {
@@ -65,7 +66,7 @@ namespace libermedical.Pages
         void Majoration_Tapped(object sender, System.EventArgs e)
         {
             //Changement des majorations à la tap sur la zone
-            string[] tab = {"Non", "MAU", "MCI"};
+            string[] tab = { "Non", "MAU", "MCI" };
             var cot = maj.Text;
 
             for (var i = 0; i < tab.Length; i++)
@@ -100,6 +101,12 @@ namespace libermedical.Pages
         {
             (this.BindingContext as OrdonnanceFrequence2ViewModel).Frequency.Movement =
                 Movements[MovementPicker.SelectedIndex];
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (listCotations.ItemsSource != null)
+                CotationsViewCell.Height = (listCotations.ItemsSource as ObservableCollection<string>).Count * 45;
         }
     }
 }

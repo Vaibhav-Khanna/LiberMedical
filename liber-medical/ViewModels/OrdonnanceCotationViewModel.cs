@@ -19,6 +19,8 @@ namespace libermedical.ViewModels
                 RaisePropertyChanged();
             }
         }
+
+        
         public Frequency Frequency { get; set; }
         public IList<string> ItemsSource { get; } = new List<string>
         {
@@ -48,7 +50,7 @@ namespace libermedical.ViewModels
             base.Init(initData);
             if (initData != null)
             {
-                Frequency = initData as Frequency;
+                Frequency = initData as Frequency;                
             }
         }
 
