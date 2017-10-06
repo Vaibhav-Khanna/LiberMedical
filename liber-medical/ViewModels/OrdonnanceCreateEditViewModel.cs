@@ -29,11 +29,11 @@ namespace libermedical.ViewModels
                 First_Care_At = App.ConvertToUnixTimestamp(DateTime.Now)
             };
 
-            MessagingCenter.Subscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance, (sender, patient) => 
+            MessagingCenter.Subscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance, (sender, patient) =>
             {
                 if (patient != null)
                 {
-					Ordonnance.Patient = patient;
+                    Ordonnance.Patient = patient;
                     Ordonnance.PatientId = patient.Id;
                     Ordonnance.PatientName = patient.Fullname;
                     PatientLabel = patient.Fullname;
@@ -48,13 +48,16 @@ namespace libermedical.ViewModels
             {
                 if (initData is string)
                 {
-                    Ordonnance.Attachments.Add((string) initData);
+                    Ordonnance.Attachments.Add((string)initData);
                     Creating = true;
-                    SaveLabel = "Enregistrer";                    
+                    SaveLabel = "Enregistrer";
                 }
                 else
                 {
-                    Ordonnance = initData as Ordonnance;
+                    var ordonnance = initData as Ordonnance;
+                    Ordonnance.Patient = ordonnance.Patient;
+                    Ordonnance.PatientId = ordonnance.PatientId;
+                    Ordonnance.PatientName = ordonnance.PatientName;
                     PatientLabel = Ordonnance?.PatientName;
                     Creating = false;
                     SaveLabel = "Modifier";
@@ -64,14 +67,14 @@ namespace libermedical.ViewModels
 
         public ICommand SelectPatientCommand => new Command(async () =>
         {
-            await CoreMethods.PushPageModel<PatientListViewModel>(new [] { "OrdonanceSelectPatient", "normal", "ordonnance" }, true);
+            await CoreMethods.PushPageModel<PatientListViewModel>(new[] { "OrdonanceSelectPatient", "normal", "ordonnance" }, true);
         });
 
         public ICommand SaveCommand => new Command(async () =>
         {
             var storageService = new StorageService<Ordonnance>();
             await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + Ordonnance.Id);
-			Ordonnance.IsSynced = false;
+            Ordonnance.IsSynced = false;
             await storageService.AddAsync(Ordonnance);
 
             //TODO: Display success toast

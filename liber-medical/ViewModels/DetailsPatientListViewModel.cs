@@ -93,11 +93,11 @@ namespace libermedical.ViewModels
                 {
                     if (BottomTitle == "+ Ajoutez une ordonnance")
                     {
-                         await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>();
+                         await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(new Ordonnance() { Patient = Patient,PatientId = Patient.Id,PatientName = Patient.Fullname});
                     }
                     else
                     {
-                        await CoreMethods.PushPageModel<AddDocumentViewModel>();
+                        await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient);
                     }
                 });
             }

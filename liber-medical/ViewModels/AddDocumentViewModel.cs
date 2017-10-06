@@ -4,5 +4,10 @@ namespace libermedical.ViewModels
 {
 	public class AddDocumentViewModel:ViewModelBase
 	{
+        public AddDocumentViewModel()
+        {
+
+        }
+
 	}
 }
