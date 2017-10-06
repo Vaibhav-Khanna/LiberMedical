@@ -26,7 +26,8 @@ namespace libermedical.Pages
             }
 
             var ordonnance = (BindingContext as OrdonnanceCreateEditViewModel).Ordonnance;
-
+            if ((BindingContext as OrdonnanceCreateEditViewModel).SaveLabel == "Enregistrer")
+                TableLayout.Root.Remove(VisualiserSection);
             MyDatePicker.Date = ordonnance.FirstCareAt;
             MyDatePicker.DateSelected += MyDatePickerOnDateSelected;
 
@@ -59,6 +60,8 @@ namespace libermedical.Pages
         private void MyDatePickerOnDateSelected(object sender, DateChangedEventArgs dateChangedEventArgs)
         {
             (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.First_Care_At = App.ConvertToUnixTimestamp(dateChangedEventArgs.NewDate);
+            SelectedDate.Text = $"Date : {(sender as DatePicker).Date.ToString("dd-MM-yyyy")}";
+
         }
 
         async void Cancel_Tapped(object sender, EventArgs e)

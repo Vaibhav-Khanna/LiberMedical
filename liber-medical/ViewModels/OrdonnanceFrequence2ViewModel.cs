@@ -4,6 +4,7 @@ using libermedical.ViewModels.Base;
 using Xamarin.Forms;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace libermedical.ViewModels
 {
@@ -17,6 +18,8 @@ namespace libermedical.ViewModels
             {
                 _cotations = value;
                 RaisePropertyChanged();
+                if (Cotations.Count != 0)
+                    Height = Cotations.Count * 45;
             }
         }
 
@@ -27,7 +30,17 @@ namespace libermedical.ViewModels
             set
             {
                 _frequency = value;                
-                RaisePropertyChanged();               
+                RaisePropertyChanged();    
+            }
+        }
+        private int _height=45;
+        public int Height
+        {
+            get { return _height; }
+            set
+            {
+                _height = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -43,7 +56,7 @@ namespace libermedical.ViewModels
                 if (args != null)
                 {
                     Frequency = args as Frequency;
-                    Cotations = new ObservableCollection<string>(Frequency.Quotations) ?? null;
+                    Cotations = Frequency.Quotations != null ? new ObservableCollection<string>(Frequency.Quotations.Distinct()) : null;
                 }
 
                 MessagingCenter.Unsubscribe<OrdonnanceCotationViewModel, Frequency>(this, Events.UpdateCotations);
@@ -55,7 +68,7 @@ namespace libermedical.ViewModels
             if (initData != null)
             {
                 Frequency = initData as Frequency;
-                Cotations = Frequency.Quotations!=null? new ObservableCollection<string>(Frequency.Quotations) : null;
+                Cotations = Frequency.Quotations!=null? new ObservableCollection<string>(Frequency.Quotations.Distinct()) : null;
             }
 
             MessagingCenter.Send(this, Events.SetInitialPickerValue);
@@ -71,6 +84,10 @@ namespace libermedical.ViewModels
         {
             SubscribeMessage();
             await CoreMethods.PushPageModel<OrdonnanceCotationViewModel>(Frequency, true);
+        });
+        public ICommand DeleteCotation => new Command((args) =>
+        {
+            Cotations.Remove(args as string);
         });
     }
 }
