@@ -2,7 +2,9 @@
 <custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
                  xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                 x:Class="libermedical.Pages.OrdonnanceFrequence2Page" Style="{StaticResource AppBackgroundColor}">
+                 x:Class="libermedical.Pages.OrdonnanceFrequence2Page"
+                 Style="{StaticResource AppBackgroundColor}"
+                 x:Name="Root">
   <custom:BasePage.Header>
     <ContentView Style="{StaticResource HeaderFooterBackground}">
       <Grid Padding="5">
@@ -39,17 +41,21 @@
 
             <TextCell Text="Cotations" Detail="+ Ajouter" DetailColor="#007aff"
                       Command="{Binding CotationsTappedCommand}" />
-            <ViewCell x:Name="CotationsViewCell" Height="100">
+            <ViewCell x:Name="CotationsViewCell">
               <ViewCell.View>
-                <ListView x:Name="listCotations" ItemsSource="{Binding Cotations}"  SeparatorVisibility="None" IsPullToRefreshEnabled="false" Style="{StaticResource StandartListViewStyle}">
+                <ListView x:Name="listCotations" ItemsSource="{Binding Cotations}" VerticalOptions="Start"  SeparatorVisibility="Default" IsPullToRefreshEnabled="false" Style="{StaticResource StandartListViewStyle}">
                   <ListView.ItemTemplate>
                     <DataTemplate>
                       <ViewCell>
+                        <ViewCell.ContextActions>
+                          <MenuItem Command="{Binding Path=BindingContext.DeleteCotation, Source={x:Reference Name=Root}}" CommandParameter="{Binding .}"
+                             Text="Delete" IsDestructive="True" />
+                        </ViewCell.ContextActions>
                         <Grid>
                           <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                           </Grid.ColumnDefinitions>
-                          <Label Text="{Binding .}" Margin="20,0,0,0"></Label>
+                          <Label Text="{Binding .}" Margin="20,0,0,0" VerticalOptions="CenterAndExpand"></Label>
                         </Grid>
                       </ViewCell>
                     </DataTemplate>
@@ -72,7 +78,7 @@
                   <ColumnDefinition Width="88*" />
                   <ColumnDefinition Width="12*" />
                 </Grid.ColumnDefinitions>
-                
+
                 <Label Text="Majoration" VerticalOptions="Center" Grid.Column="0" />
                 <Label Text="Non" x:Name="maj" VerticalOptions="Center" Grid.Column="1" />
 
@@ -84,7 +90,7 @@
                   <ColumnDefinition Width="75*" />
                   <ColumnDefinition Width="25*" />
                 </Grid.ColumnDefinitions>
-                 
+
                 <Label Text="Déplacement" VerticalOptions="Center" Grid.Column="0" />
                 <Picker x:Name="MovementPicker" Grid.Column="1" Title="Déplacement"
                         SelectedIndexChanged="Picker_OnSelectedIndexChanged">

@@ -50,7 +50,7 @@ namespace libermedical.ViewModels
                 {
                     Ordonnance.Attachments.Add((string) initData);
                     Creating = true;
-                    SaveLabel = "Enregistrer";
+                    SaveLabel = "Enregistrer";                    
                 }
                 else
                 {

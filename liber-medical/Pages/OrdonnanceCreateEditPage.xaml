@@ -32,7 +32,7 @@
     </custom:BasePage.Header>
     <custom:BasePage.ContentPresenter>
         <ContentView Padding="0,0,0,0">
-            <TableView Intent="Menu" HasUnevenRows="True">
+            <TableView Intent="Menu" HasUnevenRows="True" x:Name="TableLayout">
                 <TableRoot>
                     <TableSection>
                         <ViewCell Height="60" Tapped="Patient_Tapped">
@@ -48,7 +48,7 @@
                             </Grid>
                         </ViewCell>
                     </TableSection>
-                    <TableSection>
+                    <TableSection x:Name="VisualiserSection">
                         <ViewCell Height="60">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -97,8 +97,8 @@
                                     <ColumnDefinition Width="10*" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
-                                <DatePicker x:Name="MyDatePicker" IsVisible="False" Grid.Column="1" />
-                                <Label Text="Date de premier soin" VerticalOptions="Center"
+                                <DatePicker x:Name="MyDatePicker" IsVisible="False" Grid.Column="1"  />
+                                <Label x:Name="SelectedDate" Text="Date de premier soin" VerticalOptions="Center"
                                        HorizontalOptions="FillAndExpand" Grid.Column="1" />
                                 <Image Source="back_arrow_green.png" VerticalOptions="Center" Grid.Column="2" />
                             </Grid>
