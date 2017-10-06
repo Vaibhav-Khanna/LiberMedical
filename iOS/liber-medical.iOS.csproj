@@ -51,7 +51,7 @@
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchFastDev>false</MtouchFastDev>
-    <CodesignProvision>34ca4491-d0e4-45c2-8d62-0d74b1178297</CodesignProvision>
+    <CodesignProvision>libermedical UAT</CodesignProvision>
     <MtouchLink>None</MtouchLink>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">

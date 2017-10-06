@@ -4,7 +4,6 @@ namespace libermedical.Pages
 {
     public partial class OrdonnanceCotationPage : BasePage
     {
-        //  public ObservableCollection<Cotation> cotation { get; set; }
 
         public OrdonnanceCotationPage() : base(-1, 64, false)
         {

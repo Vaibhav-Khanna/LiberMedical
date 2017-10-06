@@ -9,5 +9,6 @@ namespace libermedical
         public static string OrdonnancePageSetPatientForOrdonnance = "OrdonnancePageSetPatientForOrdonnance";
         public static string SetInitialPickerValue = "SetInitialPickerValue";
         public static string CreateTabbedPage = "CreateTabbedPage";
+        public static string UpdateCotations = "UpdateCotations";
     }
 }
