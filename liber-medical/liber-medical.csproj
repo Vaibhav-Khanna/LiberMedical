@@ -184,6 +184,7 @@
     <Compile Include="ViewModels\OrdonnanceFrequence2ViewModel.cs" />
     <Compile Include="ViewModels\OrdonnanceFrequenceViewModel.cs" />
     <Compile Include="ViewModels\OrdonnancesListViewModel.cs" />
+    <Compile Include="ViewModels\OrdonnanceViewViewModel.cs" />
     <Compile Include="ViewModels\PatientListViewModel.cs" />
     <Compile Include="Models\Ordonnance.cs" />
     <Compile Include="Models\Teledeclaration.cs" />
