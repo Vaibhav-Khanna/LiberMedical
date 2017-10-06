@@ -13,10 +13,10 @@ namespace libermedical.Behaviours
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            if (((Button)sender).BackgroundColor == Color.FromHex("#91c602"))
-                ((Button)sender).BackgroundColor = Color.FromHex("#d1d1d1");
+            if (((Button)sender).BackgroundColor == (Color)Application.Current.Resources["HeaderFooterBackgroundColor"])
+                ((Button)sender).BackgroundColor = (Color)Application.Current.Resources["LightGrey"];
             else
-                ((Button)sender).BackgroundColor = Color.FromHex("#91c602");
+                ((Button)sender).BackgroundColor = (Color)Application.Current.Resources["HeaderFooterBackgroundColor"];
         }
 
         protected override void OnDetachingFrom(Button button)
