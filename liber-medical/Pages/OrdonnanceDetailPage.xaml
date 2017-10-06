@@ -52,7 +52,7 @@
                                 <Image Source="search.png" VerticalOptions="Center" Grid.Column="0" />
                                 <Label Text="Visualiser l'ordonnance" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Ordonnance_Tapped" />
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding OpenDocumentCommand}" />
                     </Grid.GestureRecognizers>
                                 
                             </Grid>

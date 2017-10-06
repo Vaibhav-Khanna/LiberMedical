@@ -7,6 +7,7 @@ namespace libermedical.ViewModels
 {
     public class OrdonnanceDetailViewModel : ViewModelBase
     {
+       
         public Ordonnance Ordonnance { get; set; }
 
         public OrdonnanceDetailViewModel()
@@ -26,6 +27,11 @@ namespace libermedical.ViewModels
         public ICommand CreateOrdonnanceCommand => new Command(async () =>
         {
             await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(Ordonnance, true);
+        });
+
+        public ICommand OpenDocumentCommand => new Command(async () =>
+        {
+            await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(Ordonnance, true);
         });
     }
 }
