@@ -40,7 +40,7 @@ namespace libermedical.ViewModels
             {
                 Ordonnance = initData as Ordonnance;
                 Title = Ordonnance.PatientName;
-                ImageSource = Ordonnance.Attachments[0];
+				ImageSource = Ordonnance.Attachments!=null && Ordonnance.Attachments.Count>0 ? Ordonnance.Attachments[0] : string.Empty;
             }
         }
     }

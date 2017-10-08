@@ -35,15 +35,14 @@
   </custom:BasePage.Header>
   <custom:BasePage.ContentPresenter>
     <ContentView>
-      <TableView Intent="Settings" x:Name="Table" HasUnevenRows="true">
+      <TableView Intent="Form" x:Name="Table" HasUnevenRows="true">
         <TableRoot>
           <TableSection Title="Matin">
 
-            <TextCell Text="Cotations" Detail="+ Ajouter" DetailColor="#007aff"
+            <TextCell Text="Cotations" Detail="+ Ajouter" DetailColor="#007aff" Height="70"
                       Command="{Binding CotationsTappedCommand}" />
             <ViewCell x:Name="CotationsViewCell">
-              <ViewCell.View>
-                <ListView x:Name="listCotations" ItemsSource="{Binding Cotations}" VerticalOptions="Start"  SeparatorVisibility="Default" IsPullToRefreshEnabled="false" Style="{StaticResource StandartListViewStyle}">
+                <ListView x:Name="listCotations" ItemsSource="{Binding Cotations}" VerticalOptions="Start"  SeparatorVisibility="Default" Style="{StaticResource StandartListViewStyle}">
                   <ListView.ItemTemplate>
                     <DataTemplate>
                       <ViewCell>
@@ -60,10 +59,7 @@
                       </ViewCell>
                     </DataTemplate>
                   </ListView.ItemTemplate>
-                  <ListView.Footer>
-                  </ListView.Footer>
                 </ListView>
-              </ViewCell.View>
             </ViewCell>
 
 
