@@ -7,11 +7,22 @@ using libermedical.ViewModels.Base;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Xamarin.Forms;
+using System.Collections.ObjectModel;
 
 namespace libermedical.ViewModels
 {
     public class OrdonnanceCreateEditViewModel : ViewModelBase
     {
+        private ObservableCollection<Frequency> _frequencies;
+        public ObservableCollection<Frequency> Frequencies
+        {
+            get { return _frequencies; }
+            set
+            {
+                _frequencies = value;
+                RaisePropertyChanged();
+            }
+        }
         public string PatientLabel { get; set; } = "Choisissez un patient";
         public Ordonnance Ordonnance { get; set; }
 
@@ -41,7 +52,7 @@ namespace libermedical.ViewModels
             });
         }
 
-        public override void Init(object initData)
+        public override async void Init(object initData)
         {
             base.Init(initData);
             if (initData != null)
@@ -55,10 +66,12 @@ namespace libermedical.ViewModels
                 else
                 {
                     var ordonnance = initData as Ordonnance;
+                    Ordonnance = await new StorageService<Ordonnance>().GetItemAsync($"Ordonnance_{ordonnance.Id}");
                     Ordonnance.Patient = ordonnance.Patient;
                     Ordonnance.PatientId = ordonnance.PatientId;
                     Ordonnance.PatientName = ordonnance.PatientName;
                     PatientLabel = Ordonnance?.PatientName;
+                    Frequencies = new ObservableCollection<Frequency>(Ordonnance.Frequencies);
                     Creating = false;
                     SaveLabel = "Modifier";
                 }
@@ -113,14 +126,33 @@ namespace libermedical.ViewModels
 
         public ICommand AddFrequenceTappedCommand => new Command(async () =>
         {
-            var frequency = new Frequency();
-            Ordonnance.Frequencies.Add(frequency);
-            await CoreMethods.PushPageModel<OrdonnanceFrequenceViewModel>(frequency, true);
+            //var frequency = new Frequency();
+            //Ordonnance.Frequencies.Add(frequency);
+            await CoreMethods.PushPageModel<OrdonnanceFrequenceViewModel>(null, true);
+            SubscribeMessage();
+
         });
 
         public ICommand ModifyFrequenceTappedCommand => new Command(async frequency =>
         {
             await CoreMethods.PushPageModel<OrdonnanceFrequenceViewModel>(frequency, true);
         });
+
+        private void SubscribeMessage()
+        {
+            MessagingCenter.Subscribe<OrdonnanceFrequence2ViewModel, Frequency>(this, Events.UpdateFrequencies, ((sender, args) =>
+            {
+
+                if (args != null)
+                {
+                    var frequency = args as Frequency;
+                    if (Ordonnance.Frequencies != null)
+                        Ordonnance.Frequencies.Add(frequency);
+                    Frequencies = Ordonnance.Frequencies != null ? new ObservableCollection<Frequency>(Ordonnance.Frequencies) : new ObservableCollection<Frequency>(new List<Frequency>() { frequency });
+                }
+
+                MessagingCenter.Unsubscribe<OrdonnanceFrequence2ViewModel, Frequency>(this, Events.UpdateFrequencies);
+            }));
+        }
     }
 }

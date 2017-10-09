@@ -108,7 +108,7 @@
                       <TextCell Text="Frequence d'administration" Detail="+ Ajouter" DetailColor="#007aff"
                                   Height="70" Command="{Binding AddFrequenceTappedCommand}" />
                       <ViewCell x:Name="FrequenciesViewCell">
-                          <ListView x:Name="FrequencesListView" SeparatorVisibility="None" VerticalOptions="Start" ItemSelected="FrequencesListView_OnItemSelected">
+                          <ListView x:Name="FrequencesListView" SeparatorVisibility="None" ItemsSource="{Binding Frequencies}" VerticalOptions="Start" ItemSelected="FrequencesListView_OnItemSelected">
                               <ListView.ItemTemplate>
                                   <DataTemplate>
                                     <ViewCell>

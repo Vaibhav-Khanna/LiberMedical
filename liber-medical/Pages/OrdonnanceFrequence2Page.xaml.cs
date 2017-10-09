@@ -55,7 +55,7 @@ namespace libermedical.Pages
 					maj.Text = "MCI";
 				}
 			});
-            UpdateListAsync();
+           // UpdateListAsync();
 			
 		}
 
@@ -124,6 +124,7 @@ namespace libermedical.Pages
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
-		}
+
+        }
 	}
 }
