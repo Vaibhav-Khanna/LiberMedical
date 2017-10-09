@@ -55,6 +55,17 @@ namespace libermedical.Pages
             {
                 FrequenciesViewCell.Height = ordonnance.Frequencies.Count * 40 + 10;
             }
+
+            AttachmentsListView.ItemsSource = ordonnance.Attachments;
+            if (ordonnance.Attachments.Count == 0)
+            {
+                AttachmentsViewCell.Height = 0;
+            }
+            else
+            {
+                AttachmentsViewCell.Height = ordonnance.Attachments.Count * 40 + 10;
+            }
+
         }
 
         private void MyDatePickerOnDateSelected(object sender, DateChangedEventArgs dateChangedEventArgs)
