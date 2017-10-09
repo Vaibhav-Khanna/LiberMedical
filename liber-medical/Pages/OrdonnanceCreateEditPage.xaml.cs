@@ -46,15 +46,15 @@ namespace libermedical.Pages
                 StatusLabel.Text = "Statut: " + ordonnance.StatusString;
             }
 
-            FrequencesListView.ItemsSource = ordonnance.Frequencies;
-            if (ordonnance.Frequencies.Count == 0)
-            {
-                FrequenciesViewCell.Height = 0;
-            }
-            else
-            {
-                FrequenciesViewCell.Height = ordonnance.Frequencies.Count * 40 + 10;
-            }
+           // FrequencesListView.ItemsSource = ordonnance.Frequencies;
+            //if (ordonnance.Frequencies.Count == 0)
+            //{
+            //    FrequenciesViewCell.Height = 0;
+            //}
+            //else
+            //{
+            //    FrequenciesViewCell.Height = ordonnance.Frequencies.Count * 40 + 10;
+            //}
 
             AttachmentsListView.ItemsSource = ordonnance.Attachments;
             if (ordonnance.Attachments.Count == 0)

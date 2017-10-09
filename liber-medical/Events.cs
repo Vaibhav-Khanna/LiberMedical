@@ -10,5 +10,6 @@ namespace libermedical
         public static string SetInitialPickerValue = "SetInitialPickerValue";
         public static string CreateTabbedPage = "CreateTabbedPage";
         public static string UpdateCotations = "UpdateCotations";
+        public static string UpdateFrequencies = "UpdateFrequencies";
     }
 }

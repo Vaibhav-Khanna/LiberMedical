@@ -12,6 +12,7 @@ namespace libermedical.ViewModels
 
         public OrdonnanceFrequenceViewModel()
         {
+            Frequency = new Frequency();
         }
 
         public override void Init(object initData)
