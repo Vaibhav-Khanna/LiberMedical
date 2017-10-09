@@ -142,6 +142,27 @@
                             </StackLayout>
                         </ViewCell>
                     </TableSection>
+                  <TableSection>
+                    <TextCell Text="Attachments" DetailColor="#007aff"
+                                Height="70"  />
+                    <ViewCell x:Name="AttachmentsViewCell">
+                      <ListView x:Name="AttachmentsListView" SeparatorVisibility="None" VerticalOptions="Start" >
+                        <ListView.ItemTemplate>
+                          <DataTemplate>
+                            <ViewCell>
+                              <Grid>
+                                <Grid.ColumnDefinitions>
+                                  <ColumnDefinition Width="100*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding .}" VerticalOptions="Center" Margin="15,0,0,0" FontSize="16"
+                                       HorizontalOptions="FillAndExpand" Grid.Column="0" />
+                              </Grid>
+                            </ViewCell>
+                          </DataTemplate>
+                        </ListView.ItemTemplate>
+                      </ListView>
+                    </ViewCell>
+                  </TableSection>
                 </TableRoot>
             </TableView>
         </ContentView>

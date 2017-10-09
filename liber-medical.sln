@@ -116,6 +116,7 @@ Global
 		{BC911BAD-2E56-4442-8CAF-312A896E1208}.Release|iPhone.Build.0 = Release|iPhone
 		{BC911BAD-2E56-4442-8CAF-312A896E1208}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{BC911BAD-2E56-4442-8CAF-312A896E1208}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{BC911BAD-2E56-4442-8CAF-312A896E1208}.Debug|Any CPU.Build.0 = Debug|iPhone
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -127,5 +128,6 @@ Global
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+		$1.ResourceNamePolicy = FileFormatDefault
 	EndGlobalSection
 EndGlobal
