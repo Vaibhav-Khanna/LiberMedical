@@ -65,7 +65,7 @@
 				</StackLayout>
 				<ScrollView Grid.Row="2">
 					<StackLayout Padding="45,0,0,0">
-						<ListView ItemsSource="{Binding Ordonnances}" x:Name="stackOrdonnance" SeparatorVisibility="Default" RowHeight="60" IsVisible="{Binding ShowStackOrdonnance}">
+						<ListView ItemsSource="{Binding Ordonnances}" x:Name="stackOrdonnance" SelectedItem="{Binding SelectedOrdonnance}" SeparatorVisibility="Default" RowHeight="60" IsVisible="{Binding ShowStackOrdonnance}">
 							<ListView.ItemTemplate>
 								<DataTemplate>
 									<ViewCell>

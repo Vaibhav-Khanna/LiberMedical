@@ -29,5 +29,12 @@ namespace libermedical.Pages
         {
             ((ListView)sender).SelectedItem = null;
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (stackOrdonnance.SelectedItem != null)
+                stackOrdonnance.SelectedItem = null;
+        }
     }
 }
