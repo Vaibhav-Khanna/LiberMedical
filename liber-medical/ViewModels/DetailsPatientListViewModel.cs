@@ -41,7 +41,7 @@ namespace libermedical.ViewModels
         {
             ShowStackOrdonnance = ShowBoxViewOrdonnances = true;
             BottomTitle = "+ Ajoutez une ordonnance";
-            Ordonnances = new ObservableCollection<Ordonnance>((await new StorageService<Ordonnance>().GetList()).Where(x =>  x.PatientId == Patient.Id));
+            Ordonnances = new ObservableCollection<Ordonnance>((await new StorageService<Ordonnance>().GetList()).Where(x => x.PatientId == Patient.Id));
             Documents = new ObservableCollection<Document>((await new StorageService<Document>().GetList()).Where(x => x.PatientId == Patient.Id));
         }
         public Command EditPatient
@@ -93,12 +93,37 @@ namespace libermedical.ViewModels
                 {
                     if (BottomTitle == "+ Ajoutez une ordonnance")
                     {
-                         await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(new Ordonnance() { Patient = Patient,PatientId = Patient.Id,PatientName = Patient.Fullname});
+                        await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(new Ordonnance() { Patient = Patient, PatientId = Patient.Id, PatientName = Patient.Fullname });
                     }
                     else
                     {
                         await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient);
                     }
+                });
+            }
+        }
+
+        private Ordonnance _selectedOrdonnance;
+        public Ordonnance SelectedOrdonnance
+        {
+            get { return _selectedOrdonnance; }
+            set
+            {
+                _selectedOrdonnance = value;
+                RaisePropertyChanged();
+                if (_selectedOrdonnance!=null)
+                    OrdonnanceSelectCommand.Execute(null);
+            }
+        }
+
+        private ICommand OrdonnanceSelectCommand
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+
+                    await CoreMethods.PushPageModel<OrdonnanceDetailViewModel>(_selectedOrdonnance, true);
                 });
             }
         }
