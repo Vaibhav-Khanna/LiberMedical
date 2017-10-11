@@ -122,8 +122,9 @@ namespace libermedical.ViewModels
             {
                 return new Command(async () =>
                 {
+                    await CoreMethods.PushPageModel<OrdonnanceDetailViewModel>();
+                    MessagingCenter.Send(this, Events.UpdateOrdonnanceDetails,_selectedOrdonnance);
 
-                    await CoreMethods.PushPageModel<OrdonnanceDetailViewModel>(_selectedOrdonnance, true);
                 });
             }
         }
