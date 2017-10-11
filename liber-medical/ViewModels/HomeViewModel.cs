@@ -21,11 +21,22 @@ namespace libermedical.ViewModels
 		private string typeDoc = "ordonnance";
 		private string _documentPath = string.Empty;
 		private string AdvisorContact = string.Empty;
+        private string _welcomeText;
+        public string WelcomeText
+        {
+            get { return _welcomeText; }
+            set
+            {
+                _welcomeText = value;
+                RaisePropertyChanged();
+            }
+        }
 
 
 		public HomeViewModel()
 		{
 			SubscribeToMessages();
+            WelcomeText = $"Bonjour {JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Fullname}, que souhaitez vous faire?";
 			CheckForAdvisor();
 		}
 		public ICommand AssistCommand => new Command(async () =>
