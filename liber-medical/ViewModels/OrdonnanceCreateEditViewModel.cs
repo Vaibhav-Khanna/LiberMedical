@@ -50,6 +50,16 @@ namespace libermedical.ViewModels
                     PatientLabel = patient.Fullname;
                 }
             });
+            MessagingCenter.Subscribe<DetailsPatientListViewModel, Patient>(this, Events.PatientDetailsPageSetPatientToOrdonnance, (sender, patient) =>
+            {
+                if (patient != null)
+                {
+                    Ordonnance.Patient = patient;
+                    Ordonnance.PatientId = patient.Id;
+                    Ordonnance.PatientName = patient.Fullname;
+                    PatientLabel = patient.Fullname;
+                }
+            });
         }
 
         public override async void Init(object initData)
@@ -59,14 +69,18 @@ namespace libermedical.ViewModels
             {
                 if (initData is string)
                 {
-                    Ordonnance.Attachments.Add((string)initData);
+                    if (!string.IsNullOrEmpty((string)initData))
+                        Ordonnance.Attachments.Add((string)initData);
+                    else
+                        Ordonnance.Attachments = new List<string>();
                     Creating = true;
                     SaveLabel = "Enregistrer";
                 }
                 else
                 {
                     var ordonnance = initData as Ordonnance;
-                    Ordonnance = await new StorageService<Ordonnance>().GetItemAsync($"Ordonnance_{ordonnance.Id}");
+                    if (ordonnance.Id != null)
+                        Ordonnance = await new StorageService<Ordonnance>().GetItemAsync($"Ordonnance_{ordonnance.Id}");
                     Ordonnance.Patient = ordonnance.Patient;
                     Ordonnance.PatientId = ordonnance.PatientId;
                     Ordonnance.PatientName = ordonnance.PatientName;
