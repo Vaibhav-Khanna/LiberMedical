@@ -12,6 +12,7 @@ using libermedical.Enums;
 using libermedical.Request;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
+using libermedical.Pages;
 
 namespace libermedical.ViewModels
 {
@@ -63,8 +64,9 @@ namespace libermedical.ViewModels
 
 		public ICommand SelectItemCommand => new Command(async (item) =>
 		{
-			await CoreMethods.PushPageModel<OrdonnanceDetailViewModel>(item, true);
-		});
+            await CoreMethods.PushPageModel<OrdonnanceDetailViewModel>();
+            MessagingCenter.Send(this,Events.UpdateOrdonnanceDetails,(Ordonnance)item);
+        });
 
 		public ICommand AddCommand => new Command(async () =>
 		{

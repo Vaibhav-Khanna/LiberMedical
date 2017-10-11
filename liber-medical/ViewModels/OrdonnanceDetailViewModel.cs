@@ -7,12 +7,20 @@ namespace libermedical.ViewModels
 {
     public class OrdonnanceDetailViewModel : ViewModelBase
     {
-       
-        public Ordonnance Ordonnance { get; set; }
+        private Ordonnance _ordonnance;
+        public Ordonnance Ordonnance
+        {
+            get { return _ordonnance; }
+            set
+            {
+                _ordonnance = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public OrdonnanceDetailViewModel()
         {
-            
+            SubscribeMessages();
         }
 
         public override void Init(object initData)
@@ -33,5 +41,31 @@ namespace libermedical.ViewModels
         {
             await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(Ordonnance, true);
         });
+
+        public ICommand CloseCommand => new Command(async () =>
+        {
+            await CoreMethods.PopPageModel();
+        });
+
+        private void SubscribeMessages()
+        {
+            MessagingCenter.Subscribe<OrdonnancesListViewModel, Ordonnance>(this, Events.UpdateOrdonnanceDetails,
+                (sender, ordonnance) =>
+                {
+                    if (ordonnance != null)
+                    {
+                        Ordonnance = ordonnance;
+                    }
+                });
+
+            MessagingCenter.Subscribe<DetailsPatientListViewModel, Ordonnance>(this, Events.UpdateOrdonnanceDetails,
+                (sender, ordonnance) =>
+                {
+                    if (ordonnance != null)
+                    {
+                        Ordonnance = ordonnance;
+                    }
+                });
+        }
     }
 }

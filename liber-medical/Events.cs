@@ -11,5 +11,6 @@ namespace libermedical
         public static string CreateTabbedPage = "CreateTabbedPage";
         public static string UpdateCotations = "UpdateCotations";
         public static string UpdateFrequencies = "UpdateFrequencies";
+        public static string UpdateOrdonnanceDetails = "UpdateOrdonnanceDetails";
     }
 }

@@ -12,7 +12,7 @@ namespace libermedical.Pages
         }
         async void Back_Tapped(object sender, EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync();
         }
         async void Ordonnance_Tapped(object sender, EventArgs e)
         {
