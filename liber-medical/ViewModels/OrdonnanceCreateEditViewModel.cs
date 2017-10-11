@@ -85,7 +85,7 @@ namespace libermedical.ViewModels
                     Ordonnance.PatientId = ordonnance.PatientId;
                     Ordonnance.PatientName = ordonnance.PatientName;
                     PatientLabel = Ordonnance?.PatientName;
-                    Frequencies = new ObservableCollection<Frequency>(Ordonnance.Frequencies);
+					Frequencies = Ordonnance.Frequencies!=null ? new ObservableCollection<Frequency>(Ordonnance.Frequencies) : new ObservableCollection<Frequency>();
                     Creating = false;
                     SaveLabel = "Modifier";
                 }

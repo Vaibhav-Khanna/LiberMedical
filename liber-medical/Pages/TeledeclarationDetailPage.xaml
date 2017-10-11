@@ -30,7 +30,7 @@
                     </Grid.GestureRecognizers>
                     <Image HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center" />
                 </Grid>
-                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}" Text="Télédéclaration xxx" />
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}" Text="Télédéclaration" />
             </Grid>
         </ContentView>
     </custom:BasePage.Header>
