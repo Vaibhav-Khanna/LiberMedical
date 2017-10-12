@@ -49,6 +49,7 @@ namespace libermedical.ViewModels
 
                     _teledeclarationService = new StorageService<Teledeclaration>();
                     await _teledeclarationService.DeleteItemAsync(typeof(Teledeclaration).Name + "_" + Teledeclaration.Id);
+					Teledeclaration.IsSynced = false;
                     await _teledeclarationService.AddAsync(Teledeclaration);
 
                     //TODO: Display success toast
