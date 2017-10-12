@@ -163,6 +163,8 @@ namespace libermedical.ViewModels
                     if (Ordonnance.Frequencies != null)
                         Ordonnance.Frequencies.Add(frequency);
                     Frequencies = Ordonnance.Frequencies != null ? new ObservableCollection<Frequency>(Ordonnance.Frequencies) : new ObservableCollection<Frequency>(new List<Frequency>() { frequency });
+
+					MessagingCenter.Send(this, Events.UpdateFrequenciesViewCellHeight, Frequencies);
                 }
 
                 MessagingCenter.Unsubscribe<OrdonnanceFrequence2ViewModel, Frequency>(this, Events.UpdateFrequencies);
