@@ -10,7 +10,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CloseCommand}" />
                     </Grid.GestureRecognizers>
                     <Image HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center" />
                 </Grid>
@@ -56,8 +56,16 @@
                         Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0"
                         HorizontalOptions="CenterAndExpand"
                         />
-                    <Image Source="cancel.png" Grid.Column="0" Grid.Row="1" HorizontalOptions="CenterAndExpand"/>
-                    <Image Source="send.png" Grid.Column="1" Grid.Row="1" HorizontalOptions="CenterAndExpand"/>
+                      <Image Source="cancel.png" Grid.Column="0" Grid.Row="1" HorizontalOptions="CenterAndExpand">
+                        <Image.GestureRecognizers>
+                          <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ValidateCommand}" CommandParameter="Refuse" />
+                        </Image.GestureRecognizers>
+                      </Image>
+                      <Image Source="send.png" Grid.Column="1" Grid.Row="1" HorizontalOptions="CenterAndExpand">
+                        <Image.GestureRecognizers>
+                          <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ValidateCommand}" CommandParameter="Valid" />
+                        </Image.GestureRecognizers>
+                      </Image>
                     <Label Text="Annuler" Style="{StaticResource TeledeclarationCancelAction}"  Grid.Column="0" Grid.Row="2" HorizontalOptions="CenterAndExpand"/>
                     <Label Text="Envoyer" Style="{StaticResource TeledeclarationSendAction}"  Grid.Column="1" Grid.Row="2" HorizontalOptions="CenterAndExpand"/>
                            
