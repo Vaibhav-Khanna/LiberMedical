@@ -15,5 +15,6 @@ namespace libermedical
 		public static string PatientDetailsPageSetPatientToOrdonnance = "PatientDetailsPageSetPatientToOrdonnance";
 		public static string UpdateTeledeclarationDetailsPage = "UpdateTeledeclarationDetailsPage";
 		public static string UpdateFrequenciesViewCellHeight = "UpdateFrequenciesViewCellHeight";
-	}
+        public static string UpdateCotationsViewCellHeight = "UpdateCotationsViewCellHeight";
+    }
 }
