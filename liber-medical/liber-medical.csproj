@@ -200,6 +200,8 @@
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Converters\BooleanNegativeConverter.cs" />
     <Compile Include="Converters\StatusColorConverter.cs" />
+    <Compile Include="Converters\DisableColorConverter.cs" />
+    <Compile Include="Converters\QuotationColorConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Acr.UserDialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

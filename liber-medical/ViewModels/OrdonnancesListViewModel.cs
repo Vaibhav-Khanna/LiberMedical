@@ -64,8 +64,7 @@ namespace libermedical.ViewModels
 
 		public ICommand SelectItemCommand => new Command(async (item) =>
 		{
-            await CoreMethods.PushPageModel<OrdonnanceDetailViewModel>();
-            MessagingCenter.Send(this,Events.UpdateOrdonnanceDetails,(Ordonnance)item);
+			await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(item,true);
         });
 
 		public ICommand AddCommand => new Command(async () =>
