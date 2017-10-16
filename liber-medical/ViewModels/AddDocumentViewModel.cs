@@ -13,6 +13,18 @@ namespace libermedical.ViewModels
 {
     public class AddDocumentViewModel : ViewModelBase
     {
+		private string _createdDate = "Date de premier soin";
+		public string CreatedDate
+		{
+			get { return _createdDate;}
+			set
+			{
+				_createdDate = value;
+				RaisePropertyChanged();
+			}
+		}
+
+
         private Document _document;
         public Document Document
         {
@@ -39,12 +51,17 @@ namespace libermedical.ViewModels
             base.Init(initData);
             if (initData != null)
             {
-                if (initData is Patient)
-                {
-                    var patient = initData as Patient;
-                    Document.Patient = patient;
-                    Document.PatientId = patient.Id;
-                }
+				if (initData is Patient)
+				{
+					var patient = initData as Patient;
+					Document.Patient = patient;
+					Document.PatientId = patient.Id;
+				}
+				else if(initData is Document)
+				{
+					Document = initData as Document;
+					CreatedDate = Document.AddDate.ToString("dd-MM-yyyy");
+				}
             }
         }
 

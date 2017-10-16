@@ -98,7 +98,7 @@
 								</DataTemplate>
 							</ListView.ItemTemplate>
 						</ListView>
-						<ListView ItemsSource="{Binding Documents}" x:Name="stackDocument" IsVisible="{Binding ShowStackDocument}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected">
+						<ListView ItemsSource="{Binding Documents}" x:Name="stackDocument" SelectedItem="{Binding SelectedDocument}" IsVisible="{Binding ShowStackDocument}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected">
 							<ListView.ItemTemplate>
 								<DataTemplate>
 									<ViewCell>
@@ -112,7 +112,7 @@
 												<RowDefinition Height="40*" />
 											</Grid.RowDefinitions>
 											<Label Text="{Binding Label, StringFormat='Doc- {0}'}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
-											<Label Text="{Binding AddDate, StringFormat='{0:MM:dd:yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
+											<Label Text="{Binding AddDate, StringFormat='{0:MM-dd-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
 											<Image Source="back_arrow_green.png" HorizontalOptions="Start" VerticalOptions="Center" Grid.RowSpan="2" Grid.Column="1" />
 										</Grid>
 									</ViewCell>
