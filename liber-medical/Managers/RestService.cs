@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Reactive;
@@ -19,289 +20,311 @@ using Newtonsoft.Json.Linq;
 
 namespace libermedical.Managers
 {
-    public class RestService<T> : IRestService<T>
-    {
-        private readonly HttpClient _client;
-        private readonly string _type;
-        private static string _auth => string.Concat("token=", Settings.Token);
+	public class RestService<T> : IRestService<T>
+	{
+		private readonly HttpClient _client;
+		private readonly string _type;
+		private static string _auth => string.Concat("token=", Settings.Token);
 
-        public PaginationResponse<T> Items { get; private set; }
+		public PaginationResponse<T> Items { get; private set; }
 
-        public RestService(string type)
-        {
-            _type = type;
-            _client = new HttpClient();
-        }
+		public RestService(string type)
+		{
+			_type = type;
+			_client = new HttpClient();
+		}
 
-        public async Task<PaginationResponse<T>> GetAllDataAsync()
-        {
-            Items = new PaginationResponse<T>();
+		public async Task<PaginationResponse<T>> GetAllDataAsync()
+		{
+			Items = new PaginationResponse<T>();
 
-            var uri = new Uri(string.Format(Constants.RestUrl + _type + "?" + _auth, string.Empty));
+			var uri = new Uri(string.Format(Constants.RestUrl + _type + "?" + _auth, string.Empty));
 
-            var response = await _client.GetAsync(uri);
-            var content = await response.Content.ReadAsStringAsync();
-            switch (response.StatusCode)
-            {
-                case HttpStatusCode.OK:
-                    Items = JsonConvert.DeserializeObject<PaginationResponse<T>>(content);
-                    break;
-                case HttpStatusCode.BadRequest:
-                    var r = JsonConvert.DeserializeObject<ErrorResponse>(content);
-                    if (r.Error == "Unauthorized")
-                        throw new UnauthorizedAccessException(r.Error);
-                    else
-                        throw new Exception(r.Error);
-                case HttpStatusCode.InternalServerError:
-                    throw new Exception();
-                default:
-                    throw new Exception();
-            }
+			var response = await _client.GetAsync(uri);
+			var content = await response.Content.ReadAsStringAsync();
+			switch (response.StatusCode)
+			{
+				case HttpStatusCode.OK:
+					Items = JsonConvert.DeserializeObject<PaginationResponse<T>>(content);
+					break;
+				case HttpStatusCode.BadRequest:
+					var r = JsonConvert.DeserializeObject<ErrorResponse>(content);
+					if (r.Error == "Unauthorized")
+						throw new UnauthorizedAccessException(r.Error);
+					else
+						throw new Exception(r.Error);
+				case HttpStatusCode.InternalServerError:
+					throw new Exception();
+				default:
+					throw new Exception();
+			}
 
-            return Items;
-        }
+			return Items;
+		}
 
-        public async Task<PaginationResponse<T>> GetAllDataAsyncWithParameters(
-            int limit, int page, string searchValue = "", string searchFields = "",
-            string sortField = "", SortDirectionEnum direction = SortDirectionEnum.Asc)
-        {
-            var parameters = "?limit=" + limit + "&page=" + page;
-            if (!string.IsNullOrEmpty(searchValue))
-            {
-                parameters += "&searchValue=" + searchValue;
-            }
-            if (!string.IsNullOrEmpty(searchFields))
-            {
-                parameters += "&searchFields=" + searchFields;
-            }
-            if (!string.IsNullOrEmpty(sortField))
-            {
-                parameters += "&sortField=" + sortField;
-            }
+		public async Task<PaginationResponse<T>> GetAllDataAsyncWithParameters(
+			int limit, int page, string searchValue = "", string searchFields = "",
+			string sortField = "", SortDirectionEnum direction = SortDirectionEnum.Asc)
+		{
+			var parameters = "?limit=" + limit + "&page=" + page;
+			if (!string.IsNullOrEmpty(searchValue))
+			{
+				parameters += "&searchValue=" + searchValue;
+			}
+			if (!string.IsNullOrEmpty(searchFields))
+			{
+				parameters += "&searchFields=" + searchFields;
+			}
+			if (!string.IsNullOrEmpty(sortField))
+			{
+				parameters += "&sortField=" + sortField;
+			}
 
-            parameters += "&" + _auth;
+			parameters += "&" + _auth;
 
-            var uri = new Uri(string.Format(Constants.RestUrl + _type + parameters, string.Empty));
-            var response = await _client.GetAsync(uri);
-            var content = await response.Content.ReadAsStringAsync();
-            switch (response.StatusCode)
-            {
-                case HttpStatusCode.OK:
-                    var result = JsonConvert.DeserializeObject<PaginationResponse<T>>(content);
-                    return result;
-                case HttpStatusCode.BadRequest:
-                    var r = JsonConvert.DeserializeObject<ErrorResponse>(content);
-                    if (r.Error == "Unauthorized")
-                        throw new UnauthorizedAccessException(r.Error);
-                    else
-                        throw new Exception(r.Error);
-                case HttpStatusCode.InternalServerError:
-                    throw new Exception();
-                default:
-                    throw new Exception();
-            }
-        }
-        
-        public async Task<T> GetSingleDataAsync(string id)
-        {
-            T item = default(T);
+			var uri = new Uri(string.Format(Constants.RestUrl + _type + parameters, string.Empty));
+			var response = await _client.GetAsync(uri);
+			var content = await response.Content.ReadAsStringAsync();
+			switch (response.StatusCode)
+			{
+				case HttpStatusCode.OK:
+					var result = JsonConvert.DeserializeObject<PaginationResponse<T>>(content);
+					return result;
+				case HttpStatusCode.BadRequest:
+					var r = JsonConvert.DeserializeObject<ErrorResponse>(content);
+					if (r.Error == "Unauthorized")
+						throw new UnauthorizedAccessException(r.Error);
+					else
+						throw new Exception(r.Error);
+				case HttpStatusCode.InternalServerError:
+					throw new Exception();
+				default:
+					throw new Exception();
+			}
+		}
 
-            var uri = new Uri(string.Format(Constants.RestUrl + _type + "/" + id + "?" + _auth, string.Empty));
-            var response = await _client.GetAsync(uri);
-            var content = await response.Content.ReadAsStringAsync();
-            switch (response.StatusCode)
-            {
-                case HttpStatusCode.OK:
-                    var result = JsonConvert.DeserializeObject<T>(content);
-                    return result;
-                case HttpStatusCode.BadRequest:
-                    var r = JsonConvert.DeserializeObject<ErrorResponse>(content);
-                    if (r.Error == "Unauthorized")
-                        throw new UnauthorizedAccessException(r.Error);
-                    else
-                        throw new Exception(r.Error);
-                case HttpStatusCode.InternalServerError:
-                    throw new Exception();
-                default:
-                    throw new Exception();
-            }
-        }
+		public async Task<T> GetSingleDataAsync(string id)
+		{
+			T item = default(T);
 
-        public async Task<T> GetSingleDataAsyncCached(string id)
-        {
-            T result = default(T);
-            var cache = BlobCache.UserAccount;
-            var key = typeof(T).Name + "_" + id;
-            var cachedPostsPromise = cache.GetAndFetchLatest(
-                key,
-                () => GetSingleDataAsync(id),
-                offset =>
-                {
-                    TimeSpan elapsed = DateTimeOffset.Now - offset;
-                    return elapsed > new TimeSpan(days: 0, hours: 8, minutes: 0, seconds: 0);
-                });
+			var uri = new Uri(string.Format(Constants.RestUrl + _type + "/" + id + "?" + _auth, string.Empty));
+			var response = await _client.GetAsync(uri);
+			var content = await response.Content.ReadAsStringAsync();
+			switch (response.StatusCode)
+			{
+				case HttpStatusCode.OK:
+					var result = JsonConvert.DeserializeObject<T>(content);
+					return result;
+				case HttpStatusCode.BadRequest:
+					var r = JsonConvert.DeserializeObject<ErrorResponse>(content);
+					if (r.Error == "Unauthorized")
+						throw new UnauthorizedAccessException(r.Error);
+					else
+						throw new Exception(r.Error);
+				case HttpStatusCode.InternalServerError:
+					throw new Exception();
+				default:
+					throw new Exception();
+			}
+		}
 
-            cachedPostsPromise.Subscribe(subscribedPosts => {
-                Debug.WriteLine("Subscribed Posts ready");
-                result = subscribedPosts;
-            });
+		public async Task<T> GetSingleDataAsyncCached(string id)
+		{
+			T result = default(T);
+			var cache = BlobCache.UserAccount;
+			var key = typeof(T).Name + "_" + id;
+			var cachedPostsPromise = cache.GetAndFetchLatest(
+				key,
+				() => GetSingleDataAsync(id),
+				offset =>
+				{
+					TimeSpan elapsed = DateTimeOffset.Now - offset;
+					return elapsed > new TimeSpan(days: 0, hours: 8, minutes: 0, seconds: 0);
+				});
 
-            result = await cachedPostsPromise.LastOrDefaultAsync();
-            return result;
-        }
+			cachedPostsPromise.Subscribe(subscribedPosts =>
+			{
+				Debug.WriteLine("Subscribed Posts ready");
+				result = subscribedPosts;
+			});
 
-        public async Task<PaginationResponse<T>> GetAdditionalDataAsStringAsync(string otherType, string otherId)
-        {
-            Items = new PaginationResponse<T>();
+			result = await cachedPostsPromise.LastOrDefaultAsync();
+			return result;
+		}
 
-            var uri = new Uri(string.Format(
-                Constants.RestUrl + _type + "?" + otherType + "=" + otherId + "&" + _auth, string.Empty));
+		public async Task<PaginationResponse<T>> GetAdditionalDataAsStringAsync(string otherType, string otherId)
+		{
+			Items = new PaginationResponse<T>();
 
-            try
-            {
-                var response = await _client.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    Items = JsonConvert.DeserializeObject<PaginationResponse<T>>(content);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(@"				ERROR {0}", ex.Message);
-            }
+			var uri = new Uri(string.Format(
+				Constants.RestUrl + _type + "?" + otherType + "=" + otherId + "&" + _auth, string.Empty));
 
-            return Items;
-        }
+			try
+			{
+				var response = await _client.GetAsync(uri);
+				if (response.IsSuccessStatusCode)
+				{
+					var content = await response.Content.ReadAsStringAsync();
+					Items = JsonConvert.DeserializeObject<PaginationResponse<T>>(content);
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(@"				ERROR {0}", ex.Message);
+			}
 
-        public async Task<TokenResponse> GetLoginToken(LoginRequest login)
-        {
-            TokenResponse resp = null;
+			return Items;
+		}
 
-            var uri = new Uri(string.Format(Constants.RestUrl + "login", string.Empty));
+		public async Task<TokenResponse> GetLoginToken(LoginRequest login)
+		{
+			TokenResponse resp = null;
 
-            try
-            {
-                var json = JsonConvert.SerializeObject(login);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
+			var uri = new Uri(string.Format(Constants.RestUrl + "login", string.Empty));
 
-                var response = await _client.PostAsync(uri, content);
-                if (response.IsSuccessStatusCode)
-                {
-                    var content2 = await response.Content.ReadAsStringAsync();
+			try
+			{
+				var json = JsonConvert.SerializeObject(login);
+				var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+				var response = await _client.PostAsync(uri, content);
+				if (response.IsSuccessStatusCode)
+				{
+					var content2 = await response.Content.ReadAsStringAsync();
 					var user = JsonConvert.DeserializeObject<User>(JObject.Parse(content2)["user"].ToString());
 					Settings.CurrentUser = JsonConvert.SerializeObject(user);
-                    resp = JsonConvert.DeserializeObject<TokenResponse>(content2);
+					resp = JsonConvert.DeserializeObject<TokenResponse>(content2);
 
-                    Debug.WriteLine(@"				Item successfully saved.");
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(@"				ERROR {0}", ex.Message);
-            }
+					Debug.WriteLine(@"				Item successfully saved.");
+				}
+				else
+				{
+					return null;
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(@"				ERROR {0}", ex.Message);
+			}
 
-            return resp;
-        }
+			return resp;
+		}
 
-        public async Task<TokenResponse> RegenerateLoginToken()
-        {
-            var uri = new Uri(string.Format(Constants.RestUrl + "regenerate" + "?" + _auth));
-            var response = await _client.GetAsync(uri);
-            var content = await response.Content.ReadAsStringAsync();
-            switch (response.StatusCode)
-            {
-                case HttpStatusCode.OK:
-                    var resp = JsonConvert.DeserializeObject<TokenResponse>(content);
-                    return resp;
-                case HttpStatusCode.BadRequest:
-                    var r = JsonConvert.DeserializeObject<ErrorResponse>(content);
-                    throw new Exception(r.Error);
-                default:
-                    throw new Exception();
-            }
-        }
-        
-        public async Task RequestNewPassword(ForgotPasswordRequest request)
-        {
-            var uri = new Uri(string.Format(Constants.RestUrl + "forgot", string.Empty));
+		public async Task<TokenResponse> RegenerateLoginToken()
+		{
+			var uri = new Uri(string.Format(Constants.RestUrl + "regenerate" + "?" + _auth));
+			var response = await _client.GetAsync(uri);
+			var content = await response.Content.ReadAsStringAsync();
+			switch (response.StatusCode)
+			{
+				case HttpStatusCode.OK:
+					var resp = JsonConvert.DeserializeObject<TokenResponse>(content);
+					return resp;
+				case HttpStatusCode.BadRequest:
+					var r = JsonConvert.DeserializeObject<ErrorResponse>(content);
+					throw new Exception(r.Error);
+				default:
+					throw new Exception();
+			}
+		}
 
-            try
-            {
-                var json = JsonConvert.SerializeObject(request);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
+		public async Task RequestNewPassword(ForgotPasswordRequest request)
+		{
+			var uri = new Uri(string.Format(Constants.RestUrl + "forgot", string.Empty));
 
-                var response = await _client.PostAsync(uri, content);
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new BadResponseException("Error retrieving password");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(@"				ERROR {0}", ex.Message);
-            }
-        }
+			try
+			{
+				var json = JsonConvert.SerializeObject(request);
+				var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        public async Task<T> SaveItemAsync(T item, string id = "", bool isNewItem = false)
-        {
-            T resp = default(T);
+				var response = await _client.PostAsync(uri, content);
+				if (!response.IsSuccessStatusCode)
+				{
+					throw new BadResponseException("Error retrieving password");
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(@"				ERROR {0}", ex.Message);
+			}
+		}
 
-            var uri = isNewItem
-                ? new Uri(string.Format(Constants.RestUrl + _type + "?" + _auth, string.Empty))
-                : new Uri(string.Format(Constants.RestUrl + _type + "/" + id + "?" + _auth));
+		public async Task<T> SaveItemAsync(T item, string id = "", bool isNewItem = false)
+		{
+			T resp = default(T);
 
-            try
-            {
-                var json = JsonConvert.SerializeObject(item);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
+			var uri = isNewItem
+				? new Uri(string.Format(Constants.RestUrl + _type + "?" + _auth, string.Empty))
+				: new Uri(string.Format(Constants.RestUrl + _type + "/" + id + "?" + _auth));
 
-                HttpResponseMessage response;
-                if (isNewItem)
-                {
-                    response = await _client.PostAsync(uri, content);
-                }
-                else
-                {
-                    response = await _client.PutAsync(uri, content);
-                }
+			try
+			{
+				var json = JsonConvert.SerializeObject(item);
+				var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                if (response.IsSuccessStatusCode)
-                {
-                    var content2 = await response.Content.ReadAsStringAsync();
-                    resp = JsonConvert.DeserializeObject<T>(content2);
-                    Debug.WriteLine(@"				Item successfully saved.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(@"				ERROR {0}", ex.Message);
-            }
+				HttpResponseMessage response;
+				if (isNewItem)
+				{
+					response = await _client.PostAsync(uri, content);
+				}
+				else
+				{
+					response = await _client.PutAsync(uri, content);
+				}
 
-            return resp;
-        }
+				if (response.IsSuccessStatusCode)
+				{
+					var content2 = await response.Content.ReadAsStringAsync();
+					resp = JsonConvert.DeserializeObject<T>(content2);
+					Debug.WriteLine(@"				Item successfully saved.");
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(@"				ERROR {0}", ex.Message);
+			}
 
-        public async Task DeleteItemAsync(string id)
-        {
-            var uri = new Uri(string.Format(Constants.RestUrl + _type + "/" + id + "?" + _auth));
+			return resp;
+		}
 
-            try
-            {
-                var response = await _client.DeleteAsync(uri);
+		public async Task DeleteItemAsync(string id)
+		{
+			var uri = new Uri(string.Format(Constants.RestUrl + _type + "/" + id + "?" + _auth));
 
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine(@"				Item successfully deleted.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(@"				ERROR {0}", ex.Message);
-            }
-        }
-    }
+			try
+			{
+				var response = await _client.DeleteAsync(uri);
+
+				if (response.IsSuccessStatusCode)
+				{
+					Debug.WriteLine(@"				Item successfully deleted.");
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(@"				ERROR {0}", ex.Message);
+			}
+		}
+
+		public async Task<Stream> DownloadFile(string filePath, bool shouldSave)
+		{
+			var uri = new Uri(string.Format(Constants.RestUrl + "file?path=" + filePath + "&" + _auth));
+
+			try
+			{
+				var response = await _client.GetAsync(uri);
+
+				if (response.IsSuccessStatusCode)
+				{
+					return await response.Content.ReadAsStreamAsync();
+				}
+				return new System.IO.MemoryStream();
+			}
+			catch (Exception ex)
+			{
+				return new System.IO.MemoryStream();
+				Debug.WriteLine(@"				ERROR {0}", ex.Message);
+			}
+		}
+	}
 }

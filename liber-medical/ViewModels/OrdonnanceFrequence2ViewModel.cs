@@ -57,6 +57,7 @@ namespace libermedical.ViewModels
                 {
                     var frequency = args as Frequency;
                     Cotations = frequency.Quotations != null ? new ObservableCollection<string>(frequency.Quotations.Distinct()) : new ObservableCollection<string>();
+                    MessagingCenter.Send(this,Events.UpdateCotationsViewCellHeight,Cotations);
                 }
 
                 MessagingCenter.Unsubscribe<OrdonnanceCotationViewModel, Frequency>(this, Events.UpdateCotations);
@@ -69,6 +70,7 @@ namespace libermedical.ViewModels
             {
                 Frequency = initData as Frequency;
                 Cotations = Frequency.Quotations!=null? new ObservableCollection<string>(Frequency.Quotations.Distinct()) : new ObservableCollection<string>();
+				MessagingCenter.Send(this, Events.UpdateCotationsViewCellHeight, Cotations);
             }
 
             MessagingCenter.Send(this, Events.SetInitialPickerValue);
