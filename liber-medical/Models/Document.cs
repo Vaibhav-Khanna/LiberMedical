@@ -9,7 +9,7 @@ namespace libermedical.Models
         [JsonProperty("label")]
         public string Label { get; set; }
         [JsonProperty("status")]
-        public StatusEnum Status { get; set; }
+        public DocumentStatusEnum Status { get; set; }
         [JsonProperty("attachment_path")]
         public string AttachmentPath { get; set; }
         [JsonProperty("patient_id")]

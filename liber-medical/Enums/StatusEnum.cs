@@ -6,4 +6,12 @@
         valid,
         refused
     }
+
+    public enum DocumentStatusEnum
+    {
+        waiting,
+        valid,
+        sent,
+        refused
+    }
 }

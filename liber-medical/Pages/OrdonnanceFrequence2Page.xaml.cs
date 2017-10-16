@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using libermedical.CustomControls;
+﻿using libermedical.CustomControls;
 using libermedical.Enums;
 using libermedical.ViewModels;
-using Xamarin.Forms;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using libermedical.Models;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace libermedical.Pages
 {
-	public partial class OrdonnanceFrequence2Page : BasePage
+    public partial class OrdonnanceFrequence2Page : BasePage
 	{
 		public List<string> Movements { get; set; }
 
