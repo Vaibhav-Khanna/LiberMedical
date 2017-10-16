@@ -124,9 +124,31 @@ namespace libermedical.ViewModels
 				return new Command(async () =>
 				{
 					await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(SelectedOrdonnance, true);
-					//await CoreMethods.PushPageModel<OrdonnanceDetailViewModel>();
-					//MessagingCenter.Send(this, Events.UpdateOrdonnanceDetails,_selectedOrdonnance);
 
+				});
+			}
+		}
+
+		private Document _selectedDocument;
+		public Document SelectedDocument
+		{
+			get { return _selectedDocument; }
+			set
+			{
+				_selectedDocument = value;
+				RaisePropertyChanged();
+				if (_selectedDocument != null)
+					DocumentSelectCommand.Execute(null);
+			}
+		}
+
+		private ICommand DocumentSelectCommand
+		{
+			get
+			{
+				return new Command(async () =>
+				{
+					await CoreMethods.PushPageModel<AddDocumentViewModel>(SelectedDocument);
 				});
 			}
 		}
