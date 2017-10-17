@@ -119,6 +119,16 @@ namespace libermedical.ViewModels
 				}
 			}
 		}
+		public ICommand ViewOrdonnance => new Command(async () =>
+		{
+			if (Ordonnance.Attachments != null && Ordonnance.Attachments.Count > 0)
+			{
+				if (Ordonnance.Attachments[0].Contains(".pdf"))
+					await CoreMethods.PushPageModel<SecuriseBillsViewModel>(Ordonnance, true);
+				else
+					await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(Ordonnance, true);
+			}
+		});
 
 		public ICommand CloseCommand => new Command(async () =>
 		{
@@ -201,7 +211,7 @@ namespace libermedical.ViewModels
 		public ICommand ModifyFrequenceTappedCommand => new Command(async frequency =>
 		{
 			await CoreMethods.PushPageModel<OrdonnanceCotationViewModel>(frequency, true);
-			if(CanEdit)
+			if (CanEdit)
 				MessagingCenter.Send(this, Events.EnableCotationsEditMode, true);
 		});
 
