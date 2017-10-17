@@ -68,6 +68,8 @@ namespace libermedical.Pages
             {
                 _filter.Statuses.Add(StatusEnum.refused);
             }
+            if (_filter.Statuses.Count > 1)
+                _filter.IsActivated = true;
 
             MessagingCenter.Send(this, Events.UpdatePrescriptionFilters, _filter);
 			if(_parentScreen=="Teledeclarations")

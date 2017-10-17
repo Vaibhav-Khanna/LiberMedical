@@ -39,7 +39,7 @@ namespace libermedical.Pages
 
         private void ApplyFilter(Filter filter)
         {
-            if (filter != null)
+            if (filter != null && filter.IsActivated)
             {
                 List<Ordonnance> filteredItems = new List<Ordonnance>();
                 foreach (var status in filter.Statuses)

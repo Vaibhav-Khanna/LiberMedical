@@ -9,5 +9,6 @@ namespace libermedical.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public List<StatusEnum> Statuses { get; set; }
+        public bool IsActivated { get; set; }
     }
 }
