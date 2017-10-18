@@ -58,6 +58,16 @@ namespace libermedical.ViewModels
 					else
 						DownloadFile(teledeclaration.FilePath);
 				}
+				else if (initData is Ordonnance)
+				{
+					var ordonnance = initData as Ordonnance;
+					Title = ordonnance.PatientName;
+					if (ordonnance.Attachments.Count > 0)
+						if (ordonnance.Attachments[0].StartsWith("/"))
+							DownloadFile(ordonnance.Attachments[0].Remove(0, 1));
+						else
+							DownloadFile(ordonnance.Attachments[0]);
+				}
 
 			}
 		}

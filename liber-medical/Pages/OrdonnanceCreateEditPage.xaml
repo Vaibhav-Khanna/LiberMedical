@@ -45,6 +45,9 @@
 						<TableSection x:Name="VisualiserSection">
 							<ViewCell Height="60">
 								<Grid>
+									<Grid.GestureRecognizers>
+										<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ViewOrdonnance}" />
+									</Grid.GestureRecognizers>
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="15*" />
 										<ColumnDefinition Width="75*" />
@@ -75,7 +78,7 @@
 										<ColumnDefinition Width="10*" />
 									</Grid.ColumnDefinitions>
 									<Image Source="clock.png" VerticalOptions="Center" Grid.Column="0" />
-									<Label x:Name="StatusLabel"  VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+									<Label x:Name="StatusLabel" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
 								</Grid>
 							</ViewCell>
 						</TableSection>

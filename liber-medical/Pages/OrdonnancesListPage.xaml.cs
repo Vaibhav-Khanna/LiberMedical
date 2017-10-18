@@ -10,98 +10,122 @@ using Xamarin.Forms;
 namespace libermedical.Pages
 {
 	public partial class OrdonnancesListPage
-    {
-        private ObservableCollection<Ordonnance> _filteredItems { get; set; }
+	{
+		private ObservableCollection<Ordonnance> _filteredItems { get; set; }
 
-        private Filter _filter;
+		private Filter _filter;
 
-        public OrdonnancesListPage()
-        {
-            InitializeComponent();
+		public OrdonnancesListPage()
+		{
+			InitializeComponent();
 
-            MessagingCenter.Subscribe<FilterPage, Filter>(this, Events.UpdatePrescriptionFilters, (sender, filter) =>
-            {
-                _filter = filter;
+			MessagingCenter.Subscribe<FilterPage, Filter>(this, Events.UpdatePrescriptionFilters, (sender, filter) =>
+			{
+				_filter = filter;
 
-                ApplyFilter(filter);
-            });
-        }
+				ApplyFilter(filter);
+			});
+		}
 
-        private async void DoAsyncActions()
-        {
-            //while ((BindingContext as OrdonnancesListViewModel)?.Ordonnances == null)
-            //{
-            //    await Task.Delay(100);
-            //}
+		private async void DoAsyncActions()
+		{
+			//while ((BindingContext as OrdonnancesListViewModel)?.Ordonnances == null)
+			//{
+			//    await Task.Delay(100);
+			//}
 
-            //MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
-        }
+			//MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
+		}
 
-        private void ApplyFilter(Filter filter)
-        {
-            if (filter != null)
-            {
-                List<Ordonnance> filteredItems = new List<Ordonnance>();
-                foreach (var status in filter.Statuses)
-                {
-                    var foundItems =
-                        (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.Status == status && x.FirstCareAt >= filter.StartDate &&
-                                                                     x.FirstCareAt <= filter.EndDate);
-                    filteredItems.AddRange(foundItems);
-                }
+		private void ApplyFilter(Filter filter)
+		{
+			if (filter != null && filter.IsActivated)
+			{
+				List<Ordonnance> filteredItems = new List<Ordonnance>();
+				List<Ordonnance> foundItems = new List<Ordonnance>();
 
-                _filteredItems = new ObservableCollection<Ordonnance>(filteredItems);
-                MyListView.ItemsSource = _filteredItems;
-            }
-            else
-            {
-                _filteredItems = null;
+				if (filter.Statuses.Count > 0)
+				{
 
-                MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
-            }
-        }
-        
-        async void Filter_Clicked(object sender, EventArgs e)
-        {
-			await Navigation.PushModalAsync(new FilterPage("Ordonnance",_filter));
-        }
+					foreach (var status in filter.Statuses)
+					{
+						if (filter.EnableDateSearch)
+						{
+							foundItems =
+							   (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.Status == status && x.FirstCareAt >= filter.StartDate &&
+																							  x.FirstCareAt <= filter.EndDate).ToList();
+						}
+						else
+						{
+							foundItems =
+							   (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.Status == status).ToList();
+						}
+						filteredItems.AddRange(foundItems);
+					}
+				}
+				else
+				{
+					if (filter.EnableDateSearch)
+					{
+						foundItems =
+						   (BindingContext as OrdonnancesListViewModel).Ordonnances.Where( x=>x.FirstCareAt >= filter.StartDate &&
+																						  x.FirstCareAt <= filter.EndDate).ToList();
+						filteredItems.AddRange(foundItems);
+					}
+				}
 
-        void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
-        {
-            if (e.SelectedItem == null)
-            {
-                return; //ItemSelected is called on deselection, which results in SelectedItem being set to null
-            }
+				_filteredItems = new ObservableCollection<Ordonnance>(filteredItems);
+				MyListView.ItemsSource = _filteredItems;
+			}
+			else
+			{
+				_filteredItems = null;
 
-            var item = e.SelectedItem as Ordonnance;
-            (BindingContext as OrdonnancesListViewModel).SelectItemCommand.Execute(item);
+				MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
+			}
+		}
 
-            //// disable the visual selection state.
-            ((ListView)sender).SelectedItem = null;
-        }
-        
-        private void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(e.NewTextValue))
-            {
-                IEnumerable<Ordonnance> foundItems;
+		async void Filter_Clicked(object sender, EventArgs e)
+		{
+			await Navigation.PushModalAsync(new FilterPage("Ordonnance", _filter));
+		}
 
-                if (_filteredItems != null)
-                {
-                    foundItems =
-                        _filteredItems.Where(x => x.PatientName.ToLower().Contains(e.NewTextValue.ToLower()));
-                }
-                else
-                {
-                    foundItems =
-                        (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.PatientName.ToLower().Contains(e.NewTextValue.ToLower()));
-                }
-                MyListView.ItemsSource = foundItems;
-            }
-            else
-            {
-                MyListView.ItemsSource = _filteredItems ?? (BindingContext as OrdonnancesListViewModel).Ordonnances;
-            }
-        }
-    }
+		void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+		{
+			if (e.SelectedItem == null)
+			{
+				return; //ItemSelected is called on deselection, which results in SelectedItem being set to null
+			}
+
+			var item = e.SelectedItem as Ordonnance;
+			(BindingContext as OrdonnancesListViewModel).SelectItemCommand.Execute(item);
+
+			//// disable the visual selection state.
+			((ListView)sender).SelectedItem = null;
+		}
+
+		private void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
+		{
+			if (!string.IsNullOrEmpty(e.NewTextValue))
+			{
+				IEnumerable<Ordonnance> foundItems;
+
+				if (_filteredItems != null)
+				{
+					foundItems =
+						_filteredItems.Where(x => x.PatientName.ToLower().Contains(e.NewTextValue.ToLower()));
+				}
+				else
+				{
+					foundItems =
+						(BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.PatientName.ToLower().Contains(e.NewTextValue.ToLower()));
+				}
+				MyListView.ItemsSource = foundItems;
+			}
+			else
+			{
+				MyListView.ItemsSource = _filteredItems ?? (BindingContext as OrdonnancesListViewModel).Ordonnances;
+			}
+		}
+	}
 }
