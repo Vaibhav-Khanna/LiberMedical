@@ -36,7 +36,7 @@ namespace libermedical.ViewModels
 		public HomeViewModel()
 		{
 			SubscribeToMessages();
-            WelcomeText = $"Bonjour {JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Fullname}, que souhaitez vous faire?";
+			WelcomeText = $"Bonjour {JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Firstname}, que souhaitez vous faire?";
 			CheckForAdvisor();
 		}
 		public ICommand AssistCommand => new Command(async () =>
