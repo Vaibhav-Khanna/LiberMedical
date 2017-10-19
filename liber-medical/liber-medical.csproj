@@ -202,6 +202,7 @@
     <Compile Include="Converters\StatusColorConverter.cs" />
     <Compile Include="Converters\DisableColorConverter.cs" />
     <Compile Include="Converters\QuotationColorConverter.cs" />
+    <Compile Include="CustomControls\BorderlessPicker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Acr.UserDialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

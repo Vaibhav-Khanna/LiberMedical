@@ -9,16 +9,16 @@ using Xamarin.Forms;
 
 namespace libermedical.Pages
 {
-    public partial class OrdonnanceFrequence2Page : BasePage
+	public partial class OrdonnanceFrequence2Page : BasePage
 	{
 		public List<string> Movements { get; set; }
 
 		public OrdonnanceFrequence2Page() : base(-1, 64, false)
 		{
 			InitializeComponent();
-            SubscribeMessages();
+			SubscribeMessages();
 
-            Movements = new List<string>
+			Movements = new List<string>
 			{
 				"Non", "IFD", "IFP", "IFO", "IFN", "IFR", "IFS"
 			};
@@ -41,11 +41,11 @@ namespace libermedical.Pages
 				{
 					MovementPicker.SelectedIndex = 0;
 				}
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    UpdateCotationsViewCellHeight(new ObservableCollection<string>((BindingContext as OrdonnanceFrequence2ViewModel).Cotations));
-                });
-                NightSwitch.On = (BindingContext as OrdonnanceFrequence2ViewModel).Frequency.Night;
+				Device.BeginInvokeOnMainThread(() =>
+				{
+					UpdateCotationsViewCellHeight(new ObservableCollection<string>((BindingContext as OrdonnanceFrequence2ViewModel).Cotations));
+				});
+				NightSwitch.On = (BindingContext as OrdonnanceFrequence2ViewModel).Frequency.Night;
 
 				if ((BindingContext as OrdonnanceFrequence2ViewModel).Frequency.Increase == IncreaseEnum.Non)
 				{
@@ -60,8 +60,8 @@ namespace libermedical.Pages
 					maj.Text = "MCI";
 				}
 			});
-           // UpdateListAsync();
-			
+			// UpdateListAsync();
+
 		}
 
 		async void Cancel_Tapped(object sender, System.EventArgs e)
@@ -100,7 +100,8 @@ namespace libermedical.Pages
 
 		private void NightOnChanged(object sender, ToggledEventArgs e)
 		{
-			(this.BindingContext as OrdonnanceFrequence2ViewModel).Frequency.Night = e.Value;
+			if (this.BindingContext != null)
+				(this.BindingContext as OrdonnanceFrequence2ViewModel).Frequency.Night = e.Value;
 		}
 
 		private void Picker_OnSelectedIndexChanged(object sender, EventArgs e)
@@ -130,25 +131,25 @@ namespace libermedical.Pages
 		{
 			base.OnAppearing();
 
-        }
+		}
 
-        private void SubscribeMessages()
-        {
-            MessagingCenter.Subscribe<OrdonnanceFrequence2ViewModel, ObservableCollection<string>>(this, Events.UpdateCotationsViewCellHeight, (sender, args) =>
-            {
-                UpdateCotationsViewCellHeight(args);
-            });
+		private void SubscribeMessages()
+		{
+			MessagingCenter.Subscribe<OrdonnanceFrequence2ViewModel, ObservableCollection<string>>(this, Events.UpdateCotationsViewCellHeight, (sender, args) =>
+			{
+				UpdateCotationsViewCellHeight(args);
+			});
 
-        }
+		}
 
-        private void UpdateCotationsViewCellHeight(ObservableCollection<string> cotations)
-        {
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                listCotations.ItemsSource = cotations;
-                CotationsViewCell.Height = cotations.Count * 43;
+		private void UpdateCotationsViewCellHeight(ObservableCollection<string> cotations)
+		{
+			Device.BeginInvokeOnMainThread(() =>
+			{
+				listCotations.ItemsSource = cotations;
+				CotationsViewCell.Height = cotations.Count * 43;
 
-            });
-        }
-    }
+			});
+		}
+	}
 }
