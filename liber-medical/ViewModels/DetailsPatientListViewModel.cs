@@ -34,7 +34,6 @@ namespace libermedical.ViewModels
         {
             base.Init(initData);
             this.Patient = (Patient)initData;
-            BindData();
         }
 
         private async void BindData()
@@ -165,6 +164,13 @@ namespace libermedical.ViewModels
                 });
             }
         }
+
+		protected override void ViewIsAppearing(object sender, System.EventArgs e)
+		{
+			base.ViewIsAppearing(sender, e);
+            BindData();
+			
+		}
 
     }
 }

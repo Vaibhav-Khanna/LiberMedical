@@ -23,6 +23,18 @@ namespace libermedical.ViewModels
 			}
 		}
 
+		private bool _hasManualCotations;
+		public bool HasManualCotations
+		{
+			get { return _hasManualCotations; }
+			set
+			{
+				_hasManualCotations = value;
+				RaisePropertyChanged();
+			}
+		}
+
+
 
 		public Frequency Frequency { get; set; }
 		public IList<string> ItemsSource { get; } = new List<string>
@@ -55,24 +67,28 @@ namespace libermedical.ViewModels
 			if (initData != null)
 			{
 				Frequency = initData as Frequency;
-				if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("1 AMI 1")).FirstOrDefault()))
-					AMI1 = true;
-				if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("1 AMI 2")).FirstOrDefault()))
-					AMI2 = true;
-				if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("1 AMI 4")).FirstOrDefault()))
-					AMI4 = true;
-				if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("1 AMI 1.5")).FirstOrDefault()))
-					AMI15 = true;
-				if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("1 AIS 3")).FirstOrDefault()))
-					AIS3 = true;
-				if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("1 AIS 4")).FirstOrDefault()))
-					AIS4 = true;
-				if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("2 AIS 3")).FirstOrDefault()))
-					AIS32 = true;
-				if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("1 AMS 7.5")).FirstOrDefault()))
-					AMS75 = true;
-				if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("1 AMS 9.5")).FirstOrDefault()))
-					AMS95 = true;
+				//if (Frequency.Quotations != null)
+				//{
+				//	if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("1 AMI 1")).FirstOrDefault()))
+				//		AMI1 = true;
+				//	if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("1 AMI 2")).FirstOrDefault()))
+				//		AMI2 = true;
+				//	if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("1 AMI 4")).FirstOrDefault()))
+				//		AMI4 = true;
+				//	if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("1 AMI 1.5")).FirstOrDefault()))
+				//		AMI15 = true;
+				//	if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("1 AIS 3")).FirstOrDefault()))
+				//		AIS3 = true;
+				//	if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("1 AIS 4")).FirstOrDefault()))
+				//		AIS4 = true;
+				//	if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("2 AIS 3")).FirstOrDefault()))
+				//		AIS32 = true;
+				//	if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("1 AMS 7.5")).FirstOrDefault()))
+				//		AMS75 = true;
+				//	if (!string.IsNullOrEmpty(Frequency.Quotations.Where(x => x.Contains("1 AMS 9.5")).FirstOrDefault()))
+				//		AMS95 = true;
+				//}
+
 			}
 		}
 
@@ -129,12 +145,19 @@ namespace libermedical.ViewModels
 
 		private void SubscribeMessages()
 		{
-			MessagingCenter.Unsubscribe<OrdonnanceCreateEditViewModel, bool>(this, Events.EnableCotationsEditMode);
-			MessagingCenter.Subscribe<OrdonnanceCreateEditViewModel, bool>(this, Events.EnableCotationsEditMode,
+			MessagingCenter.Unsubscribe<OrdonnanceFrequence2ViewModel, bool>(this, Events.EnableCotationsEditMode);
+			MessagingCenter.Subscribe<OrdonnanceFrequence2ViewModel, bool>(this, Events.EnableCotationsEditMode,
 			(sender, canEdit) =>
 			{
 				CanEdit = canEdit;
 			});
+
+			MessagingCenter.Unsubscribe<OrdonnanceCreateEditViewModel, bool>(this, Events.EnableCotationsEditMode);
+			MessagingCenter.Subscribe<OrdonnanceCreateEditViewModel, bool>(this, Events.EnableCotationsEditMode,
+						(sender, canEdit) =>
+						{
+							CanEdit = canEdit;
+						});
 		}
 
 		private bool _ami1;

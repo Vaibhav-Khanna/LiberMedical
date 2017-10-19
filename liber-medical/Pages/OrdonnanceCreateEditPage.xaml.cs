@@ -5,6 +5,7 @@ using libermedical.Models;
 using Xamarin.Forms;
 using libermedical.ViewModels;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace libermedical.Pages
 {
@@ -32,6 +33,11 @@ namespace libermedical.Pages
 				TableLayout.Root.Remove(VisualiserSection);
 			MyDatePicker.Date = _ordonnance.FirstCareAt;
 			MyDatePicker.DateSelected += MyDatePickerOnDateSelected;
+			SelectedDate.Text = $"Date : {_ordonnance.FirstCareAt.ToString("dd-MM-yyyy")}";
+			if (_ordonnance.Frequencies != null)
+				UpdateFrequenciesViewCellHeight(new ObservableCollection<Frequency>(_ordonnance.Frequencies));
+			else
+				UpdateFrequenciesViewCellHeight(new ObservableCollection<Frequency>());
 
 			if (string.IsNullOrEmpty(_ordonnance.Comments))
 			{
@@ -42,7 +48,7 @@ namespace libermedical.Pages
 			{
 				MyEditor.Text = _ordonnance.Comments;
 			}
-
+			StatusLabel.Text = "Statut: " + _ordonnance.StatusString;
 			if (!(BindingContext as OrdonnanceCreateEditViewModel).Creating)
 			{
 				StatusLabel.Text = "Statut: " + _ordonnance.StatusString;
@@ -69,6 +75,12 @@ namespace libermedical.Pages
 		private void MyDatePickerOnDateSelected(object sender, DateChangedEventArgs dateChangedEventArgs)
 		{
 			(this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.First_Care_At = App.ConvertToUnixTimestamp(dateChangedEventArgs.NewDate);
+			SelectedDate.Text = $"Date : {(sender as DatePicker).Date.ToString("dd-MM-yyyy")}";
+		}
+
+		void Handle_Unfocused(object sender, Xamarin.Forms.FocusEventArgs e)
+		{
+			(this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.First_Care_At = App.ConvertToUnixTimestamp((sender as DatePicker).Date);
 			SelectedDate.Text = $"Date : {(sender as DatePicker).Date.ToString("dd-MM-yyyy")}";
 		}
 
@@ -164,6 +176,11 @@ namespace libermedical.Pages
 				UpdateFrequenciesViewCellHeight(args);
 			});
 
+			MessagingCenter.Subscribe<OrdonnanceCreateEditViewModel, List<string>>(this, Events.UpdateAttachmentsViewCellHeight, (sender, args) =>
+			{
+				UpdateAttachmentsViewCellHeight(args);
+			});
+
 		}
 
 		private void UpdateFrequenciesViewCellHeight(ObservableCollection<Frequency> frequencies)
@@ -173,6 +190,17 @@ namespace libermedical.Pages
 					if (frequencies != null)
 						FrequencesListView.ItemsSource = frequencies;
 					FrequenciesViewCell.Height = frequencies.Count * 43;
+
+				});
+		}
+
+		private void UpdateAttachmentsViewCellHeight(List<string> attachments)
+		{
+			Device.BeginInvokeOnMainThread(() =>
+				{
+					if (attachments != null)
+						AttachmentsListView.ItemsSource = attachments;
+					AttachmentsViewCell.Height = attachments.Count * 43;
 
 				});
 		}

@@ -21,6 +21,11 @@ namespace libermedical.Pages
 				_filter = filter;
 				StartDatePicker.Date = filter.StartDate;
 				EndDatePicker.Date = filter.EndDate;
+				if (filter.EnableDateSearch)
+				{
+					EndDate.Text = _filter.EndDate.ToString("MM-dd-yyyy");
+					StartDate.Text = _filter.StartDate.ToString("MM-dd-yyyy");
+				}
 				if (filter.Statuses.Contains(StatusEnum.waiting))
 				{
 					attente.On = true;
@@ -48,16 +53,22 @@ namespace libermedical.Pages
 
 		async void Back_Tapped(object sender, System.EventArgs e)
 		{
+			_filter = null;
+			MessagingCenter.Send(this, Events.UpdatePrescriptionFilters, _filter);
 			await Navigation.PopModalAsync();
 		}
 
 		async void Reset_Tapped(object sender, System.EventArgs e)
 		{
-			_filter = null;
+			attente.On = traite.On = refuse.On = false;
+			StartDate.Text = EndDate.Text = string.Empty;
+			_filter.Statuses = new List<StatusEnum>();
+			_filter.IsActivated = false;
+		}
 
-			MessagingCenter.Send(this, Events.UpdatePrescriptionFilters, _filter);
-
-			await Navigation.PopModalAsync();
+		void HandleEndDateTapped(object sender, System.EventArgs e)
+		{
+			EndDatePicker.Focus();
 		}
 
 		public void Handle_EndDateSelected(object sender, Xamarin.Forms.DateChangedEventArgs e)
@@ -65,6 +76,15 @@ namespace libermedical.Pages
 			_filter.IsActivated = true;
 			_filter.EnableDateSearch = true;
 			_filter.EndDate = ((DatePicker)sender).Date;
+			EndDate.Text = _filter.EndDate.ToString("MM-dd-yyyy");
+		}
+
+		void EndDateUnfocused(object sender, Xamarin.Forms.FocusEventArgs e)
+		{
+			_filter.IsActivated = true;
+			_filter.EnableDateSearch = true;
+			_filter.EndDate = ((DatePicker)sender).Date;
+			EndDate.Text = _filter.EndDate.ToString("MM-dd-yyyy");
 		}
 
 		public void Handle_StartDateSelected(object sender, Xamarin.Forms.DateChangedEventArgs e)
@@ -74,6 +94,18 @@ namespace libermedical.Pages
 			_filter.StartDate = ((DatePicker)sender).Date;
 		}
 
+		void StartDateUnfocused(object sender, Xamarin.Forms.FocusEventArgs e)
+		{
+			_filter.IsActivated = true;
+			_filter.EnableDateSearch = true;
+			_filter.StartDate = ((DatePicker)sender).Date;
+			StartDate.Text = _filter.StartDate.ToString("MM-dd-yyyy");
+		}
+
+		void HandleStartDateTapped(object sender, System.EventArgs e)
+		{
+			StartDatePicker.Focus();
+		}
 		async void Search_Tapped(object sender, System.EventArgs e)
 		{
 

@@ -91,7 +91,7 @@
 										<ColumnDefinition Width="10*" />
 									</Grid.ColumnDefinitions>
 									<Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
-									<DatePicker x:Name="MyDatePicker" IsVisible="False" Grid.Column="1" />
+									<DatePicker x:Name="MyDatePicker" IsVisible="False" Grid.Column="1" Unfocused="Handle_Unfocused" />
 									<Label x:Name="SelectedDate" Text="Date de premier soin" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
 									<Image Source="back_arrow_green.png" VerticalOptions="Center" Grid.Column="2" />
 								</Grid>
@@ -120,17 +120,6 @@
 						</TableSection>
 						<TableSection>
 							<TextCell Text="Pièce jointe" Detail="+ Ajouter" Height="70" DetailColor="{Binding CanEdit,Converter={converter:DisableColorConverter}}" Command="{Binding AddAttachmentCommand}" />
-						</TableSection>
-						<TableSection>
-							<ViewCell Height="200">
-								<StackLayout Padding="18,10,20,10" Orientation="Vertical">
-									<Label Text="Commentaire" TextColor="#000000" />
-									<Editor x:Name="MyEditor" IsEnabled="{Binding CanEdit}" BackgroundColor="#f0f0f0" FontFamily="SFUIText-Regular.otf" FontSize="12" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Focused="Editor_Focused" Unfocused="Editor_Unfocused" />
-								</StackLayout>
-							</ViewCell>
-						</TableSection>
-						<TableSection>
-							<TextCell Text="Attachments" DetailColor="#007aff" Height="70" />
 							<ViewCell x:Name="AttachmentsViewCell">
 								<ListView x:Name="AttachmentsListView" SeparatorVisibility="None" VerticalOptions="Start">
 									<ListView.ItemTemplate>
@@ -146,6 +135,14 @@
 										</DataTemplate>
 									</ListView.ItemTemplate>
 								</ListView>
+							</ViewCell>
+						</TableSection>
+						<TableSection>
+							<ViewCell Height="200">
+								<StackLayout Padding="18,10,20,10" Orientation="Vertical">
+									<Label Text="Commentaire" TextColor="#000000" />
+									<Editor x:Name="MyEditor" IsEnabled="{Binding CanEdit}" BackgroundColor="#f0f0f0" FontFamily="SFUIText-Regular.otf" FontSize="12" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Focused="Editor_Focused" Unfocused="Editor_Unfocused" />
+								</StackLayout>
 							</ViewCell>
 						</TableSection>
 					</TableRoot>

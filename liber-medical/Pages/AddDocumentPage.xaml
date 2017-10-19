@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:libermedical.Renderers;" x:Class="libermedical.Pages.AddDocumentPage" Style="{StaticResource AppBackgroundColor}">
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:libermedical.Renderers;" x:Class="libermedical.Pages.AddDocumentPage" Style="{StaticResource ModalBackgroundColor}">
 	<custom:BasePage.Resources>
 		<ResourceDictionary>
 			<Style x:Key="JoinDocumentLabel" TargetType="Label">
@@ -22,7 +22,7 @@
 						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CancelCommand}" />
 					</Label.GestureRecognizers>
 				</Label>
-				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderLabel}" Text="Nouveau Document" />
+				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderLabel}" Text="Document" />
 				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Style="{StaticResource HeaderLabelAction}" Text="Enregistrer">
 					<Label.GestureRecognizers>
 						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddCommand}" />
@@ -32,39 +32,53 @@
 		</ContentView>
 	</custom:BasePage.Header>
 	<custom:BasePage.ContentPresenter>
-		<ContentView Padding="20,10,0,10">
-			<TableView Intent="Data" HorizontalOptions="FillAndExpand">
-				<TableRoot>
-					<TableSection>
-						<ViewCell>
-							<local:BorderlessEntry Text="{Binding Document.Label}" Placeholder="Nom" Keyboard="Text" Style="{StaticResource PatientNameEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
-						</ViewCell>
-						<ViewCell Height="60" Tapped="DatePicker_Tapped">
-							<Grid>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="15*" />
-									<ColumnDefinition Width="75*" />
-									<ColumnDefinition Width="10*" />
-								</Grid.ColumnDefinitions>
-								<Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
-								<DatePicker x:Name="MyDatePicker" IsVisible="False" Grid.Column="1" Unfocused="Handle_Unfocused" />
-								<Label x:Name="SelectedDate" Text="{Binding CreatedDate}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
-								<Image Source="back_arrow_green.png" VerticalOptions="Center" Grid.Column="2" />
-							</Grid>
-						</ViewCell>
-						<ViewCell>
-							<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-								<StackLayout.GestureRecognizers>
-									<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddDocumentCommand}" />
-								</StackLayout.GestureRecognizers>
-								<Label Text="Pièce jointe" Style="{StaticResource JoinDocumentLabel}" VerticalOptions="Center" />
-								<Image Source="attachment.png">
-								</Image>
-							</StackLayout>
-						</ViewCell>
-					</TableSection>
-				</TableRoot>
-			</TableView>
+		<ContentView Padding="20,10,0,10" Style="{StaticResource ModalContentBackgroundColor}">
+			<Grid RowSpacing="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="45" />
+					<RowDefinition Height="1" />
+					<RowDefinition Height="45" />
+					<RowDefinition Height="1" />
+					<RowDefinition Height="45" />
+					<RowDefinition Height="1" />
+				</Grid.RowDefinitions>
+				<local:BorderlessEntry Text="{Binding Label}" Placeholder="Nom" Keyboard="Text" Style="{StaticResource PatientNameEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Row="0" />
+				<BoxView BackgroundColor="#c8c7cc" HeightRequest="1" Grid.Row="1">
+				</BoxView>
+				<StackLayout Grid.Row="2" HorizontalOptions="FillAndExpand">
+					<Grid VerticalOptions="CenterAndExpand">
+						<Grid.GestureRecognizers>
+							<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DatePicker_Tapped" />
+						</Grid.GestureRecognizers>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="15*" />
+							<ColumnDefinition Width="75*" />
+							<ColumnDefinition Width="10*" />
+						</Grid.ColumnDefinitions>
+						<Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
+						<DatePicker x:Name="MyDatePicker" IsVisible="False" Grid.Column="1" Unfocused="Handle_Unfocused" />
+						<Label x:Name="SelectedDate" Text="{Binding CreatedDate}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+						<Image Source="back_arrow_green.png" VerticalOptions="Center" Grid.Column="2" />
+					</Grid>
+				</StackLayout>
+				<BoxView BackgroundColor="#c8c7cc" HeightRequest="1" Grid.Row="3">
+				</BoxView>
+				<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Grid.Row="4">
+					<StackLayout.GestureRecognizers>
+						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddDocumentCommand}" />
+					</StackLayout.GestureRecognizers>
+					<Label Text="Pièce jointe" Style="{StaticResource JoinDocumentLabel}" VerticalOptions="Center" />
+					<Image Source="attachment.png">
+					</Image>
+				<Image Source="{Binding ImagePath}" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,1,3,1"></Image>
+					
+				</StackLayout>
+				<BoxView BackgroundColor="#c8c7cc" HeightRequest="1" Grid.Row="5">
+				</BoxView>
+			</Grid>
 		</ContentView>
 	</custom:BasePage.ContentPresenter>
 </custom:BasePage>

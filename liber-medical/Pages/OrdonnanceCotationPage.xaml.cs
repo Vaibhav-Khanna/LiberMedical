@@ -5,7 +5,7 @@ namespace libermedical.Pages
     public partial class OrdonnanceCotationPage : BasePage
     {
 
-        public OrdonnanceCotationPage() : base(-1, 64, false)
+        public OrdonnanceCotationPage() : base(-1, 0, false)
         {
             /*  cotation = new ObservableCollection<Cotation>
                   {
@@ -61,7 +61,7 @@ namespace libermedical.Pages
 
         void Handle_OnChanged(object sender, Xamarin.Forms.ToggledEventArgs e)
         {
-            if (Switch.On)
+			if (Switch.IsToggled)
             {
                 Picker.IsVisible = true;
                 Footer.IsVisible = true;

@@ -9,11 +9,14 @@ using Plugin.Media.Abstractions;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using libermedical.Enums;
+using System.Linq;
 
 namespace libermedical.ViewModels
 {
 	public class OrdonnanceCreateEditViewModel : ViewModelBase
 	{
+		private string[] _frequenciesAll = new string[] { "Matin", "Midi", "Après-midi", "Soir" };
+
 		private bool _isEditing;
 		private bool _canEdit;
 		public bool CanEdit
@@ -115,8 +118,9 @@ namespace libermedical.ViewModels
 					Frequencies = Ordonnance.Frequencies != null ? new ObservableCollection<Frequency>(Ordonnance.Frequencies) : new ObservableCollection<Frequency>();
 					Creating = false;
 					_isEditing = true;
-					MessagingCenter.Send(this, Events.UpdateFrequenciesViewCellHeight, Frequencies);
 				}
+				MessagingCenter.Send(this, Events.UpdateFrequenciesViewCellHeight, Ordonnance.Frequencies);
+
 			}
 		}
 		public ICommand ViewOrdonnance => new Command(async () =>
@@ -190,16 +194,49 @@ namespace libermedical.ViewModels
 						Ordonnance.Attachments.Add(file.Path);
 					}
 				}
+				MessagingCenter.Send(this,Events.UpdateAttachmentsViewCellHeight,Ordonnance.Attachments);
 			}
 		});
 
 		public ICommand AddFrequenceTappedCommand => new Command(async () =>
 		{
+
+
 			if (CanEdit)
 			{
-				await CoreMethods.PushPageModel<OrdonnanceFrequenceViewModel>(null, true);
+				var frequency = new Frequency();
+				string[] availableFrequencies = null;
+				if (Frequencies != null)
+					availableFrequencies = _frequenciesAll.Except(Frequencies.Select(x => x.PeriodString).ToArray()).ToArray();
+				else
+					availableFrequencies = _frequenciesAll;
+				var action = await CoreMethods.DisplayActionSheet("Choisissez la fréquence d'administration", "Annuler", null,availableFrequencies);
+
+				switch (action)
+				{
+					case "Matin":
+						frequency.Period = PeriodEnum.morning;
+						break;
+					case "Midi":
+						frequency.Period = PeriodEnum.lunch;
+						break;
+					case "Après-midi":
+						frequency.Period = PeriodEnum.afternoon;
+						break;
+					case "Soir":
+						frequency.Period = PeriodEnum.evening;
+						break;
+
+				}
+
+				if (action == "Annuler")
+					return;
+
+				await CoreMethods.PushPageModel<OrdonnanceFrequence2ViewModel>(frequency, true);
 				SubscribeFrequencyMessages();
+				MessagingCenter.Send(this, Events.EnableCotationsEditMode, true);
 			}
+
 
 		});
 
@@ -210,9 +247,10 @@ namespace libermedical.ViewModels
 
 		public ICommand ModifyFrequenceTappedCommand => new Command(async frequency =>
 		{
-			await CoreMethods.PushPageModel<OrdonnanceCotationViewModel>(frequency, true);
+			await CoreMethods.PushPageModel<OrdonnanceFrequence2ViewModel>(frequency, true);
 			if (CanEdit)
 				MessagingCenter.Send(this, Events.EnableCotationsEditMode, true);
+
 		});
 
 		private void SubscribeMessages()
