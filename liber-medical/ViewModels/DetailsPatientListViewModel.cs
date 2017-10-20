@@ -35,10 +35,12 @@ namespace libermedical.ViewModels
             base.Init(initData);
             this.Patient = (Patient)initData;
         }
-
-        private async void BindData()
+        public DetailsPatientListViewModel()
         {
             ShowStackOrdonnance = ShowBoxViewOrdonnances = true;
+        }
+        private async void BindData()
+        {
             BottomTitle = "+ Ajoutez une ordonnance";
             Ordonnances = new ObservableCollection<Ordonnance>((await new StorageService<Ordonnance>().GetList()).Where(x => x.PatientId == Patient.Id));
             Documents = new ObservableCollection<Document>((await new StorageService<Document>().GetList()).Where(x => x.PatientId == Patient.Id));

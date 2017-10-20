@@ -1,161 +1,156 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.OrdonnanceCreateEditPage" xmlns:converter="clr-namespace:libermedical.Converters;assembly=libermedical" Style="{StaticResource ModalBackgroundColor}">
-	<custom:BasePage.Header>
-		<ContentView Style="{StaticResource HeaderFooterBackground}">
-			<Grid Padding="5">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="40" />
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="99" />
-				</Grid.ColumnDefinitions>
-				<Grid Grid.Column="0">
-					<Grid.GestureRecognizers>
-						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CloseCommand}" />
-					</Grid.GestureRecognizers>
-					<Image HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center" />
-				</Grid>
-				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderLabel}" Text="Ordonnance" />
-				<!--<Grid Grid.Column="2" IsVisible="{Binding CanEdit,Converter={converter:BooleanNegativeConverter}}">
+  <custom:BasePage.Header>
+    <ContentView Style="{StaticResource HeaderFooterBackground}">
+      <Grid Padding="5">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="40" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="99" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+          <Grid.GestureRecognizers>
+            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CloseCommand}" />
+          </Grid.GestureRecognizers>
+          <Image HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center" />
+        </Grid>
+        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderLabel}" Text="Ordonnance" />
+        <!--<Grid Grid.Column="2" IsVisible="{Binding CanEdit,Converter={converter:BooleanNegativeConverter}}">
 					<Grid.GestureRecognizers>
 						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding EditCommand}" />
 					</Grid.GestureRecognizers>
 					<Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}" Text="{Binding SaveLabel}" />
 				</Grid>-->
-			</Grid>
-		</ContentView>
-	</custom:BasePage.Header>
-	<custom:BasePage.ContentPresenter>
-		<ContentView Padding="0,0,0,0">
-			<StackLayout>
-				<TableView Intent="Menu" HasUnevenRows="True" x:Name="TableLayout">
-					<TableRoot>
-						<TableSection>
-							<ViewCell Height="60" Tapped="Patient_Tapped">
-								<Grid>
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="15*" />
-										<ColumnDefinition Width="75*" />
-										<ColumnDefinition Width="10*" />
-									</Grid.ColumnDefinitions>
-									<Image Source="user.png" VerticalOptions="Center" Grid.Column="0" />
-									<Label Text="{Binding PatientLabel}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
-								</Grid>
-							</ViewCell>
-						</TableSection>
-						<TableSection x:Name="VisualiserSection">
-							<ViewCell Height="60">
-								<Grid>
-									<Grid.GestureRecognizers>
-										<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ViewOrdonnance}" />
-									</Grid.GestureRecognizers>
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="15*" />
-										<ColumnDefinition Width="75*" />
-										<ColumnDefinition Width="10*" />
-									</Grid.ColumnDefinitions>
-									<Image Source="search.png" VerticalOptions="Center" Grid.Column="0" />
-									<Label Text="Visualiser l'ordonnance" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
-								</Grid>
-							</ViewCell>
-							<ViewCell Height="60">
-								<Grid>
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="15*" />
-										<ColumnDefinition Width="75*" />
-										<ColumnDefinition Width="10*" />
-									</Grid.ColumnDefinitions>
-									<Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
-									<Label Text="{Binding Ordonnance.CreatedAt, StringFormat='Crée le {0:dd-MM-yyyy}'}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
-								</Grid>
-							</ViewCell>
-						</TableSection>
-						<TableSection>
-							<ViewCell Height="60" Tapped="StatusChanged">
-								<Grid>
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="15*" />
-										<ColumnDefinition Width="75*" />
-										<ColumnDefinition Width="10*" />
-									</Grid.ColumnDefinitions>
-									<Image Source="clock.png" VerticalOptions="Center" Grid.Column="0" />
-									<Label x:Name="StatusLabel" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
-								</Grid>
-							</ViewCell>
-						</TableSection>
-						<TableSection>
-							<ViewCell Height="60" Tapped="DatePicker_Tapped">
-								<Grid>
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="15*" />
-										<ColumnDefinition Width="75*" />
-										<ColumnDefinition Width="10*" />
-									</Grid.ColumnDefinitions>
-									<Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
-									<DatePicker x:Name="MyDatePicker" IsVisible="False" Grid.Column="1" Unfocused="Handle_Unfocused" />
-									<Label x:Name="SelectedDate" Text="Date de premier soin" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
-									<Image Source="back_arrow_green.png" VerticalOptions="Center" Grid.Column="2" />
-								</Grid>
-							</ViewCell>
-						</TableSection>
-						<TableSection>
-							<TextCell Text="Frequence d'administration" Detail="+ Ajouter" DetailColor="{Binding CanEdit,Converter={converter:DisableColorConverter}}" Height="70" Command="{Binding AddFrequenceTappedCommand}" />
-							<ViewCell x:Name="FrequenciesViewCell">
-								<ListView x:Name="FrequencesListView" SeparatorVisibility="None" ItemsSource="{Binding Frequencies}" SelectedItem="{Binding SelectedFrequency}" VerticalOptions="Start" ItemSelected="FrequencesListView_OnItemSelected">
-									<ListView.ItemTemplate>
-										<DataTemplate>
-											<ViewCell>
-												<Grid>
-													<Grid.ColumnDefinitions>
-														<ColumnDefinition Width="90*" />
-														<ColumnDefinition Width="10*" />
-													</Grid.ColumnDefinitions>
-													<Label Text="{Binding PeriodString}" VerticalOptions="Center" Margin="15,0,0,0" FontSize="16" HorizontalOptions="FillAndExpand" Grid.Column="0" />
-													<Image Source="back_arrow_grey.png" VerticalOptions="Center" Grid.Column="1" />
-												</Grid>
-											</ViewCell>
-										</DataTemplate>
-									</ListView.ItemTemplate>
-								</ListView>
-							</ViewCell>
-						</TableSection>
-						<TableSection>
-							<TextCell Text="Pièce jointe" Detail="+ Ajouter" Height="70" DetailColor="{Binding CanEdit,Converter={converter:DisableColorConverter}}" Command="{Binding AddAttachmentCommand}" />
-							<ViewCell x:Name="AttachmentsViewCell">
-								<ListView x:Name="AttachmentsListView" SeparatorVisibility="None" VerticalOptions="Start">
-									<ListView.ItemTemplate>
-										<DataTemplate>
-											<ViewCell>
-												<Grid>
-													<Grid.ColumnDefinitions>
-														<ColumnDefinition Width="100*" />
-													</Grid.ColumnDefinitions>
-													<Label Text="{Binding .}" VerticalOptions="Center" Margin="15,0,0,0" FontSize="16" HorizontalOptions="FillAndExpand" Grid.Column="0" />
-												</Grid>
-											</ViewCell>
-										</DataTemplate>
-									</ListView.ItemTemplate>
-								</ListView>
-							</ViewCell>
-						</TableSection>
-						<TableSection>
-							<ViewCell Height="200">
-								<StackLayout Padding="18,10,20,10" Orientation="Vertical">
-									<Label Text="Commentaire" TextColor="#000000" />
-									<Editor x:Name="MyEditor" IsEnabled="{Binding CanEdit}" BackgroundColor="#f0f0f0" FontFamily="SFUIText-Regular.otf" FontSize="12" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Focused="Editor_Focused" Unfocused="Editor_Unfocused" />
-								</StackLayout>
-							</ViewCell>
-						</TableSection>
-					</TableRoot>
-				</TableView>
-			</StackLayout>
-		</ContentView>
-	</custom:BasePage.ContentPresenter>
-	<custom:BasePage.Footer>
-		<ContentView Style="{StaticResource HeaderFooterBackground}">
-			<ContentView.GestureRecognizers>
-				<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SaveCommand}" />
-			</ContentView.GestureRecognizers>
-			<Label Text="{Binding SaveLabel}" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource FooterLabel}" />
-		</ContentView>
-	</custom:BasePage.Footer>
+      </Grid>
+    </ContentView>
+  </custom:BasePage.Header>
+  <custom:BasePage.ContentPresenter>
+    <ContentView Style="{StaticResource ModalContentBackgroundColor}">
+      <ScrollView BackgroundColor="#f3f3f3">
+        <StackLayout BackgroundColor="#f3f3f3" Spacing="12">
+          <Grid HeightRequest="60" Margin="0,10,0,0" Style="{StaticResource ModalContentBackgroundColor}">
+            <Grid.GestureRecognizers>
+              <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Patient_Tapped" />
+            </Grid.GestureRecognizers>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="15*" />
+              <ColumnDefinition Width="75*" />
+              <ColumnDefinition Width="10*" />
+            </Grid.ColumnDefinitions>
+            <Image Source="user.png" VerticalOptions="Center" Grid.Column="0" />
+            <Label Text="{Binding PatientLabel}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+          </Grid>
+          <Grid HeightRequest="60" x:Name="VisualiserSection" Style="{StaticResource ModalContentBackgroundColor}">
+            <Grid.GestureRecognizers>
+              <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ViewOrdonnance}" />
+            </Grid.GestureRecognizers>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="15*" />
+              <ColumnDefinition Width="75*" />
+              <ColumnDefinition Width="10*" />
+            </Grid.ColumnDefinitions>
+            <Image Source="search.png" VerticalOptions="Center" Grid.Column="0" />
+            <Label Text="Visualiser l'ordonnance" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+          </Grid>
+          <Grid HeightRequest="60" Style="{StaticResource ModalContentBackgroundColor}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="15*" />
+              <ColumnDefinition Width="75*" />
+              <ColumnDefinition Width="10*" />
+            </Grid.ColumnDefinitions>
+            <Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
+            <Label Text="{Binding Ordonnance.CreatedAt, StringFormat='Crée le {0:dd-MM-yyyy}'}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+          </Grid>
+          <Grid HeightRequest="60" Style="{StaticResource ModalContentBackgroundColor}">
+            <Grid.GestureRecognizers>
+              <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="StatusChanged" />
+            </Grid.GestureRecognizers>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="15*" />
+              <ColumnDefinition Width="75*" />
+              <ColumnDefinition Width="10*" />
+            </Grid.ColumnDefinitions>
+            <Image Source="clock.png" VerticalOptions="Center" Grid.Column="0" />
+            <Label x:Name="StatusLabel" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+          </Grid>
+          <Grid HeightRequest="60" Style="{StaticResource ModalContentBackgroundColor}">
+            <Grid.GestureRecognizers>
+              <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DatePicker_Tapped" />
+            </Grid.GestureRecognizers>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="15*" />
+              <ColumnDefinition Width="75*" />
+              <ColumnDefinition Width="10*" />
+            </Grid.ColumnDefinitions>
+            <Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
+            <DatePicker x:Name="MyDatePicker" IsVisible="False" Grid.Column="1" Unfocused="Handle_Unfocused" />
+            <Label x:Name="SelectedDate" Text="Date de premier soin" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+            <Image Source="back_arrow_green.png" VerticalOptions="Center" Grid.Column="2" />
+          </Grid>
+          <StackLayout  Padding="10,10,0,10" Style="{StaticResource ModalContentBackgroundColor}">
+            <StackLayout>
+              <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddFrequenceTappedCommand}" />
+              </StackLayout.GestureRecognizers>
+              <Label Text="Frequence d'administration"></Label>
+              <Label Text="+ Ajouter" TextColor="{Binding CanEdit,Converter={converter:DisableColorConverter}}" Style="{StaticResource CotationAddTitle}"></Label>
+              <BoxView HeightRequest="1" BackgroundColor="#f3f3f3" Margin="10,0,0,0"></BoxView>
+            </StackLayout>
+            <custom:NonScrollableList x:Name="FrequencesListView" SeparatorVisibility="None" ItemsSource="{Binding Frequencies}" SelectedItem="{Binding SelectedFrequency}" VerticalOptions="Start" ItemSelected="FrequencesListView_OnItemSelected">
+              <ListView.ItemTemplate>
+                <DataTemplate>
+                  <ViewCell>
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90*" />
+                        <ColumnDefinition Width="10*" />
+                      </Grid.ColumnDefinitions>
+                      <Label Text="{Binding PeriodString}" VerticalOptions="Center" Margin="15,0,0,0" FontSize="16" HorizontalOptions="FillAndExpand" Grid.Column="0" />
+                      <Image Source="back_arrow_grey.png" VerticalOptions="Center" Grid.Column="1" />
+                    </Grid>
+                  </ViewCell>
+                </DataTemplate>
+              </ListView.ItemTemplate>
+            </custom:NonScrollableList>
+          </StackLayout>
+          <StackLayout  Padding="10,10,0,10" Style="{StaticResource ModalContentBackgroundColor}">
+            <StackLayout>
+              <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddFrequenceTappedCommand}" />
+              </StackLayout.GestureRecognizers>
+              <Label Text="Pièce jointe"></Label>
+              <Label Text="+ Ajouter" TextColor="{Binding CanEdit,Converter={converter:DisableColorConverter}}" Style="{StaticResource CotationAddTitle}"></Label>
+              <BoxView HeightRequest="1" BackgroundColor="#f3f3f3" Margin="10,0,0,0"></BoxView>
+            </StackLayout>
+            <custom:NonScrollableList x:Name="AttachmentsListView" SeparatorVisibility="None" VerticalOptions="Start">
+              <ListView.ItemTemplate>
+                <DataTemplate>
+                  <ViewCell>
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100*" />
+                      </Grid.ColumnDefinitions>
+                      <Label Text="{Binding .}" VerticalOptions="Center" Margin="15,0,0,0" FontSize="16" HorizontalOptions="FillAndExpand" Grid.Column="0" />
+                    </Grid>
+                  </ViewCell>
+                </DataTemplate>
+              </ListView.ItemTemplate>
+            </custom:NonScrollableList>
+          </StackLayout>
+          <StackLayout Padding="18,10,20,10" Orientation="Vertical" HeightRequest="200" Style="{StaticResource ModalContentBackgroundColor}">
+            <Label Text="Commentaire" TextColor="#000000" />
+            <Editor x:Name="MyEditor" IsEnabled="{Binding CanEdit}" BackgroundColor="#f0f0f0" FontFamily="SFUIText-Regular.otf" FontSize="12" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Focused="Editor_Focused" Unfocused="Editor_Unfocused" />
+          </StackLayout>
+        </StackLayout>
+      </ScrollView>
+    </ContentView>
+  </custom:BasePage.ContentPresenter>
+  <custom:BasePage.Footer>
+    <ContentView Style="{StaticResource HeaderFooterBackground}">
+      <ContentView.GestureRecognizers>
+        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SaveCommand}" />
+      </ContentView.GestureRecognizers>
+      <Label Text="{Binding SaveLabel}" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource FooterLabel}" />
+    </ContentView>
+  </custom:BasePage.Footer>
 </custom:BasePage>
