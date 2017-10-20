@@ -30,7 +30,7 @@ namespace libermedical.Pages
 
 			_ordonnance = (BindingContext as OrdonnanceCreateEditViewModel).Ordonnance;
 			if ((BindingContext as OrdonnanceCreateEditViewModel).SaveLabel == "Enregistrer")
-				TableLayout.Root.Remove(VisualiserSection);
+				VisualiserSection.IsVisible = false;
 			MyDatePicker.Date = _ordonnance.FirstCareAt;
 			MyDatePicker.DateSelected += MyDatePickerOnDateSelected;
 			SelectedDate.Text = $"Date : {_ordonnance.FirstCareAt.ToString("dd-MM-yyyy")}";
@@ -61,11 +61,11 @@ namespace libermedical.Pages
 					AttachmentsListView.ItemsSource = _ordonnance.Attachments;
 					if (_ordonnance.Attachments.Count == 0)
 					{
-						AttachmentsViewCell.Height = 0;
+                        AttachmentsListView.HeightRequest = 0;
 					}
 					else
 					{
-						AttachmentsViewCell.Height = _ordonnance.Attachments.Count * 40 + 10;
+                        AttachmentsListView.HeightRequest = _ordonnance.Attachments.Count * 40 + 10;
 					}
 				});
 
@@ -189,7 +189,7 @@ namespace libermedical.Pages
 				{
 					if (frequencies != null)
 						FrequencesListView.ItemsSource = frequencies;
-					FrequenciesViewCell.Height = frequencies.Count * 43;
+                    FrequencesListView.HeightRequest = frequencies.Count * 43;
 
 				});
 		}
@@ -200,7 +200,7 @@ namespace libermedical.Pages
 				{
 					if (attachments != null)
 						AttachmentsListView.ItemsSource = attachments;
-					AttachmentsViewCell.Height = attachments.Count * 43;
+                    AttachmentsListView.HeightRequest = attachments.Count * 43;
 
 				});
 		}
