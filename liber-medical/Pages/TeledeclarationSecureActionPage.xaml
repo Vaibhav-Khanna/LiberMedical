@@ -18,30 +18,32 @@
 		</ContentView>
 	</custom:BasePage.Header>
 	<custom:BasePage.ContentPresenter>
-		<ContentView Padding="10,0,0,0" Style="{StaticResource ModalContentBackgroundColor}">
-			<Grid>
+		<ContentView Padding="10,10,0,0" Style="{StaticResource ModalContentBackgroundColor}">
+			<Grid RowSpacing="0">
 				<Grid.RowDefinitions>
-					<RowDefinition Height="170" />
+					<RowDefinition Height="50" />
+					<RowDefinition Height="1" />
+					<RowDefinition Height="50" />
+					<RowDefinition Height="1" />
+					<RowDefinition Height="50" />
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
-				<TableView Intent="Data" RowHeight="50" Grid.Row="0">
-					<TableRoot>
-						<TableSection>
-							<TextCell Text="{Binding Teledeclaration.Label}" />
-							<TextCell Text="{Binding Teledeclaration.CreatedAt, StringFormat='{0:dd-MM-yyyy}'}" />
-							<ViewCell>
-								<StackLayout Orientation="Horizontal" Padding="10,0,10,0">
-									<StackLayout.GestureRecognizers>
-										<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding DocumentViewCommand}" />
-									</StackLayout.GestureRecognizers>
-									<Label Text="Détails déclaration" HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
-									<Image Source="back_arrow_green.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
-								</StackLayout>
-							</ViewCell>
-						</TableSection>
-					</TableRoot>
-				</TableView>
-				<StackLayout Grid.Row="1" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsVisible="{Binding CanValidate}">
+				<Label Text="{Binding Teledeclaration.Label}" Grid.Row="0" VerticalOptions="CenterAndExpand">
+				</Label>
+				<BoxView HeightRequest="1" Grid.Row="1" BackgroundColor="#c8c7cc">
+				</BoxView>
+				<Label Text="{Binding Teledeclaration.CreatedAt, StringFormat='{0:dd-MM-yyyy}'}" Grid.Row="2" VerticalOptions="CenterAndExpand">
+				</Label>
+				<BoxView HeightRequest="1" Grid.Row="3" BackgroundColor="#c8c7cc">
+				</BoxView>
+				<StackLayout Orientation="Horizontal" Padding="10,0,10,0" Grid.Row="4">
+					<StackLayout.GestureRecognizers>
+						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding DocumentViewCommand}" />
+					</StackLayout.GestureRecognizers>
+					<Label Text="Détails déclaration" HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
+					<Image Source="back_arrow_green.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
+				</StackLayout>
+				<StackLayout Grid.Row="5" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsVisible="{Binding CanValidate}">
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="50*" />
@@ -63,8 +65,8 @@
 								<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ValidateCommand}" CommandParameter="Valid" />
 							</Image.GestureRecognizers>
 						</Image>
-						<Label Text="Annuler" Style="{StaticResource TeledeclarationCancelAction}" Grid.Column="0" Grid.Row="2" HorizontalOptions="CenterAndExpand" />
-						<Label Text="Envoyer" Style="{StaticResource TeledeclarationSendAction}" Grid.Column="1" Grid.Row="2" HorizontalOptions="CenterAndExpand" />
+						<Label Text="Refuser" Style="{StaticResource TeledeclarationCancelAction}" Grid.Column="0" Grid.Row="2" HorizontalOptions="CenterAndExpand" />
+						<Label Text="Valider" Style="{StaticResource TeledeclarationSendAction}" Grid.Column="1" Grid.Row="2" HorizontalOptions="CenterAndExpand" />
 					</Grid>
 				</StackLayout>
 			</Grid>
