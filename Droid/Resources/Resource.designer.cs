@@ -1620,6 +1620,7 @@ namespace libermedical.Droid
 			global::Syncfusion.SfPdfViewer.XForms.Droid.Resource.Styleable.ViewStubCompat_android_id = global::libermedical.Droid.Resource.Styleable.ViewStubCompat_android_id;
 			global::Syncfusion.SfPdfViewer.XForms.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId = global::libermedical.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId;
 			global::Syncfusion.SfPdfViewer.XForms.Droid.Resource.Styleable.ViewStubCompat_android_layout = global::libermedical.Droid.Resource.Styleable.ViewStubCompat_android_layout;
+			global::Com.Syncfusion.SfPicker.Resource.String.library_name = global::libermedical.Droid.Resource.String.library_name;
 			global::Vapolia.Resource.Array.days = global::libermedical.Droid.Resource.Array.days;
 			global::Vapolia.Resource.Array.months = global::libermedical.Droid.Resource.Array.months;
 			global::Vapolia.Resource.Array.wheelDefaultItems = global::libermedical.Droid.Resource.Array.wheelDefaultItems;
@@ -5583,8 +5584,8 @@ namespace libermedical.Droid
 			// aapt resource value: 0x7f090038
 			public const int character_counter_pattern = 2131296312;
 			
-			// aapt resource value: 0x7f09003f
-			public const int library_name = 2131296319;
+			// aapt resource value: 0x7f09003e
+			public const int library_name = 2131296318;
 			
 			// aapt resource value: 0x7f090000
 			public const int mr_button_content_description = 2131296256;
@@ -5667,8 +5668,8 @@ namespace libermedical.Droid
 			// aapt resource value: 0x7f090028
 			public const int search_menu_title = 2131296296;
 			
-			// aapt resource value: 0x7f09003e
-			public const int sfpdfviewer_copy = 2131296318;
+			// aapt resource value: 0x7f09003f
+			public const int sfpdfviewer_copy = 2131296319;
 			
 			// aapt resource value: 0x7f090029
 			public const int status_bar_notification_info_overflow = 2131296297;

@@ -20,10 +20,11 @@ namespace libermedical.Models
 		[JsonProperty("employee_id")]
 		public string EmployeeId { get; set; }
 
+		[JsonIgnore]
 		public string StatusString => Status == StatusEnum.waiting
-			? "En attente"
-			: Status == StatusEnum.valid
-				? "Traité"
-				: "Refusé";
+					? "En attente"
+					: Status == StatusEnum.valid
+						? "Traité"
+						: "Refusé";
 	}
 }
