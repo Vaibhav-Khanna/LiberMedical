@@ -23,7 +23,7 @@
 					</Label.GestureRecognizers>
 				</Label>
 				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderLabel}" Text="Document" />
-				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Style="{StaticResource HeaderLabelAction}" Text="Enregistrer">
+				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Style="{StaticResource HeaderLabelAction}" Text="{Binding OptionText}">
 					<Label.GestureRecognizers>
 						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddCommand}" />
 					</Label.GestureRecognizers>
@@ -45,14 +45,14 @@
 					<RowDefinition Height="45" />
 					<RowDefinition Height="1" />
 				</Grid.RowDefinitions>
-				<local:BorderlessEntry Text="{Binding Label}" Placeholder="Nom" Keyboard="Text" Style="{StaticResource PatientNameEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Row="0" />
+				<local:BorderlessEntry Text="{Binding Label}" Placeholder="Nom" IsEnabled="{Binding CanEdit}" Keyboard="Text" Style="{StaticResource PatientNameEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Row="0" />
 				<BoxView BackgroundColor="#c8c7cc" HeightRequest="1" Grid.Row="1">
 				</BoxView>
 				<StackLayout Grid.Row="2" HorizontalOptions="FillAndExpand">
 					<Grid VerticalOptions="CenterAndExpand">
-						<Grid.GestureRecognizers>
+						<!--<Grid.GestureRecognizers>
 							<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DatePicker_Tapped" />
-						</Grid.GestureRecognizers>
+						</Grid.GestureRecognizers>-->
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="15*" />
 							<ColumnDefinition Width="75*" />
