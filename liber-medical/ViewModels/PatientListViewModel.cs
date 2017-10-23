@@ -15,6 +15,7 @@ namespace libermedical.ViewModels
 {
 	public class PatientListViewModel : ListViewModelBase<Patient>
 	{
+        
 		private ObservableCollection<GroupedItem<Patient>> _filteredPatients;
 		private ObservableCollection<GroupedItem<Patient>> Patients;
 		private IStorageService<Patient> _patientsStorage;
@@ -65,6 +66,7 @@ namespace libermedical.ViewModels
 					groupedList.Add(patientGroup);
 				}
 
+                Patients = groupedList;
 				ItemsSource = groupedList;
 			}
 			catch (Exception ex)
@@ -121,6 +123,7 @@ namespace libermedical.ViewModels
 				}
 				else
 				{
+                    ItemsSource = Patients;
 					await GetDataAsync();
 				}
 
@@ -131,6 +134,8 @@ namespace libermedical.ViewModels
 			}
 
 		}
+
+
 		protected override async Task TapCommandFunc(Cell cell)
 		{
 			if (ParentScreen == "HomeSelectPatient")
@@ -161,6 +166,8 @@ namespace libermedical.ViewModels
                 DocType = values[2];
             }
         }
+
+
 		protected override async void ViewIsAppearing(object sender, EventArgs e)
 		{
 			base.ViewIsAppearing(sender, e);

@@ -2,9 +2,12 @@
 using libermedical.Models;
 using libermedical.ViewModels;
 using Xamarin.Forms;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace libermedical.Pages
 {
+    
 	public partial class PatientListPage
 	{
 		public ObservableCollection<Patient> patients { get; set; }
@@ -29,5 +32,21 @@ namespace libermedical.Pages
 		{
 			((ListView) sender).SelectedItem = null;
 		}
+
+        void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(e.OldTextValue) && string.IsNullOrWhiteSpace(e.NewTextValue))
+            {
+                
+                    Device.BeginInvokeOnMainThread( () => 
+                    {
+                        searchBar.Unfocus();
+                        PatientListView.Focus();
+                    });
+
+            }
+        }
+
+
 	}
 }
