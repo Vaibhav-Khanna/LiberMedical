@@ -18,5 +18,6 @@ namespace libermedical
 		public static string UpdateAttachmentsViewCellHeight = "UpdateAttachmentsViewCellHeight";
 		public static string UpdateCotationsViewCellHeight = "UpdateCotationsViewCellHeight";
 		public static string EnableCotationsEditMode = "EnableCotationsEditMode";
-	}
+        public static string DocumentPathFromPatientDetail = "DocumentPathFromPatientDetail";
+    }
 }
