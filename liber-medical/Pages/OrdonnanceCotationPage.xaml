@@ -1,97 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
-                 xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
-                 xmlns:behaviours="clr-namespace:libermedical.Behaviours;assembly=libermedical" 
-                 xmlns:converter="clr-namespace:libermedical.Converters;assembly=libermedical" 
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
+                 xmlns:behaviours="clr-namespace:libermedical.Behaviours;assembly=libermedical"
+                 xmlns:converter="clr-namespace:libermedical.Converters;assembly=libermedical"
                  xmlns:wp="clr-namespace:Vapolia.WheelPickerForms;assembly=Vapolia.WheelPickerForms"
                  xmlns:syncfusion="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.OrdonnanceCotationPage" Style="{StaticResource ModalBackgroundColor}">
-	<custom:BasePage.Resources>
-		<ResourceDictionary>
-			<Style x:Key="ButtonCotation" TargetType="Button">
-				<Setter Property="BackgroundColor" Value="#d1d1d1" />
-				<Setter Property="WidthRequest" Value="90" />
-				<Setter Property="HeightRequest" Value="40" />
-				<Setter Property="TextColor" Value="#ffffff" />
-				<Setter Property="Margin" Value="10,10" />
-			</Style>
+  <custom:BasePage.Resources>
+    <ResourceDictionary>
+      <Style x:Key="ButtonCotation" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#d1d1d1" />
+        <Setter Property="WidthRequest" Value="90" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="TextColor" Value="#ffffff" />
+        <Setter Property="Margin" Value="10,10" />
+      </Style>
 
-			
-		</ResourceDictionary>
-	</custom:BasePage.Resources>
-	<custom:BasePage.Header>
-		<ContentView Style="{StaticResource HeaderFooterBackground}">
-			<Grid Padding="5">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="40" />
-					<ColumnDefinition Width="*" />
-				</Grid.ColumnDefinitions>
-				<Grid Grid.Column="0">
-					<Grid.GestureRecognizers>
-						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddCommand}" />
-					</Grid.GestureRecognizers>
-					<Image HorizontalOptions="Center" VerticalOptions="Center" Source="close.png" />
-				</Grid>
-				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}" Text="Cotations" />
-			</Grid>
-		</ContentView>
-	</custom:BasePage.Header>
-	<custom:BasePage.ContentPresenter>
-		<ContentView Style="{StaticResource ModalContentBackgroundColor}">
-			<StackLayout BackgroundColor="#f3f3f3">
-				
-				<Label Style="{StaticResource CotationSectionTitle}" HorizontalOptions="CenterAndExpand" Text="Sélectionnez votre cotation dans la liste ou choisissez cotation manuelle">
-				</Label>
-				<Grid Padding="20,15" Style="{StaticResource ModalContentBackgroundColor}">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="33*" />
-						<ColumnDefinition Width="33*" />
-						<ColumnDefinition Width="33*" />
-					</Grid.ColumnDefinitions>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="60" />
-						<RowDefinition Height="60" />
-						<RowDefinition Height="60" />
-					</Grid.RowDefinitions>
-					<Button Text="1 AMI 1" Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 1" BackgroundColor="{Binding AMI1,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
-					</Button>
-					<Button Text="1 AMI 2" Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 2" BackgroundColor="{Binding AMI2,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
-					</Button>
-					<Button Text="1 AMI 4" Grid.Row="0" Grid.Column="2" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 4" BackgroundColor="{Binding AMI4,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
-					</Button>
-					<Button Text="1 AMI 1.5" Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 1.5" BackgroundColor="{Binding AMI15,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
-					</Button>
-					<Button Text="1 AIS 3" Grid.Row="1" Grid.Column="1" Style="{StaticResource ButtonCotation}" CommandParameter="1 AIS 3" BackgroundColor="{Binding AIS3,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
-					</Button>
-					<Button Text="1 AIS 4" Grid.Row="1" Grid.Column="2" Style="{StaticResource ButtonCotation}" CommandParameter="1 AIS 4" BackgroundColor="{Binding AIS4,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
-					</Button>
-					<Button Text="2 AIS 3" Grid.Row="2" Grid.Column="0" Style="{StaticResource ButtonCotation}" CommandParameter="2 AIS 3" IsVisible="{Binding AIS32,Converter={converter:QuotationColorConverter}}" BackgroundColor="{Binding AIS32,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
-					</Button>
-					<Button Text="1 AMS 7.5" Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMS 7.5" IsVisible="{Binding AMS75,Converter={converter:QuotationColorConverter}}" BackgroundColor="{Binding AMS75,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
-					</Button>
-					<Button Text="1 AMS 9.5" Grid.Row="2" Grid.Column="2" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMS 9.5" IsVisible="{Binding AMS95,Converter={converter:QuotationColorConverter}}" BackgroundColor="{Binding AMS95,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
-					</Button>
-				</Grid>
 
-				<StackLayout Style="{StaticResource ModalContentBackgroundColor}" Spacing="0">
-					<StackLayout Orientation="Horizontal" HeightRequest="40" Padding="20,2,20,2">
-						<Label Text="Cotation manuelle" VerticalOptions="CenterAndExpand">
-						</Label>
-						<Switch Toggled="Handle_OnChanged" VerticalOptions="CenterAndExpand" x:Name="Switch" IsToggled="{Binding HasManualCotations}" IsEnabled="{Binding CanEdit}" HorizontalOptions="EndAndExpand" />
-					</StackLayout>
-						<BoxView HeightRequest="1" BackgroundColor="#f3f3f3"></BoxView>
-          <syncfusion:SfPicker x:Name="Picker" ShowColumnHeader="False" HeaderTextColor="#007aff" SelectionChanged="picker_SelectionChanged" IsVisible="{Binding ShouldEnableAdd}" HeightRequest="200" BackgroundColor="White" HeaderText="{Binding Selected}" SelectedItem="{Binding Selected}" ItemsSource="{Binding CotationManual}" />
-				
-				</StackLayout>
+    </ResourceDictionary>
+  </custom:BasePage.Resources>
+  <custom:BasePage.Header>
+    <ContentView Style="{StaticResource HeaderFooterBackground}">
+      <Grid Padding="5">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="40" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+          <Grid.GestureRecognizers>
+            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddCommand}" />
+          </Grid.GestureRecognizers>
+          <Image HorizontalOptions="Center" VerticalOptions="Center" Source="close.png" />
+        </Grid>
+        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderLabel}" Text="Cotations" />
+      </Grid>
+    </ContentView>
+  </custom:BasePage.Header>
+  <custom:BasePage.ContentPresenter>
+    <ContentView Style="{StaticResource ModalContentBackgroundColor}">
 
-				<StackLayout VerticalOptions="EndAndExpand" HeightRequest="74"  Style="{StaticResource HeaderFooterBackground}" IsVisible="{Binding ShouldEnableAdd}" x:Name="Footer">
-					<Label Text="Ajouter la cotation manuelle" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Style="{StaticResource FooterLabel}" />
-					<StackLayout.GestureRecognizers>
-						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddCommand}" />
-					</StackLayout.GestureRecognizers>
-				</StackLayout>
-			</StackLayout>
-		</ContentView>
-	</custom:BasePage.ContentPresenter>
+      <StackLayout BackgroundColor="#f3f3f3">
+        <ScrollView>
+          <StackLayout>
+          <Label Style="{StaticResource CotationSectionTitle}" HorizontalOptions="CenterAndExpand" Text="Sélectionnez votre cotation dans la liste ou choisissez cotation manuelle">
+          </Label>
+          <Grid Padding="20,15" Style="{StaticResource ModalContentBackgroundColor}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="33*" />
+              <ColumnDefinition Width="33*" />
+              <ColumnDefinition Width="33*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="60" />
+              <RowDefinition Height="60" />
+              <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+            <Button Text="1 AMI 1" Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 1" BackgroundColor="{Binding AMI1,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
+            </Button>
+            <Button Text="1 AMI 2" Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 2" BackgroundColor="{Binding AMI2,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
+            </Button>
+            <Button Text="1 AMI 4" Grid.Row="0" Grid.Column="2" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 4" BackgroundColor="{Binding AMI4,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
+            </Button>
+            <Button Text="1 AMI 1.5" Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 1.5" BackgroundColor="{Binding AMI15,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
+            </Button>
+            <Button Text="1 AIS 3" Grid.Row="1" Grid.Column="1" Style="{StaticResource ButtonCotation}" CommandParameter="1 AIS 3" BackgroundColor="{Binding AIS3,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
+            </Button>
+            <Button Text="1 AIS 4" Grid.Row="1" Grid.Column="2" Style="{StaticResource ButtonCotation}" CommandParameter="1 AIS 4" BackgroundColor="{Binding AIS4,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
+            </Button>
+            <Button Text="2 AIS 3" Grid.Row="2" Grid.Column="0" Style="{StaticResource ButtonCotation}" CommandParameter="2 AIS 3" IsVisible="{Binding AIS32,Converter={converter:QuotationColorConverter}}" BackgroundColor="{Binding AIS32,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
+            </Button>
+            <Button Text="1 AMS 7.5" Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMS 7.5" IsVisible="{Binding AMS75,Converter={converter:QuotationColorConverter}}" BackgroundColor="{Binding AMS75,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
+            </Button>
+            <Button Text="1 AMS 9.5" Grid.Row="2" Grid.Column="2" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMS 9.5" IsVisible="{Binding AMS95,Converter={converter:QuotationColorConverter}}" BackgroundColor="{Binding AMS95,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
+            </Button>
+          </Grid>
+
+          <StackLayout Style="{StaticResource ModalContentBackgroundColor}" Spacing="0">
+            <StackLayout Orientation="Horizontal" HeightRequest="40" Padding="20,2,20,2">
+              <Label Text="Cotation manuelle" VerticalOptions="CenterAndExpand">
+              </Label>
+              <Switch Toggled="Handle_OnChanged" VerticalOptions="CenterAndExpand" x:Name="Switch" IsToggled="{Binding HasManualCotations}" IsEnabled="{Binding CanEdit}" HorizontalOptions="EndAndExpand" />
+            </StackLayout>
+            <BoxView HeightRequest="1" BackgroundColor="#f3f3f3"></BoxView>
+            <syncfusion:SfPicker x:Name="Picker" ShowColumnHeader="False" HeaderTextColor="#007aff" SelectionChanged="picker_SelectionChanged" IsVisible="{Binding ShouldEnableAdd}" HeightRequest="200" BackgroundColor="White" HeaderText="{Binding Selected}" SelectedItem="{Binding Selected}" ItemsSource="{Binding CotationManual}" />
+          </StackLayout>
+          </StackLayout>
+        </ScrollView>
+
+        <StackLayout VerticalOptions="EndAndExpand" HeightRequest="74"  Style="{StaticResource HeaderFooterBackground}" IsVisible="{Binding ShouldEnableAdd}" x:Name="Footer">
+          <Label Text="Enregistrer" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Style="{StaticResource FooterLabel}" />
+          <StackLayout.GestureRecognizers>
+            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddCommand}" />
+          </StackLayout.GestureRecognizers>
+        </StackLayout>
+      </StackLayout>
+    </ContentView>
+  </custom:BasePage.ContentPresenter>
 
 </custom:BasePage>
