@@ -36,7 +36,7 @@
 										</Grid.RowDefinitions>
 										<Label Grid.Row="0" Grid.Column="0" HorizontalOptions="StartAndExpand" Style="{StaticResource Ordonnance}" Text="{Binding Label}" VerticalOptions="EndAndExpand"  />
                                         <Label Grid.Row="1" Grid.Column="0" HorizontalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Text="{Binding CreatedAt, StringFormat='{0:dd-MM-yyyy}'}" VerticalOptions="StartAndExpand" />
-										<Button Grid.RowSpan="2" Grid.Column="1" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" HorizontalOptions="Center" Text="{Binding Status}" TextColor="#ffffff" VerticalOptions="Center">
+										<Button Grid.RowSpan="2" Grid.Column="1" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" HorizontalOptions="Center" Text="{Binding StatusString}" TextColor="#ffffff" VerticalOptions="Center">
 											<Button.HeightRequest>
 												<OnPlatform x:TypeArguments="x:Double" Android="40" iOS="20" />
 											</Button.HeightRequest>
