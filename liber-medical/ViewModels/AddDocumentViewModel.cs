@@ -58,14 +58,26 @@ namespace libermedical.ViewModels
 		}
 		public AddDocumentViewModel()
 		{
-			Document = new Document
+            Document = new Document
 			{
 				Id = Guid.NewGuid().ToString(),
 				CreatedAt = DateTime.Today,
 				AddDate = DateTime.Today,
 				NurseId = JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id,
 			};
-		}
+            SubscribeMessage();
+
+        }
+
+        private void SubscribeMessage()
+        {
+            MessagingCenter.Unsubscribe<DetailsPatientListViewModel, string>(this, Events.DocumentPathFromPatientDetail);
+            MessagingCenter.Subscribe<DetailsPatientListViewModel, string>(this, Events.DocumentPathFromPatientDetail, (sender, args) => {
+                ImagePath = args;
+                if (Document != null)
+                    Document.AttachmentPath = ImagePath;
+            });
+        }
 
 		public override void Init(object initData)
 		{
@@ -117,41 +129,41 @@ namespace libermedical.ViewModels
 			{
 				return new Command(async () =>
 				{
-					var action = await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Appareil photo", "Bibliothèque photo");
-					if (action == "Appareil photo")
-					{
-						await CrossMedia.Current.Initialize();
+					//var action = await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Appareil photo", "Bibliothèque photo");
+					//if (action == "Appareil photo")
+					//{
+					//	await CrossMedia.Current.Initialize();
 
-						if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
-						{
-							await CoreMethods.DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
-							return;
-						}
-						var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
-						if (file != null)
-						{
-							var profilePicture = ImageSource.FromStream(() => file.GetStream());
-							var typeNavigation = "normal";
-							Document.AttachmentPath = file.Path;
-						}
+					//	if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+					//	{
+					//		await CoreMethods.DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
+					//		return;
+					//	}
+					//	var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
+					//	if (file != null)
+					//	{
+					//		var profilePicture = ImageSource.FromStream(() => file.GetStream());
+					//		var typeNavigation = "normal";
+					//		Document.AttachmentPath = file.Path;
+					//	}
 
-					}
-					else if (action == "Bibliothèque photo")
-					{
-						await CrossMedia.Current.Initialize();
+					//}
+					//else if (action == "Bibliothèque photo")
+					//{
+					//	await CrossMedia.Current.Initialize();
 
-						var pickerOptions = new PickMediaOptions();
+					//	var pickerOptions = new PickMediaOptions();
 
-						var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
-						if (file != null)
-						{
-							var profilePicture = ImageSource.FromStream(() => file.GetStream());
-							var typeNavigation = "normal";
-							Document.AttachmentPath = file.Path;
-						}
-					}
+					//	var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
+					//	if (file != null)
+					//	{
+					//		var profilePicture = ImageSource.FromStream(() => file.GetStream());
+					//		var typeNavigation = "normal";
+					//		Document.AttachmentPath = file.Path;
+					//	}
+					//}
 
-					ImagePath = Document.AttachmentPath;
+					//ImagePath = Document.AttachmentPath;
 
 				});
 			}

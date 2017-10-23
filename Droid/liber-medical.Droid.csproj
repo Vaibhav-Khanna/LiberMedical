@@ -177,6 +177,18 @@
     <Reference Include="Syncfusion.SfPdfViewer.XForms.Android">
       <HintPath>..\packages_external\lib\android\Syncfusion.SfPdfViewer.XForms.Android.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.SfPicker.Android, Version=15.3451.0.33, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Xamarin.SfPicker.15.3.0.33\lib\MonoAndroid10\Syncfusion.SfPicker.Android.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.SfPicker.XForms, Version=15.3451.0.33, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Xamarin.SfPicker.15.3.0.33\lib\MonoAndroid10\Syncfusion.SfPicker.XForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.SfPicker.XForms.Android, Version=15.3451.0.33, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Xamarin.SfPicker.15.3.0.33\lib\MonoAndroid10\Syncfusion.SfPicker.XForms.Android.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\MonoAndroid\v1.0\System.dll</HintPath>
     </Reference>

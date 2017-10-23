@@ -1,6 +1,8 @@
 ﻿using FreshMvvm;
 using libermedical.Models;
 using libermedical.Services;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -38,10 +40,11 @@ namespace libermedical.ViewModels
         public DetailsPatientListViewModel()
         {
             ShowStackOrdonnance = ShowBoxViewOrdonnances = true;
+            BottomTitle = "+ Ajoutez une ordonnance";
+
         }
         private async void BindData()
         {
-            BottomTitle = "+ Ajoutez une ordonnance";
             Ordonnances = new ObservableCollection<Ordonnance>((await new StorageService<Ordonnance>().GetList()).Where(x => x.PatientId == Patient.Id));
             Documents = new ObservableCollection<Document>((await new StorageService<Document>().GetList()).Where(x => x.PatientId == Patient.Id));
         }
@@ -99,7 +102,42 @@ namespace libermedical.ViewModels
                     }
                     else
                     {
-                        await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient);
+                        var _documentPath = string.Empty;
+                        var action = await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Appareil photo", "Bibliothèque photo");
+                        if (action == "Appareil photo")
+                        {
+                            await CrossMedia.Current.Initialize();
+
+                            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                            {
+                                await CoreMethods.DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
+                                return;
+                            }
+                            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
+                            if (file != null)
+                            {
+                                var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                                _documentPath = file.Path;
+                                await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient);
+                                MessagingCenter.Send(this, Events.DocumentPathFromPatientDetail, _documentPath);
+                            }
+                        }
+                        else if (action == "Bibliothèque photo")
+                        {
+                            await CrossMedia.Current.Initialize();
+
+                            var pickerOptions = new PickMediaOptions();
+
+                            var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
+                            if (file != null)
+                            {
+                                var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                                _documentPath = file.Path;
+                                await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient);
+                                MessagingCenter.Send(this, Events.DocumentPathFromPatientDetail, _documentPath);
+                            }
+                        }
+                        
                     }
                 });
             }
