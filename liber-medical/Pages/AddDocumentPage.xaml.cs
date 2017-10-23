@@ -12,7 +12,6 @@ namespace libermedical.Pages
 		public AddDocumentPage() : base(-1, 0, false)
 		{
 			InitializeComponent();
-			MyDatePicker.DateSelected += MyDatePickerOnDateSelected;
 
 		}
 		async void Cancel_Tapped(object sender, System.EventArgs e)
@@ -42,11 +41,7 @@ namespace libermedical.Pages
 
 		private void DatePicker_Tapped(object sender, EventArgs e)
 		{
-			MyDatePicker.Focus();
-			//if ((this.BindingContext as AddDocumentViewModel))
-			//{
-
-			//}
+			
 		}
 
 		private void MyDatePickerOnDateSelected(object sender, DateChangedEventArgs dateChangedEventArgs)
