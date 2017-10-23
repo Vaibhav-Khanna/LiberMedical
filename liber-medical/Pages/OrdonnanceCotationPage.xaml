@@ -81,11 +81,7 @@
 					</StackLayout>
 						<BoxView HeightRequest="1" BackgroundColor="#f3f3f3"></BoxView>
           <syncfusion:SfPicker x:Name="Picker" ShowColumnHeader="False" HeaderTextColor="#007aff" SelectionChanged="picker_SelectionChanged" IsVisible="{Binding ShouldEnableAdd}" HeightRequest="200" BackgroundColor="White" HeaderText="{Binding Selected}" SelectedItem="{Binding Selected}" ItemsSource="{Binding CotationManual}" />
-					<!--<wp:WheelPicker ItemsSourceSimple="{Binding ItemsSource}" Command="{Binding ItemSelectedCommand}" SelectionLinesColor="Navy" HorizontalSpaceBetweenWheels="40" SelectedItemsIndex="0" HorizontalOptions="Fill" x:Name="Picker" IsVisible="false" BackgroundColor="White">
-						<wp:WheelPicker.WheelDefinitions>
-							<wp:WheelDefinition Width="Auto" HorizontalOptions="Left" Alignment="Center" />
-						</wp:WheelPicker.WheelDefinitions>
-					</wp:WheelPicker>-->
+				
 				</StackLayout>
 
 				<StackLayout VerticalOptions="EndAndExpand" HeightRequest="74"  Style="{StaticResource HeaderFooterBackground}" IsVisible="{Binding ShouldEnableAdd}" x:Name="Footer">
@@ -97,12 +93,5 @@
 			</StackLayout>
 		</ContentView>
 	</custom:BasePage.ContentPresenter>
-	<!--<custom:BasePage.Footer>
-		<ContentView Style="{StaticResource HeaderFooterBackground}" IsVisible="{Binding ShouldEnableAdd}" x:Name="Footer">
-			<Label Text="Ajouter la cotation manuelle" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource FooterLabel}" />
-			<ContentView.GestureRecognizers>
-				<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddCommand}" />
-			</ContentView.GestureRecognizers>
-		</ContentView>
-	</custom:BasePage.Footer>-->
+
 </custom:BasePage>

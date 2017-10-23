@@ -113,6 +113,7 @@ namespace libermedical.ViewModels
 					Document.Patient = patient;
 					Document.PatientId = patient.Id;
                     OptionText = "Enregistrer";
+                    CanEdit = true;
                 }
 				else if (initData is Document)
 				{
@@ -131,6 +132,12 @@ namespace libermedical.ViewModels
 			{
 				return new Command(async () =>
 				{
+                    if (CanEdit)
+                    {
+                        CanEdit = false;
+                        OptionText = "Modifier";
+                    }
+                    else
 					await CoreMethods.PopPageModel();
 				});
 			}
