@@ -17,6 +17,17 @@ namespace libermedical.iOS.Renderers
             if(Control!=null)
             {
                 Control.ShowsCancelButton = false;
+                Control.ClipsToBounds = true;
+                Control.SelectedScopeButtonIndexChanged += (sender, ee) => 
+                {
+                    Control.ResignFirstResponder();
+                };
+                Control.ListButtonClicked += (sender, ed) => 
+                {
+                    
+                };
+                Control.Layer.BorderWidth = 1;
+                Control.Layer.BorderColor = Xamarin.Forms.Color.White.ToCGColor();
             }
         }
 
