@@ -45,12 +45,19 @@ namespace libermedical.ViewModels
 					Title = Ordonnance.PatientName;
 					ImageSource = Ordonnance.Attachments != null && Ordonnance.Attachments.Count > 0 ? Ordonnance.Attachments[0] : string.Empty;
 				}
-				else
+                else if (initData is Document)
+                {
+                    var document = initData as Document;
+                    Title = document.Patient.Fullname;
+                    ImageSource = document.AttachmentPath;
+                }
+                else
 				{
 					Teledeclaration = initData as Teledeclaration;
 					Title = Teledeclaration.Label;
 					ImageSource = Teledeclaration.FilePath;
 				}
+
 			}
 		}
 	}

@@ -13,7 +13,7 @@ namespace libermedical.ViewModels
 {
 	public class AddDocumentViewModel : ViewModelBase
 	{
-		private string _createdDate = "Date de premier soin";
+		private string _createdDate = DateTime.Now.ToString("dd-MM-yyyy");
 		public string CreatedDate
 		{
 			get { return _createdDate; }
@@ -56,7 +56,30 @@ namespace libermedical.ViewModels
 				RaisePropertyChanged();
 			}
 		}
-		public AddDocumentViewModel()
+
+        private string _optionText;
+        public string OptionText
+        {
+            get { return _optionText; }
+            set
+            {
+                _optionText = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool _canEdit;
+        public bool CanEdit
+        {
+            get { return _canEdit; }
+            set
+            {
+                _canEdit = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public AddDocumentViewModel()
 		{
             Document = new Document
 			{
@@ -89,14 +112,16 @@ namespace libermedical.ViewModels
 					var patient = initData as Patient;
 					Document.Patient = patient;
 					Document.PatientId = patient.Id;
-				}
+                    OptionText = "Enregistrer";
+                }
 				else if (initData is Document)
 				{
 					Document = initData as Document;
 					CreatedDate = Document.AddDate.ToString("dd-MM-yyyy");
 					ImagePath = Document.AttachmentPath;
 					Label = Document.Label;
-				}
+                    OptionText = "Modifier";
+                }
 			}
 		}
 
@@ -116,10 +141,19 @@ namespace libermedical.ViewModels
 			{
 				return new Command(async () =>
 				{
-					var storageService = new StorageService<Document>();
-					Document.Label = Label;
-					await storageService.AddAsync(Document);
-					await CoreMethods.PopPageModel();
+                    if(OptionText == "Modifier")
+                    {
+                        OptionText = "Enregistrer";
+                        CanEdit = true;
+                    }
+                    else
+                    {
+                        var storageService = new StorageService<Document>();
+                        Document.Label = Label;
+                        await storageService.AddAsync(Document);
+                        await CoreMethods.PopPageModel();
+                    }
+					
 				});
 			}
 		}
@@ -129,43 +163,54 @@ namespace libermedical.ViewModels
 			{
 				return new Command(async () =>
 				{
-					//var action = await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Appareil photo", "Bibliothèque photo");
-					//if (action == "Appareil photo")
-					//{
-					//	await CrossMedia.Current.Initialize();
+                    if(CanEdit)
+                    {
+                        var action = await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Appareil photo", "Bibliothèque photo");
+                        if (action == "Appareil photo")
+                        {
+                            await CrossMedia.Current.Initialize();
 
-					//	if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
-					//	{
-					//		await CoreMethods.DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
-					//		return;
-					//	}
-					//	var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
-					//	if (file != null)
-					//	{
-					//		var profilePicture = ImageSource.FromStream(() => file.GetStream());
-					//		var typeNavigation = "normal";
-					//		Document.AttachmentPath = file.Path;
-					//	}
+                            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                            {
+                                await CoreMethods.DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
+                                return;
+                            }
+                            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
+                            if (file != null)
+                            {
+                                var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                                Document.AttachmentPath = file.Path;
+                            }
 
-					//}
-					//else if (action == "Bibliothèque photo")
-					//{
-					//	await CrossMedia.Current.Initialize();
+                        }
+                        else if (action == "Bibliothèque photo")
+                        {
+                            await CrossMedia.Current.Initialize();
 
-					//	var pickerOptions = new PickMediaOptions();
+                            var pickerOptions = new PickMediaOptions();
 
-					//	var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
-					//	if (file != null)
-					//	{
-					//		var profilePicture = ImageSource.FromStream(() => file.GetStream());
-					//		var typeNavigation = "normal";
-					//		Document.AttachmentPath = file.Path;
-					//	}
-					//}
+                            var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
+                            if (file != null)
+                            {
+                                var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                                Document.AttachmentPath = file.Path;
+                            }
+                        }
 
-					//ImagePath = Document.AttachmentPath;
-
-				});
+                        ImagePath = Document.AttachmentPath;
+                    }
+                    else
+                    {
+                        if (Document.AttachmentPath != null)
+                        {
+                            if (Document.AttachmentPath.Contains(".pdf"))
+                                await CoreMethods.PushPageModel<SecuriseBillsViewModel>(Document, true);
+                            else
+                                await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(Document, true);
+                        }
+                    }
+                   
+                });
 			}
 		}
 	}
