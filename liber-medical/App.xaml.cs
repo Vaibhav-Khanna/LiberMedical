@@ -56,7 +56,7 @@ namespace libermedical
         private void CreateTabbedPage()
         {
             tabbedNavigation = new LibermedicalTabbedNavigation { Style = Resources["TabbedPage"] as Style };
-            tabbedNavigation.AddTab<HomeViewModel>("", "home_green.png");
+            tabbedNavigation.AddTab<HomeViewModel>("", "home_selected.png");
             tabbedNavigation.AddTab<PatientListViewModel>("", "patients.png");
             tabbedNavigation.AddTab<OrdonnancesListViewModel>("", "ordonnances.png");
             tabbedNavigation.AddTab<TeledeclarationsListViewModel>("", "teledeclaration.png");

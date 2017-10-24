@@ -440,6 +440,11 @@
     <AndroidResource Include="Resources\drawable-xhdpi\bottom.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\secure.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\bottom.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\home_selected.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\home_selected.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\home_selected.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\home_selected.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\home_selected.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
