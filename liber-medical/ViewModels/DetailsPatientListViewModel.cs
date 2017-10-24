@@ -1,10 +1,12 @@
 ﻿using FreshMvvm;
 using libermedical.Models;
+using libermedical.Request;
 using libermedical.Services;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -41,8 +43,9 @@ namespace libermedical.ViewModels
         {
             ShowStackOrdonnance = ShowBoxViewOrdonnances = true;
             BottomTitle = "+ Ajoutez une ordonnance";
-
+            
         }
+       
         private async void BindData()
         {
             Ordonnances = new ObservableCollection<Ordonnance>((await new StorageService<Ordonnance>().GetList()).Where(x => x.PatientId == Patient.Id));
