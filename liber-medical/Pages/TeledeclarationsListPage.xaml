@@ -8,23 +8,27 @@
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Name="Télédéclarations" Command="{Binding FilterTappedCommand}" Icon="filters.png" />
 	</ContentPage.ToolbarItems>
-	<ContentView>
-		<Grid>
+    <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        
+		<Grid RowSpacing="0" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" >
 			<Grid.RowDefinitions>
 				<RowDefinition Height="50" />
 				<RowDefinition Height="*" />
-				<RowDefinition Height="50" />
+                <RowDefinition Height="60" />
 			</Grid.RowDefinitions>
 			<StackLayout Grid.Row="0" Padding="8,7" BackgroundColor="#c8c7cc" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
-				<SearchBar BackgroundColor="White" HeightRequest="30" HorizontalOptions="FillAndExpand" Placeholder="Rechercher" Style="{StaticResource ResearchBar}" VerticalOptions="FillAndExpand" TextChanged="Handle_TextChanged" />
+				<SearchBar x:Name="searchBar" BackgroundColor="White" HeightRequest="30" HorizontalOptions="FillAndExpand" Placeholder="Rechercher" Style="{StaticResource ResearchBar}" VerticalOptions="FillAndExpand" TextChanged="Handle_TextChanged" />
 			</StackLayout>
-			<ScrollView Grid.Row="1">
-				<StackLayout Padding="20,0,0,0">
-					<ListView x:Name="TeledeclarationsList" ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" RowHeight="60" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default">
+
+
+           
+            
+
+            <ListView x:Name="TeledeclarationsList" Grid.Row="1" ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" RowHeight="60" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default">
 						<ListView.ItemTemplate>
 							<DataTemplate>
 								<ViewCell>
-									<Grid>
+									<Grid Padding="20,0,0,0">
 										<Grid.ColumnDefinitions>
 											<ColumnDefinition Width="60*" />
 											<ColumnDefinition Width="30*" />
@@ -53,17 +57,19 @@
 							</DataTemplate>
 						</ListView.ItemTemplate>
 					</ListView>
-				</StackLayout>
-			</ScrollView>
-			<ContentView Grid.Row="2" HorizontalOptions="FillAndExpand" Style="{StaticResource HeaderFooterBackground}" VerticalOptions="FillAndExpand">
-				<StackLayout HorizontalOptions="Center" VerticalOptions="Center" Orientation="Horizontal">
-					<Image Source="secure.png" />
-					<Label HorizontalOptions="Center" Style="{StaticResource FooterLabel}" Text="Mes factures à sécuriser" VerticalOptions="Center" />
-				</StackLayout>
-				<ContentView.GestureRecognizers>
-					<TapGestureRecognizer Tapped="Bill_Tapped" />
-				</ContentView.GestureRecognizers>
-			</ContentView>
+           
 		</Grid>
-	</ContentView>
+
+         <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional" AbsoluteLayout.LayoutBounds="0,1,1,60" Orientation="Vertical" HorizontalOptions="FillAndExpand" Style="{StaticResource HeaderFooterBackground}" VerticalOptions="FillAndExpand">
+                <StackLayout  HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Orientation="Horizontal">
+                    <Image Source="secure.png" />
+                    <Label HorizontalOptions="Center" Style="{StaticResource FooterLabel}" Text="Mes factures à sécuriser" VerticalOptions="Center" />
+                </StackLayout>
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Bill_Tapped" />
+               </ContentView.GestureRecognizers>
+        </StackLayout>
+
+        
+	</AbsoluteLayout>
 </ContentPage>

@@ -16,6 +16,7 @@ namespace libermedical.Pages
 			//BindingContext = this;
 			InitializeComponent();
 		}
+       
 
 		private void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
 		{
@@ -53,6 +54,15 @@ namespace libermedical.Pages
 			}
 			else
 			{
+                if (!string.IsNullOrWhiteSpace(e.OldTextValue))
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        searchBar.Unfocus();
+                        TeledeclarationsList.Focus();
+                    });
+                }
+
 				TeledeclarationsList.ItemsSource = _filteredItems ?? (BindingContext as TeledeclarationsListViewModel).Teledeclarations;
 			}
 		}

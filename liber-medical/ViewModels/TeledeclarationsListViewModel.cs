@@ -134,7 +134,7 @@ namespace libermedical.ViewModels
 				return new Command(
 				async (args) =>
 				{
-					await CoreMethods.PushPageModel<TeledeclarationSecureActionViewModel>();
+                    await CoreMethods.PushPageModel<TeledeclarationSecureActionViewModel>(null,true,true);
 					MessagingCenter.Send(this, Events.UpdateTeledeclarationDetailsPage, args as Teledeclaration);
 				});
 			}

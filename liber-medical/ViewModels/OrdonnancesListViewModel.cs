@@ -36,7 +36,7 @@ namespace libermedical.ViewModels
 			BindData();
 		}
 
-		private async void BindData()
+        public async Task BindData()
 		{
 			if (App.IsConnected())
 			{

@@ -29,7 +29,7 @@ namespace libermedical.ViewModels
 			BindData();
 		}
 
-		private async void BindData()
+        public async Task BindData()
 		{
 			if (App.IsConnected())
 			{
@@ -41,9 +41,10 @@ namespace libermedical.ViewModels
 				await _storageService.InvalidateSyncedItems();
 				await _storageService.AddManyAsync(patients.ToList());
 			}
-			ItemsSource.Clear();
+			//ItemsSource.Clear();
 			GroupItems((await _storageService.GetList()).ToList());
-		}
+		}   
+
 
 		private void GroupItems(List<Patient> observableCollection)
 		{

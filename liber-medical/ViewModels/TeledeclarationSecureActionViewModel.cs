@@ -61,7 +61,7 @@ namespace libermedical.ViewModels
 
 		public ICommand CloseCommand
 		{
-			get { return new Command(async () => { await CoreMethods.PopPageModel(); }); }
+			get { return new Command(async () => { await CoreMethods.PopPageModel(true,true); }); }
 		}
 
 		private void SubscribeMessages()
