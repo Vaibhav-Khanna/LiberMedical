@@ -17,7 +17,7 @@
 	</custom:BasePage.Resources>
 	<custom:BasePage.Header>
 		<ContentView Style="{StaticResource HeaderFooterBackground}">
-			<Grid Padding="5">
+			<Grid Padding="15,5,15,5">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="*" />
@@ -28,7 +28,7 @@
 				  Grid.Column="0"
 				  HorizontalOptions="Center"
 				  Style="{StaticResource HeaderLabelAction}"
-				  Text="Cancel"
+				  Text="Annuler"
 				  VerticalOptions="Center">
 					<View.GestureRecognizers>
 						<TapGestureRecognizer Command="{Binding NavBackCommand}" />
@@ -38,7 +38,7 @@
 					<Label
 					  HorizontalOptions="Center"
 					  Style="{StaticResource HeaderLabelAction}"
-					  Text="Save"
+					  Text="Enregistrer"
 					  VerticalOptions="Center">
 						<View.GestureRecognizers>
 							<TapGestureRecognizer Command="{Binding SaveCommand}" />
@@ -67,27 +67,27 @@
 							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" Text="{Binding CurrentUser.Phone}" />
 						</ViewCell>
 					</TableSection>
-				  <TableSection Title="Change password">
+				  <TableSection Title="Changer le mot de passe">
 					<ViewCell>
 					  <renderers:BorderlessEntry 
 						Style="{StaticResource EntryStyle}" 
 						Text="{Binding OldPassword}" 
 						IsPassword="True"
-						Placeholder="Old password"/>
+						Placeholder="Ancien mot de passe"/>
 					</ViewCell>
 					<ViewCell>
 					  <renderers:BorderlessEntry 
 						Style="{StaticResource EntryStyle}" 
 						Text="{Binding NewPassword}" 
 						IsPassword="True"
-						Placeholder="New password"/>
+						Placeholder="Nouveau mot de passe"/>
 					</ViewCell>
 					<ViewCell>
 					  <renderers:BorderlessEntry 
 						Style="{StaticResource EntryStyle}" 
 						Text="{Binding ConfirmPassword}"
 						IsPassword="True"
-						Placeholder="Confirm password"/>
+						Placeholder="Confirmez le mot de passe"/>
 					</ViewCell>
 				  </TableSection>
 				</TableRoot>
