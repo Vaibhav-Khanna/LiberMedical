@@ -6,8 +6,8 @@ namespace libermedical.Models
 {
     public class Filter
     {
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public List<StatusEnum> Statuses { get; set; }
         public bool IsActivated { get; set; }
 		public bool EnableDateSearch
@@ -15,5 +15,6 @@ namespace libermedical.Models
 			get;
 			set;
 		}
+
     }
 }
