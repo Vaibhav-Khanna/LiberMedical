@@ -52,7 +52,7 @@ namespace libermedical.ViewModels
 
 		private void ApplyFilter(Filter filter)
 		{
-			if (filter != null && filter.IsActivated)
+			if (filter != null)
 			{
 				List<Teledeclaration> filteredItems = new List<Teledeclaration>();
 				List<Teledeclaration> foundItems = new List<Teledeclaration>();
@@ -64,9 +64,9 @@ namespace libermedical.ViewModels
 						if (filter.EnableDateSearch)
 						{
 							foundItems =
-							   _teledeclarationsAll.Where(x => x.Status == status && x.CreatedAt >= filter.StartDate &&
-														  x.CreatedAt <= filter.EndDate).ToList();
-						}
+							   _teledeclarationsAll.Where(x => x.Status == status && x.CreatedAt.Value.Date >= filter.StartDate.Value.Date &&
+                                                          x.CreatedAt.Value.Date <= filter.EndDate.Value.Date).ToList();
+                        }
 						else
 						{
 							foundItems =
@@ -81,11 +81,16 @@ namespace libermedical.ViewModels
 					if (filter.EnableDateSearch)
 					{
 						foundItems =
-							   _teledeclarationsAll.Where(x => x.CreatedAt >= filter.StartDate &&
-														  x.CreatedAt <= filter.EndDate).ToList();
+							   _teledeclarationsAll.Where(x => x.CreatedAt.Value.Date >= filter.StartDate.Value.Date &&
+														  x.CreatedAt.Value.Date <= filter.EndDate.Value.Date).ToList();
 						filteredItems.AddRange(foundItems);
 					}
-				}
+                    else
+                    {
+                        Teledeclarations = _teledeclarationsAll;
+                        return;
+                    }
+                }
 				Teledeclarations = new ObservableCollection<Teledeclaration>(filteredItems);
 			}
 			else
@@ -111,7 +116,7 @@ namespace libermedical.ViewModels
 				Teledeclarations = new ObservableCollection<Teledeclaration>(await _teledeclarationsStorage.GetList());
 			}
 			_teledeclarationsAll = Teledeclarations;
-			MessagingCenter.Subscribe<FilterPage, Filter>(this, Events.UpdatePrescriptionFilters, (sender, filter) =>
+			MessagingCenter.Subscribe<FilterPage, Filter>(this, Events.UpdateTeledeclarationsFilters, (sender, filter) =>
 		   {
 			   _filter = filter;
 			   ApplyFilter(filter);
