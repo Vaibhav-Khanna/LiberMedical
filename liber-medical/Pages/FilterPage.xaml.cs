@@ -18,13 +18,13 @@ namespace libermedical.Pages
 			_parentScreen = parentScreen;
 			if (filter != null)
 			{
-				_filter = filter;
-				StartDatePicker.Date = filter.StartDate;
-				EndDatePicker.Date = filter.EndDate;
+				_filter = filter;				
 				if (filter.EnableDateSearch)
 				{
-					EndDate.Text = _filter.EndDate.ToString("MM-dd-yyyy");
-					StartDate.Text = _filter.StartDate.ToString("MM-dd-yyyy");
+                    StartDatePicker.Date = filter.StartDate.Value;
+                    EndDatePicker.Date = filter.EndDate.Value;
+                    EndDate.Text = _filter.EndDate.Value.ToString("MM-dd-yyyy");
+					StartDate.Text = _filter.StartDate.Value.ToString("MM-dd-yyyy");
 				}
 				if (filter.Statuses.Contains(StatusEnum.waiting))
 				{
@@ -62,9 +62,9 @@ namespace libermedical.Pages
 		{
 			attente.On = traite.On = refuse.On = false;
 			StartDate.Text = EndDate.Text = string.Empty;
-			_filter.Statuses = new List<StatusEnum>();
-			_filter.IsActivated = false;
-		}
+            _filter = null;
+
+        }
 
 		void HandleEndDateTapped(object sender, System.EventArgs e)
 		{
@@ -76,7 +76,7 @@ namespace libermedical.Pages
 			_filter.IsActivated = true;
 			_filter.EnableDateSearch = true;
 			_filter.EndDate = ((DatePicker)sender).Date;
-			EndDate.Text = _filter.EndDate.ToString("MM-dd-yyyy");
+			EndDate.Text = _filter.EndDate.Value.ToString("MM-dd-yyyy");
 		}
 
 		void EndDateUnfocused(object sender, Xamarin.Forms.FocusEventArgs e)
@@ -84,7 +84,7 @@ namespace libermedical.Pages
 			_filter.IsActivated = true;
 			_filter.EnableDateSearch = true;
 			_filter.EndDate = ((DatePicker)sender).Date;
-			EndDate.Text = _filter.EndDate.ToString("MM-dd-yyyy");
+			EndDate.Text = _filter.EndDate.Value.ToString("MM-dd-yyyy");
 		}
 
 		public void Handle_StartDateSelected(object sender, Xamarin.Forms.DateChangedEventArgs e)
@@ -99,7 +99,7 @@ namespace libermedical.Pages
 			_filter.IsActivated = true;
 			_filter.EnableDateSearch = true;
 			_filter.StartDate = ((DatePicker)sender).Date;
-			StartDate.Text = _filter.StartDate.ToString("MM-dd-yyyy");
+			StartDate.Text = _filter.StartDate.Value.ToString("MM-dd-yyyy");
 		}
 
 		void HandleStartDateTapped(object sender, System.EventArgs e)
@@ -108,27 +108,35 @@ namespace libermedical.Pages
 		}
 		async void Search_Tapped(object sender, System.EventArgs e)
 		{
+            if (_filter!=null)
+            {
+                _filter.Statuses = new List<StatusEnum>();
 
-			if (attente.On)
-			{
-				_filter.Statuses.Add(StatusEnum.waiting);
-			}
-			if (traite.On)
-			{
-				_filter.Statuses.Add(StatusEnum.valid);
-			}
-			if (refuse.On)
-			{
-				_filter.Statuses.Add(StatusEnum.refused);
-			}
-			if (_filter.Statuses.Count >= 1)
-				_filter.IsActivated = true;
+                if (attente.On)
+                {
+                    _filter.Statuses.Add(StatusEnum.waiting);
+                }
+                if (traite.On)
+                {
+                    _filter.Statuses.Add(StatusEnum.valid);
+                }
+                if (refuse.On)
+                {
+                    _filter.Statuses.Add(StatusEnum.refused);
+                }
+                if (_filter.Statuses.Count >= 1)
+                    _filter.IsActivated = true;
+                else
+                    _filter.IsActivated = false; 
+            }
 
-			MessagingCenter.Send(this, Events.UpdatePrescriptionFilters, _filter);
 			if (_parentScreen == "Teledeclarations")
 				MessagingCenter.Send(this, Events.UpdateTeledeclarationsFilters, _filter);
+            else
+                MessagingCenter.Send(this, Events.UpdatePrescriptionFilters, _filter);
 
-			await Navigation.PopModalAsync();
+
+            await Navigation.PopModalAsync();
 		}
 	}
 }

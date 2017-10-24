@@ -37,7 +37,7 @@ namespace libermedical.Pages
 
 		private void ApplyFilter(Filter filter)
 		{
-			if (filter != null && filter.IsActivated)
+			if (filter != null)
 			{
 				List<Ordonnance> filteredItems = new List<Ordonnance>();
 				List<Ordonnance> foundItems = new List<Ordonnance>();
@@ -50,9 +50,9 @@ namespace libermedical.Pages
 						if (filter.EnableDateSearch)
 						{
 							foundItems =
-							   (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.Status == status && x.FirstCareAt >= filter.StartDate &&
-																							  x.FirstCareAt <= filter.EndDate).ToList();
-						}
+							   (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.Status == status && x.FirstCareAt.Date >= filter.StartDate.Value.Date &&
+                                                                                          x.FirstCareAt.Date <= filter.EndDate.Value.Date).ToList();
+                        }
 						else
 						{
 							foundItems =
@@ -66,11 +66,17 @@ namespace libermedical.Pages
 					if (filter.EnableDateSearch)
 					{
 						foundItems =
-						   (BindingContext as OrdonnancesListViewModel).Ordonnances.Where( x=>x.FirstCareAt >= filter.StartDate &&
-																						  x.FirstCareAt <= filter.EndDate).ToList();
+						   (BindingContext as OrdonnancesListViewModel).Ordonnances.Where( x=>x.FirstCareAt.Date >= filter.StartDate.Value.Date &&
+																						  x.FirstCareAt.Date <= filter.EndDate.Value.Date).ToList();
 						filteredItems.AddRange(foundItems);
 					}
-				}
+                    else
+                    {
+                        _filteredItems = null;
+                        MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
+                        return;
+                    }
+                }
 
 				_filteredItems = new ObservableCollection<Ordonnance>(filteredItems);
 				MyListView.ItemsSource = _filteredItems;
