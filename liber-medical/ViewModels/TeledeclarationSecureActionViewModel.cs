@@ -54,7 +54,7 @@ namespace libermedical.ViewModels
 
 					//TODO: Display success toast
 
-					await CoreMethods.PopPageModel();
+                    await CoreMethods.PopPageModel(true,true);
 				});
 			}
 		}
@@ -89,5 +89,6 @@ namespace libermedical.ViewModels
 				});
 			}
 		}
+
 	}
 }

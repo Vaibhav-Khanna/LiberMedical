@@ -43,11 +43,11 @@ namespace libermedical.ViewModels
 		{
 			if (!EmailValidator.EmailIsValid(CurrentUser.Email))
 			{
-				await CoreMethods.DisplayAlert("Email", "Please use a valid Email address", "OK");
+                await CoreMethods.DisplayAlert("Email", "Veuillez entrer une adresse email valide", "OK");
 				return;
 			}
 
-			using (_dialogs.Loading("Saving..."))
+            using (_dialogs.Loading("Enregistrement..."))
 			{
 				Settings.CurrentUser = JsonConvert.SerializeObject(CurrentUser);
 				MessagingCenter.Send(this, "ProfileUpdate");
@@ -66,12 +66,12 @@ namespace libermedical.ViewModels
 			if (string.IsNullOrEmpty(NewPassword + OldPassword + ConfirmPassword)) return true;
 			if (NewPassword.Length < 6)
 			{
-				await CoreMethods.DisplayAlert("Wrong password", "Password should be at least 6 characters long", "OK");
+                await CoreMethods.DisplayAlert("Mot de passe incorrect", "Le mot de passe doit contenir un minimum de 6 caractères", "OK");
 				return false;
 			}
 			if (NewPassword != ConfirmPassword)
 			{
-				await CoreMethods.DisplayAlert("Wrong password", "Entered passwords don't match", "OK");
+                await CoreMethods.DisplayAlert("Mot de passe incorrect", "Les mots de passes doivent êtres identiques", "OK");
 				return false;
 			}
 

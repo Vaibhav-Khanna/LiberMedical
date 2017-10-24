@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <custom:BasePage
   x:Class="libermedical.Pages.PlusPage"
   xmlns="http://xamarin.com/schemas/2014/forms"
@@ -60,6 +60,9 @@
 						  HorizontalOptions="EndAndExpand"
 						  Source="back_arrow_green.png"
 						  VerticalOptions="Center" />
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CGVCommand}" />
+                        </StackLayout.GestureRecognizers>
 					</StackLayout>
 					<BoxView Style="{StaticResource GreyBoxViewLine}"/>
 					<StackLayout
@@ -75,6 +78,9 @@
 						  HorizontalOptions="EndAndExpand"
 						  Source="back_arrow_green.png"
 						  VerticalOptions="Center" />
+                         <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CGUCommand}" />
+                        </StackLayout.GestureRecognizers>
 					</StackLayout>
 					<BoxView Style="{StaticResource GreyBoxViewLine}"/>
 					<StackLayout
@@ -90,15 +96,20 @@
 						  HorizontalOptions="EndAndExpand"
 						  Source="back_arrow_green.png"
 						  VerticalOptions="Center" />
+                         <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding FAQCommand}" />
+                        </StackLayout.GestureRecognizers>
 					</StackLayout>
 					<BoxView Style="{StaticResource GreyBoxViewLine}"/>
 				</StackLayout>
 				<Button
-          IsEnabled="{Binding ShouldShowContact}"
+                  IsEnabled="{Binding ShouldShowContact}"
 				  Grid.Row="1"
+                     
 				  BackgroundColor="White"
 				  BorderColor="#91c602"
 				  BorderWidth="1"
+                  BorderRadius="5"
 				  Command="{Binding ConnectCommand}"
 				  FontFamily="SFUIText-Medium.otf"
 				  FontSize="18"
