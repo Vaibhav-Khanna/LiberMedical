@@ -17,6 +17,7 @@ namespace libermedical.iOS.Renderers
 
 			Control.Layer.BorderWidth = 0;
 			Control.BorderStyle = UITextBorderStyle.None;
+            Control.TextAlignment = UITextAlignment.Justified;
 		}
 	}
 }
