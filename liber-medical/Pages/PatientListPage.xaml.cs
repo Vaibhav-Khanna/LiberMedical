@@ -28,7 +28,13 @@ namespace libermedical.Pages
 			vm.ListElementTapCommand.Execute(cell);
 		}
 
-		void Handle_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        async void Handle_Refreshing(object sender, System.EventArgs e)
+        {
+            await (BindingContext as PatientListViewModel).BindData();
+            PatientListView.IsRefreshing = false;
+        }
+
+        void Handle_ItemSelected(object sender, SelectedItemChangedEventArgs e)
 		{
 			((ListView) sender).SelectedItem = null;
 		}
@@ -36,14 +42,12 @@ namespace libermedical.Pages
         void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(e.OldTextValue) && string.IsNullOrWhiteSpace(e.NewTextValue))
-            {
-                
+            {              
                     Device.BeginInvokeOnMainThread( () => 
                     {
                         searchBar.Unfocus();
                         PatientListView.Focus();
                     });
-
             }
         }
 

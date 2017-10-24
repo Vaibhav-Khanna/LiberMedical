@@ -27,15 +27,13 @@ namespace libermedical.Pages
 			});
 		}
 
-		private async void DoAsyncActions()
-		{
-			//while ((BindingContext as OrdonnancesListViewModel)?.Ordonnances == null)
-			//{
-			//    await Task.Delay(100);
-			//}
 
-			//MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
-		}
+        async void Handle_Refreshing(object sender, System.EventArgs e)
+        {
+            await (BindingContext as OrdonnancesListViewModel).BindData();
+            MyListView.IsRefreshing = false;
+        }
+      
 
 		private void ApplyFilter(Filter filter)
 		{
@@ -87,7 +85,7 @@ namespace libermedical.Pages
 			{
 				_filteredItems = null;
 
-				MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
+                MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
 			}
 		}
 
@@ -110,9 +108,11 @@ namespace libermedical.Pages
 			((ListView)sender).SelectedItem = null;
 		}
 
+       
+
 		private void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
 		{
-			if (!string.IsNullOrEmpty(e.NewTextValue))
+            if (!string.IsNullOrWhiteSpace(e.NewTextValue))
 			{
 				IEnumerable<Ordonnance> foundItems;
 
@@ -130,8 +130,20 @@ namespace libermedical.Pages
 			}
 			else
 			{
+                if (!string.IsNullOrWhiteSpace(e.OldTextValue))
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        searchBar.Unfocus();
+                        MyListView.Focus();
+                    });
+                }
+
 				MyListView.ItemsSource = _filteredItems ?? (BindingContext as OrdonnancesListViewModel).Ordonnances;
 			}
 		}
+
+
+
 	}
 }
