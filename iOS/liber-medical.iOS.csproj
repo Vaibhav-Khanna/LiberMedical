@@ -431,13 +431,13 @@
     <BundleResource Include="Resources\filters%403x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\home_green.png" />
+    <BundleResource Include="Resources\home_selected.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\home_green%402x.png" />
+    <BundleResource Include="Resources\home_selected%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\home_green%403x.png" />
+    <BundleResource Include="Resources\home_selected%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\logo.jpg" />
