@@ -40,7 +40,19 @@ namespace libermedical.ViewModels
 				RaisePropertyChanged();
 			}
 		}
-		public string PatientLabel { get; set; } = "Choisissez un patient";
+
+        private ObservableCollection<string> _attachments;
+        public ObservableCollection<string> Attachments
+        {
+            get { return _attachments; }
+            set
+            {
+                _attachments = value;
+                RaisePropertyChanged();
+            }
+        }
+        
+        public string PatientLabel { get; set; } = "Choisissez un patient";
 
 		private Ordonnance _ordonnance;
 		public Ordonnance Ordonnance
@@ -116,12 +128,15 @@ namespace libermedical.ViewModels
 					Ordonnance.PatientName = ordonnance.PatientName;
 					PatientLabel = Ordonnance?.PatientName;
 					Frequencies = Ordonnance.Frequencies != null ? new ObservableCollection<Frequency>(Ordonnance.Frequencies) : new ObservableCollection<Frequency>();
-					Creating = false;
+                    Attachments = Ordonnance.Attachments != null ? new ObservableCollection<string>(Ordonnance.Attachments) : new ObservableCollection<string>();
+
+                    Creating = false;
 					_isEditing = true;
 				}
 				MessagingCenter.Send(this, Events.UpdateFrequenciesViewCellHeight, Ordonnance.Frequencies);
+                MessagingCenter.Send(this, Events.UpdateAttachmentsViewCellHeight, Ordonnance.Attachments);
 
-			}
+            }
 		}
 		public ICommand ViewOrdonnance => new Command(async () =>
 		{
@@ -134,7 +149,18 @@ namespace libermedical.ViewModels
 			}
 		});
 
-		public ICommand CloseCommand => new Command(async () =>
+        public ICommand ViewAttachment => new Command(async (args) =>
+        {
+            if (args != null)
+            {
+                if (args.ToString().Contains(".pdf"))
+                    await CoreMethods.PushPageModel<SecuriseBillsViewModel>(Ordonnance, true);
+                else
+                    await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(args, true);
+            }
+        });
+
+        public ICommand CloseCommand => new Command(async () =>
 		{
 			await CoreMethods.PopPageModel(null, true);
 		});
@@ -183,7 +209,8 @@ namespace libermedical.ViewModels
 					var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
 					if (file != null)
 					{
-						Ordonnance.Attachments.Add(file.Path);
+                        Attachments.Add(file.Path);
+                        Ordonnance.Attachments.Add(file.Path);
 					}
 				}
 				else if (action == "Bibliothèque photo")
@@ -191,6 +218,7 @@ namespace libermedical.ViewModels
 					var file = await CrossMedia.Current.PickPhotoAsync();
 					if (file != null)
 					{
+                        Attachments.Add(file.Path);
 						Ordonnance.Attachments.Add(file.Path);
 					}
 				}

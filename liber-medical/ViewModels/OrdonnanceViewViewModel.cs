@@ -51,6 +51,11 @@ namespace libermedical.ViewModels
                     Title = document.Patient.Fullname;
                     ImageSource = document.AttachmentPath;
                 }
+                else if (initData is string)
+                {
+                    Title = System.IO.Path.GetFileNameWithoutExtension((string)initData);
+                    ImageSource = (string)initData;
+                }
                 else
 				{
 					Teledeclaration = initData as Teledeclaration;
