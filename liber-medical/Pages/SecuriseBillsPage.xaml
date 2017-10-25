@@ -25,15 +25,9 @@
     </custom:BasePage.Header>
   <custom:BasePage.ContentPresenter>
     <ContentView>
-      <Grid>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <syncfusion:SfPdfViewer x:Name="pdfViewerControl"  InputFileStream="{Binding PdfDocumentStream}"/>
-      </Grid>
+     
+        <syncfusion:SfPdfViewer  x:Name="pdfViewerControl" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  InputFileStream="{Binding PdfDocumentStream}"/>
+      
     </ContentView>
   </custom:BasePage.ContentPresenter>
    

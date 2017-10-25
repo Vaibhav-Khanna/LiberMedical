@@ -10,14 +10,32 @@ namespace libermedical.iOS.Renderers
 {
     public class BorderlessPickerRenderer : PickerRenderer
 	{
-		public static void Init() { }
-		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+				
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			base.OnElementPropertyChanged(sender, e);
 
 			Control.Layer.BorderWidth = 0;
 			Control.BorderStyle = UITextBorderStyle.None;
-            Control.TextAlignment = UITextAlignment.Justified;
+
+            if (Element != null)
+            {
+                var ele = Element as BorderlessPicker;
+
+                if (ele.Text_Aligment == TextAlignment.Center)
+                {
+                    Control.TextAlignment = UITextAlignment.Justified;
+                }
+                else if (ele.Text_Aligment == TextAlignment.End)
+                {
+                    Control.TextAlignment = UITextAlignment.Right;
+                }
+                else if (ele.Text_Aligment == TextAlignment.Start)
+                {
+                    Control.TextAlignment = UITextAlignment.Left;
+                }
+            }
+
 		}
 	}
 }

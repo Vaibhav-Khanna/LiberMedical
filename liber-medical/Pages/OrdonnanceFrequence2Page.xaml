@@ -68,40 +68,38 @@
               <RowDefinition Height="45" />
             </Grid.RowDefinitions>
             <BoxView HeightRequest="1" BackgroundColor="#f3f3f3" Grid.Row="0"></BoxView>
-            <Grid Padding="10,0,0,0" HeightRequest="45" Style="{StaticResource ModalContentBackgroundColor}" Grid.Row="1">
+            <Grid Margin="15,0,15,0" HeightRequest="45" Style="{StaticResource ModalContentBackgroundColor}" Grid.Row="1">
               <Grid.GestureRecognizers>
                 <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Majoration_Tapped" />
               </Grid.GestureRecognizers>
               <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="88*" />
-                <ColumnDefinition Width="12*" />
+                <ColumnDefinition Width="80*" />
+                <ColumnDefinition Width="20*" />
               </Grid.ColumnDefinitions>
-              <Label Text="Majoration" VerticalOptions="Center" Grid.Column="0" />
-              <Label Text="Non" x:Name="maj" VerticalOptions="Center" Grid.Column="1" IsEnabled="{Binding CanEdit}" Margin="0,0,3,0" />
+              <Label Text="Majoration" HorizontalOptions="Start" VerticalOptions="Center" Grid.Column="0" />
+              <Label Text="Non" x:Name="maj" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="1" IsEnabled="{Binding CanEdit}" Margin="0,0,0,0" />
             </Grid>
             <BoxView HeightRequest="1" BackgroundColor="#f3f3f3" Grid.Row="2"></BoxView>
-            <Grid Padding="10,0,0,0" HeightRequest="45" Style="{StaticResource ModalContentBackgroundColor}" Grid.Row="3">
+            <Grid Margin="15,0,15,0" HeightRequest="45" Style="{StaticResource ModalContentBackgroundColor}" Grid.Row="3">
               <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="88*" />
-                <ColumnDefinition Width="12*" />
+                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="2*" />
               </Grid.ColumnDefinitions>
-              <Label Text="Déplacement" VerticalOptions="Center" Grid.Column="0"/>
-              <custom:BorderlessPicker x:Name="MovementPicker" VerticalOptions="Center" Grid.Column="1" Title="Déplacement" IsEnabled="{Binding CanEdit}" SelectedIndexChanged="Picker_OnSelectedIndexChanged">
+              <Label Text="Déplacement" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start" VerticalOptions="Center" Grid.Column="0"/>
+              <custom:BorderlessPicker x:Name="MovementPicker" HorizontalOptions="FillAndExpand" Text_Aligment="End" VerticalOptions="Center" Grid.Column="1" Title="Déplacement" IsEnabled="{Binding CanEdit}" SelectedIndexChanged="Picker_OnSelectedIndexChanged">
               </custom:BorderlessPicker>
             </Grid>
             <BoxView HeightRequest="1" BackgroundColor="#f3f3f3" Grid.Row="4"></BoxView>
-            <Grid Padding="10,0,0,0" HeightRequest="45" Style="{StaticResource ModalContentBackgroundColor}" Grid.Row="5">
+            <Grid Margin="15,0,15,0" HeightRequest="45" Style="{StaticResource ModalContentBackgroundColor}" Grid.Row="5">
               <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="85*" />
-                <ColumnDefinition Width="15*" />
+                <ColumnDefinition Width="80*" />
+                <ColumnDefinition Width="20*" />
               </Grid.ColumnDefinitions>
-              <Label Text="Nuit" VerticalOptions="Center" Grid.Column="0"/>
-              <Switch x:Name="NightSwitch" Margin="0,0,2,0" VerticalOptions="Center" Grid.Column="1" IsToggled="{Binding Frequency.Night}" IsEnabled="{Binding CanEdit}" Toggled="NightOnChanged" ></Switch>
+              <Label Text="Nuit" HorizontalOptions="Start" VerticalOptions="Center" Grid.Column="0"/>
+              <Switch x:Name="NightSwitch" Margin="0,0,0,0" HorizontalOptions="End" VerticalOptions="Center" Grid.Column="1" IsToggled="{Binding Frequency.Night}" IsEnabled="{Binding CanEdit}" Toggled="NightOnChanged" ></Switch>
             </Grid>
           </Grid>
 
-        
-      
       </StackLayout>
       </ScrollView>
 

@@ -71,7 +71,7 @@ namespace libermedical.ViewModels
                 else if (initData is Document)
                 {
                     var document = initData as Document;
-                    Title = document.Patient.Fullname;
+                    Title = document.Patient?.Fullname;
                     if (document.AttachmentPath.StartsWith("/"))
                         DownloadFile(document.AttachmentPath.Remove(0, 1));
                     else

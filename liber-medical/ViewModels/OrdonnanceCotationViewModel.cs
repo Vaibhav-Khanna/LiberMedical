@@ -19,7 +19,7 @@ namespace libermedical.ViewModels
 
         public bool CanEdit { get; set; }
 
-        private bool _shouldEnableAdd;
+        private bool _shouldEnableAdd = true;
         public bool ShouldEnableAdd
         {
             get { return _shouldEnableAdd; }
@@ -136,7 +136,7 @@ namespace libermedical.ViewModels
                             Frequency.Quotations = new List<string>();
                         }
                         Frequency.Quotations.Add((string)args);
-                        ShouldEnableAdd = true;
+                       
                     }
                 });
             }
@@ -148,8 +148,15 @@ namespace libermedical.ViewModels
             {
                 return new Command(async () =>
                 {
-                    MessagingCenter.Send(this, Events.UpdateCotations, Frequency);
-                    await App.Current.MainPage.Navigation.PopModalAsync(true);
+                    if (Frequency != null && Frequency.Quotations != null && Frequency.Quotations.Count != 0)
+                    {
+                        MessagingCenter.Send(this, Events.UpdateCotations, Frequency);
+                        await App.Current.MainPage.Navigation.PopModalAsync(true);
+                    }
+                    else
+                    {
+                        await CoreMethods.DisplayAlert("Alerte","Veuillez d'abord sélectionner un élément","OK");
+                    }
                 });
             }
         }
