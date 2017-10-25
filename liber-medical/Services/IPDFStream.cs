@@ -4,7 +4,7 @@ namespace libermedical.Services
 {
     public interface IPDFStream
     {
-        Stream GetStream(string filename);
+        Stream GetStream(string path);
         void Save(string filename, byte[] data);
     }
 }

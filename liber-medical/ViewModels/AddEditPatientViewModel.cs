@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using PropertyChanged;
 using System.Collections.ObjectModel;
 using System.Linq;
+using libermedical.Helpers;
+using Newtonsoft.Json;
 
 namespace libermedical.ViewModels
 {
@@ -90,6 +92,7 @@ namespace libermedical.ViewModels
 		{
 			try
 			{
+                bool isNew = false;
 				if (!string.IsNullOrEmpty(PhoneNo))
 					PatientProperty.PhoneNumbers = new List<string>() { PhoneNo };
 
@@ -97,11 +100,14 @@ namespace libermedical.ViewModels
 						PatientProperty.PhoneNumbers = Phones.ToList();
 				
 				if (ValidateForm())
-				{	
-					PatientProperty.CreatedAt = DateTimeOffset.Now;
+				{
+                    isNew = PatientProperty.CreatedAt == null ? true : false;
+                    PatientProperty.CreatedAt = PatientProperty.CreatedAt == null ? DateTimeOffset.Now : PatientProperty.CreatedAt;
 					PatientProperty.UpdatedAt = DateTimeOffset.Now;
 					PatientProperty.IsSynced = false;
-					await _storageService.AddAsync(PatientProperty);
+                    PatientProperty.NurseId = JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id;
+                    await _storageService.DeleteItemAsync(typeof(Patient).Name + "_" + PatientProperty.Id);
+                    await _storageService.AddAsync(PatientProperty);
 					await CoreMethods.PopPageModel(PatientProperty);
 				}
 				else
@@ -109,7 +115,19 @@ namespace libermedical.ViewModels
 					await CoreMethods.DisplayAlert("Liber Medical", "Please enter details", "Ok");
 				}
 
-			}
+                if (App.IsConnected())
+                {
+                    var localId = PatientProperty.Id;
+                    var patient = await App.PatientsManager.SaveOrUpdateAsync(PatientProperty.Id, PatientProperty, isNew);
+                    if (patient != null)
+                    {
+                        await _storageService.DeleteItemAsync(typeof(Patient).Name + "_" + localId);
+                        await _storageService.AddAsync(PatientProperty);
+                    }
+
+                }
+
+            }
 			catch (Exception e)
 			{
 				Debug.WriteLine(e.Message);

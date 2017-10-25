@@ -10,6 +10,7 @@ using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using libermedical.Enums;
 using System.Linq;
+using libermedical.Managers;
 
 namespace libermedical.ViewModels
 {
@@ -175,7 +176,10 @@ namespace libermedical.ViewModels
 		{
 			if (CanEdit)
 			{
-				var storageService = new StorageService<Ordonnance>();
+                bool isNew = false;
+                isNew = Ordonnance.CreatedAt == null ? true : false;
+                Ordonnance.CreatedAt = Ordonnance.CreatedAt == null ? DateTimeOffset.Now : Ordonnance.CreatedAt;
+                var storageService = new StorageService<Ordonnance>();
 				await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + Ordonnance.Id);
 				Ordonnance.IsSynced = false;
 				await storageService.AddAsync(Ordonnance);
@@ -183,7 +187,20 @@ namespace libermedical.ViewModels
 				//TODO: Display success toast
 
 				await CoreMethods.PopPageModel(null, true);
-			}
+
+                if (App.IsConnected())
+                {
+                    var localId = Ordonnance.Id;
+                    var ordonnance = await App.OrdonnanceManager.SaveOrUpdateAsync(Ordonnance.Id, Ordonnance, isNew);
+                    if (ordonnance != null)
+                    {
+                        await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + localId);
+                        await storageService.AddAsync(Ordonnance);
+
+                    }
+
+                }
+            }
 			else
 			{
 				CanEdit = true;
@@ -211,7 +228,8 @@ namespace libermedical.ViewModels
 					{
                         Attachments.Add(file.Path);
                         Ordonnance.Attachments.Add(file.Path);
-					}
+                        FileUpload.UploadFile(file.Path, "Ordonnances", Ordonnance.Id);
+                    }
 				}
 				else if (action == "Bibliothèque photo")
 				{
@@ -220,9 +238,11 @@ namespace libermedical.ViewModels
 					{
                         Attachments.Add(file.Path);
 						Ordonnance.Attachments.Add(file.Path);
-					}
+                        FileUpload.UploadFile(file.Path, "Ordonnances", Ordonnance.Id);
+                    }
 				}
 				MessagingCenter.Send(this,Events.UpdateAttachmentsViewCellHeight,Ordonnance.Attachments);
+                
 			}
 		});
 
