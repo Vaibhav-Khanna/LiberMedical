@@ -346,6 +346,7 @@
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Services\PDFStream.cs" />
     <Compile Include="SplashScreen.cs" />
+    <Compile Include="Renderers\BorderlessPickerRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
