@@ -34,6 +34,7 @@ namespace libermedical.ViewModels
 		{
 			_ordonnanceStorage = storageService;
 			BindData();
+            DownlaodDocuments();
 		}
 
         public async Task BindData()
@@ -51,7 +52,20 @@ namespace libermedical.ViewModels
 			Ordonnances = new ObservableCollection<Ordonnance>(await _ordonnanceStorage.GetList());
 		}
 
-		protected override async Task TapCommandFunc(Cell cell)
+        private async Task DownlaodDocuments()
+        {
+            if (App.IsConnected())
+            {
+                var request = new GetListRequest(200, 0);
+                var documents =
+                    new ObservableCollection<Document>((await App.DocumentsManager.GetListAsync(request)).rows);
+
+                //Updating records in local cache
+                await new StorageService<Document>().InvalidateSyncedItems();
+                await new StorageService<Document>().AddManyAsync(documents.ToList());
+            }
+        }
+        protected override async Task TapCommandFunc(Cell cell)
 		{
 			var ctx = cell.BindingContext;
 			await CoreMethods.PushPageModel<DetailsPatientListViewModel>(ctx, true);

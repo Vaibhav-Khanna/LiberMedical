@@ -27,26 +27,31 @@ namespace libermedical.ViewModels
 		{
 			_patientsStorage = storageService;
 			BindData();
-		}
+        }
 
         public async Task BindData()
 		{
-			if (App.IsConnected())
-			{
-				var request = new GetListRequest(20, 0);
-				var patients =
-					new ObservableCollection<Patient>((await App.PatientsManager.GetListAsync(request)).rows);
-
-				//Updating records in local cache
-				await _storageService.InvalidateSyncedItems();
-				await _storageService.AddManyAsync(patients.ToList());
-			}
-			//ItemsSource.Clear();
-			GroupItems((await _storageService.GetList()).ToList());
+            await DownlaodPatients();           
 		}   
 
+        private async Task DownlaodPatients()
+        {
+            if (App.IsConnected())
+            {
+                var request = new GetListRequest(20, 0);
+                var patients =
+                    new ObservableCollection<Patient>((await App.PatientsManager.GetListAsync(request)).rows);
 
-		private void GroupItems(List<Patient> observableCollection)
+                //Updating records in local cache
+                await _storageService.InvalidateSyncedItems();
+                await _storageService.AddManyAsync(patients.ToList());
+            }
+            GroupItems((await _storageService.GetList()).ToList());
+        }
+
+       
+
+        private void GroupItems(List<Patient> observableCollection)
 		{
 			try
 			{

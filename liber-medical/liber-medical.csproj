@@ -65,6 +65,7 @@
     <Compile Include="liber-medicalPage.xaml.cs">
       <DependentUpon>liber-medicalPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Managers\DocumentsManager.cs" />
     <Compile Include="Managers\IDataManager.cs" />
     <Compile Include="Managers\DataManager.cs" />
     <Compile Include="Managers\ILoginManager.cs" />

@@ -22,6 +22,7 @@ namespace libermedical
         private static ILoginManager _loginManager;
         private static IOrdonnanceManager _ordonnanceManager;
         private static IPatientsManager _patientsManager;
+        private static IDocumentsManager _documentsManager;
         private static ITeledeclarationsManager _teledeclarationsManager;
         public static LibermedicalTabbedNavigation tabbedNavigation;
 
@@ -129,6 +130,9 @@ namespace libermedical
                                                                             (_teledeclarationsManager = new TeledeclarationsManager(new RestService<Teledeclaration>("teledeclarations")));
         public static IUserManager UserManager => _userManager ??
                                                       (_userManager = new UserManager(new RestService<User>("users")));
+
+        public static IDocumentsManager DocumentsManager => _documentsManager ??
+                                                      (_documentsManager = new DocumentsManager(new RestService<Document>("documents")));
 
 
 
