@@ -17,7 +17,7 @@ namespace libermedical.ViewModels
 	public class OrdonnanceCreateEditViewModel : ViewModelBase
 	{
 		private string[] _frequenciesAll = new string[] { "Matin", "Midi", "Après-midi", "Soir" };
-
+		private bool _isNew;
 		private bool _isEditing;
 		private bool _canEdit;
 		public bool CanEdit
@@ -117,6 +117,7 @@ namespace libermedical.ViewModels
 					Creating = true;
 					SaveLabel = "Enregistrer";
 					CanEdit = true;
+					_isNew = true;
 				}
 				else
 				{
@@ -130,7 +131,7 @@ namespace libermedical.ViewModels
 					PatientLabel = Ordonnance?.PatientName;
 					Frequencies = Ordonnance.Frequencies != null ? new ObservableCollection<Frequency>(Ordonnance.Frequencies) : new ObservableCollection<Frequency>();
                     Attachments = Ordonnance.Attachments != null ? new ObservableCollection<string>(Ordonnance.Attachments) : new ObservableCollection<string>();
-
+					_isNew = false;
                     Creating = false;
 					_isEditing = true;
 				}
@@ -176,9 +177,6 @@ namespace libermedical.ViewModels
 		{
 			if (CanEdit)
 			{
-                bool isNew = false;
-                isNew = Ordonnance.CreatedAt == null ? true : false;
-                Ordonnance.CreatedAt = Ordonnance.CreatedAt == null ? DateTimeOffset.Now : Ordonnance.CreatedAt;
                 var storageService = new StorageService<Ordonnance>();
 				await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + Ordonnance.Id);
 				Ordonnance.IsSynced = false;
@@ -191,11 +189,12 @@ namespace libermedical.ViewModels
                 if (App.IsConnected())
                 {
                     var localId = Ordonnance.Id;
-                    var ordonnance = await App.OrdonnanceManager.SaveOrUpdateAsync(Ordonnance.Id, Ordonnance, isNew);
+					var ordonnance = await App.OrdonnanceManager.SaveOrUpdateAsync(Ordonnance.Id, Ordonnance, _isNew);
                     if (ordonnance != null)
                     {
                         await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + localId);
-                        await storageService.AddAsync(Ordonnance);
+						ordonnance.IsSynced = true;
+                        await storageService.AddAsync(ordonnance);
 
                     }
 

@@ -122,7 +122,8 @@ namespace libermedical.ViewModels
                     if (patient != null)
                     {
                         await _storageService.DeleteItemAsync(typeof(Patient).Name + "_" + localId);
-                        await _storageService.AddAsync(PatientProperty);
+						patient.IsSynced = true;
+                        await _storageService.AddAsync(patient);
                     }
 
                 }
