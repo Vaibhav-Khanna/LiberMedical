@@ -33,9 +33,8 @@ namespace libermedical.ViewModels
 		public OrdonnancesListViewModel(IStorageService<Ordonnance> storageService) : base(storageService)
 		{
 			_ordonnanceStorage = storageService;
-			BindData();
             DownlaodDocuments();
-		}
+        }
 
         public async Task BindData()
 		{
@@ -161,7 +160,7 @@ namespace libermedical.ViewModels
 		protected override async void ViewIsAppearing(object sender, EventArgs e)
 		{
 			base.ViewIsAppearing(sender, e);
-			Ordonnances = new ObservableCollection<Ordonnance>(await _ordonnanceStorage.GetList());
+            await BindData();
 		}
 	}
 }

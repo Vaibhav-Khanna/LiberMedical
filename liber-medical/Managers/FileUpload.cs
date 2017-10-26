@@ -14,7 +14,7 @@ namespace libermedical.Managers
     public static class FileUpload
     {
 
-        public static async Task UploadFile(string filepath, string type, string id)
+        public static async Task<bool> UploadFile(string filepath, string type, string id)
         {
             try
             {
@@ -31,12 +31,15 @@ namespace libermedical.Managers
 
                 var response = await client.PostAsync(Constants.RestUrl + "upload", content);
 
-                var result = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                    return true;
+                return false;
 
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
+                return false;
             }
         }
 

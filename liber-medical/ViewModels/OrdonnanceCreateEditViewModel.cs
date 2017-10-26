@@ -188,19 +188,7 @@ namespace libermedical.ViewModels
 
                 if (App.IsConnected())
                 {
-                    var localId = Ordonnance.Id;
-					var ordonnance = await App.OrdonnanceManager.SaveOrUpdateAsync(Ordonnance.Id, Ordonnance, _isNew);
-                    if (ordonnance != null)
-                    {
-                        await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + localId);
-						ordonnance.IsSynced = true;
-                        await storageService.AddAsync(ordonnance);
-                        foreach(var attachment in ordonnance.Attachments)
-                        {
-                            await FileUpload.UploadFile(attachment,"Ordonnance",ordonnance.Id);
-                        }
-                    }
-
+                    await storageService.SyncOrdonnances();
                 }
             }
 			else

@@ -17,6 +17,7 @@ namespace libermedical.Models
          [JsonProperty("lastUpdatedAt")]
         public DateTimeOffset? UpdatedAt { get; set; }
 
+        [JsonIgnore]
         [JsonConverter(typeof(BoolConverter))]
         public bool Deleted { get; set; }
 
