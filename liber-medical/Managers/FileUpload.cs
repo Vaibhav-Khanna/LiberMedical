@@ -2,28 +2,35 @@
 using libermedical.Services;
 using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
+
 namespace libermedical.Managers
 {
+    
     public static class FileUpload
     {
-        private static string _auth => string.Concat("token=", Settings.Token);
+
         public static async Task UploadFile(string filepath, string type, string id)
         {
             try
             {
-                var client = new HttpClient();
-                var content = new MultipartFormDataContent();
-                var url = new Uri(string.Format(Constants.RestUrl + "upload?" + _auth, string.Empty));
-                content.Add(new StreamContent(DependencyService.Get<IPDFStream>().GetStream(filepath)), type, $"{ type}/{id}/{Path.GetFileName(filepath)}");
-                content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/Octet");
-                var response = await client.PostAsync(url, content);
+                
+                var bytedata = ReadFully(DependencyService.Get<IPDFStream>().GetStream(filepath));
+                 
+                HttpClient client = new HttpClient();
+                MultipartFormDataContent content = new MultipartFormDataContent();
+                ByteArrayContent baContent = new ByteArrayContent(bytedata);
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Settings.Token);
+                client.DefaultRequestHeaders.Add("path",$"{type}/{id}/{Path.GetFileName(filepath)}");
+                content.Add(baContent, "file", $"{Path.GetFileName(filepath)}");
+
+                var response = await client.PostAsync(Constants.RestUrl + "upload", content);
+
                 var result = await response.Content.ReadAsStringAsync();
 
             }
@@ -32,6 +39,24 @@ namespace libermedical.Managers
                 Debug.WriteLine(ex.Message);
             }
         }
+
+
+        public static byte[] ReadFully(Stream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
+
+
     }
 
 
