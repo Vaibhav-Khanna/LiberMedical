@@ -148,6 +148,8 @@ namespace libermedical.ViewModels
             {
                 return new Command(async () =>
                 {
+					if (HasManualCotations)
+						Frequency.Quotations.Add((string)Selected);
                     MessagingCenter.Send(this, Events.UpdateCotations, Frequency);
                     await App.Current.MainPage.Navigation.PopModalAsync(true);
                 });
