@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using libermedical.Helpers;
 using Newtonsoft.Json;
+using Acr.UserDialogs;
 
 namespace libermedical.ViewModels
 {
@@ -18,7 +19,7 @@ namespace libermedical.ViewModels
 	{
 		private readonly IStorageService<Patient> _storageService;
 		public Patient PatientProperty { get; set; }
-
+		private bool _isNew;
 
 		private ObservableCollection<string> _phones;
 
@@ -59,12 +60,14 @@ namespace libermedical.ViewModels
 				PatientProperty.PhoneNumbers = new List<string>();
 				PatientProperty.Id = DateTime.Now.Ticks.ToString();
 				Phones = new ObservableCollection<string>();
+				_isNew = true;
 
 			}
 			else
 			{
 				PatientProperty = initData as Patient;
 				Phones = new ObservableCollection<string>(PatientProperty.PhoneNumbers);
+				_isNew = false;
 			}
 		}
 
@@ -92,46 +95,45 @@ namespace libermedical.ViewModels
 		{
 			try
 			{
-                bool isNew = false;
+				bool isNew = false;
 				if (!string.IsNullOrEmpty(PhoneNo))
 					PatientProperty.PhoneNumbers = new List<string>() { PhoneNo };
 
 				if (Phones.Count > 0)
-						PatientProperty.PhoneNumbers = Phones.ToList();
-				
+					PatientProperty.PhoneNumbers = Phones.ToList();
+
 				if (ValidateForm())
 				{
-                    isNew = PatientProperty.CreatedAt == null ? true : false;
-                    PatientProperty.CreatedAt = PatientProperty.CreatedAt == null ? DateTimeOffset.Now : PatientProperty.CreatedAt;
+					isNew = PatientProperty.CreatedAt == null ? true : false;
+					PatientProperty.CreatedAt = PatientProperty.CreatedAt == null ? DateTimeOffset.Now : PatientProperty.CreatedAt;
 					PatientProperty.UpdatedAt = DateTimeOffset.Now;
 					PatientProperty.IsSynced = false;
-                    PatientProperty.NurseId = JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id;
-                    await _storageService.DeleteItemAsync(typeof(Patient).Name + "_" + PatientProperty.Id);
-                    await _storageService.AddAsync(PatientProperty);
+					PatientProperty.NurseId = JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id;
+					await _storageService.DeleteItemAsync(typeof(Patient).Name + "_" + PatientProperty.Id);
+					await _storageService.AddAsync(PatientProperty);
+					if (App.IsConnected())
+					{
+						UserDialogs.Instance.ShowLoading("Processing...");
+						await new StorageService<Patient>().PushPatient(PatientProperty, _isNew);
+					}
 					await CoreMethods.PopPageModel(PatientProperty);
+
 				}
 				else
 				{
 					await CoreMethods.DisplayAlert("Liber Medical", "Please enter details", "Ok");
 				}
 
-                if (App.IsConnected())
-                {
-                    var localId = PatientProperty.Id;
-                    var patient = await App.PatientsManager.SaveOrUpdateAsync(PatientProperty.Id, PatientProperty, isNew);
-                    if (patient != null)
-                    {
-                        await _storageService.DeleteItemAsync(typeof(Patient).Name + "_" + localId);
-						patient.IsSynced = true;
-                        await _storageService.AddAsync(patient);
-                    }
 
-                }
 
-            }
+			}
 			catch (Exception e)
 			{
 				Debug.WriteLine(e.Message);
+			}
+			finally
+			{
+				UserDialogs.Instance.HideLoading();
 			}
 
 		});

@@ -188,7 +188,7 @@ namespace libermedical.ViewModels
 
                 if (App.IsConnected())
                 {
-                    await storageService.SyncOrdonnances();
+					await storageService.PushOrdonnance(Ordonnance,true);
                 }
             }
 			else
