@@ -14,6 +14,7 @@ namespace libermedical.ViewModels
 	public class AddDocumentViewModel : ViewModelBase
 	{
 		private string _createdDate = DateTime.Now.ToString("dd-MM-yyyy");
+
 		public string CreatedDate
 		{
 			get { return _createdDate; }
@@ -88,6 +89,7 @@ namespace libermedical.ViewModels
 				AddDate = DateTime.Today,
 				NurseId = JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id,
 			};
+
             SubscribeMessage();
 
         }
@@ -142,12 +144,14 @@ namespace libermedical.ViewModels
 				});
 			}
 		}
+
 		public ICommand AddCommand
 		{
 			get
 			{
 				return new Command(async () =>
 				{
+
                     if(OptionText == "Modifier")
                     {
                         OptionText = "Enregistrer";
@@ -160,10 +164,12 @@ namespace libermedical.ViewModels
                         await storageService.AddAsync(Document);
                         await CoreMethods.PopPageModel();
                     }
-					
+
 				});
 			}
 		}
+
+
 		public ICommand AddDocumentCommand
 		{
 			get

@@ -28,7 +28,7 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
           <Grid.GestureRecognizers>
-            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddCommand}" />
+            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Cancel_Tapped" />
           </Grid.GestureRecognizers>
           <Image HorizontalOptions="Center" VerticalOptions="Center" Source="close.png" />
         </Grid>
@@ -55,6 +55,8 @@
               <RowDefinition Height="60" />
               <RowDefinition Height="60" />
             </Grid.RowDefinitions>
+
+
             <Button Text="1 AMI 1" Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 1" BackgroundColor="{Binding AMI1,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
             </Button>
             <Button Text="1 AMI 2" Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 2" BackgroundColor="{Binding AMI2,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
