@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using libermedical.Models;
 using Akavache;
 using System.Reactive.Linq;
+using libermedical.Managers;
+using System.Diagnostics;
 
 namespace libermedical.Services
 {
@@ -115,9 +117,68 @@ namespace libermedical.Services
 			}
 		}
 
-		public Task SyncTables()
+		public async Task SyncTables()
 		{
-			throw new NotImplementedException();
+            await SyncPatients();
+            await SyncOrdonnances();
 		}
-	}
+
+        public async Task SyncPatients()
+        {
+            try
+            {
+                var items = (await BlobCache.UserAccount.GetAllObjects<Patient>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
+                foreach (var item in items)
+                {
+                    var isNew = item.CreatedAt == item.UpdatedAt ? true : false;
+                    var localId = item.Id;
+                    var patient = await App.PatientsManager.SaveOrUpdateAsync(item.Id, item, isNew);
+                    if (patient != null)
+                    {
+                        await DeleteItemAsync(typeof(Patient).Name + "_" + localId);
+                        patient.IsSynced = true;
+                        await AddAsync(patient as TModel);
+                        var patientDocuments = (await BlobCache.UserAccount.GetAllObjects<Document>()).ToObservable().Where(x => x.PatientId == localId).ToEnumerable();
+                        foreach (var document in patientDocuments)
+                        {
+                            await FileUpload.UploadFile(document.AttachmentPath, "PatientDocuments", document.Id);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
+
+        public async Task SyncOrdonnances()
+        {
+            try
+            {
+                var items = (await BlobCache.UserAccount.GetAllObjects<Ordonnance>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
+                foreach (var item in items)
+                {
+                    var isNew = item.CreatedAt == item.UpdatedAt ? true : false;
+                    var localId = item.Id;
+                    var ordonnance = await App.OrdonnanceManager.SaveOrUpdateAsync(item.Id, item, isNew);
+                    if (ordonnance != null)
+                    {
+                        await DeleteItemAsync(typeof(Ordonnance).Name + "_" + localId);
+                        ordonnance.IsSynced = true;
+                        await AddAsync(ordonnance as TModel);
+                        foreach (var attachment in ordonnance.Attachments)
+                        {
+                            await FileUpload.UploadFile(attachment, "Ordonnance", ordonnance.Id);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
+
+    }
 }
