@@ -195,7 +195,10 @@ namespace libermedical.ViewModels
                         await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + localId);
 						ordonnance.IsSynced = true;
                         await storageService.AddAsync(ordonnance);
-
+                        foreach(var attachment in ordonnance.Attachments)
+                        {
+                            await FileUpload.UploadFile(attachment,"Ordonnance",ordonnance.Id);
+                        }
                     }
 
                 }
