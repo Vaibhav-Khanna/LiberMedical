@@ -110,15 +110,16 @@
 				  BorderColor="#91c602"
 				  BorderWidth="1"
                   BorderRadius="5"
+                  Margin="30,0,45,0"
 				  Command="{Binding ConnectCommand}"
 				  FontFamily="SFUIText-Medium.otf"
 				  FontSize="18"
 				  HeightRequest="69"
-				  HorizontalOptions="CenterAndExpand"
+				  HorizontalOptions="FillAndExpand"
 				  Text="Contacter mon conseiller"
 				  TextColor="#91c602"
 				  VerticalOptions="CenterAndExpand"
-				  WidthRequest="291" />
+				  />
 			</Grid>
 		</ContentView>
 	</custom:BasePage.ContentPresenter>
