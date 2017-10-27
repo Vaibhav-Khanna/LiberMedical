@@ -126,7 +126,7 @@ namespace libermedical.ViewModels
 				{
 					Document = initData as Document;
 					CreatedDate = Document.AddDate.ToString("dd-MM-yyyy");
-					ImagePath = Document.AttachmentPath;
+                    ImagePath = GetDocumentPath(Document.AttachmentPath);
 					Label = Document.Label;
 					OptionText = "Modifier";
 					_isNew = true;
@@ -246,5 +246,19 @@ namespace libermedical.ViewModels
 				});
 			}
 		}
+
+        private string GetDocumentPath(string path)
+        {
+            if (!string.IsNullOrEmpty(path))
+                if (path.StartsWith("Ordonnance/") || path.StartsWith("PatientDocuments/"))
+                {
+                    return $"{Constants.RestUrl}file?path={System.Net.WebUtility.UrlEncode(path)}&token={Settings.Token}";
+                }
+                else
+                    return path;
+            else
+                return string.Empty;
+        }
+
 	}
 }
