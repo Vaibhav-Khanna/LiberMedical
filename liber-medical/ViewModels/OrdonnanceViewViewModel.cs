@@ -39,7 +39,7 @@ namespace libermedical.ViewModels
             if (!string.IsNullOrEmpty(path))
                 if (path.StartsWith("Ordonnance/") || path.StartsWith("PatientDocuments/"))
                 {
-                    return $"{Constants.RestUrl}file?path={System.Net.WebUtility.UrlEncode(Ordonnance.Attachments[0].ToString())}&token={Settings.Token}";
+                    return $"{Constants.RestUrl}file?path={System.Net.WebUtility.UrlEncode(path)}&token={Settings.Token}";
                 }
                 else
                     return path;

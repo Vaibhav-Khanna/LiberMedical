@@ -40,17 +40,8 @@ namespace libermedical.ViewModels
 
         public async Task BindData()
 		{
-			if (App.IsConnected())
-			{
-				var request = new GetListRequest(20, 0);
-				Ordonnances =
-					new ObservableCollection<Ordonnance>((await App.OrdonnanceManager.GetListAsync(request)).rows);
-
-				//Updating records in local cache
-				await _ordonnanceStorage.InvalidateSyncedItems();
-				await _ordonnanceStorage.AddManyAsync(Ordonnances.ToList());
-			}
-			Ordonnances = new ObservableCollection<Ordonnance>(await _ordonnanceStorage.GetList());
+           await  new StorageService<Ordonnance>().DownloadOrdonnances();
+           Ordonnances = new ObservableCollection<Ordonnance>(await _ordonnanceStorage.GetList());
 		}
 
         private async Task DownlaodDocuments()
