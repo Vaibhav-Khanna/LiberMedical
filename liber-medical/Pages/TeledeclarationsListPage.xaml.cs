@@ -24,6 +24,13 @@ namespace libermedical.Pages
 		}
 
 
+        async void Handle_Refreshing(object sender, System.EventArgs e)
+        {
+            await (BindingContext as TeledeclarationsListViewModel).BindData();
+            TeledeclarationsList.EndRefresh();
+        }
+
+
 		private async void Bill_Tapped(object sender, EventArgs e)
 		{
 			await Navigation.PushModalAsync(new SecuriseBillsPage());

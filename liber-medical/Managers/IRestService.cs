@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using libermedical.Enums;
+using libermedical.Models;
 using libermedical.Request;
 using libermedical.Responses;
 
@@ -25,5 +26,7 @@ namespace libermedical.Managers
         Task<T> SaveItemAsync(T item, string id = "", bool isNewItem = false);
 
         Task DeleteItemAsync(string id);
+
+        Task<Contract> GetContract();
     }
 }

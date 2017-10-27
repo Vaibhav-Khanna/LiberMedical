@@ -35,7 +35,7 @@ namespace libermedical.ViewModels
 			}
 		}
 
-		public string OldPassword { get; set; } = string.Empty;
+		//public string OldPassword { get; set; } = string.Empty;
 		public string NewPassword { get; set; } = string.Empty;
 		public string ConfirmPassword { get; set; } = string.Empty;
 
@@ -52,8 +52,11 @@ namespace libermedical.ViewModels
 				Settings.CurrentUser = JsonConvert.SerializeObject(CurrentUser);
 				MessagingCenter.Send(this, "ProfileUpdate");
 				var passwd = await ChangePassword();
+
+                if(passwd)
                 CurrentUser.Password = NewPassword;
-				if (App.IsConnected())
+			
+                if (App.IsConnected())
 					await App.UserManager.SaveOrUpdateAsync(CurrentUser.Id, CurrentUser, false);
 				if (passwd)
 					NavBackCommand.Execute(null);
@@ -64,7 +67,7 @@ namespace libermedical.ViewModels
 
 		private async Task<bool> ChangePassword()
 		{
-			if (string.IsNullOrEmpty(NewPassword + OldPassword + ConfirmPassword)) return true;
+            if (string.IsNullOrEmpty(NewPassword + ConfirmPassword)) return false;
 			if (NewPassword.Length < 6)
 			{
                 await CoreMethods.DisplayAlert("Mot de passe incorrect", "Le mot de passe doit contenir un minimum de 6 caractères", "OK");
