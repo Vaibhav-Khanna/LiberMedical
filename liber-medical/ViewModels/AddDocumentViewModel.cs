@@ -1,4 +1,4 @@
-﻿using libermedical.Helpers;
+using libermedical.Helpers;
 using libermedical.Models;
 using libermedical.Services;
 using libermedical.ViewModels.Base;
@@ -17,6 +17,7 @@ namespace libermedical.ViewModels
 	{
 		private bool _isNew;
 		private string _createdDate = DateTime.Now.ToString("dd-MM-yyyy");
+
 		public string CreatedDate
 		{
 			get { return _createdDate; }
@@ -91,7 +92,8 @@ namespace libermedical.ViewModels
 				AddDate = DateTime.Today,
 				NurseId = JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id,
 			};
-			SubscribeMessage();
+
+            SubscribeMessage();
 
 		}
 
@@ -148,6 +150,7 @@ namespace libermedical.ViewModels
 				});
 			}
 		}
+
 		public ICommand AddCommand
 		{
 			get
@@ -185,6 +188,8 @@ namespace libermedical.ViewModels
 				});
 			}
 		}
+
+
 		public ICommand AddDocumentCommand
 		{
 			get
