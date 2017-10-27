@@ -11,6 +11,8 @@ using System.Collections.ObjectModel;
 using libermedical.Enums;
 using System.Linq;
 using libermedical.Managers;
+using System.Diagnostics;
+using Acr.UserDialogs;
 
 namespace libermedical.ViewModels
 {
@@ -175,27 +177,42 @@ namespace libermedical.ViewModels
 
 		public ICommand SaveCommand => new Command(async () =>
 		{
-			if (CanEdit)
-			{
-                var storageService = new StorageService<Ordonnance>();
-				await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + Ordonnance.Id);
-				Ordonnance.IsSynced = false;
-				await storageService.AddAsync(Ordonnance);
-
-				//TODO: Display success toast
-
-				await CoreMethods.PopPageModel(null, true);
-
-                if (App.IsConnected())
+            try
+            {
+                if (CanEdit)
                 {
-					await storageService.PushOrdonnance(Ordonnance,true);
+                    UserDialogs.Instance.ShowLoading("Processing...");
+                    var storageService = new StorageService<Ordonnance>();
+                    await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + Ordonnance.Id);
+                    Ordonnance.Attachments = Attachments.ToList();
+                    Ordonnance.Frequencies = Frequencies.ToList();
+                    Ordonnance.IsSynced = false;
+                    await storageService.AddAsync(Ordonnance);
+
+                    //TODO: Display success toast
+
+                    if (App.IsConnected())
+                    {
+                        await storageService.PushOrdonnance(Ordonnance, true);
+                    }
+                    await CoreMethods.PopPageModel(null, true);
+
+                }
+                else
+                {
+                    CanEdit = true;
+                    SaveLabel = "Enregistrer";
                 }
             }
-			else
-			{
-				CanEdit = true;
-				SaveLabel = "Enregistrer";
-			}
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+
+            }
 		});
 
 		public ICommand AddAttachmentCommand => new Command(async () =>
