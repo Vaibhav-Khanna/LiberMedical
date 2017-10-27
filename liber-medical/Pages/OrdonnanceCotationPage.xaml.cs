@@ -11,55 +11,6 @@ namespace libermedical.Pages
 
         public OrdonnanceCotationPage() : base(-1, 0, false)
         {
-            /*  cotation = new ObservableCollection<Cotation>
-                  {
-                  new Cotation {
-                      FirstCode=1,
-                      SecondCode= "AMI",
-                      ThirdCode= 1
-                  },
-                  new Cotation {
-                      FirstCode=1,
-                      SecondCode= "AMI",
-                      ThirdCode= 2
-                  },
-                  new Cotation {
-                      FirstCode=1,
-                      SecondCode= "AMI",
-                      ThirdCode= 4
-                  },
-                  new Cotation {
-                      FirstCode=3,
-                      SecondCode= "AMK",
-                      ThirdCode= 5
-                  },
-                  new Cotation {
-                      FirstCode=3,
-                      SecondCode= "AMK",
-                      ThirdCode= 5
-                  },
-                  new Cotation {
-                      FirstCode=3,
-                      SecondCode= "AMK",
-                      ThirdCode= 5
-                  },
-                  new Cotation {
-                      FirstCode=3,
-                      SecondCode= "AMK",
-                      ThirdCode= 5
-                  },
-                  new Cotation {
-                      FirstCode=3,
-                      SecondCode= "AMK",
-                      ThirdCode= 5
-                  },
-                  new Cotation {
-                      FirstCode=3,
-                      SecondCode= "AMK",
-                      ThirdCode= 5
-                  }
-              }; */
-
             InitializeComponent();
 
         }
