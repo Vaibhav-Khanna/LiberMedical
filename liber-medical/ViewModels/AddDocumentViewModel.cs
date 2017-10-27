@@ -93,7 +93,7 @@ namespace libermedical.ViewModels
 				NurseId = JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id,
 			};
 
-            SubscribeMessage();
+			SubscribeMessage();
 
 		}
 
@@ -120,16 +120,16 @@ namespace libermedical.ViewModels
 					Document.PatientId = patient.Id;
 					OptionText = "Enregistrer";
 					CanEdit = true;
-					_isNew = false;
+					_isNew = true;
 				}
 				else if (initData is Document)
 				{
 					Document = initData as Document;
 					CreatedDate = Document.AddDate.ToString("dd-MM-yyyy");
-                    ImagePath = GetDocumentPath(Document.AttachmentPath);
+					ImagePath = GetDocumentPath(Document.AttachmentPath);
 					Label = Document.Label;
 					OptionText = "Modifier";
-					_isNew = true;
+					_isNew = false;
 				}
 			}
 		}
@@ -167,7 +167,10 @@ namespace libermedical.ViewModels
 						else
 						{
 							var storageService = new StorageService<Document>();
+							await storageService.DeleteItemAsync(typeof(Document).Name + "_" + Document.Id);
+							Document.AttachmentPath = ImagePath;
 							Document.Label = Label;
+							Document.UpdatedAt = DateTimeOffset.Now;
 							await storageService.AddAsync(Document);
 							if (App.IsConnected())
 							{
@@ -247,18 +250,18 @@ namespace libermedical.ViewModels
 			}
 		}
 
-        private string GetDocumentPath(string path)
-        {
-            if (!string.IsNullOrEmpty(path))
-                if (path.StartsWith("Ordonnance/") || path.StartsWith("PatientDocuments/"))
-                {
-                    return $"{Constants.RestUrl}file?path={System.Net.WebUtility.UrlEncode(path)}&token={Settings.Token}";
-                }
-                else
-                    return path;
-            else
-                return string.Empty;
-        }
+		private string GetDocumentPath(string path)
+		{
+			if (!string.IsNullOrEmpty(path))
+				if (path.StartsWith("Ordonnance/") || path.StartsWith("PatientDocuments/"))
+				{
+					return $"{Constants.RestUrl}file?path={System.Net.WebUtility.UrlEncode(path)}&token={Settings.Token}";
+				}
+				else
+					return path;
+			else
+				return string.Empty;
+		}
 
 	}
 }

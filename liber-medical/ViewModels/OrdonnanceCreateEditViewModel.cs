@@ -44,18 +44,18 @@ namespace libermedical.ViewModels
 			}
 		}
 
-        private ObservableCollection<string> _attachments;
-        public ObservableCollection<string> Attachments
-        {
-            get { return _attachments; }
-            set
-            {
-                _attachments = value;
-                RaisePropertyChanged();
-            }
-        }
-        
-        public string PatientLabel { get; set; } = "Choisissez un patient";
+		private ObservableCollection<string> _attachments;
+		public ObservableCollection<string> Attachments
+		{
+			get { return _attachments; }
+			set
+			{
+				_attachments = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		public string PatientLabel { get; set; } = "Choisissez un patient";
 
 		private Ordonnance _ordonnance;
 		public Ordonnance Ordonnance
@@ -72,6 +72,7 @@ namespace libermedical.ViewModels
 
 		public OrdonnanceCreateEditViewModel()
 		{
+			Attachments = new ObservableCollection<string>();
 			Ordonnance = new Ordonnance
 			{
 				Id = Guid.NewGuid().ToString(),
@@ -132,15 +133,15 @@ namespace libermedical.ViewModels
 					Ordonnance.PatientName = ordonnance.PatientName;
 					PatientLabel = Ordonnance?.PatientName;
 					Frequencies = Ordonnance.Frequencies != null ? new ObservableCollection<Frequency>(Ordonnance.Frequencies) : new ObservableCollection<Frequency>();
-                    Attachments = Ordonnance.Attachments != null ? new ObservableCollection<string>(Ordonnance.Attachments) : new ObservableCollection<string>();
+					Attachments = Ordonnance.Attachments != null ? new ObservableCollection<string>(Ordonnance.Attachments) : new ObservableCollection<string>();
 					_isNew = false;
-                    Creating = false;
+					Creating = false;
 					_isEditing = true;
 				}
 				MessagingCenter.Send(this, Events.UpdateFrequenciesViewCellHeight, Ordonnance.Frequencies);
-                MessagingCenter.Send(this, Events.UpdateAttachmentsViewCellHeight, Ordonnance.Attachments);
+				MessagingCenter.Send(this, Events.UpdateAttachmentsViewCellHeight, Ordonnance.Attachments);
 
-            }
+			}
 		}
 		public ICommand ViewOrdonnance => new Command(async () =>
 		{
@@ -153,18 +154,18 @@ namespace libermedical.ViewModels
 			}
 		});
 
-        public ICommand ViewAttachment => new Command(async (args) =>
-        {
-            if (args != null)
-            {
-                if (args.ToString().Contains(".pdf"))
-                    await CoreMethods.PushPageModel<SecuriseBillsViewModel>(Ordonnance, true);
-                else
-                    await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(args, true);
-            }
-        });
+		public ICommand ViewAttachment => new Command(async (args) =>
+		{
+			if (args != null)
+			{
+				if (args.ToString().Contains(".pdf"))
+					await CoreMethods.PushPageModel<SecuriseBillsViewModel>(Ordonnance, true);
+				else
+					await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(args, true);
+			}
+		});
 
-        public ICommand CloseCommand => new Command(async () =>
+		public ICommand CloseCommand => new Command(async () =>
 		{
 			await CoreMethods.PopPageModel(null, true);
 		});
@@ -177,42 +178,46 @@ namespace libermedical.ViewModels
 
 		public ICommand SaveCommand => new Command(async () =>
 		{
-            try
-            {
-                if (CanEdit)
-                {
-                    UserDialogs.Instance.ShowLoading("Processing...");
-                    var storageService = new StorageService<Ordonnance>();
-                    await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + Ordonnance.Id);
-                    Ordonnance.Attachments = Attachments.ToList();
-                    Ordonnance.Frequencies = Frequencies.ToList();
-                    Ordonnance.IsSynced = false;
-                    await storageService.AddAsync(Ordonnance);
+			try
+			{
+				if (CanEdit)
+				{
+					UserDialogs.Instance.ShowLoading("Processing...");
+					var storageService = new StorageService<Ordonnance>();
+					await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + Ordonnance.Id);
+					Ordonnance.Attachments = Attachments.ToList();
+					Ordonnance.Frequencies = Frequencies.ToList();
+					Ordonnance.IsSynced = false;
+					if (!_isNew)
+						Ordonnance.UpdatedAt = DateTimeOffset.Now;
 
-                    //TODO: Display success toast
+					await storageService.AddAsync(Ordonnance);
 
-                    if (App.IsConnected())
-                    {
-                        await storageService.PushOrdonnance(Ordonnance, true);
-                    }
-                    await CoreMethods.PopPageModel(null, true);
+					//TODO: Display success toast
 
-                }
-                else
-                {
-                    CanEdit = true;
-                    SaveLabel = "Enregistrer";
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-            finally
-            {
-                UserDialogs.Instance.HideLoading();
+					if (App.IsConnected())
+					{
+						await storageService.PushOrdonnance(Ordonnance, _isNew);
+					}
+					await CoreMethods.PopPageModel(null, true);
+					UserDialogs.Instance.HideLoading();
 
-            }
+
+				}
+				else
+				{
+					CanEdit = true;
+					SaveLabel = "Enregistrer";
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.Message);
+			}
+			finally
+			{
+
+			}
 		});
 
 		public ICommand AddAttachmentCommand => new Command(async () =>
@@ -233,23 +238,21 @@ namespace libermedical.ViewModels
 					var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
 					if (file != null)
 					{
-                        Attachments.Add(file.Path);
-                        Ordonnance.Attachments.Add(file.Path);
-                        FileUpload.UploadFile(file.Path, "Ordonnances", Ordonnance.Id);
-                    }
+						Attachments.Add(file.Path);
+						Ordonnance.Attachments.Add(file.Path);
+					}
 				}
 				else if (action == "Bibliothèque photo")
 				{
 					var file = await CrossMedia.Current.PickPhotoAsync();
 					if (file != null)
 					{
-                        Attachments.Add(file.Path);
+						Attachments.Add(file.Path);
 						Ordonnance.Attachments.Add(file.Path);
-                        FileUpload.UploadFile(file.Path, "Ordonnances", Ordonnance.Id);
-                    }
+					}
 				}
-				MessagingCenter.Send(this,Events.UpdateAttachmentsViewCellHeight,Ordonnance.Attachments);
-                
+				MessagingCenter.Send(this, Events.UpdateAttachmentsViewCellHeight, Ordonnance.Attachments);
+
 			}
 		});
 
@@ -265,7 +268,7 @@ namespace libermedical.ViewModels
 					availableFrequencies = _frequenciesAll.Except(Frequencies.Select(x => x.PeriodString).ToArray()).ToArray();
 				else
 					availableFrequencies = _frequenciesAll;
-				var action = await CoreMethods.DisplayActionSheet("Choisissez la fréquence d'administration", "Annuler", null,availableFrequencies);
+				var action = await CoreMethods.DisplayActionSheet("Choisissez la fréquence d'administration", "Annuler", null, availableFrequencies);
 
 				switch (action)
 				{

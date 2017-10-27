@@ -123,6 +123,7 @@ namespace libermedical.Services
 		{
 			await SyncPatients();
 			await SyncOrdonnances();
+			await SyncDocuments();
 		}
 
 		public async Task SyncPatients()
@@ -140,6 +141,24 @@ namespace libermedical.Services
 			{
 				Debug.WriteLine(e.Message);
 			}
+		}
+
+		public async Task SyncDocuments()
+		{
+			try
+			{
+
+				var items = (await BlobCache.UserAccount.GetAllObjects<Document>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
+				foreach (var item in items)
+				{
+					await PushDocument(item, item.CreatedAt == item.UpdatedAt);
+				}
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(e.Message);
+			}
+
 		}
 
 		public async Task PushPatient(Patient patientObject, bool isNew)

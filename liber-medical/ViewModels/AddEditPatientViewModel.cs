@@ -106,7 +106,8 @@ namespace libermedical.ViewModels
 				{
 					isNew = PatientProperty.CreatedAt == null ? true : false;
 					PatientProperty.CreatedAt = PatientProperty.CreatedAt == null ? DateTimeOffset.Now : PatientProperty.CreatedAt;
-					PatientProperty.UpdatedAt = DateTimeOffset.Now;
+					if (!_isNew)
+						PatientProperty.UpdatedAt = DateTimeOffset.Now;
 					PatientProperty.IsSynced = false;
 					PatientProperty.NurseId = JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id;
 					await _storageService.DeleteItemAsync(typeof(Patient).Name + "_" + PatientProperty.Id);
