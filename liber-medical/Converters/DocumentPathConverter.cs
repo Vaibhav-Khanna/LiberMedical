@@ -19,6 +19,10 @@ namespace libermedical.Converters
                 var path = $"{Constants.RestUrl}file?path={System.Net.WebUtility.UrlEncode(value.ToString())}&token={Settings.Token}";
                 return path;
             }
+            else if(value.ToString().Contains(".jpg") || value.ToString().Contains(".png"))
+            {
+                return value.ToString();
+            }
             return Path.GetFileName(value.ToString());
 
         }
