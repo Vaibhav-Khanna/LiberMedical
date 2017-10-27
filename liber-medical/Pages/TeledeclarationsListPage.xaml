@@ -24,7 +24,7 @@
            
             
 
-            <ListView x:Name="TeledeclarationsList" Grid.Row="1" ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" RowHeight="60" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default">
+            <ListView x:Name="TeledeclarationsList" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing" Grid.Row="1" ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" RowHeight="60" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default">
 						<ListView.ItemTemplate>
 							<DataTemplate>
 								<ViewCell>

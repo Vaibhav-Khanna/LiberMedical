@@ -326,5 +326,37 @@ namespace libermedical.Managers
 				Debug.WriteLine(@"				ERROR {0}", ex.Message);
 			}
 		}
-	}
+
+        public async Task<Contract> GetContract()
+        {
+            
+            var uri = new Uri(string.Format(Constants.RestUrl + "contracts?limit=5&page=0&start=0&end=0&sortField=field1=asc"+ "&" + _auth));
+
+            try
+            {
+                
+                var response = await _client.GetAsync(uri);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var resp = await response.Content.ReadAsStringAsync();
+                    var con = JsonConvert.DeserializeObject<PaginationResponse<Contract>>(resp);
+
+                    if (con.rows.Count != 0)
+                    {
+                        return con.rows[0];
+                    }
+                    else
+                        return null;
+
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                Debug.WriteLine(@"              ERROR {0}", ex.Message);
+            }
+        }
+    }
 }
