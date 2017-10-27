@@ -11,7 +11,7 @@
         <ToolbarItem Name="Ordonnances" Icon="plus.png" Command="{Binding AddCommand}" />
     </ContentPage.ToolbarItems>
     <ContentView>
-        <Grid>
+        <Grid RowSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
                 <RowDefinition Height="*" />

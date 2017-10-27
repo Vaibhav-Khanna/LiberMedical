@@ -17,7 +17,7 @@
 				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderLabel}" Text="Patient" />
 				<Grid Grid.Column="2">
 					<Grid.GestureRecognizers>
-						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding EditPatient}" />
+						<TapGestureRecognizer NumberOfTapsRequired="1" Command  ="{Binding EditPatient}" />
 					</Grid.GestureRecognizers>
 					<Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}" Text="Editer" />
 				</Grid>
@@ -69,12 +69,12 @@
 					</Grid>
 				</StackLayout>
 				<ScrollView Grid.Row="2">
-					<StackLayout Padding="45,0,0,0">
+					<StackLayout Padding="0,0,0,0">
 						<ListView ItemsSource="{Binding Ordonnances}" x:Name="stackOrdonnance" SelectedItem="{Binding SelectedOrdonnance}" SeparatorVisibility="Default" RowHeight="60" IsVisible="{Binding ShowStackOrdonnance}">
 							<ListView.ItemTemplate>
 								<DataTemplate>
 									<ViewCell>
-										<Grid>
+										<Grid Padding="20,0,0,0" >
 											<Grid.ColumnDefinitions>
 												<ColumnDefinition Width="50*" />
 												<ColumnDefinition Width="40*" />
@@ -85,7 +85,7 @@
 												<RowDefinition Height="40*" />
 											</Grid.RowDefinitions>
 											<Label Text="{Binding Reference, StringFormat='Ordo {0}'}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
-											<Label Text="{Binding FirstCareAt}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
+											<Label Text="{Binding FirstCareAt,StringFormat='{0:dd-MM-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
 											<Button Text="{Binding Status}" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" TextColor="#ffffff" Grid.RowSpan="2" Grid.Column="1">
 												<Button.HeightRequest>
 													<OnPlatform x:TypeArguments="x:Double" iOS="20" Android="40" />
@@ -107,7 +107,7 @@
 							<ListView.ItemTemplate>
 								<DataTemplate>
 									<ViewCell>
-										<Grid>
+										<Grid Padding="20,0,0,0" >
 											<Grid.ColumnDefinitions>
 												<ColumnDefinition Width="90*" />
 												<ColumnDefinition Width="10*" />
@@ -117,7 +117,7 @@
 												<RowDefinition Height="40*" />
 											</Grid.RowDefinitions>
 											<Label Text="{Binding Label, StringFormat='Doc- {0}'}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
-											<Label Text="{Binding AddDate, StringFormat='{0:MM-dd-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
+											<Label Text="{Binding AddDate, StringFormat='{0:dd-MM-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
 											<Image Source="back_arrow_green.png" HorizontalOptions="Start" VerticalOptions="Center" Grid.RowSpan="2" Grid.Column="1" />
 										</Grid>
 									</ViewCell>
