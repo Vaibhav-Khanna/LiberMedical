@@ -51,6 +51,11 @@ namespace libermedical
             {
                 MainPage = new NavigationPage(new LoginPage()); // { BarTextColor = Color.White };
             }
+            CrossConnectivity.Current.ConnectivityChanged += (sender, args) =>
+            {
+                if (CrossConnectivity.Current.IsConnected)
+                    SyncData();
+            };
         }
 
         private void CreateTabbedPage()
@@ -75,6 +80,14 @@ namespace libermedical
                 return connectivity.IsConnected;
             }
         }
+
+        public async static void SyncData()
+        {
+            var synchelper = new StorageService<BaseDTO>();
+            await synchelper.SyncTables();
+        }
+
+
 
         public static long ConvertToUnixTimestamp(DateTime date)
         {

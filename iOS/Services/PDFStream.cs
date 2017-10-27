@@ -9,9 +9,9 @@ namespace libermedical.iOS.Services
 {
     public class PDFStream : IPDFStream
     {
-        public Stream GetStream(string filename)
+        public Stream GetStream(string path)
         {
-            return new FileStream(GetFilePath(filename), FileMode.Open, FileAccess.Read, FileShare.Read);
+            return new FileStream(GetFilePath(path), FileMode.Open, FileAccess.Read, FileShare.Read);
         }
 
         public void Save(string filename, byte[] data)

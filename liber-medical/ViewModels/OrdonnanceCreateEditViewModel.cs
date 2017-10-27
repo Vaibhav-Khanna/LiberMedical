@@ -10,13 +10,14 @@ using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using libermedical.Enums;
 using System.Linq;
+using libermedical.Managers;
 
 namespace libermedical.ViewModels
 {
 	public class OrdonnanceCreateEditViewModel : ViewModelBase
 	{
 		private string[] _frequenciesAll = new string[] { "Matin", "Midi", "Après-midi", "Soir" };
-
+		private bool _isNew;
 		private bool _isEditing;
 		private bool _canEdit;
 		public bool CanEdit
@@ -116,6 +117,7 @@ namespace libermedical.ViewModels
 					Creating = true;
 					SaveLabel = "Enregistrer";
 					CanEdit = true;
+					_isNew = true;
 				}
 				else
 				{
@@ -129,7 +131,7 @@ namespace libermedical.ViewModels
 					PatientLabel = Ordonnance?.PatientName;
 					Frequencies = Ordonnance.Frequencies != null ? new ObservableCollection<Frequency>(Ordonnance.Frequencies) : new ObservableCollection<Frequency>();
                     Attachments = Ordonnance.Attachments != null ? new ObservableCollection<string>(Ordonnance.Attachments) : new ObservableCollection<string>();
-
+					_isNew = false;
                     Creating = false;
 					_isEditing = true;
 				}
@@ -175,7 +177,7 @@ namespace libermedical.ViewModels
 		{
 			if (CanEdit)
 			{
-				var storageService = new StorageService<Ordonnance>();
+                var storageService = new StorageService<Ordonnance>();
 				await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + Ordonnance.Id);
 				Ordonnance.IsSynced = false;
 				await storageService.AddAsync(Ordonnance);
@@ -183,7 +185,12 @@ namespace libermedical.ViewModels
 				//TODO: Display success toast
 
 				await CoreMethods.PopPageModel(null, true);
-			}
+
+                if (App.IsConnected())
+                {
+					await storageService.PushOrdonnance(Ordonnance,true);
+                }
+            }
 			else
 			{
 				CanEdit = true;
@@ -211,7 +218,8 @@ namespace libermedical.ViewModels
 					{
                         Attachments.Add(file.Path);
                         Ordonnance.Attachments.Add(file.Path);
-					}
+                        FileUpload.UploadFile(file.Path, "Ordonnances", Ordonnance.Id);
+                    }
 				}
 				else if (action == "Bibliothèque photo")
 				{
@@ -220,9 +228,11 @@ namespace libermedical.ViewModels
 					{
                         Attachments.Add(file.Path);
 						Ordonnance.Attachments.Add(file.Path);
-					}
+                        FileUpload.UploadFile(file.Path, "Ordonnances", Ordonnance.Id);
+                    }
 				}
 				MessagingCenter.Send(this,Events.UpdateAttachmentsViewCellHeight,Ordonnance.Attachments);
+                
 			}
 		});
 

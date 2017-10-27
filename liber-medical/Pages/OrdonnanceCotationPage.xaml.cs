@@ -89,8 +89,11 @@ namespace libermedical.Pages
         private void picker_SelectionChanged(object sender, Syncfusion.SfPicker.XForms.SelectionChangedEventArgs e)
         {
             var newValue = e.NewValue as IList;
-            if (newValue != null && newValue.Count == 3)
-                ((SfPicker)sender).HeaderText = $"{newValue[0]} {newValue[1]} {newValue[2]}";
+			if (newValue != null && newValue.Count == 3)
+			{
+				((SfPicker)sender).HeaderText = $"{newValue[0]} {newValue[1]} {newValue[2]}";
+				(this.BindingContext as OrdonnanceCotationViewModel).Selected = newValue; 
+			}
 
         }
         async void Cancel_Tapped(object sender, System.EventArgs e)
