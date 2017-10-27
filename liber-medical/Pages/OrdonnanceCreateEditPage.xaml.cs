@@ -162,8 +162,7 @@ namespace libermedical.Pages
                  .Execute(e.SelectedItem as string);
 
                 // disable the visual selection state.
-                //if (((ListView)sender).SelectedItem != null)
-                //    ((ListView)sender).SelectedItem = null;
+                ((ListView)sender).SelectedItem = null;
             }
             catch (Exception ex)
             {
