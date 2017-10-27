@@ -4,7 +4,7 @@
 		<ToolbarItem Order="Primary" Icon="plus.png" Command="{Binding AddUserCommand}" />
 	</ContentPage.ToolbarItems>
 		<ContentView Style="{StaticResource ModalContentBackgroundColor}">
-			<Grid>
+			<Grid RowSpacing="0" >
 				<Grid.RowDefinitions>
 					<RowDefinition Height="50" />
 					<RowDefinition Height="*" />
