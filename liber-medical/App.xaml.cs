@@ -51,6 +51,8 @@ namespace libermedical
             {
                 MainPage = new NavigationPage(new LoginPage()); // { BarTextColor = Color.White };
             }
+            if (IsConnected())
+                SyncData();
             CrossConnectivity.Current.ConnectivityChanged += (sender, args) =>
             {
                 if (CrossConnectivity.Current.IsConnected)

@@ -11,55 +11,6 @@ namespace libermedical.Pages
 
         public OrdonnanceCotationPage() : base(-1, 0, false)
         {
-            /*  cotation = new ObservableCollection<Cotation>
-                  {
-                  new Cotation {
-                      FirstCode=1,
-                      SecondCode= "AMI",
-                      ThirdCode= 1
-                  },
-                  new Cotation {
-                      FirstCode=1,
-                      SecondCode= "AMI",
-                      ThirdCode= 2
-                  },
-                  new Cotation {
-                      FirstCode=1,
-                      SecondCode= "AMI",
-                      ThirdCode= 4
-                  },
-                  new Cotation {
-                      FirstCode=3,
-                      SecondCode= "AMK",
-                      ThirdCode= 5
-                  },
-                  new Cotation {
-                      FirstCode=3,
-                      SecondCode= "AMK",
-                      ThirdCode= 5
-                  },
-                  new Cotation {
-                      FirstCode=3,
-                      SecondCode= "AMK",
-                      ThirdCode= 5
-                  },
-                  new Cotation {
-                      FirstCode=3,
-                      SecondCode= "AMK",
-                      ThirdCode= 5
-                  },
-                  new Cotation {
-                      FirstCode=3,
-                      SecondCode= "AMK",
-                      ThirdCode= 5
-                  },
-                  new Cotation {
-                      FirstCode=3,
-                      SecondCode= "AMK",
-                      ThirdCode= 5
-                  }
-              }; */
-
             InitializeComponent();
 
         }
@@ -89,8 +40,11 @@ namespace libermedical.Pages
         private void picker_SelectionChanged(object sender, Syncfusion.SfPicker.XForms.SelectionChangedEventArgs e)
         {
             var newValue = e.NewValue as IList;
-            if (newValue != null && newValue.Count == 3)
-                ((SfPicker)sender).HeaderText = $"{newValue[0]} {newValue[1]} {newValue[2]}";
+			if (newValue != null && newValue.Count == 3)
+			{
+				((SfPicker)sender).HeaderText = $"{newValue[0]} {newValue[1]} {newValue[2]}";
+				(this.BindingContext as OrdonnanceCotationViewModel).Selected = newValue; 
+			}
 
         }
         async void Cancel_Tapped(object sender, System.EventArgs e)

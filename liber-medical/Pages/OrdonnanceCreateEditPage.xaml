@@ -130,7 +130,7 @@
                       <!--<Label Text="Pièce jointe" Style="{StaticResource JoinDocumentLabel}" VerticalOptions="Center" />-->
                       <Image Source="attachment.png">
                       </Image>
-                      <Image Source="{Binding .}" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,1,3,1"></Image>
+                      <Image Source="{Binding .,Converter={converter:DocumentPathConverter}}" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,1,3,1"></Image>
                     </StackLayout>
                     <!--<Grid>
                       <Grid.ColumnDefinitions>

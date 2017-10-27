@@ -17,8 +17,9 @@ using libermedical.Pages;
 namespace libermedical.ViewModels
 {
 	public class OrdonnancesListViewModel : ListViewModelBase<Ordonnance>
-	{ 			 
-		private IStorageService<Ordonnance> _ordonnanceStorage;
+	{
+
+        private IStorageService<Ordonnance> _ordonnanceStorage;
 		private ObservableCollection<Ordonnance> _ordonnances;
 		public ObservableCollection<Ordonnance> Ordonnances
 		{
@@ -33,6 +34,7 @@ namespace libermedical.ViewModels
 		public OrdonnancesListViewModel(IStorageService<Ordonnance> storageService) : base(storageService)
 		{
 			_ordonnanceStorage = storageService;
+            BindData();
             DownlaodDocuments();
         }
 
@@ -40,7 +42,7 @@ namespace libermedical.ViewModels
 		{
 			if (App.IsConnected())
 			{
-				var request = new GetListRequest(20, 0);
+				var request = new GetListRequest(200, 0);
 				Ordonnances =
 					new ObservableCollection<Ordonnance>((await App.OrdonnanceManager.GetListAsync(request)).rows);
 
@@ -160,7 +162,7 @@ namespace libermedical.ViewModels
 		protected override async void ViewIsAppearing(object sender, EventArgs e)
 		{
 			base.ViewIsAppearing(sender, e);
-            await BindData();
-		}
+            Ordonnances = new ObservableCollection<Ordonnance>(await _ordonnanceStorage.GetList());
+        }
 	}
 }
