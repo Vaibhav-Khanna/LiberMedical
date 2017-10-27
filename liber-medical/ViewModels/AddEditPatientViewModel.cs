@@ -121,7 +121,7 @@ namespace libermedical.ViewModels
 				}
 				else
 				{
-					await CoreMethods.DisplayAlert("Liber Medical", "Please enter details", "Ok");
+					await CoreMethods.DisplayAlert("Liber Medical", "Veuillez remplir les informations", "Ok");
 				}
 
 

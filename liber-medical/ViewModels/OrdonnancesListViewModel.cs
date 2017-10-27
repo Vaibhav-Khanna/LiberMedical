@@ -42,7 +42,7 @@ namespace libermedical.ViewModels
 		{
 			if (App.IsConnected())
 			{
-				var request = new GetListRequest(200, 0);
+				var request = new GetListRequest(20, 0);
 				Ordonnances =
 					new ObservableCollection<Ordonnance>((await App.OrdonnanceManager.GetListAsync(request)).rows);
 
