@@ -53,6 +53,7 @@
     <Compile Include="Behaviours\ButtonCotationBehaviour.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Converters\BoolConverter.cs" />
+    <Compile Include="Converters\DocumentPathConverter.cs" />
     <Compile Include="Converters\PathToFilenameConverter.cs" />
     <Compile Include="CustomControls\NonScrollableList.cs" />
     <Compile Include="CustomExceptions\BadResponseException.cs" />
