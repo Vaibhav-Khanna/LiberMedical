@@ -193,7 +193,7 @@ namespace libermedical.ViewModels
 
                     if (App.IsConnected())
                     {
-                        await storageService.PushOrdonnance(Ordonnance, true);
+                        await storageService.PushOrdonnance(Ordonnance, _isNew);
                     }
                     await CoreMethods.PopPageModel(null, true);
 

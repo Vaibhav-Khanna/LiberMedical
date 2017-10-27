@@ -52,6 +52,7 @@ namespace libermedical.ViewModels
 				Settings.CurrentUser = JsonConvert.SerializeObject(CurrentUser);
 				MessagingCenter.Send(this, "ProfileUpdate");
 				var passwd = await ChangePassword();
+                CurrentUser.Password = NewPassword;
 				if (App.IsConnected())
 					await App.UserManager.SaveOrUpdateAsync(CurrentUser.Id, CurrentUser, false);
 				if (passwd)
