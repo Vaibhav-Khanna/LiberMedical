@@ -8,6 +8,8 @@ using libermedical.Managers;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using libermedical.Request;
+using System.Collections.ObjectModel;
 
 namespace libermedical.Services
 {
@@ -246,13 +248,11 @@ namespace libermedical.Services
 					}
 					if (attachments.Keys.Count > 0)
 						foreach (var key in attachments.Keys)
-						{
 							ordonnance.Attachments[ordonnance.Attachments.IndexOf(key)] = attachments[key];
 
-						}
 					var ordonnanceUpdated = await App.OrdonnanceManager.SaveOrUpdateAsync(ordonnance.Id, ordonnance, false);
 					if (ordonnanceUpdated != null)
-						return;
+						await DownloadOrdonnances();
 					else
 					{
 						await DeleteItemAsync(typeof(Ordonnance).Name + "_" + ordonnance.Id);
@@ -274,7 +274,7 @@ namespace libermedical.Services
 				var items = (await BlobCache.UserAccount.GetAllObjects<Ordonnance>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
 				foreach (var item in items)
 				{
-					var isNew = item.CreatedAt == item.UpdatedAt ? true : false;
+					var isNew = item.CreatedAt == item.UpdatedAt ? false : true;
 					await PushOrdonnance(item, isNew);
 				}
 			}
@@ -284,5 +284,18 @@ namespace libermedical.Services
 			}
 		}
 
+		public async Task DownloadOrdonnances()
+		{
+			if (App.IsConnected())
+			{
+				var request = new GetListRequest(20, 0);
+				var Ordonnances =
+					new ObservableCollection<Ordonnance>((await App.OrdonnanceManager.GetListAsync(request)).rows);
+
+				//Updating records in local cache
+				await InvalidateSyncedItems();
+				await AddManyAsync(Ordonnances.ToList() as List<TModel>);
+			}
+		}
 	}
 }
