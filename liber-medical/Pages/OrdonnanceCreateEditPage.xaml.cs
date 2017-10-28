@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using libermedical.ViewModels;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace libermedical.Pages
 {
@@ -150,16 +151,23 @@ namespace libermedical.Pages
         }
         private void AttachmentsListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (e.SelectedItem == null)
+            try
             {
-                return; //ItemSelected is called on deselection, which results in SelectedItem being set to null
+                if (e.SelectedItem == null)
+                {
+                    return; //ItemSelected is called on deselection, which results in SelectedItem being set to null
+                }
+
+             (BindingContext as OrdonnanceCreateEditViewModel).ViewAttachment
+                 .Execute(e.SelectedItem as string);
+
+                // disable the visual selection state.
+                ((ListView)sender).SelectedItem = null;
             }
-
-            (BindingContext as OrdonnanceCreateEditViewModel).ViewAttachment
-                .Execute(e.SelectedItem as string);
-
-            // disable the visual selection state.
-            ((ListView)sender).SelectedItem = null;
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         protected override void OnAppearing()

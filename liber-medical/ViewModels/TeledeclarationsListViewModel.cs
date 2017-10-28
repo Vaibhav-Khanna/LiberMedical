@@ -99,14 +99,14 @@ namespace libermedical.ViewModels
 			}
 		}
 
-		private async void BindData()
+        public async Task BindData()
 		{
 			if (App.IsConnected())
 			{
 				var request = new GetListRequest(20, 0);
 				Teledeclarations =
 					new ObservableCollection<Teledeclaration>((await App.TeledeclarationsManager.GetListAsync(request)).rows);
-
+                
 				//Updating records in local cache
 				await _teledeclarationsStorage.DeleteAllAsync();
 				await _teledeclarationsStorage.AddManyAsync(Teledeclarations.ToList());
@@ -115,12 +115,16 @@ namespace libermedical.ViewModels
 			{
 				Teledeclarations = new ObservableCollection<Teledeclaration>(await _teledeclarationsStorage.GetList());
 			}
+
 			_teledeclarationsAll = Teledeclarations;
+
+            MessagingCenter.Unsubscribe<FilterPage, Filter>(this, Events.UpdateTeledeclarationsFilters);
 			MessagingCenter.Subscribe<FilterPage, Filter>(this, Events.UpdateTeledeclarationsFilters, (sender, filter) =>
 		   {
 			   _filter = filter;
 			   ApplyFilter(filter);
 		   });
+
 		}
 
 		protected override async Task TapCommandFunc(Cell cell)

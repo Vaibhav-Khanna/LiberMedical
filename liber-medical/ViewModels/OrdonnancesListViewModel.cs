@@ -40,17 +40,16 @@ namespace libermedical.ViewModels
 
         public async Task BindData()
 		{
-			if (App.IsConnected())
-			{
-				var request = new GetListRequest(20, 0);
-				Ordonnances =
-					new ObservableCollection<Ordonnance>((await App.OrdonnanceManager.GetListAsync(request)).rows);
+           await  new StorageService<Ordonnance>().DownloadOrdonnances();
+           
+           var list = await _ordonnanceStorage.GetList();
+          
+            if (list != null && list.Count() != 0)
+            {
+                list = list.OrderByDescending((arg) => arg.CreatedAt);
+            }
 
-				//Updating records in local cache
-				await _ordonnanceStorage.InvalidateSyncedItems();
-				await _ordonnanceStorage.AddManyAsync(Ordonnances.ToList());
-			}
-			Ordonnances = new ObservableCollection<Ordonnance>(await _ordonnanceStorage.GetList());
+            Ordonnances = new ObservableCollection<Ordonnance>(list);
 		}
 
         private async Task DownlaodDocuments()
@@ -162,7 +161,15 @@ namespace libermedical.ViewModels
 		protected override async void ViewIsAppearing(object sender, EventArgs e)
 		{
 			base.ViewIsAppearing(sender, e);
-            Ordonnances = new ObservableCollection<Ordonnance>(await _ordonnanceStorage.GetList());
+
+            var list = await _ordonnanceStorage.GetList();
+
+            if(list!=null && list.Count()!=0)
+            {
+                list = list.OrderByDescending((arg) => arg.CreatedAt);
+            }
+
+            Ordonnances = new ObservableCollection<Ordonnance>(list);
         }
 	}
 }

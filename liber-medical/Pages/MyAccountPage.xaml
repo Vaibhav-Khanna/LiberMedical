@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <custom:BasePage
   x:Class="libermedical.Pages.MyAccountPage"
   xmlns="http://xamarin.com/schemas/2014/forms"
@@ -17,7 +17,7 @@
   
 	<custom:BasePage.Header>
 		<ContentView Style="{StaticResource HeaderFooterBackground}">
-			<Grid Padding="5">
+			<Grid Padding="5,5,15,5">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="40" />
 					<ColumnDefinition Width="*" />
@@ -41,8 +41,8 @@
 	</custom:BasePage.Header>
 	  
 	<custom:BasePage.ContentPresenter>
-		<ContentView Style="{StaticResource ModalContentBackgroundColor}">
-			<TableView Intent="Data" RowHeight="50">
+		<ContentView Style="{StaticResource ModalContentBackgroundColor}" VerticalOptions="FillAndExpand" >
+			<TableView Intent="Form" RowHeight="50" VerticalOptions="FillAndExpand" BackgroundColor="White" >
 				<TableRoot>
 					<TableSection>
 						<ViewCell>
@@ -57,8 +57,8 @@
 						<ViewCell>
 							<Label Style="{StaticResource LabellabelStyle}" Text="{Binding PhoneNumber}" />
 						</ViewCell>
-						<ViewCell>
-							<Grid Margin="15,0,21,0" VerticalOptions="Center">
+						<ViewCell Tapped="Handle_Tapped">
+							<Grid Margin="15,0,21,0" VerticalOptions="Center" IsVisible="{Binding IsContractVisible}" >
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="10*" />
 									<ColumnDefinition Width="88*" />

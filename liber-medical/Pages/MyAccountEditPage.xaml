@@ -68,13 +68,14 @@
 						</ViewCell>
 					</TableSection>
 				  <TableSection Title="Changer le mot de passe">
-					<ViewCell>
+					<!--<ViewCell>
 					  <renderers:BorderlessEntry 
 						Style="{StaticResource EntryStyle}" 
 						Text="{Binding OldPassword}" 
 						IsPassword="True"
+                        IsVisible="false"
 						Placeholder="Ancien mot de passe"/>
-					</ViewCell>
+					</ViewCell>-->
 					<ViewCell>
 					  <renderers:BorderlessEntry 
 						Style="{StaticResource EntryStyle}" 
