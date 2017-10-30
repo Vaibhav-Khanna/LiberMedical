@@ -30,7 +30,7 @@ namespace libermedical.Pages
 
         async void Handle_Refreshing(object sender, System.EventArgs e)
         {
-            await (BindingContext as PatientListViewModel).BindData();
+            await (BindingContext as PatientListViewModel).BindData(20);
             PatientListView.IsRefreshing = false;
         }
 
@@ -51,6 +51,15 @@ namespace libermedical.Pages
             }
         }
 
-
-	}
+        private async void PatientListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
+        {
+            if ((BindingContext as PatientListViewModel).ItemsSource.Count < (BindingContext as PatientListViewModel).MaxCount)
+            {
+                var currentItem = e.Item as Patient;
+                var lastItem = (BindingContext as PatientListViewModel).ItemsSource[(BindingContext as PatientListViewModel).ItemsSource.Count - 1];
+                if (currentItem == lastItem[lastItem.Count - 1])
+                    await (BindingContext as PatientListViewModel).BindData(20);
+            }
+        }
+    }
 }

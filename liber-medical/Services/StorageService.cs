@@ -252,7 +252,7 @@ namespace libermedical.Services
 
 					var ordonnanceUpdated = await App.OrdonnanceManager.SaveOrUpdateAsync(ordonnance.Id, ordonnance, false);
 					if (ordonnanceUpdated != null)
-						await DownloadOrdonnances();
+						await DownloadOrdonnances(20);
 					else
 					{
 						await DeleteItemAsync(typeof(Ordonnance).Name + "_" + ordonnance.Id);
@@ -284,18 +284,55 @@ namespace libermedical.Services
 			}
 		}
 
-		public async Task DownloadOrdonnances()
+		public async Task<int> DownloadOrdonnances(int count)
 		{
 			if (App.IsConnected())
 			{
-				var request = new GetListRequest(20, 0);
+				var request = new GetListRequest(count, 1);
+                var response = await App.OrdonnanceManager.GetListAsync(request);
 				var Ordonnances =
-					new ObservableCollection<Ordonnance>((await App.OrdonnanceManager.GetListAsync(request)).rows);
+					new ObservableCollection<Ordonnance>(response.rows);
 
 				//Updating records in local cache
 				await InvalidateSyncedItems();
 				await AddManyAsync(Ordonnances.ToList() as List<TModel>);
+                return response.total;
 			}
+            return -1;
 		}
-	}
+
+        public async Task<int> DownloadPatients(int count)
+        {
+            if (App.IsConnected())
+            {
+                var request = new GetListRequest(count, 1);
+                var response = await App.PatientsManager.GetListAsync(request);
+                var patients =
+                    new ObservableCollection<Patient>(response.rows);
+
+                //Updating records in local cache
+                await InvalidateSyncedItems();
+                await AddManyAsync(patients.ToList() as List<TModel>);
+                return response.total;
+            }
+            return -1;
+        }
+
+        public async Task<int> DownloadTeledeclarations(int count)
+        {
+            if (App.IsConnected())
+            {
+                var request = new GetListRequest(count, 1);
+                var response = await App.TeledeclarationsManager.GetListAsync(request);
+                var teledeclarations =
+                    new ObservableCollection<Teledeclaration>(response.rows);
+
+                //Updating records in local cache
+                await InvalidateSyncedItems();
+                await AddManyAsync(teledeclarations.ToList() as List<TModel>);
+                return response.total;
+            }
+            return -1;
+        }
+    }
 }

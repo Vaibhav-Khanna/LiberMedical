@@ -16,7 +16,9 @@ namespace libermedical.ViewModels
 {
 	public class TeledeclarationsListViewModel : ListViewModelBase<Teledeclaration>
 	{
-		private IStorageService<Teledeclaration> _teledeclarationsStorage;
+        int _initCount = 0;
+        public int MaxCount { get; set; }
+        private IStorageService<Teledeclaration> _teledeclarationsStorage;
 		private Filter _filter;
 		private ObservableCollection<Teledeclaration> _teledeclarationsAll;
 		private ObservableCollection<Teledeclaration> _teledeclarations;
@@ -47,7 +49,7 @@ namespace libermedical.ViewModels
 		public TeledeclarationsListViewModel(IStorageService<Teledeclaration> storageService) : base(storageService)
 		{
 			_teledeclarationsStorage = storageService;
-			BindData();
+			BindData(20);
 		}
 
 		private void ApplyFilter(Filter filter)
@@ -99,23 +101,20 @@ namespace libermedical.ViewModels
 			}
 		}
 
-        public async Task BindData()
+        public async Task BindData(int count)
 		{
-			if (App.IsConnected())
-			{
-				var request = new GetListRequest(20, 0);
-				Teledeclarations =
-					new ObservableCollection<Teledeclaration>((await App.TeledeclarationsManager.GetListAsync(request)).rows);
-                
-				//Updating records in local cache
-				await _teledeclarationsStorage.DeleteAllAsync();
-				await _teledeclarationsStorage.AddManyAsync(Teledeclarations.ToList());
-			}
-			else
-			{
-				Teledeclarations = new ObservableCollection<Teledeclaration>(await _teledeclarationsStorage.GetList());
-			}
+            _initCount = _initCount + count;
+            if (MaxCount == 0)
+                MaxCount = await new StorageService<Teledeclaration>().DownloadTeledeclarations(_initCount);
 
+            await new StorageService<Teledeclaration>().DownloadTeledeclarations(_initCount);
+            var list = await _teledeclarationsStorage.GetList();
+            if (list != null && list.Count() != 0)
+            {
+                list = list.OrderByDescending((arg) => arg.CreatedAt);
+            }
+            Teledeclarations = new ObservableCollection<Teledeclaration>(list);
+          
 			_teledeclarationsAll = Teledeclarations;
 
             MessagingCenter.Unsubscribe<FilterPage, Filter>(this, Events.UpdateTeledeclarationsFilters);

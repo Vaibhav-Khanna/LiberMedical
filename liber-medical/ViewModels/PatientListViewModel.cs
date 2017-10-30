@@ -15,8 +15,9 @@ namespace libermedical.ViewModels
 {
 	public class PatientListViewModel : ListViewModelBase<Patient>
 	{
-        
-		private ObservableCollection<GroupedItem<Patient>> _filteredPatients;
+        int _initCount = 0;
+        public int MaxCount { get; set; }
+        private ObservableCollection<GroupedItem<Patient>> _filteredPatients;
 		private ObservableCollection<GroupedItem<Patient>> Patients;
 		private IStorageService<Patient> _patientsStorage;
 		private string NavigationType;
@@ -26,29 +27,23 @@ namespace libermedical.ViewModels
 		public PatientListViewModel(IStorageService<Patient> storageService) : base(storageService)
 		{
 			_patientsStorage = storageService;
-			BindData();
+			BindData(20);
         }
 
-        public async Task BindData()
-		{
-            await DownlaodPatients();           
-		}   
-
-        private async Task DownlaodPatients()
+        public async Task BindData(int count)
         {
-            if (App.IsConnected())
-            {
-                var request = new GetListRequest(20, 0);
-                var patients =
-                    new ObservableCollection<Patient>((await App.PatientsManager.GetListAsync(request)).rows);
+            _initCount = _initCount + count;
+            if (MaxCount == 0)
+                MaxCount = await new StorageService<Patient>().DownloadPatients(_initCount);
 
-                //Updating records in local cache
-                await _storageService.InvalidateSyncedItems();
-                await _storageService.AddManyAsync(patients.ToList());
+            await new StorageService<Ordonnance>().DownloadPatients(_initCount);
+            var list = await _storageService.GetList();
+            if (list != null && list.Count() != 0)
+            {
+                list = list.OrderByDescending((arg) => arg.CreatedAt);
             }
             GroupItems((await _storageService.GetList()).ToList());
         }
-
        
 
         private void GroupItems(List<Patient> observableCollection)
