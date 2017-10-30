@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.DetailsPatientListPage" xmlns:converter="clr-namespace:libermedical.Converters;assembly=libermedical" Style="{StaticResource ModalBackgroundColor}">
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.DetailsPatientListPage" xmlns:converter="clr-namespace:libermedical.Converters;assembly=libermedical" Style="{StaticResource ModalBackgroundColor}" x:Name="Root">
 	<custom:BasePage.Header>
 		<ContentView Style="{StaticResource HeaderFooterBackground}">
 			<Grid Padding="5">
@@ -28,14 +28,14 @@
 		<ContentView BackgroundColor="White">
 			<Grid>
 				<Grid.RowDefinitions>
-					<RowDefinition Height="127" />
+					<RowDefinition Height="100" />
 					<RowDefinition Height="50" />
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 				<StackLayout BackgroundColor="#f0f0f0" Grid.Row="0">
 					<Label Margin="0,20,0,0" Text="{Binding Patient.Fullname}" HorizontalOptions="Center" VerticalOptions="Fill" Style="{StaticResource PatientNameTitle}" />
-					<Label Margin="0,0,0,0" Text="portable" HorizontalOptions="Center" VerticalOptions="Fill" Style="{StaticResource PortableTitle}" />
-					<!--<Label Margin="0,0,0,21" Text="{Binding Patient.PhoneNumbers[0]}" HorizontalOptions="Center" VerticalOptions="Fill" Style="{StaticResource PortableNumber}" />-->
+					<!--<Label Margin="0,0,0,0" Text="portable" HorizontalOptions="Center" VerticalOptions="Fill" Style="{StaticResource PortableTitle}" />
+					<Label Margin="0,0,0,21" Text="{Binding Patient.PhoneNumbers[0]}" HorizontalOptions="Center" VerticalOptions="Fill" Style="{StaticResource PortableNumber}" />-->
           <Image Source="phone.png" HorizontalOptions="Center">
             <Image.GestureRecognizers>
               <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CallCommand}" />
@@ -70,7 +70,7 @@
 				</StackLayout>
 				<ScrollView Grid.Row="2">
 					<StackLayout Padding="0,0,0,0">
-						<ListView ItemsSource="{Binding Ordonnances}" x:Name="stackOrdonnance" SelectedItem="{Binding SelectedOrdonnance}" SeparatorVisibility="Default" RowHeight="60" IsVisible="{Binding ShowStackOrdonnance}">
+						<ListView ItemsSource="{Binding Ordonnances}" x:Name="stackOrdonnance" SelectedItem="{Binding SelectedOrdonnance}" SeparatorVisibility="Default" RowHeight="60" IsVisible="{Binding ShowStackOrdonnance}" >
 							<ListView.ItemTemplate>
 								<DataTemplate>
 									<ViewCell>
@@ -86,7 +86,7 @@
 											</Grid.RowDefinitions>
 											<Label Text="{Binding Reference, StringFormat='Ordo {0}'}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
 											<Label Text="{Binding FirstCareAt,StringFormat='{0:dd-MM-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
-											<Button Text="{Binding Status}" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" TextColor="#ffffff" Grid.RowSpan="2" Grid.Column="1">
+											<Button Text="{Binding Status}" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" TextColor="#ffffff" Grid.RowSpan="2" Grid.Column="1" Command="{Binding Source={x:Reference Root}, Path=BindingContext.OrdonnanceSelectCommand}" CommandParameter="{Binding .}">
 												<Button.HeightRequest>
 													<OnPlatform x:TypeArguments="x:Double" iOS="20" Android="40" />
 												</Button.HeightRequest>

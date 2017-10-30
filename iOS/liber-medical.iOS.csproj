@@ -111,6 +111,7 @@
     </None>
     <Compile Include="Renderers\BorderlessPickerRenderer.cs" />
     <Compile Include="Renderers\DefaultSearchBarRenderer.cs" />
+    <Compile Include="Renderers\CustomViewCellRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

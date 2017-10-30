@@ -3,29 +3,36 @@
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Order="Primary" Icon="plus.png" Command="{Binding AddUserCommand}" />
 	</ContentPage.ToolbarItems>
-		<ContentView Style="{StaticResource ModalContentBackgroundColor}">
-			<Grid RowSpacing="0" >
-				<Grid.RowDefinitions>
-					<RowDefinition Height="50" />
-					<RowDefinition Height="*" />
-				</Grid.RowDefinitions>
-				<StackLayout BackgroundColor="#c8c7cc" Grid.Row="0" Padding="8,7" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
-					<SearchBar x:Name="searchBar" TextChanged="Handle_TextChanged" Placeholder="Rechercher" Text="{Binding SearchString, Mode=TwoWay}" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" />
-				</StackLayout>
-				<ListView x:Name="PatientListView" SeparatorVisibility="Default" Refreshing="Handle_Refreshing" IsPullToRefreshEnabled="True" Grid.Row="1" Style="{StaticResource StandartListViewStyle}" ItemSelected="Handle_ItemSelected" IsGroupingEnabled="true" GroupDisplayBinding="{Binding HeaderKey}" GroupShortNameBinding="{Binding HeaderKey}" ItemAppearing="PatientListView_ItemAppearing">
-					<ListView.GroupHeaderTemplate>
-						<DataTemplate>
-							<ViewCell>
-								<Label Text="{Binding HeaderKey}" Margin="10,0,0,0" VerticalOptions="CenterAndExpand" />
-							</ViewCell>
-						</DataTemplate>
-					</ListView.GroupHeaderTemplate>
-					<ListView.ItemTemplate>
-						<DataTemplate>
-							<TextCell Text="{Binding Fullname}" TextColor="Black" Tapped="PatientTapped" />
-						</DataTemplate>
-					</ListView.ItemTemplate>
-				</ListView>
-			</Grid>
-		</ContentView>
+	<ContentView Style="{StaticResource ModalContentBackgroundColor}">
+		<Grid RowSpacing="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="50" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			<StackLayout BackgroundColor="#c8c7cc" Grid.Row="0" Padding="8,7" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
+				<SearchBar x:Name="searchBar" TextChanged="Handle_TextChanged" Placeholder="Rechercher" Text="{Binding SearchString, Mode=TwoWay}" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" />
+			</StackLayout>
+			<ListView x:Name="PatientListView" SeparatorVisibility="Default" Refreshing="Handle_Refreshing" IsPullToRefreshEnabled="True" Grid.Row="1" Style="{StaticResource StandartListViewStyle}" ItemSelected="Handle_ItemSelected" IsGroupingEnabled="true" GroupDisplayBinding="{Binding HeaderKey}" GroupShortNameBinding="{Binding HeaderKey}"
+				ItemAppearing="PatientListView_ItemAppearing">
+				<ListView.GroupHeaderTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<Label Text="{Binding HeaderKey}" Margin="10,0,0,0" VerticalOptions="CenterAndExpand" />
+						</ViewCell>
+					</DataTemplate>
+				</ListView.GroupHeaderTemplate>
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell Tapped="PatientTapped">
+							<ViewCell.View>
+								<StackLayout Padding="10,0,0,0">
+									<Label Text="{Binding Fullname}" TextColor="Black" VerticalOptions="CenterAndExpand" />
+								</StackLayout>
+							</ViewCell.View>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</Grid>
+	</ContentView>
 </ContentPage>

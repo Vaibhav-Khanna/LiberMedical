@@ -159,7 +159,7 @@ namespace libermedical.ViewModels
             }
         }
 
-        private ICommand OrdonnanceSelectCommand
+        public ICommand OrdonnanceSelectCommand
         {
             get
             {
