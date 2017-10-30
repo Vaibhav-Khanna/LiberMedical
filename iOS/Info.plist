@@ -47,5 +47,11 @@
 	<string>0.0.1</string>
 	<key>XSAppIconAssets</key>
 	<string>Resources/Icons.xcassets/AppIcons.appiconset</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>fr</string>
+	</array>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
 </dict>
 </plist>
