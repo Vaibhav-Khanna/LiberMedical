@@ -23,7 +23,7 @@ namespace libermedical.Pages
 		void PatientTapped(object sender, System.EventArgs e)
 		{
 			var vm = (PatientListViewModel)BindingContext;
-			var cell = (TextCell)sender;
+			var cell = (ViewCell)sender;
 			if (cell == null) return;
 			vm.ListElementTapCommand.Execute(cell);
 		}

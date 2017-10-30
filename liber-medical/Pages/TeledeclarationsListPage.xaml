@@ -4,7 +4,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 	xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
 	xmlns:converter="clr-namespace:libermedical.Converters;assembly=libermedical"
-	Title="Télédéclarations" Style="{StaticResource AppBackgroundColor}">
+	Title="Télédéclarations" Style="{StaticResource AppBackgroundColor}" x:Name="Root">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Name="Télédéclarations" Command="{Binding FilterTappedCommand}" Icon="filters.png" />
 	</ContentPage.ToolbarItems>
@@ -36,7 +36,7 @@
 										</Grid.RowDefinitions>
 										<Label Grid.Row="0" Grid.Column="0" HorizontalOptions="StartAndExpand" Style="{StaticResource Ordonnance}" Text="{Binding Label}" VerticalOptions="EndAndExpand"  />
                                         <Label Grid.Row="1" Grid.Column="0" HorizontalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Text="{Binding CreatedAt, StringFormat='{0:dd-MM-yyyy}'}" VerticalOptions="StartAndExpand" />
-										<Button Grid.RowSpan="2" Grid.Column="1" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" HorizontalOptions="Center" Text="{Binding StatusString}" TextColor="#ffffff" VerticalOptions="Center">
+										<Button Grid.RowSpan="2" Grid.Column="1" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" HorizontalOptions="Center" Text="{Binding StatusString}" TextColor="#ffffff" VerticalOptions="Center" Command="{Binding Source={x:Reference Root}, Path=BindingContext.TeledeclarationTappedCommand}" CommandParameter="{Binding .}">
 											<Button.HeightRequest>
 												<OnPlatform x:TypeArguments="x:Double" Android="40" iOS="20" />
 											</Button.HeightRequest>

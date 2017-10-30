@@ -42,23 +42,32 @@
 	  
 	<custom:BasePage.ContentPresenter>
 		<ContentView Style="{StaticResource ModalContentBackgroundColor}" VerticalOptions="FillAndExpand" >
-			<TableView Intent="Form" RowHeight="50" VerticalOptions="FillAndExpand" BackgroundColor="White" >
-				<TableRoot>
-					<TableSection>
-						<ViewCell>
-							<Label Style="{StaticResource LabellabelStyle}" Text="{Binding FirstName}" />
-						</ViewCell>
-						<ViewCell>
-							<Label Style="{StaticResource LabellabelStyle}" Text="{Binding LastName}" />
-						</ViewCell>
-						<ViewCell>
-							<Label Style="{StaticResource LabellabelStyle}" Text="{Binding EmailAddress}" />
-						</ViewCell>
-						<ViewCell>
-							<Label Style="{StaticResource LabellabelStyle}" Text="{Binding PhoneNumber}" />
-						</ViewCell>
-						<ViewCell Tapped="Handle_Tapped">
-							<Grid Margin="15,0,21,0" VerticalOptions="Center" IsVisible="{Binding IsContractVisible}" >
+
+			<Grid Padding="10,0,0,0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="1"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="1"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="1"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="1"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="1"/>
+				</Grid.RowDefinitions>
+				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding FirstName}"  Grid.Row="0"/>
+				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="1"></BoxView>
+				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding LastName}"  Grid.Row="2"/>
+				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="3"></BoxView>
+				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding EmailAddress}"  Grid.Row="4"/>
+				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="5"></BoxView>
+				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding PhoneNumber}" Grid.Row="6"/>
+				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="7"></BoxView>
+				<Grid Margin="15,0,21,0" VerticalOptions="Center" IsVisible="{Binding IsContractVisible}" Grid.Row="8">
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="10*" />
 									<ColumnDefinition Width="88*" />
@@ -82,10 +91,8 @@
 									Source="back_arrow_green.png"
 									VerticalOptions="Center" />
 							</Grid>
-						</ViewCell>
-					</TableSection>
-				</TableRoot>
-			</TableView>
+			</Grid>
+
 		</ContentView>
 		</custom:BasePage.ContentPresenter>
 </custom:BasePage>
