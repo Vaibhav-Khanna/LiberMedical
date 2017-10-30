@@ -20,11 +20,7 @@
 				<SearchBar x:Name="searchBar" BackgroundColor="White" HeightRequest="30" HorizontalOptions="FillAndExpand" Placeholder="Rechercher" Style="{StaticResource ResearchBar}" VerticalOptions="FillAndExpand" TextChanged="Handle_TextChanged" />
 			</StackLayout>
 
-
-           
-            
-
-            <ListView x:Name="TeledeclarationsList" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing" Grid.Row="1" ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" RowHeight="60" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default">
+            <ListView x:Name="TeledeclarationsList" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing" Grid.Row="1" ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" RowHeight="60" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default" ItemAppearing="TeledeclarationsList_ItemAppearing">
 						<ListView.ItemTemplate>
 							<DataTemplate>
 								<ViewCell>
