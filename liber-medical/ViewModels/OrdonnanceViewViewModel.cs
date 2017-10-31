@@ -70,6 +70,12 @@ namespace libermedical.ViewModels
                     Title = System.IO.Path.GetFileNameWithoutExtension((string)initData);
                     ImageSource = GetDocumentPath((string)initData);
                 }
+                else if (initData is Invoice)
+                {
+                    var invoice = initData as Invoice;
+                    Title = invoice.Label;
+                    ImageSource = GetDocumentPath(invoice.FilePath);
+                }
                 else
                 {
                     Teledeclaration = initData as Teledeclaration;

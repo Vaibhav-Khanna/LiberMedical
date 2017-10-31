@@ -77,6 +77,12 @@ namespace libermedical.ViewModels
                     else
                         DownloadFile(document.AttachmentPath);
                 }
+                else if (initData is Invoice)
+                {
+                    var invoice = initData as Invoice;
+                    Title = invoice.Label;
+                    DownloadFile(invoice.FilePath);
+                }
 
             }
         }

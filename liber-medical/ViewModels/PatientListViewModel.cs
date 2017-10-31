@@ -36,7 +36,7 @@ namespace libermedical.ViewModels
             if (MaxCount == 0)
                 MaxCount = await new StorageService<Patient>().DownloadPatients(_initCount);
 
-            await new StorageService<Ordonnance>().DownloadPatients(_initCount);
+            await new StorageService<Patient>().DownloadPatients(_initCount);
             var list = await _storageService.GetList();
             if (list != null && list.Count() != 0)
             {

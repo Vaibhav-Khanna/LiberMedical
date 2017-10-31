@@ -11,6 +11,7 @@ using System.Linq;
 using libermedical.Request;
 using libermedical.Services;
 using System.Threading.Tasks;
+using Acr.UserDialogs;
 
 namespace libermedical.ViewModels
 {
@@ -181,5 +182,28 @@ namespace libermedical.ViewModels
                 await Application.Current.MainPage.Navigation.PushModalAsync(new FilterPage("Teledeclarations", _filter));
             });
 
+        public ICommand OpenInvoiceToSecuriseCommand
+        {
+            get
+            {
+                return new Command(
+                async (args) =>
+                {
+                    UserDialogs.Instance.ShowLoading("ouverture");
+                    var request = new GetListRequest(20, 1);
+                    var invoices = await App.InvoicesManager.GetListAsync(request);
+                    if (invoices != null && invoices.rows.Count > 0)
+                    {
+                        var invoice = invoices.rows[invoices.rows.Count-1];
+                        if (invoice.FilePath.Contains(".pdf"))
+                            await CoreMethods.PushPageModel<SecuriseBillsViewModel>(invoice, true);
+                        else
+                            await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(invoice, true);
+                    }
+                    UserDialogs.Instance.HideLoading();
+
+                });
+            }
+        }
     }
 }
