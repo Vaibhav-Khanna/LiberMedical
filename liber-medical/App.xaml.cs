@@ -24,6 +24,7 @@ namespace libermedical
         private static IPatientsManager _patientsManager;
         private static IDocumentsManager _documentsManager;
         private static ITeledeclarationsManager _teledeclarationsManager;
+        private static IInvoicesManager _invoicesManager;
         public static LibermedicalTabbedNavigation tabbedNavigation;
 
         public App()
@@ -149,7 +150,8 @@ namespace libermedical
         public static IDocumentsManager DocumentsManager => _documentsManager ??
                                                       (_documentsManager = new DocumentsManager(new RestService<Document>("documents")));
 
-
+        public static IInvoicesManager InvoicesManager => _invoicesManager ??
+                                                      (_invoicesManager = new InvoicesManager(new RestService<Invoice>("invoicesToSecure")));
 
     }
 }

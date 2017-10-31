@@ -40,7 +40,7 @@
 								</Grid.ColumnDefinitions>
 								<Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
 								<Label Text="Date de Début" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
-								<DatePicker x:Name="StartDatePicker" VerticalOptions="CenterAndExpand" Date="{x:Static sys:DateTime.Now}" Grid.Column="2" DateSelected="Handle_StartDateSelected" IsVisible="false" Unfocused="StartDateUnfocused">
+								<DatePicker x:Name="StartDatePicker" VerticalOptions="CenterAndExpand" Date="{x:Static sys:DateTime.UtcNow}" Grid.Column="2" DateSelected="Handle_StartDateSelected" IsVisible="false" Unfocused="StartDateUnfocused">
 									<DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
 									<DatePicker.MinimumDate>
 										<sys:DateTime x:FactoryMethod="Parse">
@@ -73,7 +73,7 @@
 								</Grid.ColumnDefinitions>
 								<Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
 								<Label Text="Date de Fin" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
-								<DatePicker x:Name="EndDatePicker" VerticalOptions="CenterAndExpand" Date="{x:Static sys:DateTime.Now}" Grid.Column="2" DateSelected="Handle_EndDateSelected" IsVisible="false" Unfocused="EndDateUnfocused">
+								<DatePicker x:Name="EndDatePicker" VerticalOptions="CenterAndExpand" Date="{x:Static sys:DateTime.UtcNow}" Grid.Column="2" DateSelected="Handle_EndDateSelected" IsVisible="false" Unfocused="EndDateUnfocused">
 									<DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
 									<DatePicker.MinimumDate>
 										<sys:DateTime x:FactoryMethod="Parse">

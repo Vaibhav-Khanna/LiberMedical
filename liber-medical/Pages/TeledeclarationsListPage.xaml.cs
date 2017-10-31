@@ -32,7 +32,7 @@ namespace libermedical.Pages
 
         private async void Bill_Tapped(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new SecuriseBillsPage());
+            (BindingContext as TeledeclarationsListViewModel).OpenInvoiceToSecuriseCommand.Execute(null);
         }
 
         private void Handle_ItemSelected(object sender, SelectedItemChangedEventArgs e)

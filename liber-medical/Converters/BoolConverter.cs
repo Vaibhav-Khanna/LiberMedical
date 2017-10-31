@@ -21,7 +21,7 @@ namespace libermedical.Converters
 		}
 	}
 
-	public class BoolSyncConverter : JsonConverter
+	public class TupleConverter : JsonConverter
 	{
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 		{
@@ -30,12 +30,34 @@ namespace libermedical.Converters
 
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
-			return reader.Value ?? true;
+            if(reader.Value!=null)
+            {
+                return new Tuple<string, bool>(reader.Value.ToString(), true);
+            }
+			return null;
 		}
 
 		public override bool CanConvert(Type objectType)
 		{
-			return objectType == typeof(bool);
+			return true;
 		}
 	}
+
+    public class BoolSyncConverter : JsonConverter
+    {
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            writer.WriteValue(value);
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            return reader.Value ?? true;
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(bool);
+        }
+    }
 }
