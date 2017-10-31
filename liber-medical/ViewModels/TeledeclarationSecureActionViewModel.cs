@@ -4,12 +4,13 @@ using libermedical.Models;
 using libermedical.Services;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Acr.UserDialogs;
 
 namespace libermedical.ViewModels
 {
 	public class TeledeclarationSecureActionViewModel : FreshBasePageModel
 	{
-		private IStorageService<Teledeclaration> _teledeclarationService;
+		private StorageService<Teledeclaration> _teledeclarationService;
 
 		private Teledeclaration _teledeclaration;
 
@@ -41,8 +42,8 @@ namespace libermedical.ViewModels
 			{
 				return new Command(async (args) =>
 				{
-
-					if (args as string == "Valid")
+                    UserDialogs.Instance.ShowLoading("Processing...");
+                    if (args as string == "Valid")
 						Teledeclaration.Status = Enums.StatusEnum.valid;
 					else
 						Teledeclaration.Status = Enums.StatusEnum.refused;
@@ -52,10 +53,15 @@ namespace libermedical.ViewModels
 					Teledeclaration.IsSynced = false;
 					await _teledeclarationService.AddAsync(Teledeclaration);
 
-					//TODO: Display success toast
+                    if (App.IsConnected())
+                    {
+                        await _teledeclarationService.PushTeledeclaration(Teledeclaration);
+                    }
+                    //TODO: Display success toast
 
                     await CoreMethods.PopPageModel(true,true);
-				});
+                    UserDialogs.Instance.HideLoading();
+                });
 			}
 		}
 

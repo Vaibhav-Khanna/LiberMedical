@@ -35,7 +35,6 @@ namespace libermedical.ViewModels
         {
             _ordonnanceStorage = storageService;
             BindData(20);
-            DownlaodDocuments();
         }
 
         public async Task BindData(int count)
@@ -54,8 +53,6 @@ namespace libermedical.ViewModels
             Ordonnances = new ObservableCollection<Ordonnance>(list);
         }
 
-       
-
         private async Task DownlaodDocuments()
         {
             if (App.IsConnected())
@@ -69,6 +66,7 @@ namespace libermedical.ViewModels
                 await new StorageService<Document>().AddManyAsync(documents.ToList());
             }
         }
+
         protected override async Task TapCommandFunc(Cell cell)
         {
             var ctx = cell.BindingContext;

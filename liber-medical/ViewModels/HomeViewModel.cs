@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using libermedical.Helpers;
 using Newtonsoft.Json;
 using libermedical.Request;
+using Acr.UserDialogs;
 
 namespace libermedical.ViewModels
 {
@@ -134,7 +135,7 @@ namespace libermedical.ViewModels
 				}
 
 				var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-				{ Directory = "Docs", Name = DateTime.Now.Ticks.ToString() });
+				{ Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality =30  });
 				if (file != null)
 				{
 					//if document we change typeDoc to document
@@ -180,7 +181,13 @@ namespace libermedical.ViewModels
 					PatientName = patient.Fullname
 				};
 				await new StorageService<Ordonnance>().AddAsync(ordannance);
-			}
+                if (App.IsConnected())
+                {
+                    UserDialogs.Instance.ShowLoading("Processing...");
+                    await new StorageService<Ordonnance>().PushOrdonnance(ordannance, true);
+                    UserDialogs.Instance.HideLoading();
+                }
+            }
 			else
 			{
 				var document = new Document()
@@ -194,7 +201,13 @@ namespace libermedical.ViewModels
 					AttachmentPath = _documentPath,
 				};
 				await new StorageService<Document>().AddAsync(document);
-			}
+                if (App.IsConnected())
+                {
+                    UserDialogs.Instance.ShowLoading("Processing...");
+                    await new StorageService<Document>().PushDocument(document, true);
+                    UserDialogs.Instance.HideLoading();
+                }
+            }
 
 		}
 	}

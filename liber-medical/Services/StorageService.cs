@@ -13,6 +13,7 @@ using System.Collections.ObjectModel;
 
 namespace libermedical.Services
 {
+
 	public class StorageService<TModel> : IStorageService<TModel> where TModel : BaseDTO, new()
 	{
 		public async Task<bool> AddAsync(TModel item)
@@ -132,7 +133,25 @@ namespace libermedical.Services
 			await SyncPatients();
 			await SyncOrdonnances();
 			await SyncDocuments();
+            await SyncTeledeclarations();
 		}
+
+        public async Task SyncTeledeclarations()
+        {
+            try
+            {
+
+                var items = (await BlobCache.UserAccount.GetAllObjects<Teledeclaration>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
+                foreach (var item in items)
+                {
+                    await PushTeledeclaration(item);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
 
 		public async Task SyncPatients()
 		{
@@ -169,109 +188,149 @@ namespace libermedical.Services
 
 		}
 
-		public async Task PushPatient(Patient patientObject, bool isNew)
-		{
-			try
-			{
+        public async Task PushTeledeclaration(Teledeclaration teledeclaration)
+        {
+            try
+            {
 
-				var localId = patientObject.Id;
-				var patient = await App.PatientsManager.SaveOrUpdateAsync(patientObject.Id, patientObject, isNew);
-				if (patient != null)
-				{
-					await DeleteItemAsync(typeof(Patient).Name + "_" + localId);
-					patient.IsSynced = true;
-					await AddAsync(patient as TModel);
-					var patientDocuments = (await BlobCache.UserAccount.GetAllObjects<Document>()).ToObservable().Where(x => x.PatientId == localId).ToEnumerable();
-					foreach (var document in patientDocuments.Where(x => x.IsSynced == false))
-					{
-						document.Patient = patient;
-						document.PatientId = patient.Id;
-						await PushDocument(document, document.CreatedAt == document.UpdatedAt);
-					}
+                var localId = teledeclaration.Id;
+                var tele = await App.TeledeclarationsManager.SaveOrUpdateAsync(teledeclaration.Id, teledeclaration, false);
+                if (tele != null)
+                {
+                    tele.IsSynced = true;
+                    await UpdateAsync(tele as TModel, typeof(Teledeclaration).Name + "_" + localId);
+                }
+                else
+                {
+                    await UpdateAsync(teledeclaration as TModel, typeof(Teledeclaration).Name + "_" + teledeclaration.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
 
-					var patientOrdonnances = (await BlobCache.UserAccount.GetAllObjects<Ordonnance>()).ToObservable().Where(x => x.PatientId == localId).ToEnumerable();
-					foreach (var ordonnance in patientOrdonnances.Where(x => x.IsSynced == false))
-					{
-						ordonnance.Patient = patient;
-						ordonnance.PatientId = patient.Id;
-						await PushOrdonnance(ordonnance, ordonnance.CreatedAt == ordonnance.UpdatedAt);
-					}
-				}
-			}
-			catch (Exception e)
-			{
-				Debug.WriteLine(e.Message);
-			}
-		}
 
-		public async Task PushDocument(Document document, bool isNew)
-		{
-			try
-			{
-				var res = await FileUpload.UploadFile(document.AttachmentPath, "PatientDocuments", document.Id);
-				if (res)
-				{
-					document.AttachmentPath = $"PatientDocuments/{document.Id}/{Path.GetFileName(document.AttachmentPath)}";
-					var localId = document.Id;
-					var doc = await App.DocumentsManager.SaveOrUpdateAsync(document.Id, document, isNew);
-					if (doc != null)
-					{
-						await DeleteItemAsync(typeof(Document).Name + "_" + localId);
-						doc.IsSynced = true;
-						await AddAsync(doc as TModel);
-					}
-					else
-					{
-						await DeleteItemAsync(typeof(Document).Name + "_" + localId);
-						await AddAsync(document as TModel);
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.Message);
-			}
-		}
+        public async Task PushPatient(Patient patientObject, bool isNew)
+        {
+            try
+            {
 
-		public async Task PushOrdonnance(Ordonnance ordonnanceObject, bool isNew)
-		{
-			try
-			{
+                var localId = patientObject.Id;
+                var patient = await App.PatientsManager.SaveOrUpdateAsync(patientObject.Id, patientObject, isNew);
+                if (patient != null)
+                {
+                    patient.IsSynced = true;
+                    await UpdateAsync(patient as TModel, typeof(Patient).Name + "_" + localId);
+                    var patientDocuments = (await BlobCache.UserAccount.GetAllObjects<Document>()).ToObservable().Where(x => x.PatientId == localId).ToEnumerable();
+                    foreach (var document in patientDocuments.Where(x => x.IsSynced == false))
+                    {
+                        document.Patient = patient;
+                        document.PatientId = patient.Id;
+                        await PushDocument(document, document.CreatedAt == document.UpdatedAt);
+                    }
 
-				var localId = ordonnanceObject.Id;
-				var ordonnance = await App.OrdonnanceManager.SaveOrUpdateAsync(ordonnanceObject.Id, ordonnanceObject, isNew);
-				if (ordonnance != null)
-				{
-					await DeleteItemAsync(typeof(Ordonnance).Name + "_" + localId);
-					ordonnance.IsSynced = true;
-					await AddAsync(ordonnance as TModel);
-					var attachments = new Dictionary<string, string>();
-					foreach (var attachment in ordonnance.Attachments)
-					{
-						var res = await FileUpload.UploadFile(attachment, "Ordonnance", ordonnance.Id);
-						if (res)
-							attachments.Add(attachment, $"Ordonnance/{ordonnance.Id}/{Path.GetFileName(attachment)}");
-					}
-					if (attachments.Keys.Count > 0)
-						foreach (var key in attachments.Keys)
-							ordonnance.Attachments[ordonnance.Attachments.IndexOf(key)] = attachments[key];
+                    var patientOrdonnances = (await BlobCache.UserAccount.GetAllObjects<Ordonnance>()).ToObservable().Where(x => x.PatientId == localId).ToEnumerable();
+                    foreach (var ordonnance in patientOrdonnances.Where(x => x.IsSynced == false))
+                    {
+                        ordonnance.Patient = patient;
+                        ordonnance.PatientId = patient.Id;
+                        await PushOrdonnance(ordonnance, ordonnance.CreatedAt == ordonnance.UpdatedAt);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
 
-					var ordonnanceUpdated = await App.OrdonnanceManager.SaveOrUpdateAsync(ordonnance.Id, ordonnance, false);
-					if (ordonnanceUpdated != null)
-						await DownloadOrdonnances(20);
-					else
-					{
-						await DeleteItemAsync(typeof(Ordonnance).Name + "_" + ordonnance.Id);
-						ordonnance.IsSynced = false;
-						await AddAsync(ordonnance as TModel);
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.Message);
-			}
-		}
+        public async Task PushDocument(Document document, bool isNew)
+        {
+            try
+            {
+                var res = await FileUpload.UploadFile(document.AttachmentPath, "PatientDocuments", document.Id);
+                if (res)
+                {
+                    document.AttachmentPath = $"PatientDocuments/{document.Id}/{Path.GetFileName(document.AttachmentPath)}";
+                    var localId = document.Id;
+                    var doc = await App.DocumentsManager.SaveOrUpdateAsync(document.Id, document, isNew);
+                    if (doc != null)
+                    {
+                        doc.IsSynced = true;
+                        await UpdateAsync(doc as TModel, typeof(Document).Name + "_" + document.Id);
+                    }
+                    else
+                    {
+                        await UpdateAsync(document as TModel, typeof(Document).Name + "_" + localId);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        public async Task PushOrdonnance(Ordonnance ordonnanceObject, bool isNew)
+        {
+            try
+            {
+
+                var localId = ordonnanceObject.Id;
+                var ordonnance = await App.OrdonnanceManager.SaveOrUpdateAsync(ordonnanceObject.Id, ordonnanceObject, isNew);
+                if (ordonnance != null)
+                {
+                    ordonnance.IsSynced = true;
+                    await UpdateAsync(ordonnance as TModel, typeof(Ordonnance).Name + "_" + localId);
+                    var attachments = new Dictionary<string, string>();
+                    foreach (var attachment in ordonnance.Attachments)
+                    {
+                        var res = await FileUpload.UploadFile(attachment, "Ordonnance", ordonnance.Id);
+                        if (res)
+                            attachments.Add(attachment, $"Ordonnance/{ordonnance.Id}/{Path.GetFileName(attachment)}");
+                    }
+                    if (attachments.Keys.Count > 0)
+                        foreach (var key in attachments.Keys)
+                            ordonnance.Attachments[ordonnance.Attachments.IndexOf(key)] = attachments[key];
+
+                    var ordonnanceUpdated = await App.OrdonnanceManager.SaveOrUpdateAsync(ordonnance.Id, ordonnance, false);
+                    if (ordonnanceUpdated != null)
+                    {
+                        ordonnance = ordonnanceUpdated;
+                        ordonnance.IsSynced = true;
+                    }
+                    else
+                    {
+                        ordonnance.IsSynced = false;
+                    }
+                    await UpdateAsync(ordonnance as TModel, typeof(Ordonnance).Name + "_" + ordonnance.Id);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        public async Task<bool> UpdateAsync(TModel item, string id)
+        {
+            try
+            {
+
+                await DeleteItemAsync(id);
+                await AddAsync(item as TModel);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
 
 		public async Task SyncOrdonnances()
 		{
@@ -295,17 +354,18 @@ namespace libermedical.Services
 			if (App.IsConnected())
 			{
                 var request = new GetListRequest(count, 1, sortField: "createdAt", sortDirection: Enums.SortDirectionEnum.Desc);
-                var response = await App.OrdonnanceManager.GetListAsync(request);
-				var Ordonnances =
-					new ObservableCollection<Ordonnance>(response.rows);
 
-				//Updating records in local cache
-				await InvalidateSyncedItems();
-				await AddManyAsync(Ordonnances.ToList() as List<TModel>);
+                var response = await App.OrdonnanceManager.GetListAsync(request);
+                var Ordonnances =
+                    new ObservableCollection<Ordonnance>(response.rows);
+
+                //Updating records in local cache
+                await InvalidateSyncedItems();
+                await AddManyAsync(Ordonnances.ToList() as List<TModel>);
                 return response.total;
-			}
+            }
             return -1;
-		}
+        }
 
         public async Task<int> DownloadPatients(int count)
         {
