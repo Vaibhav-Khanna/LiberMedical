@@ -43,6 +43,7 @@ namespace libermedical.Models
                 ? "Traité"
                 : "Refusé";
 
+        [JsonIgnore]
         public List<AttachmentsHelper> AttachmentsInfo => Attachments.Select(p => new AttachmentsHelper()
         {
             FilePath = p,
