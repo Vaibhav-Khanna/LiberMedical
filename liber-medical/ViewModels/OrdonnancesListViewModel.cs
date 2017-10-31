@@ -94,6 +94,9 @@ namespace libermedical.ViewModels
                         var file = await CrossMedia.Current.TakePhotoAsync(
                             new StoreCameraMediaOptions
                             {
+                                Directory = "Docs",
+                                Name = DateTime.Now.Ticks.ToString(),
+                                CompressionQuality = 30,
                                 AllowCropping = true
                             });
                         if (file != null)
@@ -103,7 +106,8 @@ namespace libermedical.ViewModels
                     }
                     else if (action2 == "Bibliothèque photo")
                     {
-                        var file = await CrossMedia.Current.PickPhotoAsync();
+                        var pickerOptions = new PickMediaOptions() { CompressionQuality = 30 };
+                        var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
                         if (file != null)
                         {
                             filePath = file.Path;
