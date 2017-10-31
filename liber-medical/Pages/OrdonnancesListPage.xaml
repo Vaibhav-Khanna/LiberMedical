@@ -36,7 +36,7 @@
                                             <RowDefinition Height="40*" />
                                         </Grid.RowDefinitions>
                                         <Label Text="{Binding PatientName}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
-                                        <Label Text="{Binding FirstCareAt, StringFormat='{0:dd-MM-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
+                                        <Label Text="{Binding CreatedAt, StringFormat='{0:dd-MM-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
                                         <StackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Orientation="Horizontal">
                                             <Button Text="{Binding StatusString}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" TextColor="#ffffff" IsVisible="{Binding IsSynced}" Command="{Binding Source={x:Reference Root}, Path=BindingContext.SelectItemCommand}" CommandParameter="{Binding .}">
                                                 <Button.HeightRequest>
@@ -65,6 +65,11 @@
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <ContentView HorizontalOptions="FillAndExpand" HeightRequest="80">
+                        <ActivityIndicator x:Name="indicator" IsVisible="false" IsRunning="true" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+                    </ContentView>
+                </ListView.Footer>
                     </ListView>
               
         </Grid>

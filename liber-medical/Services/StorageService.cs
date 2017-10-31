@@ -35,12 +35,18 @@ namespace libermedical.Services
 			try
 			{
 				var dic = new Dictionary<string, TModel>();
+
+                var list_keys = await GetKeys();
+
 				foreach (var item in items)
 				{
 					var key = typeof(TModel).Name + "_" + item.Id;
 					item.IsSynced = true;
-					dic.Add(key, item);
+
+                    if(!list_keys.Contains(key))
+					dic.Add(key, item);                   
 				}
+
 				await BlobCache.UserAccount.InsertObjects(dic);
 				return true;
 			}
@@ -288,7 +294,7 @@ namespace libermedical.Services
 		{
 			if (App.IsConnected())
 			{
-				var request = new GetListRequest(count, 1);
+                var request = new GetListRequest(count, 1, sortField: "createdAt", sortDirection: Enums.SortDirectionEnum.Desc);
                 var response = await App.OrdonnanceManager.GetListAsync(request);
 				var Ordonnances =
 					new ObservableCollection<Ordonnance>(response.rows);
@@ -334,5 +340,19 @@ namespace libermedical.Services
             }
             return -1;
         }
+
+        private async Task<List<string>> GetKeys()
+        {
+            try
+            {
+                var response = await BlobCache.UserAccount.GetAllKeys();
+                return response.ToList();
+            }
+            catch(Exception ex)
+            {
+                return new List<string>();
+            }
+        }
+
     }
 }

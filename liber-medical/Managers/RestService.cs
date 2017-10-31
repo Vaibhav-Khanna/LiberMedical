@@ -77,7 +77,7 @@ namespace libermedical.Managers
 			}
 			if (!string.IsNullOrEmpty(sortField))
 			{
-				parameters += "&sortField=" + sortField;
+                parameters += "&sortField=" + sortField + "="+direction.ToString().ToLower();
 			}
 
 			parameters += "&" + _auth;

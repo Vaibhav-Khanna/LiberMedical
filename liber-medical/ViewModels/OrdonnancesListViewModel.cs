@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using libermedical.Helpers;
 using Xamarin.Forms;
 
 namespace libermedical.ViewModels
@@ -47,10 +48,13 @@ namespace libermedical.ViewModels
             var list = await _ordonnanceStorage.GetList();
             if (list != null && list.Count() != 0)
             {
+                list = list.DistinctBy((arg) => arg.Id);
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
             }
             Ordonnances = new ObservableCollection<Ordonnance>(list);
         }
+
+       
 
         private async Task DownlaodDocuments()
         {
@@ -166,10 +170,13 @@ namespace libermedical.ViewModels
 
             if (list != null && list.Count() != 0)
             {
+                list = list.DistinctBy((arg) => arg.Id);
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
             }
 
             Ordonnances = new ObservableCollection<Ordonnance>(list);
         }
+
+
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 
@@ -15,6 +16,8 @@ namespace libermedical.Helpers
 		{
 			get { return CrossSettings.Current; }
 		}
+
+       
 
         #region Setting Constants
 

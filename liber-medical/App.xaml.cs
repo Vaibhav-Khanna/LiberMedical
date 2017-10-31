@@ -53,11 +53,19 @@ namespace libermedical
             }
             if (IsConnected())
                 SyncData();
+            
             CrossConnectivity.Current.ConnectivityChanged += (sender, args) =>
             {
-                if (CrossConnectivity.Current.IsConnected)
+                if (args.IsConnected)
                     SyncData();
             };
+
+            CrossConnectivity.Current.ConnectivityTypeChanged += (sender, e) => 
+            {
+                if(e.IsConnected)
+                    SyncData();
+            };
+
         }
 
         private void CreateTabbedPage()
@@ -88,7 +96,6 @@ namespace libermedical
             var synchelper = new StorageService<BaseDTO>();
             await synchelper.SyncTables();
         }
-
 
 
         public static long ConvertToUnixTimestamp(DateTime date)

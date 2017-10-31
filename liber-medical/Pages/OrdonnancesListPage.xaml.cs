@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using libermedical.Models;
@@ -146,14 +147,23 @@ namespace libermedical.Pages
 
         private async void MyListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
+           
             if ((BindingContext as OrdonnancesListViewModel).Ordonnances.Count < (BindingContext as OrdonnancesListViewModel).MaxCount)
             {
+                indicator.IsVisible = true;
                 var currentItem = e.Item as Ordonnance;
+                Debug.WriteLine((BindingContext as OrdonnancesListViewModel).Ordonnances.IndexOf(currentItem));
                 var lastItem = (BindingContext as OrdonnancesListViewModel).Ordonnances[(BindingContext as OrdonnancesListViewModel).Ordonnances.Count - 1];
                 if (currentItem == lastItem)
                     await (BindingContext as OrdonnancesListViewModel).BindData(20);
             }
-
+            else
+            {
+                indicator.IsVisible = false;
+                var currentItem = e.Item as Ordonnance;
+                Debug.WriteLine((BindingContext as OrdonnancesListViewModel).Ordonnances.IndexOf(currentItem));
+            }
         }
+
     }
 }
