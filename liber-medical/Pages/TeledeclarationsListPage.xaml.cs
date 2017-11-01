@@ -66,6 +66,8 @@ namespace libermedical.Pages
                     {
                         searchBar.Unfocus();
                         TeledeclarationsList.Focus();
+                        TeledeclarationsList.SetBinding(ListView.ItemsSourceProperty, "Teledeclarations");
+                        (BindingContext as TeledeclarationsListViewModel).Teledeclarations = (BindingContext as TeledeclarationsListViewModel).Teledeclarations;
                     });
                 }
 
@@ -73,15 +75,34 @@ namespace libermedical.Pages
             }
         }
 
+        bool isExecuting = false;
+
         private async void TeledeclarationsList_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
+            if (isExecuting)
+                return;
+
+            isExecuting = true;
+
             if ((BindingContext as TeledeclarationsListViewModel).Teledeclarations.Count < (BindingContext as TeledeclarationsListViewModel).MaxCount)
             {
+                if (string.IsNullOrWhiteSpace(searchBar.Text))
+                    indicator.IsVisible = true;
+                else
+                    indicator.IsVisible = false;
+                
                 var currentItem = e.Item as Teledeclaration;
                 var lastItem = (BindingContext as TeledeclarationsListViewModel).Teledeclarations[(BindingContext as TeledeclarationsListViewModel).Teledeclarations.Count - 1];
-                if (currentItem == lastItem)
+              
+                if (currentItem == lastItem && string.IsNullOrWhiteSpace(searchBar.Text))
                     await (BindingContext as TeledeclarationsListViewModel).BindData(20);
             }
+            else
+            {
+                indicator.IsVisible = false;
+            }
+
+            isExecuting = false;
         }
     }
 }

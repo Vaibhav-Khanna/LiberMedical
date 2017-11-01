@@ -199,7 +199,7 @@ namespace libermedical.ViewModels
 
 					if (App.IsConnected())
 					{
-                        await storageService.PushOrdonnance(Ordonnance, _isNew && Ordonnance.UpdatedAt != null );
+                        await storageService.PushOrdonnance(Ordonnance, _isNew && Ordonnance.UpdatedAt == null );
 					}
 
 					await CoreMethods.PopPageModel(null, true);

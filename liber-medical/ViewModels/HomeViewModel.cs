@@ -90,7 +90,7 @@ namespace libermedical.ViewModels
 				{
 					var profilePicture = ImageSource.FromStream(() => file.GetStream());
 					var typeNavigation = "normal";
-
+                    _documentPath = file.Path;
 					await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "HomeSelectPatient", typeNavigation, typeDoc }, true);
 
 					//var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
@@ -105,7 +105,8 @@ namespace libermedical.ViewModels
 				var pickerOptions = new PickMediaOptions() { CompressionQuality = 30 };
 
 				var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
-				if (file != null)
+
+                if (file!=null)
 				{
 					var profilePicture = ImageSource.FromStream(() => file.GetStream());
 					var typeNavigation = "normal";
@@ -170,10 +171,12 @@ namespace libermedical.ViewModels
 		{
 			if (typeDoc == "ordonnance")
 			{
-				var ordannance = new Ordonnance()
-				{
-					Id = Guid.NewGuid().ToString(),
+                var ordannance = new Ordonnance()
+                {
+                    Id = Guid.NewGuid().ToString(),
                     CreatedAt = DateTime.UtcNow,
+                    IsSynced = false,
+                    UpdatedAt = null,
                     First_Care_At = App.ConvertToUnixTimestamp(DateTime.UtcNow),
 					Attachments = new List<string>() { _documentPath },
 					Frequencies = new List<Frequency>(),
@@ -195,6 +198,8 @@ namespace libermedical.ViewModels
 				{
 					Id = Guid.NewGuid().ToString(),
                     CreatedAt = DateTime.UtcNow,
+                    IsSynced = false,
+                    UpdatedAt = null,
                     Reference = DateTime.UtcNow.Ticks,
                     AddDate = DateTime.UtcNow,
 					Patient = patient,

@@ -110,8 +110,8 @@ namespace libermedical.ViewModels
                             {
                                 Directory = "Docs",
                                 Name = DateTime.Now.Ticks.ToString(),
-                                CompressionQuality = 30,
-                                AllowCropping = true
+                                 CompressionQuality = 30, RotateImage = false
+
                             });
                         if (file != null)
                         {
@@ -120,13 +120,16 @@ namespace libermedical.ViewModels
                     }
                     else if (action2 == "Bibliothèque photo")
                     {
-                        var pickerOptions = new PickMediaOptions() { CompressionQuality = 30 };
+                        var pickerOptions = new PickMediaOptions() { CompressionQuality = 30, RotateImage = false };
                         var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
                         if (file != null)
                         {
                             filePath = file.Path;
                         }
                     }
+
+                    if (string.IsNullOrWhiteSpace(filePath))
+                        return;
 
                     var ordonnance = new Ordonnance
                     {
@@ -140,18 +143,36 @@ namespace libermedical.ViewModels
                         await CoreMethods.PushPageModel<PatientListViewModel>(
                             new string[] { "OrdonanceSelectPatient", "normal", "ordonnance" }, true);
 
+                        MessagingCenter.Unsubscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance);
                         MessagingCenter.Subscribe<PatientListViewModel, Patient>(this,
                             Events.OrdonnancePageSetPatientForOrdonnance, async (sender, patient) =>
                             {
                                 if (patient != null)
                                 {
                                     ordonnance.PatientId = patient.Id;
+                                    ordonnance.Patient = patient;
+                                    ordonnance.PatientName = $"{patient.FirstName} {patient.LastName}";
+                                    ordonnance.IsSynced = false;
+                                    ordonnance.UpdatedAt = null;
 
-                                    await new StorageService<Ordonnance>().AddAsync(ordonnance);
+                                    var storageService =  new StorageService<Ordonnance>();
+                                    
+                                    await storageService.AddAsync(ordonnance);
+
+                                    if (App.IsConnected())
+                                    {
+                                        Acr.UserDialogs.UserDialogs.Instance.ShowLoading("");
+                                        await storageService.PushOrdonnance(ordonnance, true);
+                                        await BindData(20);
+                                        Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+                                    }
 
                                     //display toast
                                     //pop to root
-                                    Ordonnances = new ObservableCollection<Ordonnance>(await _ordonnanceStorage.GetList());
+                                    var list = await storageService.GetList();
+                                    Ordonnances = new ObservableCollection<Ordonnance>(list);
+
+                                    MessagingCenter.Unsubscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance);
                                 }
                             });
                     }
@@ -177,8 +198,6 @@ namespace libermedical.ViewModels
 
             Ordonnances = new ObservableCollection<Ordonnance>(list);
 
-            if (App.IsConnected())
-                await App.SyncData();
         }
 
 

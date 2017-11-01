@@ -142,6 +142,8 @@ namespace libermedical.Pages
                     {
                         searchBar.Unfocus();
                         MyListView.Focus();
+                        MyListView.SetBinding(ListView.ItemsSourceProperty,"Ordonnances");
+                        (BindingContext as OrdonnancesListViewModel).Ordonnances = (BindingContext as OrdonnancesListViewModel).Ordonnances;
                     });
                 }
 

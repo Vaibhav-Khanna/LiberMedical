@@ -30,7 +30,9 @@ namespace libermedical.Pages
 
         async Task Handle_Refreshing(object sender, System.EventArgs e)
         {
-            await App.SyncData();
+            if (App.IsConnected())
+                await App.SyncData();
+           
             await (BindingContext as PatientListViewModel).BindData(20);
             PatientListView.EndRefresh();
             isExecuting = false;
@@ -49,6 +51,8 @@ namespace libermedical.Pages
                     {
                         searchBar.Unfocus();
                         PatientListView.Focus();
+                        PatientListView.SetBinding(ListView.ItemsSourceProperty, "ItemsSource");
+                        (BindingContext as PatientListViewModel).ItemsSource = (BindingContext as PatientListViewModel).ItemsSource;
                     });
             }
         }

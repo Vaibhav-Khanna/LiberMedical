@@ -228,7 +228,7 @@ namespace libermedical.Services
             {
 
                 var localId = patientObject.Id;
-                var patient = await App.PatientsManager.SaveOrUpdateAsync(patientObject.Id, patientObject, isNew);
+                var patient = await App.PatientsManager.SaveOrUpdateAsync(patientObject.Id, patientObject, patientObject.UpdatedAt == null);
                 if (patient != null)
                 {
                     patient.IsSynced = true;
@@ -270,7 +270,7 @@ namespace libermedical.Services
                 }
 
                 var localId = document.Id;
-                var doc = await App.DocumentsManager.SaveOrUpdateAsync(document.Id, document, isNew);
+                var doc = await App.DocumentsManager.SaveOrUpdateAsync(document.Id, document, document.UpdatedAt == null);
                 if (doc != null)
                 {
                     doc.IsSynced = true;
@@ -295,7 +295,7 @@ namespace libermedical.Services
             {
 
                 var localId = ordonnanceObject.Id;
-                var ordonnance = await App.OrdonnanceManager.SaveOrUpdateAsync(ordonnanceObject.Id, ordonnanceObject, isNew);
+                var ordonnance = await App.OrdonnanceManager.SaveOrUpdateAsync(ordonnanceObject.Id, ordonnanceObject, ordonnanceObject.UpdatedAt == null );
                 if (ordonnance != null)
                 {
                     ordonnance.IsSynced = true;

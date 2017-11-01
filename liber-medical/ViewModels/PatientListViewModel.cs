@@ -205,8 +205,6 @@ namespace libermedical.ViewModels
 
             GroupItems(list.ToList());
            
-            if (App.IsConnected())
-                await App.SyncData();;
         }
 
 	}

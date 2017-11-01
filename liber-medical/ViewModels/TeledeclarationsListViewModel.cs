@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using libermedical.Enums;
 using System.Collections.Generic;
+using libermedical.Helpers;
 using System.Linq;
 using libermedical.Request;
 using libermedical.Services;
@@ -57,7 +58,7 @@ namespace libermedical.ViewModels
         {
             if (App.IsConnected())
             {
-                var request = new GetListRequest(200, 0);
+                var request = new GetListRequest(600, 0);
                 var documents =
                     new ObservableCollection<Document>((await App.DocumentsManager.GetListAsync(request)).rows);
 
@@ -118,14 +119,15 @@ namespace libermedical.ViewModels
         public async Task BindData(int count)
         {
             _initCount = _initCount + count;
-            if (MaxCount == 0)
-                MaxCount = await new StorageService<Teledeclaration>().DownloadTeledeclarations(_initCount);
 
-            await new StorageService<Teledeclaration>().DownloadTeledeclarations(_initCount);
+            MaxCount = await new StorageService<Teledeclaration>().DownloadTeledeclarations(_initCount);
+
             var list = await _teledeclarationsStorage.GetList();
+
             if (list != null && list.Count() != 0)
             {
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
+                list = list.DistinctBy( (arg) => arg.Id); 
             }
             Teledeclarations = new ObservableCollection<Teledeclaration>(list);
 
@@ -137,7 +139,9 @@ namespace libermedical.ViewModels
                _filter = filter;
                ApplyFilter(filter);
            });
-           DownlaodDocuments();
+
+           await DownlaodDocuments();
+
         }
 
         protected override async Task TapCommandFunc(Cell cell)
