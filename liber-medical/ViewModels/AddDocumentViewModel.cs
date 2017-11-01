@@ -214,8 +214,9 @@ namespace libermedical.ViewModels
 								await CoreMethods.DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
 								return;
 							}
-							var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
-							if (file != null)
+							var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                            { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30 });
+                            if (file != null)
 							{
 								var profilePicture = ImageSource.FromStream(() => file.GetStream());
 								Document.AttachmentPath = file.Path;
@@ -226,9 +227,8 @@ namespace libermedical.ViewModels
 						{
 							await CrossMedia.Current.Initialize();
 
-							var pickerOptions = new PickMediaOptions();
-
-							var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
+                            var pickerOptions = new PickMediaOptions() { CompressionQuality = 30 };
+                            var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
 							if (file != null)
 							{
 								var profilePicture = ImageSource.FromStream(() => file.GetStream());

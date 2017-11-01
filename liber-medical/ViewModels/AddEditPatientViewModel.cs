@@ -58,7 +58,9 @@ namespace libermedical.ViewModels
 			{
 				PatientProperty = new Patient();
 				PatientProperty.PhoneNumbers = new List<string>();
+
                 PatientProperty.Id = DateTime.UtcNow.Ticks.ToString();
+
 				Phones = new ObservableCollection<string>();
 				_isNew = true;
 

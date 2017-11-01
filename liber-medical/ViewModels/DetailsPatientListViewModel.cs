@@ -4,6 +4,7 @@ using libermedical.Request;
 using libermedical.Services;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -116,7 +117,7 @@ namespace libermedical.ViewModels
                                 await CoreMethods.DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
                                 return;
                             }
-                            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
+                            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions() { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30 });
                             if (file != null)
                             {
                                 var profilePicture = ImageSource.FromStream(() => file.GetStream());
@@ -129,7 +130,7 @@ namespace libermedical.ViewModels
                         {
                             await CrossMedia.Current.Initialize();
 
-                            var pickerOptions = new PickMediaOptions();
+                            var pickerOptions = new PickMediaOptions() {  CompressionQuality = 30 };
 
                             var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
                             if (file != null)

@@ -37,8 +37,6 @@ namespace libermedical.ViewModels
         {
             _initCount = _initCount + count;
 
-
-
             MaxCount = await new StorageService<Patient>().DownloadPatients(_initCount);
 
             var list = await _storageService.GetList();
@@ -47,6 +45,7 @@ namespace libermedical.ViewModels
                 list = list.DistinctBy((arg) => arg.Id);
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
             }
+
             CurrentCount = list.Count();
             GroupItems(list.ToList());
         }

@@ -252,23 +252,27 @@ namespace libermedical.Services
         {
             try
             {
-                var res = await FileUpload.UploadFile(document.AttachmentPath, "PatientDocuments", document.Id);
-                if (res)
+                if (!document.AttachmentPath.StartsWith("PatientDocuments") && !document.AttachmentPath.StartsWith("Ordonnance"))
                 {
-                    document.AttachmentPath = $"PatientDocuments/{document.Id}/{Path.GetFileName(document.AttachmentPath)}";
-                    var localId = document.Id;
-                    var doc = await App.DocumentsManager.SaveOrUpdateAsync(document.Id, document, isNew);
-                    if (doc != null)
-                    {
-                        doc.IsSynced = true;
-                        doc.UpdatedAt = DateTime.UtcNow;
-                        await UpdateAsync(doc as TModel, typeof(Document).Name + "_" + document.Id);
-                    }
-                    else
-                    {
-                        await UpdateAsync(document as TModel, typeof(Document).Name + "_" + localId);
-                    }
+
+                    var res = await FileUpload.UploadFile(document.AttachmentPath, "PatientDocuments", document.Id);
+                    if (res)
+                        document.AttachmentPath = $"PatientDocuments/{document.Id}/{Path.GetFileName(document.AttachmentPath)}";
                 }
+
+                var localId = document.Id;
+                var doc = await App.DocumentsManager.SaveOrUpdateAsync(document.Id, document, isNew);
+                if (doc != null)
+                {
+                    doc.IsSynced = true;
+                    doc.UpdatedAt = DateTime.UtcNow;
+                    await UpdateAsync(doc as TModel, typeof(Document).Name + "_" + document.Id);
+                }
+                else
+                {
+                    await UpdateAsync(document as TModel, typeof(Document).Name + "_" + localId);
+                }
+
             }
             catch (Exception ex)
             {
@@ -290,9 +294,13 @@ namespace libermedical.Services
                     var attachments = new Dictionary<string, string>();
                     foreach (var attachment in ordonnance.Attachments)
                     {
-                        var res = await FileUpload.UploadFile(attachment, "Ordonnance", ordonnance.Id);
-                        if (res)
-                            attachments.Add(attachment, $"Ordonnance/{ordonnance.Id}/{Path.GetFileName(attachment)}");
+                        if (!attachment.StartsWith("PatientDocuments") && !attachment.StartsWith("Ordonnance"))
+                        {
+                            var res = await FileUpload.UploadFile(attachment, "Ordonnance", ordonnance.Id);
+                            if (res)
+                                attachments.Add(attachment, $"Ordonnance/{ordonnance.Id}/{Path.GetFileName(attachment)}");
+                        }
+
                     }
                     if (attachments.Keys.Count > 0)
                         foreach (var key in attachments.Keys)

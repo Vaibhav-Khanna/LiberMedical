@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using libermedical.Enums;
 using Newtonsoft.Json;
+using libermedical.Converters;
+using System.Linq;
 
 namespace libermedical.Models
 {
@@ -21,6 +23,7 @@ namespace libermedical.Models
         public string NurseId { get; set; }
         [JsonProperty("refused_reason")]
         public string RefusedReason { get; set; }
+
         [JsonProperty("attachments")]
         public List<string> Attachments { get; set; }
         [JsonProperty("frequencies")]
@@ -32,13 +35,20 @@ namespace libermedical.Models
 
         public long Reference { set; get; }
         public Patient Patient { set; get; }
-        
+
         [JsonIgnore]
         public string StatusString => Status == StatusEnum.waiting
             ? "En attente"
             : Status == StatusEnum.valid
                 ? "Traité"
                 : "Refusé";
+
+        [JsonIgnore]
+        public List<AttachmentsHelper> AttachmentsInfo => Attachments.Select(p => new AttachmentsHelper()
+        {
+            FilePath = p,
+            IsSynced = true
+        }).ToList();
 
         [JsonIgnore]
         public DateTime FirstCareAt => ConvertFromUnixTimestamp(First_Care_At);
@@ -58,5 +68,11 @@ namespace libermedical.Models
                 return DateTime.UtcNow;
             }
         }
+    }
+
+    public class AttachmentsHelper
+    {
+        public string FilePath { get; set; }
+        public bool IsSynced { get; set; }
     }
 }
