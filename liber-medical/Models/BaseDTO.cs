@@ -14,8 +14,8 @@ namespace libermedical.Models
         [JsonProperty("createdAt")]
         public DateTimeOffset? CreatedAt { get; set; }
 
-         [JsonProperty("lastUpdatedAt")]
-        public DateTimeOffset? UpdatedAt { get; set; }
+        [JsonProperty("lastUpdatedAt")]
+        public DateTimeOffset? UpdatedAt { get; set; } = null;
 
         [JsonIgnore]
         [JsonConverter(typeof(BoolConverter))]

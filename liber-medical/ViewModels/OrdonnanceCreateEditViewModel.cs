@@ -76,10 +76,10 @@ namespace libermedical.ViewModels
 			Ordonnance = new Ordonnance
 			{
 				Id = Guid.NewGuid().ToString(),
-				CreatedAt = DateTime.Today,
+                CreatedAt = DateTime.UtcNow,
 				Attachments = new List<string>(),
 				Frequencies = new List<Frequency>(),
-				First_Care_At = App.ConvertToUnixTimestamp(DateTime.Now)
+                First_Care_At = App.ConvertToUnixTimestamp(DateTime.UtcNow)
 			};
 
 			SubscribeMessages();
@@ -185,11 +185,12 @@ namespace libermedical.ViewModels
 					UserDialogs.Instance.ShowLoading("Processing...");
 					var storageService = new StorageService<Ordonnance>();
 					await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + Ordonnance.Id);
-					Ordonnance.Attachments = Attachments.ToList();
-					Ordonnance.Frequencies = Frequencies.ToList();
+					Ordonnance.Attachments = Attachments?.ToList();
+					Ordonnance.Frequencies = Frequencies?.ToList();
 					Ordonnance.IsSynced = false;
-					if (!_isNew)
-						Ordonnance.UpdatedAt = DateTimeOffset.Now;
+
+                    if (!_isNew && Ordonnance.UpdatedAt != null)
+                        Ordonnance.UpdatedAt = DateTimeOffset.UtcNow;
 
 					await storageService.AddAsync(Ordonnance);
 
@@ -197,11 +198,12 @@ namespace libermedical.ViewModels
 
 					if (App.IsConnected())
 					{
-						await storageService.PushOrdonnance(Ordonnance, _isNew);
+                        await storageService.PushOrdonnance(Ordonnance, _isNew && Ordonnance.UpdatedAt != null );
 					}
-					await CoreMethods.PopPageModel(null, true);
-					UserDialogs.Instance.HideLoading();
 
+					await CoreMethods.PopPageModel(null, true);
+
+					UserDialogs.Instance.HideLoading();
 
 				}
 				else

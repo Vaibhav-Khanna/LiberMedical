@@ -54,13 +54,13 @@ namespace libermedical
             if (IsConnected())
                 SyncData();
             
-            CrossConnectivity.Current.ConnectivityChanged += (sender, args) =>
+            Plugin.Connectivity.CrossConnectivity.Current.ConnectivityChanged += (sender, args) =>
             {
                 if (args.IsConnected)
                     SyncData();
             };
 
-            CrossConnectivity.Current.ConnectivityTypeChanged += (sender, e) => 
+            Plugin.Connectivity.CrossConnectivity.Current.ConnectivityTypeChanged += (sender, e) => 
             {
                 if(e.IsConnected)
                     SyncData();
@@ -85,16 +85,22 @@ namespace libermedical
 
         public static bool IsConnected()
         {
-            using (var connectivity = CrossConnectivity.Current)
-            {
-                return connectivity.IsConnected;
-            }
+            return  Plugin.Connectivity.CrossConnectivity.Current.IsConnected;
         }
+
+        static bool isSyncing = false;
 
         public async static void SyncData()
         {
+            if (isSyncing)
+                return;
+            
+            isSyncing = true;
+
             var synchelper = new StorageService<BaseDTO>();
             await synchelper.SyncTables();
+
+            isSyncing = false;
         }
 
 

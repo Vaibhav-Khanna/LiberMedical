@@ -55,7 +55,7 @@ namespace libermedical.Models
             }
             catch (Exception)
             {
-                return DateTime.Now;
+                return DateTime.UtcNow;
             }
         }
     }

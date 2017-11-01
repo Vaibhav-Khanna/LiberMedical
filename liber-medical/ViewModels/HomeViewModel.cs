@@ -135,7 +135,7 @@ namespace libermedical.ViewModels
 				}
 
 				var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-				{ Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality =30  });
+                { Directory = "Docs", Name = DateTime.UtcNow.Ticks.ToString(), CompressionQuality =30  });
 				if (file != null)
 				{
 					//if document we change typeDoc to document
@@ -172,8 +172,8 @@ namespace libermedical.ViewModels
 				var ordannance = new Ordonnance()
 				{
 					Id = Guid.NewGuid().ToString(),
-					CreatedAt = DateTime.Today,
-					First_Care_At = App.ConvertToUnixTimestamp(DateTime.Now),
+                    CreatedAt = DateTime.UtcNow,
+                    First_Care_At = App.ConvertToUnixTimestamp(DateTime.UtcNow),
 					Attachments = new List<string>() { _documentPath },
 					Frequencies = new List<Frequency>(),
 					Patient = patient,
@@ -193,9 +193,9 @@ namespace libermedical.ViewModels
 				var document = new Document()
 				{
 					Id = Guid.NewGuid().ToString(),
-					CreatedAt = DateTime.Today,
-					Reference = DateTime.Now.Ticks,
-					AddDate = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
+                    Reference = DateTime.UtcNow.Ticks,
+                    AddDate = DateTime.UtcNow,
 					Patient = patient,
 					PatientId = patient.Id,
 					AttachmentPath = _documentPath,

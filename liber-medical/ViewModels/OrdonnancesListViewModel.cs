@@ -19,7 +19,7 @@ namespace libermedical.ViewModels
     {
         int _initCount = 0;
         public int MaxCount { get; set; }
-        private IStorageService<Ordonnance> _ordonnanceStorage;
+        public IStorageService<Ordonnance> _ordonnanceStorage;
         private ObservableCollection<Ordonnance> _ordonnances;
         public ObservableCollection<Ordonnance> Ordonnances
         {
@@ -38,12 +38,11 @@ namespace libermedical.ViewModels
         }
 
         public async Task BindData(int count)
-        {
+        {            
             _initCount = _initCount + count;
-            if (MaxCount == 0)
-                MaxCount = await new StorageService<Ordonnance>().DownloadOrdonnances(_initCount);
 
-            await new StorageService<Ordonnance>().DownloadOrdonnances(_initCount);
+            MaxCount = await new StorageService<Ordonnance>().DownloadOrdonnances(_initCount);
+           
             var list = await _ordonnanceStorage.GetList();
             if (list != null && list.Count() != 0)
             {
@@ -173,6 +172,9 @@ namespace libermedical.ViewModels
             }
 
             Ordonnances = new ObservableCollection<Ordonnance>(list);
+
+            if (App.IsConnected())
+                await _storageService.SyncTables();
         }
 
 

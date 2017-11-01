@@ -32,8 +32,12 @@ namespace libermedical.Pages
 
         async void Handle_Refreshing(object sender, System.EventArgs e)
         {
+            if(App.IsConnected())
+            await (BindingContext as OrdonnancesListViewModel)._ordonnanceStorage.SyncTables();
+          
             await (BindingContext as OrdonnancesListViewModel).BindData(0);
             MyListView.IsRefreshing = false;
+            isExecuting = false;
         }
 
 
@@ -145,24 +149,36 @@ namespace libermedical.Pages
             }
         }
 
+        bool isExecuting = false;
+
         private async void MyListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
-           
+            if (isExecuting)
+                return;
+            
+            isExecuting = true;
+
             if ((BindingContext as OrdonnancesListViewModel).Ordonnances.Count < (BindingContext as OrdonnancesListViewModel).MaxCount)
             {
-                indicator.IsVisible = true;
+                if (string.IsNullOrWhiteSpace(searchBar.Text))
+                    indicator.IsVisible = true;
+                else
+                    indicator.IsVisible = false;
+              
                 var currentItem = e.Item as Ordonnance;
-                Debug.WriteLine((BindingContext as OrdonnancesListViewModel).Ordonnances.IndexOf(currentItem));
+               
                 var lastItem = (BindingContext as OrdonnancesListViewModel).Ordonnances[(BindingContext as OrdonnancesListViewModel).Ordonnances.Count - 1];
                 if (currentItem == lastItem)
+                {
                     await (BindingContext as OrdonnancesListViewModel).BindData(20);
+                }
             }
             else
             {
                 indicator.IsVisible = false;
-                var currentItem = e.Item as Ordonnance;
-                Debug.WriteLine((BindingContext as OrdonnancesListViewModel).Ordonnances.IndexOf(currentItem));
             }
+
+            isExecuting = false;
         }
 
     }

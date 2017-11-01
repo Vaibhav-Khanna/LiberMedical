@@ -161,7 +161,7 @@ namespace libermedical.Services
 				var items = (await BlobCache.UserAccount.GetAllObjects<Patient>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
 				foreach (var item in items)
 				{
-					await PushPatient(item, item.CreatedAt == item.UpdatedAt);
+                    await PushPatient(item, item.UpdatedAt == null ? true : false );
 				}
 			}
 			catch (Exception e)
@@ -178,7 +178,7 @@ namespace libermedical.Services
 				var items = (await BlobCache.UserAccount.GetAllObjects<Document>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
 				foreach (var item in items)
 				{
-					await PushDocument(item, item.CreatedAt == item.UpdatedAt);
+                    await PushDocument(item, item.UpdatedAt == null ? true : false);
 				}
 			}
 			catch (Exception e)
@@ -198,6 +198,7 @@ namespace libermedical.Services
                 if (tele != null)
                 {
                     tele.IsSynced = true;
+                    tele.UpdatedAt = DateTime.UtcNow;
                     await UpdateAsync(tele as TModel, typeof(Teledeclaration).Name + "_" + localId);
                 }
                 else
@@ -222,6 +223,7 @@ namespace libermedical.Services
                 if (patient != null)
                 {
                     patient.IsSynced = true;
+                    patient.UpdatedAt = DateTime.UtcNow;
                     await UpdateAsync(patient as TModel, typeof(Patient).Name + "_" + localId);
                     var patientDocuments = (await BlobCache.UserAccount.GetAllObjects<Document>()).ToObservable().Where(x => x.PatientId == localId).ToEnumerable();
                     foreach (var document in patientDocuments.Where(x => x.IsSynced == false))
@@ -259,6 +261,7 @@ namespace libermedical.Services
                     if (doc != null)
                     {
                         doc.IsSynced = true;
+                        doc.UpdatedAt = DateTime.UtcNow;
                         await UpdateAsync(doc as TModel, typeof(Document).Name + "_" + document.Id);
                     }
                     else
@@ -300,6 +303,7 @@ namespace libermedical.Services
                     {
                         ordonnance = ordonnanceUpdated;
                         ordonnance.IsSynced = true;
+                        ordonnance.UpdatedAt = DateTime.UtcNow;
                     }
                     else
                     {
@@ -339,7 +343,7 @@ namespace libermedical.Services
 				var items = (await BlobCache.UserAccount.GetAllObjects<Ordonnance>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
 				foreach (var item in items)
 				{
-					var isNew = item.CreatedAt == item.UpdatedAt ? false : true;
+                    var isNew = item.UpdatedAt == null ? true : false;
 					await PushOrdonnance(item, isNew);
 				}
 			}

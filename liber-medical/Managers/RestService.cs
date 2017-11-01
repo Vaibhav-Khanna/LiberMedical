@@ -138,7 +138,7 @@ namespace libermedical.Managers
 				() => GetSingleDataAsync(id),
 				offset =>
 				{
-					TimeSpan elapsed = DateTimeOffset.Now - offset;
+                TimeSpan elapsed = DateTimeOffset.UtcNow - offset;
 					return elapsed > new TimeSpan(days: 0, hours: 8, minutes: 0, seconds: 0);
 				});
 

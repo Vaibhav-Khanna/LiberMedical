@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using libermedical.Helpers;
 using libermedical.Models;
 using libermedical.Request;
 using libermedical.Services;
@@ -17,9 +18,10 @@ namespace libermedical.ViewModels
 	{
         int _initCount = 0;
         public int MaxCount { get; set; }
+        public int CurrentCount { get; set; }
         private ObservableCollection<GroupedItem<Patient>> _filteredPatients;
-		private ObservableCollection<GroupedItem<Patient>> Patients;
-		private IStorageService<Patient> _patientsStorage;
+        public ObservableCollection<GroupedItem<Patient>> Patients;
+        public IStorageService<Patient> _patientsStorage;
 		private string NavigationType;
         private string ParentScreen;
         private string DocType;
@@ -30,19 +32,23 @@ namespace libermedical.ViewModels
 			BindData(20);
         }
 
+
         public async Task BindData(int count)
         {
             _initCount = _initCount + count;
-            if (MaxCount == 0)
-                MaxCount = await new StorageService<Patient>().DownloadPatients(_initCount);
 
-            await new StorageService<Ordonnance>().DownloadPatients(_initCount);
+
+
+            MaxCount = await new StorageService<Patient>().DownloadPatients(_initCount);
+
             var list = await _storageService.GetList();
             if (list != null && list.Count() != 0)
             {
+                list = list.DistinctBy((arg) => arg.Id);
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
             }
-            GroupItems((await _storageService.GetList()).ToList());
+            CurrentCount = list.Count();
+            GroupItems(list.ToList());
         }
        
 
@@ -173,8 +179,19 @@ namespace libermedical.ViewModels
 		{
 			base.ViewIsAppearing(sender, e);
 			SearchString = string.Empty;
-			GroupItems((await _storageService.GetList()).ToList());
-		}
+
+            var list = await _storageService.GetList();
+            if (list != null && list.Count() != 0)
+            {
+                list = list.DistinctBy((arg) => arg.Id);
+                list = list.OrderByDescending((arg) => arg.CreatedAt);
+            }
+
+            GroupItems(list.ToList());
+           
+            if (App.IsConnected())
+                await _storageService.SyncTables();
+        }
 
 	}
 }
