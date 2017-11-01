@@ -196,7 +196,7 @@ namespace libermedical.ViewModels
                     UserDialogs.Instance.ShowLoading("ouverture");
                     var request = new GetListRequest(20, 1);
                     var invoices = await App.InvoicesManager.GetListAsync(request);
-                    if (invoices != null && invoices.rows.Count > 0)
+                    if (invoices != null && invoices.rows!=null && invoices.rows.Count > 0)
                     {
                         var invoice = invoices.rows[invoices.rows.Count-1];
                         if (invoice.FilePath.Contains(".pdf"))
