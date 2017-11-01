@@ -95,16 +95,14 @@ namespace libermedical.ViewModels
 		{
 			try
 			{
-				bool isNew = false;
-				if (!string.IsNullOrEmpty(PhoneNo))
-					PatientProperty.PhoneNumbers = new List<string>() { PhoneNo };
+                if (!string.IsNullOrEmpty(PhoneNo))
+                    Phones.Add(PhoneNo);
 
 				if (Phones.Count > 0)
 					PatientProperty.PhoneNumbers = Phones.ToList();
 
 				if (ValidateForm())
 				{
-					isNew = PatientProperty.CreatedAt == null ? true : false;
 					PatientProperty.CreatedAt = PatientProperty.CreatedAt == null ? DateTimeOffset.Now : PatientProperty.CreatedAt;
 					if (!_isNew)
 						PatientProperty.UpdatedAt = DateTimeOffset.Now;
