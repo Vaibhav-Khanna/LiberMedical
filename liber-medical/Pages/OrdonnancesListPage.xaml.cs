@@ -33,7 +33,7 @@ namespace libermedical.Pages
         async void Handle_Refreshing(object sender, System.EventArgs e)
         {
             if(App.IsConnected())
-            await (BindingContext as OrdonnancesListViewModel)._ordonnanceStorage.SyncTables();
+                await App.SyncData();
           
             await (BindingContext as OrdonnancesListViewModel).BindData(0);
             MyListView.IsRefreshing = false;

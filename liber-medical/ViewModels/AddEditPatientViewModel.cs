@@ -97,25 +97,25 @@ namespace libermedical.ViewModels
 		{
 			try
 			{
-				bool isNew = false;
-				if (!string.IsNullOrEmpty(PhoneNo))
-					PatientProperty.PhoneNumbers = new List<string>() { PhoneNo };
+                if (!string.IsNullOrEmpty(PhoneNo))
+                    Phones.Add(PhoneNo);
 
 				if (Phones.Count > 0)
 					PatientProperty.PhoneNumbers = Phones.ToList();
 
 				if (ValidateForm())
 				{
-					isNew = PatientProperty.CreatedAt == null ? true : false;
+
                     PatientProperty.CreatedAt = PatientProperty.CreatedAt == null ? DateTimeOffset.UtcNow : PatientProperty.CreatedAt;
-					
                     if (!_isNew && PatientProperty.UpdatedAt != null)
                         PatientProperty.UpdatedAt = DateTimeOffset.UtcNow;
-				
-                    PatientProperty.IsSynced = false;
+					PatientProperty.IsSynced = false;
+
 					PatientProperty.NurseId = JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id;
-					await _storageService.DeleteItemAsync(typeof(Patient).Name + "_" + PatientProperty.Id);
+				
+                    await _storageService.DeleteItemAsync(typeof(Patient).Name + "_" + PatientProperty.Id);
 					await _storageService.AddAsync(PatientProperty);
+
 					if (App.IsConnected())
 					{
 						UserDialogs.Instance.ShowLoading("Processing...");

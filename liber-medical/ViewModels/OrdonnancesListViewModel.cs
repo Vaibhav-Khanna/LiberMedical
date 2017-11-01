@@ -178,7 +178,7 @@ namespace libermedical.ViewModels
             Ordonnances = new ObservableCollection<Ordonnance>(list);
 
             if (App.IsConnected())
-                await _storageService.SyncTables();
+                await App.SyncData();
         }
 
 

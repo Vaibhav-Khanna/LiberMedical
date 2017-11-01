@@ -91,7 +91,7 @@ namespace libermedical
 
         static bool isSyncing = false;
 
-        public async static void SyncData()
+        public async static Task SyncData()
         {
             if (isSyncing)
                 return;

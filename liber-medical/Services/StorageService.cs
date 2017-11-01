@@ -128,12 +128,21 @@ namespace libermedical.Services
 			}
 		}
 
+        bool isSyncing = false;
+
 		public async Task SyncTables()
 		{
+            if (isSyncing)
+                return;
+
+            isSyncing = true;
+
 			await SyncPatients();
 			await SyncOrdonnances();
 			await SyncDocuments();
             await SyncTeledeclarations();
+
+            isSyncing = false;
 		}
 
         public async Task SyncTeledeclarations()
@@ -230,7 +239,7 @@ namespace libermedical.Services
                     {
                         document.Patient = patient;
                         document.PatientId = patient.Id;
-                        await PushDocument(document, document.CreatedAt == document.UpdatedAt);
+                        await PushDocument(document, document.UpdatedAt == null ? true : false);
                     }
 
                     var patientOrdonnances = (await BlobCache.UserAccount.GetAllObjects<Ordonnance>()).ToObservable().Where(x => x.PatientId == localId).ToEnumerable();
@@ -238,7 +247,7 @@ namespace libermedical.Services
                     {
                         ordonnance.Patient = patient;
                         ordonnance.PatientId = patient.Id;
-                        await PushOrdonnance(ordonnance, ordonnance.CreatedAt == ordonnance.UpdatedAt);
+                        await PushOrdonnance(ordonnance, ordonnance.UpdatedAt == null ? true : false);
                     }
                 }
             }

@@ -30,7 +30,7 @@ namespace libermedical.Pages
 
         async Task Handle_Refreshing(object sender, System.EventArgs e)
         {
-            await (BindingContext as PatientListViewModel)._patientsStorage.SyncTables();
+            await App.SyncData();
             await (BindingContext as PatientListViewModel).BindData(20);
             PatientListView.EndRefresh();
             isExecuting = false;

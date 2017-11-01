@@ -206,7 +206,7 @@ namespace libermedical.ViewModels
             GroupItems(list.ToList());
            
             if (App.IsConnected())
-                await _storageService.SyncTables();
+                await App.SyncData();;
         }
 
 	}
