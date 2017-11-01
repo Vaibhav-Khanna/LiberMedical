@@ -10,6 +10,8 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Acr.UserDialogs;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using libermedical.Request;
 
 namespace libermedical.ViewModels
 {
@@ -170,6 +172,7 @@ namespace libermedical.ViewModels
 							await storageService.DeleteItemAsync(typeof(Document).Name + "_" + Document.Id);
 							Document.AttachmentPath = ImagePath;
 							Document.Label = Label;
+                            Document.IsSynced = false;
 
                             if(_isNew && Document.UpdatedAt != null)
                             Document.UpdatedAt = DateTimeOffset.UtcNow;
@@ -179,6 +182,7 @@ namespace libermedical.ViewModels
 							{
 								UserDialogs.Instance.ShowLoading("Processing...");
                                 await new StorageService<Document>().PushDocument(Document, _isNew && Document.UpdatedAt != null);
+                                await DownlaodDocuments();
 							}
 							await CoreMethods.PopPageModel();
 						}
@@ -194,6 +198,22 @@ namespace libermedical.ViewModels
 				});
 			}
 		}
+
+        private async Task DownlaodDocuments()
+        {
+            if (App.IsConnected())
+            {
+                var request = new GetListRequest(600, 0);
+
+                var documents = await App.DocumentsManager.GetListAsync(request);
+
+                //Updating records in local cache
+                if (documents != null && documents.rows != null)
+                    await new StorageService<Document>().InvalidateSyncedItems();
+
+                await new StorageService<Document>().AddManyAsync(documents.rows);
+            }
+        }
 
 
 		public ICommand AddDocumentCommand

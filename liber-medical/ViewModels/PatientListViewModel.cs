@@ -39,6 +39,8 @@ namespace libermedical.ViewModels
 
             MaxCount = await new StorageService<Patient>().DownloadPatients(_initCount);
 
+            await DownlaodDocuments();
+
             var list = await _storageService.GetList();
             if (list != null && list.Count() != 0)
             {
@@ -50,6 +52,21 @@ namespace libermedical.ViewModels
             GroupItems(list.ToList());
         }
        
+        private async Task DownlaodDocuments()
+        {
+            if (App.IsConnected())
+            {
+                var request = new GetListRequest(600, 0);
+               
+                var documents = await App.DocumentsManager.GetListAsync(request);
+
+                //Updating records in local cache
+                if(documents!=null && documents.rows!=null)
+                await new StorageService<Document>().InvalidateSyncedItems();
+                
+                await new StorageService<Document>().AddManyAsync(documents.rows);
+            }
+        }
 
         private void GroupItems(List<Patient> observableCollection)
 		{

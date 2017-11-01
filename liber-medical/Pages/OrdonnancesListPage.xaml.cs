@@ -168,10 +168,12 @@ namespace libermedical.Pages
                 var currentItem = e.Item as Ordonnance;
                
                 var lastItem = (BindingContext as OrdonnancesListViewModel).Ordonnances[(BindingContext as OrdonnancesListViewModel).Ordonnances.Count - 1];
-                if (currentItem == lastItem)
+
+                if (currentItem == lastItem && string.IsNullOrWhiteSpace(searchBar.Text))
                 {
                     await (BindingContext as OrdonnancesListViewModel).BindData(20);
                 }
+
             }
             else
             {

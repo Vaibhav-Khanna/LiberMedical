@@ -18,6 +18,17 @@ namespace libermedical.ViewModels
             }
         }
 
+        private double downloadprogress = 0;
+        public double Downloadprogress{
+            get { return downloadprogress; }
+            set
+            {
+                downloadprogress = value;
+                RaisePropertyChanged();
+            }
+        }
+
+
         private ImageSource _imageSource;
         public ImageSource ImageSource
         {
@@ -30,6 +41,24 @@ namespace libermedical.ViewModels
         }
         public Ordonnance Ordonnance { get; set; }
         public Teledeclaration Teledeclaration { get; set; }
+
+        public Command DownloadStarted => new Command(() =>
+       {
+
+       });
+
+        public Command Downloading => new Command((obj) =>
+       {
+            var args = obj as FFImageLoading.Forms.CachedImageEvents.DownloadProgressEventArgs;
+            if(args!=null)
+            {
+                Downloadprogress = (double) ( (double)args.DownloadProgress.Current / (double)args.DownloadProgress.Total);
+                if (downloadprogress >= 0.98)
+                   Downloadprogress = 0;
+            }
+
+       });
+
         public OrdonnanceViewViewModel()
         {
 

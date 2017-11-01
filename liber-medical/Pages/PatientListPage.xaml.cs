@@ -71,7 +71,8 @@ namespace libermedical.Pages
 
                 var currentItem = e.Item as Patient;
                 var lastItem = (BindingContext as PatientListViewModel).ItemsSource[(BindingContext as PatientListViewModel).ItemsSource.Count - 1];
-                if (currentItem == lastItem[lastItem.Count - 1])
+               
+                if (currentItem == lastItem[lastItem.Count - 1] && string.IsNullOrWhiteSpace(searchBar.Text))
                 {
                     await (BindingContext as PatientListViewModel).BindData(20);
                 }
