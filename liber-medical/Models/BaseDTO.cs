@@ -12,10 +12,10 @@ namespace libermedical.Models
         public string Id { get; set; }
 
         [JsonProperty("createdAt")]
-        public DateTimeOffset? CreatedAt { get; set; }
+        public DateTimeOffset? CreatedAt { get; set; } = DateTimeOffset.UtcNow;
 
-         [JsonProperty("lastUpdatedAt")]
-        public DateTimeOffset? UpdatedAt { get; set; }
+        [JsonProperty("lastUpdatedAt")]
+        public DateTimeOffset? UpdatedAt { get; set; } = null;
 
         [JsonIgnore]
         [JsonConverter(typeof(BoolConverter))]

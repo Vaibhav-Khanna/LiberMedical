@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using libermedical.Helpers;
 using libermedical.Models;
 using libermedical.Request;
 using libermedical.Services;
@@ -17,9 +18,10 @@ namespace libermedical.ViewModels
 	{
         int _initCount = 0;
         public int MaxCount { get; set; }
+        public int CurrentCount { get; set; }
         private ObservableCollection<GroupedItem<Patient>> _filteredPatients;
-		private ObservableCollection<GroupedItem<Patient>> Patients;
-		private IStorageService<Patient> _patientsStorage;
+        public ObservableCollection<GroupedItem<Patient>> Patients;
+        public IStorageService<Patient> _patientsStorage;
 		private string NavigationType;
         private string ParentScreen;
         private string DocType;
@@ -30,21 +32,41 @@ namespace libermedical.ViewModels
 			BindData(20);
         }
 
+
         public async Task BindData(int count)
         {
             _initCount = _initCount + count;
-            if (MaxCount == 0)
-                MaxCount = await new StorageService<Patient>().DownloadPatients(_initCount);
 
-            await new StorageService<Patient>().DownloadPatients(_initCount);
+            MaxCount = await new StorageService<Patient>().DownloadPatients(_initCount);
+
+            await DownlaodDocuments();
+
             var list = await _storageService.GetList();
             if (list != null && list.Count() != 0)
             {
+                list = list.DistinctBy((arg) => arg.Id);
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
             }
-            GroupItems((await _storageService.GetList()).ToList());
+
+            CurrentCount = list.Count();
+            GroupItems(list.ToList());
         }
        
+        private async Task DownlaodDocuments()
+        {
+            if (App.IsConnected())
+            {
+                var request = new GetListRequest(600, 0);
+               
+                var documents = await App.DocumentsManager.GetListAsync(request);
+
+                //Updating records in local cache
+                if(documents!=null && documents.rows!=null)
+                await new StorageService<Document>().InvalidateSyncedItems();
+                
+                await new StorageService<Document>().AddManyAsync(documents.rows);
+            }
+        }
 
         private void GroupItems(List<Patient> observableCollection)
 		{
@@ -173,8 +195,17 @@ namespace libermedical.ViewModels
 		{
 			base.ViewIsAppearing(sender, e);
 			SearchString = string.Empty;
-			GroupItems((await _storageService.GetList()).ToList());
-		}
+
+            var list = await _storageService.GetList();
+            if (list != null && list.Count() != 0)
+            {
+                list = list.DistinctBy((arg) => arg.Id);
+                list = list.OrderByDescending((arg) => arg.CreatedAt);
+            }
+
+            GroupItems(list.ToList());
+           
+        }
 
 	}
 }

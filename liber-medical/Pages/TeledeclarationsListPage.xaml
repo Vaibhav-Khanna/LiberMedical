@@ -52,6 +52,11 @@
 								</ViewCell>
 							</DataTemplate>
 						</ListView.ItemTemplate>
+                 <ListView.Footer>
+                    <ContentView HorizontalOptions="FillAndExpand" HeightRequest="80">
+                        <ActivityIndicator x:Name="indicator" IsVisible="false" IsRunning="true" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+                    </ContentView>
+                </ListView.Footer>
 					</ListView>
            
 		</Grid>

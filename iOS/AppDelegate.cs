@@ -4,6 +4,7 @@ using UIKit;
 using Xamarin.Forms.Platform.iOS;
 using Syncfusion.SfPdfViewer.XForms.iOS;
 using Syncfusion.SfPicker.XForms.iOS;
+using FFImageLoading.Forms.Touch;
 
 namespace libermedical.iOS
 {
@@ -24,6 +25,7 @@ namespace libermedical.iOS
 	        UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.LightContent, true);
             new SfPdfDocumentViewRenderer();
             SfPickerRenderer.Init();
+            CachedImageRenderer.Init();
             LoadApplication(application);
 			return base.FinishedLaunching(app, options);
         }

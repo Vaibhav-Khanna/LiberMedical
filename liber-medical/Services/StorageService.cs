@@ -13,121 +13,137 @@ using System.Collections.ObjectModel;
 
 namespace libermedical.Services
 {
-    public class StorageService<TModel> : IStorageService<TModel> where TModel : BaseDTO, new()
-    {
-        public async Task<bool> AddAsync(TModel item)
-        {
-            try
-            {
 
-                var key = typeof(TModel).Name + "_" + item.Id;
-                await BlobCache.UserAccount.InsertObject(key, item);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
+	public class StorageService<TModel> : IStorageService<TModel> where TModel : BaseDTO, new()
+	{
+		public async Task<bool> AddAsync(TModel item)
+		{
+			try
+			{
 
-        public async Task<bool> AddManyAsync(List<TModel> items)
-        {
-            try
-            {
-                var dic = new Dictionary<string, TModel>();
-                foreach (var item in items)
-                {
-                    var key = typeof(TModel).Name + "_" + item.Id;
-                    item.IsSynced = true;
-                    dic.Add(key, item);
-                }
-                await BlobCache.UserAccount.InsertObjects(dic);
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-        }
+				var key = typeof(TModel).Name + "_" + item.Id;
+				await BlobCache.UserAccount.InsertObject(key, item);
+				return true;
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+		}
 
-        public async Task<bool> DeleteAllAsync()
-        {
-            try
-            {
-                await BlobCache.UserAccount.InvalidateAllObjects<TModel>();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
+		public async Task<bool> AddManyAsync(List<TModel> items)
+		{
+			try
+			{
+				var dic = new Dictionary<string, TModel>();
 
-        // The structure of Key: typeof(TModel).Name + "_" + item.Id
-        public async Task<bool> DeleteItemAsync(string key)
-        {
-            try
-            {
-                await BlobCache.UserAccount.Invalidate(key);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
+                var list_keys = await GetKeys();
 
-        // The structure of Key: typeof(TModel).Name + "_" + item.Id
-        public async Task<TModel> GetItemAsync(string key)
-        {
-            try
-            {
-                return await BlobCache.UserAccount.GetObject<TModel>(key);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
+				foreach (var item in items)
+				{
+					var key = typeof(TModel).Name + "_" + item.Id;
+					item.IsSynced = true;
 
-        public async Task<IEnumerable<TModel>> GetList()
-        {
-            try
-            {
-                return await BlobCache.UserAccount.GetAllObjects<TModel>();
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
+                    if(!list_keys.Contains(key))
+					dic.Add(key, item);                   
+				}
 
-        public async Task<bool> InvalidateSyncedItems()
-        {
-            try
-            {
-                var items = (await BlobCache.UserAccount.GetAllObjects<TModel>()).ToObservable().Where(x => x.IsSynced != false).ToEnumerable();
-                System.Diagnostics.Debug.WriteLine($"{typeof(TModel).Name} count is {items.ToObservable().Count()}");
-                foreach (var item in items)
-                {
-                    var key = typeof(TModel).Name + "_" + item.Id;
-                    await BlobCache.UserAccount.Invalidate(key);
-                }
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-        }
+				await BlobCache.UserAccount.InsertObjects(dic);
+				return true;
+			}
+			catch (Exception e)
+			{
+				return false;
+			}
+		}
 
-        public async Task SyncTables()
-        {
-            await SyncPatients();
-            await SyncOrdonnances();
-            await SyncDocuments();
+		public async Task<bool> DeleteAllAsync()
+		{
+			try
+			{
+				await BlobCache.UserAccount.InvalidateAllObjects<TModel>();
+				return true;
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+		}
+
+		// The structure of Key: typeof(TModel).Name + "_" + item.Id
+		public async Task<bool> DeleteItemAsync(string key)
+		{
+			try
+			{
+				await BlobCache.UserAccount.Invalidate(key);
+				return true;
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+		}
+
+		// The structure of Key: typeof(TModel).Name + "_" + item.Id
+		public async Task<TModel> GetItemAsync(string key)
+		{
+			try
+			{
+				return await BlobCache.UserAccount.GetObject<TModel>(key);
+			}
+			catch (Exception)
+			{
+				return null;
+			}
+		}
+
+		public async Task<IEnumerable<TModel>> GetList()
+		{
+			try
+			{
+				return await BlobCache.UserAccount.GetAllObjects<TModel>();
+			}
+			catch (Exception)
+			{
+				return null;
+			}
+		}
+
+		public async Task<bool> InvalidateSyncedItems()
+		{
+			try
+			{
+				var items = (await BlobCache.UserAccount.GetAllObjects<TModel>()).ToObservable().Where(x => x.IsSynced != false).ToEnumerable();
+				System.Diagnostics.Debug.WriteLine($"{typeof(TModel).Name} count is {items.ToObservable().Count()}");
+				foreach (var item in items)
+				{
+					var key = typeof(TModel).Name + "_" + item.Id;
+					await BlobCache.UserAccount.Invalidate(key);
+				}
+				return true;
+			}
+			catch (Exception e)
+			{
+				return false;
+			}
+		}
+
+        bool isSyncing = false;
+
+		public async Task SyncTables()
+		{
+            if (isSyncing)
+                return;
+
+            isSyncing = true;
+
+			await SyncPatients();
+			await SyncOrdonnances();
+			await SyncDocuments();
             await SyncTeledeclarations();
-        }
+
+            isSyncing = false;
+		}
 
         public async Task SyncTeledeclarations()
         {
@@ -145,41 +161,41 @@ namespace libermedical.Services
                 Debug.WriteLine(e.Message);
             }
         }
-        public async Task SyncPatients()
-        {
-            try
-            {
 
-                var items = (await BlobCache.UserAccount.GetAllObjects<Patient>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
-                foreach (var item in items)
-                {
-                    await PushPatient(item, item.CreatedAt == item.UpdatedAt);
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-            }
-        }
+		public async Task SyncPatients()
+		{
+			try
+			{
 
-        public async Task SyncDocuments()
-        {
-            try
-            {
+				var items = (await BlobCache.UserAccount.GetAllObjects<Patient>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
+				foreach (var item in items)
+				{
+                    await PushPatient(item, item.UpdatedAt == null ? true : false );
+				}
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(e.Message);
+			}
+		}
 
-                var items = (await BlobCache.UserAccount.GetAllObjects<Document>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
-                foreach (var item in items)
-                {
-                    await PushDocument(item, item.CreatedAt == item.UpdatedAt);
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-            }
+		public async Task SyncDocuments()
+		{
+			try
+			{
 
-        }
+				var items = (await BlobCache.UserAccount.GetAllObjects<Document>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
+				foreach (var item in items)
+				{
+                    await PushDocument(item, item.UpdatedAt == null ? true : false);
+				}
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(e.Message);
+			}
 
+		}
 
         public async Task PushTeledeclaration(Teledeclaration teledeclaration)
         {
@@ -191,6 +207,7 @@ namespace libermedical.Services
                 if (tele != null)
                 {
                     tele.IsSynced = true;
+                    tele.UpdatedAt = DateTime.UtcNow;
                     await UpdateAsync(tele as TModel, typeof(Teledeclaration).Name + "_" + localId);
                 }
                 else
@@ -204,23 +221,25 @@ namespace libermedical.Services
             }
         }
 
+
         public async Task PushPatient(Patient patientObject, bool isNew)
         {
             try
             {
 
                 var localId = patientObject.Id;
-                var patient = await App.PatientsManager.SaveOrUpdateAsync(patientObject.Id, patientObject, isNew);
+                var patient = await App.PatientsManager.SaveOrUpdateAsync(patientObject.Id, patientObject, patientObject.UpdatedAt == null);
                 if (patient != null)
                 {
                     patient.IsSynced = true;
+                    patient.UpdatedAt = DateTime.UtcNow;
                     await UpdateAsync(patient as TModel, typeof(Patient).Name + "_" + localId);
                     var patientDocuments = (await BlobCache.UserAccount.GetAllObjects<Document>()).ToObservable().Where(x => x.PatientId == localId).ToEnumerable();
                     foreach (var document in patientDocuments.Where(x => x.IsSynced == false))
                     {
                         document.Patient = patient;
                         document.PatientId = patient.Id;
-                        await PushDocument(document, document.CreatedAt == document.UpdatedAt);
+                        await PushDocument(document, document.UpdatedAt == null ? true : false);
                     }
 
                     var patientOrdonnances = (await BlobCache.UserAccount.GetAllObjects<Ordonnance>()).ToObservable().Where(x => x.PatientId == localId).ToEnumerable();
@@ -228,7 +247,7 @@ namespace libermedical.Services
                     {
                         ordonnance.Patient = patient;
                         ordonnance.PatientId = patient.Id;
-                        await PushOrdonnance(ordonnance, ordonnance.CreatedAt == ordonnance.UpdatedAt);
+                        await PushOrdonnance(ordonnance, ordonnance.UpdatedAt == null ? true : false);
                     }
                 }
             }
@@ -244,15 +263,18 @@ namespace libermedical.Services
             {
                 if (!document.AttachmentPath.StartsWith("PatientDocuments") && !document.AttachmentPath.StartsWith("Ordonnance"))
                 {
+
                     var res = await FileUpload.UploadFile(document.AttachmentPath, "PatientDocuments", document.Id);
                     if (res)
                         document.AttachmentPath = $"PatientDocuments/{document.Id}/{Path.GetFileName(document.AttachmentPath)}";
                 }
+
                 var localId = document.Id;
-                var doc = await App.DocumentsManager.SaveOrUpdateAsync(document.Id, document, isNew);
+                var doc = await App.DocumentsManager.SaveOrUpdateAsync(document.Id, document, document.UpdatedAt == null);
                 if (doc != null)
                 {
                     doc.IsSynced = true;
+                    doc.UpdatedAt = DateTime.UtcNow;
                     await UpdateAsync(doc as TModel, typeof(Document).Name + "_" + document.Id);
                 }
                 else
@@ -273,7 +295,7 @@ namespace libermedical.Services
             {
 
                 var localId = ordonnanceObject.Id;
-                var ordonnance = await App.OrdonnanceManager.SaveOrUpdateAsync(ordonnanceObject.Id, ordonnanceObject, isNew);
+                var ordonnance = await App.OrdonnanceManager.SaveOrUpdateAsync(ordonnanceObject.Id, ordonnanceObject, ordonnanceObject.UpdatedAt == null );
                 if (ordonnance != null)
                 {
                     ordonnance.IsSynced = true;
@@ -298,6 +320,7 @@ namespace libermedical.Services
                     {
                         ordonnance = ordonnanceUpdated;
                         ordonnance.IsSynced = true;
+                        ordonnance.UpdatedAt = DateTime.UtcNow;
                     }
                     else
                     {
@@ -329,28 +352,30 @@ namespace libermedical.Services
             }
         }
 
-        public async Task SyncOrdonnances()
-        {
-            try
-            {
-                var items = (await BlobCache.UserAccount.GetAllObjects<Ordonnance>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
-                foreach (var item in items)
-                {
-                    var isNew = item.CreatedAt == item.UpdatedAt ? false : true;
-                    await PushOrdonnance(item, isNew);
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-            }
-        }
 
-        public async Task<int> DownloadOrdonnances(int count)
-        {
-            if (App.IsConnected())
-            {
-                var request = new GetListRequest(count, 1);
+		public async Task SyncOrdonnances()
+		{
+			try
+			{
+				var items = (await BlobCache.UserAccount.GetAllObjects<Ordonnance>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
+				foreach (var item in items)
+				{
+                    var isNew = item.UpdatedAt == null ? true : false;
+					await PushOrdonnance(item, isNew);
+				}
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(e.Message);
+			}
+		}
+
+		public async Task<int> DownloadOrdonnances(int count)
+		{
+			if (App.IsConnected())
+			{
+                var request = new GetListRequest(count, 1, sortField: "createdAt", sortDirection: Enums.SortDirectionEnum.Desc);
+
                 var response = await App.OrdonnanceManager.GetListAsync(request);
                 var Ordonnances =
                     new ObservableCollection<Ordonnance>(response.rows);
@@ -396,5 +421,19 @@ namespace libermedical.Services
             }
             return -1;
         }
+
+        private async Task<List<string>> GetKeys()
+        {
+            try
+            {
+                var response = await BlobCache.UserAccount.GetAllKeys();
+                return response.ToList();
+            }
+            catch(Exception ex)
+            {
+                return new List<string>();
+            }
+        }
+
     }
 }

@@ -54,11 +54,19 @@ namespace libermedical
             }
             if (IsConnected())
                 SyncData();
-            CrossConnectivity.Current.ConnectivityChanged += (sender, args) =>
+            
+            Plugin.Connectivity.CrossConnectivity.Current.ConnectivityChanged += (sender, args) =>
             {
-                if (CrossConnectivity.Current.IsConnected)
+                if (args.IsConnected)
                     SyncData();
             };
+
+            Plugin.Connectivity.CrossConnectivity.Current.ConnectivityTypeChanged += (sender, e) => 
+            {
+                if(e.IsConnected)
+                    SyncData();
+            };
+
         }
 
         private void CreateTabbedPage()
@@ -78,18 +86,23 @@ namespace libermedical
 
         public static bool IsConnected()
         {
-            using (var connectivity = CrossConnectivity.Current)
-            {
-                return connectivity.IsConnected;
-            }
+            return  Plugin.Connectivity.CrossConnectivity.Current.IsConnected;
         }
 
-        public async static void SyncData()
+        static bool isSyncing = false;
+
+        public async static Task SyncData()
         {
+            if (isSyncing)
+                return;
+            
+            isSyncing = true;
+
             var synchelper = new StorageService<BaseDTO>();
             await synchelper.SyncTables();
-        }
 
+            isSyncing = false;
+        }
 
 
         public static long ConvertToUnixTimestamp(DateTime date)

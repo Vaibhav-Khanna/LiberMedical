@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 
@@ -16,6 +17,8 @@ namespace libermedical.Helpers
 			get { return CrossSettings.Current; }
 		}
 
+       
+
         #region Setting Constants
 
 	    private static readonly string stringDefault = string.Empty;
@@ -25,7 +28,7 @@ namespace libermedical.Helpers
 	    const bool NeedsSyncDefault = true;
 
         const string LastSyncKey = "last_sync";
-		static readonly DateTime LastSyncDefault = DateTime.Now.AddDays(-30);
+        static readonly DateTime LastSyncDefault = DateTime.UtcNow.AddDays(-30);
 
 	    private const string IsLoggedInKey = "IsLoggedIn";
 	    private const string TokenKey = "Token";

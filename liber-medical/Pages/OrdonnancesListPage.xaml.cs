@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using libermedical.Models;
@@ -31,8 +32,12 @@ namespace libermedical.Pages
 
         async void Handle_Refreshing(object sender, System.EventArgs e)
         {
+            if(App.IsConnected())
+                await App.SyncData();
+          
             await (BindingContext as OrdonnancesListViewModel).BindData(0);
             MyListView.IsRefreshing = false;
+            isExecuting = false;
         }
 
 
@@ -137,6 +142,8 @@ namespace libermedical.Pages
                     {
                         searchBar.Unfocus();
                         MyListView.Focus();
+                        MyListView.SetBinding(ListView.ItemsSourceProperty,"Ordonnances");
+                        (BindingContext as OrdonnancesListViewModel).Ordonnances = (BindingContext as OrdonnancesListViewModel).Ordonnances;
                     });
                 }
 
@@ -144,16 +151,39 @@ namespace libermedical.Pages
             }
         }
 
+        bool isExecuting = false;
+
         private async void MyListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
+            if (isExecuting)
+                return;
+            
+            isExecuting = true;
+
             if ((BindingContext as OrdonnancesListViewModel).Ordonnances.Count < (BindingContext as OrdonnancesListViewModel).MaxCount)
             {
+                if (string.IsNullOrWhiteSpace(searchBar.Text))
+                    indicator.IsVisible = true;
+                else
+                    indicator.IsVisible = false;
+              
                 var currentItem = e.Item as Ordonnance;
+               
                 var lastItem = (BindingContext as OrdonnancesListViewModel).Ordonnances[(BindingContext as OrdonnancesListViewModel).Ordonnances.Count - 1];
-                if (currentItem == lastItem)
+
+                if (currentItem == lastItem && string.IsNullOrWhiteSpace(searchBar.Text))
+                {
                     await (BindingContext as OrdonnancesListViewModel).BindData(20);
+                }
+
+            }
+            else
+            {
+                indicator.IsVisible = false;
             }
 
+            isExecuting = false;
         }
+
     }
 }

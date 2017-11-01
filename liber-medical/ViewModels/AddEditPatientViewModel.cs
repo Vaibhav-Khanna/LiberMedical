@@ -58,7 +58,9 @@ namespace libermedical.ViewModels
 			{
 				PatientProperty = new Patient();
 				PatientProperty.PhoneNumbers = new List<string>();
-				PatientProperty.Id = DateTime.UtcNow.Ticks.ToString();
+
+                PatientProperty.Id = DateTime.UtcNow.Ticks.ToString();
+
 				Phones = new ObservableCollection<string>();
 				_isNew = true;
 
@@ -103,17 +105,21 @@ namespace libermedical.ViewModels
 
 				if (ValidateForm())
 				{
-					PatientProperty.CreatedAt = PatientProperty.CreatedAt == null ? DateTimeOffset.Now : PatientProperty.CreatedAt;
-					if (!_isNew)
-						PatientProperty.UpdatedAt = DateTimeOffset.Now;
+
+                    PatientProperty.CreatedAt = PatientProperty.CreatedAt == null ? DateTimeOffset.UtcNow : PatientProperty.CreatedAt;
+                    if (!_isNew && PatientProperty.UpdatedAt != null)
+                        PatientProperty.UpdatedAt = DateTimeOffset.UtcNow;
 					PatientProperty.IsSynced = false;
+
 					PatientProperty.NurseId = JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id;
-					await _storageService.DeleteItemAsync(typeof(Patient).Name + "_" + PatientProperty.Id);
+				
+                    await _storageService.DeleteItemAsync(typeof(Patient).Name + "_" + PatientProperty.Id);
 					await _storageService.AddAsync(PatientProperty);
+
 					if (App.IsConnected())
 					{
 						UserDialogs.Instance.ShowLoading("Processing...");
-						await new StorageService<Patient>().PushPatient(PatientProperty, _isNew);
+                        await new StorageService<Patient>().PushPatient(PatientProperty, _isNew && PatientProperty.UpdatedAt != null);
 					}
 					await CoreMethods.PopPageModel(PatientProperty);
 

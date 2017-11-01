@@ -2,6 +2,7 @@
 <custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     Style="{StaticResource AppBackgroundColorBlack}"
     Title="Ordonnance 1"
     x:Class="libermedical.Pages.OrdonnanceViewPage">
@@ -23,8 +24,11 @@
         </ContentView>
     </custom:BasePage.Header>
   <custom:BasePage.ContentPresenter>
-    <ContentView Padding="0,10,0,0">
-      <Image Source="{Binding ImageSource}"></Image>
+    <ContentView Padding="0">
+            <StackLayout Spacing="0" Orientation="Vertical" VerticalOptions="FillAndExpand">
+                <ProgressBar HeightRequest="2" BackgroundColor="Transparent" Progress="{Binding Downloadprogress}" />
+                <ffimageloading:CachedImage HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Source="{Binding ImageSource}" DownloadStartedCommand="{Binding DownloadStarted}" DownloadProgressCommand="{Binding Downloading}" />
+            </StackLayout> 
     </ContentView>
   </custom:BasePage.ContentPresenter>
    

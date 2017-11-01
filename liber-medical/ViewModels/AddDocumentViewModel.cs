@@ -10,13 +10,15 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Acr.UserDialogs;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using libermedical.Request;
 
 namespace libermedical.ViewModels
 {
 	public class AddDocumentViewModel : ViewModelBase
 	{
 		private bool _isNew;
-		private string _createdDate = DateTime.Now.ToString("dd-MM-yyyy");
+        private string _createdDate = DateTime.UtcNow.ToString("dd-MM-yyyy");
 
 		public string CreatedDate
 		{
@@ -88,8 +90,8 @@ namespace libermedical.ViewModels
 			Document = new Document
 			{
 				Id = Guid.NewGuid().ToString(),
-				CreatedAt = DateTime.Today,
-				AddDate = DateTime.Today,
+                CreatedAt = DateTime.UtcNow,
+                AddDate = DateTime.UtcNow,
 				NurseId = JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id,
 			};
 
@@ -170,12 +172,17 @@ namespace libermedical.ViewModels
 							await storageService.DeleteItemAsync(typeof(Document).Name + "_" + Document.Id);
 							Document.AttachmentPath = ImagePath;
 							Document.Label = Label;
-							Document.UpdatedAt = DateTimeOffset.Now;
-							await storageService.AddAsync(Document);
+                            Document.IsSynced = false;
+
+                            if(_isNew && Document.UpdatedAt != null)
+                            Document.UpdatedAt = DateTimeOffset.UtcNow;
+						
+                            await storageService.AddAsync(Document);
 							if (App.IsConnected())
 							{
 								UserDialogs.Instance.ShowLoading("Processing...");
-								await new StorageService<Document>().PushDocument(Document, _isNew);
+                                await new StorageService<Document>().PushDocument(Document, _isNew && Document.UpdatedAt != null);
+                                await DownlaodDocuments();
 							}
 							await CoreMethods.PopPageModel();
 						}
@@ -191,6 +198,22 @@ namespace libermedical.ViewModels
 				});
 			}
 		}
+
+        private async Task DownlaodDocuments()
+        {
+            if (App.IsConnected())
+            {
+                var request = new GetListRequest(600, 0);
+
+                var documents = await App.DocumentsManager.GetListAsync(request);
+
+                //Updating records in local cache
+                if (documents != null && documents.rows != null)
+                    await new StorageService<Document>().InvalidateSyncedItems();
+
+                await new StorageService<Document>().AddManyAsync(documents.rows);
+            }
+        }
 
 
 		public ICommand AddDocumentCommand

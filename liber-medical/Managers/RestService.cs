@@ -77,7 +77,7 @@ namespace libermedical.Managers
 			}
 			if (!string.IsNullOrEmpty(sortField))
 			{
-				parameters += "&sortField=" + sortField;
+                parameters += "&sortField=" + sortField + "="+direction.ToString().ToLower();
 			}
 
 			parameters += "&" + _auth;
@@ -138,7 +138,7 @@ namespace libermedical.Managers
 				() => GetSingleDataAsync(id),
 				offset =>
 				{
-					TimeSpan elapsed = DateTimeOffset.Now - offset;
+                TimeSpan elapsed = DateTimeOffset.UtcNow - offset;
 					return elapsed > new TimeSpan(days: 0, hours: 8, minutes: 0, seconds: 0);
 				});
 

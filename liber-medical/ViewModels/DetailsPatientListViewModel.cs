@@ -52,6 +52,7 @@ namespace libermedical.ViewModels
             Ordonnances = new ObservableCollection<Ordonnance>((await new StorageService<Ordonnance>().GetList()).Where(x => x.PatientId == Patient.Id));
             Documents = new ObservableCollection<Document>((await new StorageService<Document>().GetList()).Where(x => x.PatientId == Patient.Id));
         }
+
         public Command EditPatient
         {
             get
@@ -212,8 +213,7 @@ namespace libermedical.ViewModels
 		protected override void ViewIsAppearing(object sender, System.EventArgs e)
 		{
 			base.ViewIsAppearing(sender, e);
-            BindData();
-			
+            BindData();	
 		}
 
     }

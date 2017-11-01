@@ -3,6 +3,7 @@ using Acr.UserDialogs;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using FFImageLoading.Forms.Droid;
 
 namespace libermedical.Droid
 {
@@ -18,7 +19,7 @@ namespace libermedical.Droid
             Vapolia.WheelPickerForms.Droid.WheelPickerRenderer.InitializeForms();
             Xamarin.Forms.Forms.Init(this, bundle);
 
-
+            CachedImageRenderer.Init();
 	        UserDialogs.Init(this);
 			LoadApplication(new App());
         }
