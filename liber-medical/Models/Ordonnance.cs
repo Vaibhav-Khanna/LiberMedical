@@ -43,6 +43,9 @@ namespace libermedical.Models
                                                               : Status == StatusEnum.refused.ToString() ? "Refusé" : "";
 
         [JsonIgnore]
+        public string RefusedReasonString => !string.IsNullOrWhiteSpace(RefusedReason) && Status == StatusEnum.refused.ToString() ? "Motif: " + RefusedReason : "";
+
+        [JsonIgnore]
         public List<AttachmentsHelper> AttachmentsInfo => Attachments.Select(p => new AttachmentsHelper()
         {
             FilePath = p,
