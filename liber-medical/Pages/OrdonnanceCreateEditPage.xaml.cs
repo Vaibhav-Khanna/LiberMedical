@@ -34,7 +34,7 @@ namespace libermedical.Pages
                 VisualiserSection.IsVisible = false;
             MyDatePicker.Date = _ordonnance.FirstCareAt;
             MyDatePicker.DateSelected += MyDatePickerOnDateSelected;
-            SelectedDate.Text = $"Date : {_ordonnance.FirstCareAt.ToString("dd-MM-yyyy")}";
+            SelectedDate.Text = $"Premier soin: {_ordonnance.FirstCareAt.ToString("dd-MM-yyyy")}";
             if (_ordonnance.Frequencies != null)
                 UpdateFrequenciesViewCellHeight(new ObservableCollection<Frequency>(_ordonnance.Frequencies));
             else
@@ -61,13 +61,13 @@ namespace libermedical.Pages
         private void MyDatePickerOnDateSelected(object sender, DateChangedEventArgs dateChangedEventArgs)
         {
             (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.First_Care_At = App.ConvertToUnixTimestamp(dateChangedEventArgs.NewDate);
-            SelectedDate.Text = $"Date : {(sender as DatePicker).Date.ToString("dd-MM-yyyy")}";
+            SelectedDate.Text = $"Premier soin: {(sender as DatePicker).Date.ToString("dd-MM-yyyy")}";
         }
 
         void Handle_Unfocused(object sender, Xamarin.Forms.FocusEventArgs e)
         {
             (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.First_Care_At = App.ConvertToUnixTimestamp((sender as DatePicker).Date);
-            SelectedDate.Text = $"Date : {(sender as DatePicker).Date.ToString("dd-MM-yyyy")}";
+            SelectedDate.Text = $"Premier soin: {(sender as DatePicker).Date.ToString("dd-MM-yyyy")}";
         }
 
         async void StatusChanged(object sender, System.EventArgs e)
