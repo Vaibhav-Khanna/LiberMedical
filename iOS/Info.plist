@@ -11,7 +11,7 @@
 	<key>CFBundleName</key>
 	<string>LIberMedical</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.matsiya.libermedical</string>
+	<string>com.matsiya.mobilecenter.libermedical</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
