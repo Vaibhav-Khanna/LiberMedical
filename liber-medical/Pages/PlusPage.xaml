@@ -105,7 +105,7 @@
 				<Button
                   IsEnabled="{Binding ShouldShowContact}"
 				  Grid.Row="1"
-                     
+                  x:Name = "bt"
 				  BackgroundColor="White"
 				  BorderColor="#91c602"
 				  BorderWidth="1"

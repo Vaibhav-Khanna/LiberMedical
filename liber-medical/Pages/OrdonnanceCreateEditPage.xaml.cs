@@ -72,7 +72,7 @@ namespace libermedical.Pages
 
         async void StatusChanged(object sender, System.EventArgs e)
         {
-            if (_ordonnance.Status != StatusEnum.refused || (this.BindingContext as OrdonnanceCreateEditViewModel).SaveLabel == "Modifier")
+            if (_ordonnance.Status != StatusEnum.refused.ToString() || (this.BindingContext as OrdonnanceCreateEditViewModel).SaveLabel == "Modifier")
                 return;
 
             var status = await DisplayActionSheet("Sélectionnez un statut", "Annuler", null, "En attente", "Traité", "Refusé");
@@ -81,13 +81,13 @@ namespace libermedical.Pages
                 switch (status)
                 {
                     case "En attente":
-                        (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.Status = StatusEnum.waiting;
+                        (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.Status = StatusEnum.waiting.ToString();
                         break;
                     case "Traité":
-                        (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.Status = StatusEnum.valid;
+                        (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.Status = StatusEnum.valid.ToString();
                         break;
                     case "Refusé":
-                        (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.Status = StatusEnum.refused;
+                        (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.Status = StatusEnum.refused.ToString();
                         break;
                 }
                 StatusLabel.Text = $"Statut:  {status}";
