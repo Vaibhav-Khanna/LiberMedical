@@ -49,7 +49,7 @@ namespace libermedical.ViewModels
         });
 
         public ICommand GoToProfileCommand => new Command(async () => 
-			await CoreMethods.PushPageModel<MyAccountViewModel>(null, true));
+			await CoreMethods.PushPageModel<MyAccountViewModel>(null, false));
 
 
 

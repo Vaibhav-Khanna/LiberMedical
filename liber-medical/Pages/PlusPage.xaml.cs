@@ -6,5 +6,13 @@
         {
             InitializeComponent();
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            bt.TranslationY = -30;
+
+        }
     }
 }

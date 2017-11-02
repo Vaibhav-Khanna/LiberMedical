@@ -68,8 +68,8 @@
 						<BoxView HeightRequest="2" BackgroundColor="#91c602" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Grid.Row="1" WidthRequest="100" x:Name="BoxViewDocuments" IsVisible="{Binding ShowBoxViewDocuments}" />
 					</Grid>
 				</StackLayout>
-				<ScrollView Grid.Row="2">
-					<StackLayout Padding="0,0,0,0">
+
+					<StackLayout Padding="0,0,0,0" Grid.Row="2" >
 						<ListView ItemsSource="{Binding Ordonnances}" x:Name="stackOrdonnance" SelectedItem="{Binding SelectedOrdonnance}" SeparatorVisibility="Default" RowHeight="60" IsVisible="{Binding ShowStackOrdonnance}" >
 							<ListView.ItemTemplate>
 								<DataTemplate>
@@ -78,6 +78,7 @@
 											<Grid.ColumnDefinitions>
 												<ColumnDefinition Width="50*" />
 												<ColumnDefinition Width="40*" />
+                                               
 												<ColumnDefinition Width="10*" />
 											</Grid.ColumnDefinitions>
 											<Grid.RowDefinitions>
@@ -86,7 +87,7 @@
 											</Grid.RowDefinitions>
 											<Label Text="{Binding Reference, StringFormat='Ordo {0}'}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
 											<Label Text="{Binding CreatedAt,StringFormat='{0:dd-MM-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
-											<Button Text="{Binding StatusString}" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" TextColor="#ffffff" Grid.RowSpan="2" Grid.Column="1" Command="{Binding Source={x:Reference Root}, Path=BindingContext.OrdonnanceSelectCommand}" CommandParameter="{Binding .}">
+											<Button Text="{Binding StatusString}" IsVisible="{Binding IsSynced}" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" TextColor="#ffffff" Grid.RowSpan="2" Grid.Column="1" Command="{Binding Source={x:Reference Root}, Path=BindingContext.OrdonnanceSelectCommand}" CommandParameter="{Binding .}">
 												<Button.HeightRequest>
 													<OnPlatform x:TypeArguments="x:Double" iOS="20" Android="40" />
 												</Button.HeightRequest>
@@ -97,6 +98,7 @@
 													<OnPlatform x:TypeArguments="x:Int32" iOS="10" Android="0" />
 												</Button.BorderRadius>
 											</Button>
+                                            <Image Source="sync.png" VerticalOptions="Center" HorizontalOptions="Center" IsVisible="{Binding IsSynced,Converter={converter:BooleanNegativeConverter}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"></Image>
 											<Image Source="back_arrow_green.png" HorizontalOptions="Start" VerticalOptions="Center" Grid.RowSpan="2" Grid.Column="2" />
 										</Grid>
 									</ViewCell>
@@ -125,7 +127,7 @@
 							</ListView.ItemTemplate>
 						</ListView>
 					</StackLayout>
-				</ScrollView>
+				
 			</Grid>
 		</ContentView>
 	</custom:BasePage.ContentPresenter>

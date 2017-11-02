@@ -50,6 +50,10 @@ namespace libermedical.ViewModels
             }
         }
 
+        public Command BackCommand => new Command(async() =>
+       {
+            await CoreMethods.PopPageModel();
+       });
 
         public Command ViewContract => new Command( async() =>
        {

@@ -9,8 +9,8 @@ namespace libermedical.Models
 
 		[JsonProperty("label")]
 		public string Label { get; set; }
-		[JsonProperty("status")]
-		public StatusEnum Status { get; set; }
+        [JsonProperty("status")]
+        public string Status { get; set; } = StatusEnum.waiting.ToString();
 		[JsonProperty("file_path")]
 		public string FilePath { get; set; }
 		[JsonProperty("patient_id")]
@@ -21,10 +21,10 @@ namespace libermedical.Models
 		public string EmployeeId { get; set; }
 
 		[JsonIgnore]
-		public string StatusString => Status == StatusEnum.waiting
+        public string StatusString => Status == StatusEnum.waiting.ToString()
 					? "En attente"
-					: Status == StatusEnum.valid
+                                                              : Status == StatusEnum.valid.ToString()
 						? "Traité"
-						: "Refusé";
+                                                              : Status == StatusEnum.waiting.ToString() ? "Refusé" : " ";
 	}
 }

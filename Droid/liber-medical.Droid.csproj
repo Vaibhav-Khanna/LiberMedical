@@ -458,6 +458,7 @@
     <AndroidResource Include="Resources\drawable-xhdpi\home_selected.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\home_selected.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\home_selected.png" />
+    <AndroidResource Include="Resources\drawable\ion_alert_circled_ionicons.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />

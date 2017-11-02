@@ -320,6 +320,9 @@
     <BundleResource Include="Resources\sync.png" />
     <BundleResource Include="Resources\sync%402x.png" />
     <BundleResource Include="Resources\sync%403x.png" />
+    <BundleResource Include="Resources\ionAlertCircledIonicons.png" />
+    <BundleResource Include="Resources\ionAlertCircledIonicons%402x.png" />
+    <BundleResource Include="Resources\ionAlertCircledIonicons%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\add%402x.png" />

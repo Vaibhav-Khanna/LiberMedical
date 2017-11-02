@@ -21,7 +21,7 @@ namespace libermedical.ViewModels
 			{
 				_teledeclaration = value;
 				if (_teledeclaration != null)
-					CanValidate = _teledeclaration.Status == Enums.StatusEnum.waiting ? true : false;
+                    CanValidate = _teledeclaration.Status == Enums.StatusEnum.waiting.ToString() ? true : false;
 				RaisePropertyChanged();
 			}
 		}
@@ -44,9 +44,9 @@ namespace libermedical.ViewModels
 				{
                     UserDialogs.Instance.ShowLoading("Processing...");
                     if (args as string == "Valid")
-						Teledeclaration.Status = Enums.StatusEnum.valid;
+                        Teledeclaration.Status = Enums.StatusEnum.valid.ToString();
 					else
-						Teledeclaration.Status = Enums.StatusEnum.refused;
+                        Teledeclaration.Status = Enums.@StatusEnum.refused.ToString();
 
 					_teledeclarationService = new StorageService<Teledeclaration>();
 					await _teledeclarationService.DeleteItemAsync(typeof(Teledeclaration).Name + "_" + Teledeclaration.Id);

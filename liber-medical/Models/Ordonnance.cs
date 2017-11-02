@@ -10,7 +10,7 @@ namespace libermedical.Models
     public class Ordonnance : BaseDTO
     {
         [JsonProperty("status")]
-        public StatusEnum Status { get; set; }
+        public string Status { get; set; } = StatusEnum.waiting.ToString();
         [JsonProperty("first_care_at")]
         public long First_Care_At { get; set; }
         [JsonProperty("statusChangedAt")]
@@ -23,7 +23,6 @@ namespace libermedical.Models
         public string NurseId { get; set; }
         [JsonProperty("refused_reason")]
         public string RefusedReason { get; set; }
-
         [JsonProperty("attachments")]
         public List<string> Attachments { get; set; }
         [JsonProperty("frequencies")]
@@ -37,11 +36,11 @@ namespace libermedical.Models
         public Patient Patient { set; get; }
 
         [JsonIgnore]
-        public string StatusString => Status == StatusEnum.waiting
+        public string StatusString => Status == StatusEnum.waiting.ToString()
             ? "En attente"
-            : Status == StatusEnum.valid
+                                                              : Status == StatusEnum.valid.ToString()
                 ? "Traité"
-                : "Refusé";
+                                                              : Status == StatusEnum.refused.ToString() ? "Refusé" : "";
 
         [JsonIgnore]
         public List<AttachmentsHelper> AttachmentsInfo => Attachments.Select(p => new AttachmentsHelper()

@@ -56,13 +56,13 @@ namespace libermedical.Pages
                         if (filter.EnableDateSearch)
                         {
                             foundItems =
-                               (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.Status == status && x.FirstCareAt.Date >= filter.StartDate.Value.Date &&
+                                (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.Status == status.ToString() && x.FirstCareAt.Date >= filter.StartDate.Value.Date &&
                                                                                           x.FirstCareAt.Date <= filter.EndDate.Value.Date).ToList();
                         }
                         else
                         {
                             foundItems =
-                               (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.Status == status).ToList();
+                                (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.Status == status.ToString()).ToList();
                         }
                         filteredItems.AddRange(foundItems);
                     }

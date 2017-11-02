@@ -81,13 +81,13 @@ namespace libermedical.ViewModels
                         if (filter.EnableDateSearch)
                         {
                             foundItems =
-                               _teledeclarationsAll.Where(x => x.Status == status && x.CreatedAt.Value.Date >= filter.StartDate.Value.Date &&
+                                _teledeclarationsAll.Where(x => x.Status == status.ToString() && x.CreatedAt.Value.Date >= filter.StartDate.Value.Date &&
                                                           x.CreatedAt.Value.Date <= filter.EndDate.Value.Date).ToList();
                         }
                         else
                         {
                             foundItems =
-                               _teledeclarationsAll.Where(x => x.Status == status).ToList();
+                                _teledeclarationsAll.Where(x => x.Status == status.ToString()).ToList();
                         }
                         filteredItems.AddRange(foundItems);
                     }

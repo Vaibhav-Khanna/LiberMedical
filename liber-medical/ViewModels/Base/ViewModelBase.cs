@@ -10,7 +10,7 @@ namespace libermedical.ViewModels.Base
 	{
 
 		public ICommand  NavBackCommand => new Command(async () => 
-			await CoreMethods.PopPageModel(true));
+                                                       await CoreMethods.PopPageModel(true));
 
 		public async Task<string> PushPageModelWithNewNavigation<T>(object data, bool animate = true) where T : FreshBasePageModel
 		{
