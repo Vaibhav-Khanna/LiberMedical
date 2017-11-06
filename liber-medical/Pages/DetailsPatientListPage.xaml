@@ -97,6 +97,11 @@
 												<Button.BorderRadius>
 													<OnPlatform x:TypeArguments="x:Int32" iOS="10" Android="0" />
 												</Button.BorderRadius>
+                                             <Button.FontSize>
+                                                    <OnPlatform x:TypeArguments="x:Double">
+                                                        <On Platform="Android" Value="10" />
+                                                    </OnPlatform>
+                                                </Button.FontSize>
 											</Button>
                                             <Image Source="sync.png" VerticalOptions="End" HorizontalOptions="Center" IsVisible="{Binding IsSynced,Converter={converter:BooleanNegativeConverter}}" Grid.Row="0" Grid.RowSpan="1" Grid.Column="1"></Image>
                                             <Label Text="{Binding RefusedReasonString}" LineBreakMode="TailTruncation" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Start" Style="{StaticResource OrdonnanceAddDate}" TextColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" IsVisible="{Binding IsSynced}" Grid.Row="1" Grid.Column="1" />

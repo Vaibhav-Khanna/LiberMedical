@@ -45,6 +45,7 @@
     <AndroidSigningStorePass>j07lg95rCm9LTcP</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>libermedical</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>j07lg95rCm9LTcP</AndroidSigningKeyPass>
+    <AndroidLinkMode>None</AndroidLinkMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'iOS Release|iPhone' ">
     <Optimize>false</Optimize>

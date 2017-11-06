@@ -24,7 +24,6 @@ namespace libermedical.Pages
             MessagingCenter.Subscribe<FilterPage, Filter>(this, Events.UpdatePrescriptionFilters, (sender, filter) =>
             {
                 _filter = filter;
-
                 ApplyFilter(filter);
             });
         }
