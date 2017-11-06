@@ -59,6 +59,17 @@
     <WarningLevel>4</WarningLevel>
     <AndroidSupportedAbis>arm64-v8a;armeabi;armeabi-v7a;x86</AndroidSupportedAbis>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AndroidKeyStore>True</AndroidKeyStore>
+    <AndroidSigningKeyStore>/Users/vaibhavkhanna/Projects/LiberMedical/_git/Xamarin/ContinuousIntegration/Certificates/Android/libermedical.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>j07lg95rCm9LTcP</AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>libermedical</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>j07lg95rCm9LTcP</AndroidSigningKeyPass>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <AndroidSupportedAbis>armeabi-v7a;armeabi;arm64-v8a</AndroidSupportedAbis>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Acr.Support.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Acr.Support.2.1.0\lib\MonoAndroid10\Acr.Support.Android.dll</HintPath>
