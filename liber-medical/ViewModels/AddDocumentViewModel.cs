@@ -185,8 +185,10 @@ namespace libermedical.ViewModels
                                 await DownlaodDocuments();
 							}
 							await CoreMethods.PopPageModel();
-
-                            UserDialogs.Instance.Toast("Votre ordonnance a bien été enregistrée !");
+                            if (Device.RuntimePlatform == Device.iOS)
+                            {
+                                UserDialogs.Instance.Toast(("Votre ordonnance a bien été enregistrée !"));
+                            }
 						}
 					}
 					catch (Exception e)

@@ -219,7 +219,10 @@ namespace libermedical.ViewModels
 
 					UserDialogs.Instance.HideLoading();
 
-                    UserDialogs.Instance.Toast("Votre ordonnance a bien été enregistrée !");
+                    if (Device.RuntimePlatform == Device.iOS)
+                    {
+                        UserDialogs.Instance.Toast("Votre ordonnance a bien été enregistrée !");
+                    }
 
 				}
 				else
@@ -384,7 +387,10 @@ namespace libermedical.ViewModels
 						Ordonnance.Frequencies.Add(frequency);
 					Frequencies = Ordonnance.Frequencies != null ? new ObservableCollection<Frequency>(Ordonnance.Frequencies) : new ObservableCollection<Frequency>(new List<Frequency>() { frequency });
 
-                    UserDialogs.Instance.Toast("La fréquence "+ frequency.PeriodString +" a été ajoutée !");
+                    if (Device.RuntimePlatform == Device.iOS)
+                    {
+                        UserDialogs.Instance.Toast("La fréquence " + frequency.PeriodString + " a été ajoutée !");
+                    }
 
 					MessagingCenter.Send(this, Events.UpdateFrequenciesViewCellHeight, Frequencies);
 				}

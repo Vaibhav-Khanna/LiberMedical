@@ -5,6 +5,7 @@ using Android.OS;
 using Android.Runtime;
 using FFImageLoading.Forms.Droid;
 using Plugin.Permissions;
+using Xamarin.Forms;
 
 namespace libermedical.Droid
 {
@@ -22,16 +23,17 @@ namespace libermedical.Droid
 
             CachedImageRenderer.Init();
 
-	        UserDialogs.Init(this);
+            UserDialogs.Init(() => (Activity)Forms.Context);
+
 			LoadApplication(new App());
         }
+         
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-
 
     }
 }

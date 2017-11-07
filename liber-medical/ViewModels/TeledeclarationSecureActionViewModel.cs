@@ -59,7 +59,10 @@ namespace libermedical.ViewModels
                     }
                     //TODO: Display success toast
 
-                    UserDialogs.Instance.Toast("Votre télédéclaration vient d’être envoyée !");
+                    if (Device.RuntimePlatform == Device.iOS)
+                    {
+                        UserDialogs.Instance.Toast("Votre télédéclaration vient d’être envoyée !");
+                    }
 
                     await CoreMethods.PopPageModel(true,true);
                     UserDialogs.Instance.HideLoading();
