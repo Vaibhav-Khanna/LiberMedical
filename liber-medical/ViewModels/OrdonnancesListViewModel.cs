@@ -21,6 +21,7 @@ namespace libermedical.ViewModels
         public int MaxCount { get; set; }
         public IStorageService<Ordonnance> _ordonnanceStorage;
         private ObservableCollection<Ordonnance> _ordonnances;
+
         public ObservableCollection<Ordonnance> Ordonnances
         {
             get { return _ordonnances; }
@@ -34,6 +35,9 @@ namespace libermedical.ViewModels
         public OrdonnancesListViewModel(IStorageService<Ordonnance> storageService) : base(storageService)
         {
             _ordonnanceStorage = storageService;
+           
+            CachedList();
+
             BindData(20);
         }
 
@@ -104,27 +108,36 @@ namespace libermedical.ViewModels
                             await CoreMethods.DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
                             return;
                         }
+                        var perm = await App.AskForCameraPermission();
 
-                        var file = await CrossMedia.Current.TakePhotoAsync(
-                            new StoreCameraMediaOptions
-                            {
-                                Directory = "Docs",
-                                Name = DateTime.Now.Ticks.ToString(),
-                                 CompressionQuality = 30, RotateImage = false
-
-                            });
-                        if (file != null)
+                        if (perm)
                         {
-                            filePath = file.Path;
+                            await CrossMedia.Current.Initialize();
+                            var file = await CrossMedia.Current.TakePhotoAsync(
+                                new StoreCameraMediaOptions
+                                {
+                                    Directory = "Docs",
+                                    Name = DateTime.Now.Ticks.ToString(),
+                                    CompressionQuality = 30,
+                                    RotateImage = false
+
+                                });
+                            if (file != null)
+                            {
+                                filePath = file.Path;
+                            }
                         }
                     }
                     else if (action2 == "Bibliothèque photo")
                     {
-                        var pickerOptions = new PickMediaOptions() { CompressionQuality = 30, RotateImage = false };
-                        var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
-                        if (file != null)
+                        if (await App.AskForPhotoPermission())
                         {
-                            filePath = file.Path;
+                            var pickerOptions = new PickMediaOptions() { CompressionQuality = 30, RotateImage = false };
+                            var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
+                            if (file != null)
+                            {
+                                filePath = file.Path;
+                            }
                         }
                     }
 
@@ -161,7 +174,7 @@ namespace libermedical.ViewModels
 
                                     if (App.IsConnected())
                                     {
-                                        Acr.UserDialogs.UserDialogs.Instance.ShowLoading("");
+                                    Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
                                         await storageService.PushOrdonnance(ordonnance, true);
                                         await BindData(20);
                                         Acr.UserDialogs.UserDialogs.Instance.HideLoading();
@@ -184,10 +197,9 @@ namespace libermedical.ViewModels
             }
         });
 
-        protected override async void ViewIsAppearing(object sender, EventArgs e)
+        public async Task CachedList()
         {
-            base.ViewIsAppearing(sender, e);
-
+            
             var list = await _ordonnanceStorage.GetList();
 
             if (list != null && list.Count() != 0)
@@ -197,7 +209,6 @@ namespace libermedical.ViewModels
             }
 
             Ordonnances = new ObservableCollection<Ordonnance>(list);
-
         }
 
 

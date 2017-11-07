@@ -129,13 +129,19 @@ namespace libermedical.ViewModels
                                 await CoreMethods.DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
                                 return;
                             }
-                            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions() { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30 });
-                            if (file != null)
+
+                            var permission = await App.AskForCameraPermission();
+                            if (permission)
                             {
-                                var profilePicture = ImageSource.FromStream(() => file.GetStream());
-                                _documentPath = file.Path;
-                                await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient);
-                                MessagingCenter.Send(this, Events.DocumentPathFromPatientDetail, _documentPath);
+                                await CrossMedia.Current.Initialize();
+                                var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions() { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30 });
+                                if (file != null)
+                                {
+                                    var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                                    _documentPath = file.Path;
+                                    await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient);
+                                    MessagingCenter.Send(this, Events.DocumentPathFromPatientDetail, _documentPath);
+                                }
                             }
                         }
                         else if (action == "Bibliothèque photo")
@@ -144,13 +150,16 @@ namespace libermedical.ViewModels
 
                             var pickerOptions = new PickMediaOptions() {  CompressionQuality = 30 };
 
-                            var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
-                            if (file != null)
+                            if (await App.AskForPhotoPermission())
                             {
-                                var profilePicture = ImageSource.FromStream(() => file.GetStream());
-                                _documentPath = file.Path;
-                                await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient);
-                                MessagingCenter.Send(this, Events.DocumentPathFromPatientDetail, _documentPath);
+                                var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
+                                if (file != null)
+                                {
+                                    var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                                    _documentPath = file.Path;
+                                    await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient);
+                                    MessagingCenter.Send(this, Events.DocumentPathFromPatientDetail, _documentPath);
+                                }
                             }
                         }
                         
@@ -214,9 +223,12 @@ namespace libermedical.ViewModels
             {
                 return new Command(async () =>
                 {
-                    var contactPhone = await CoreMethods.DisplayActionSheet("Contact Numbers", "Cancel", null, Patient.PhoneNumbers.ToArray());
-                    if (contactPhone != "Cancel")
-                        Device.OpenUri(new System.Uri($"tel:{contactPhone}"));
+                    if (Patient.PhoneNumbers != null && Patient.PhoneNumbers.Any())
+                    {
+                        var contactPhone = await CoreMethods.DisplayActionSheet("Contact Numbers", "Cancel", null, Patient.PhoneNumbers.ToArray());
+                        if (contactPhone != "Cancel")
+                            Device.OpenUri(new System.Uri($"tel:{contactPhone}"));
+                    }
                 });
             }
         }

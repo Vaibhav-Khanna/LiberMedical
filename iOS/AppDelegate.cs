@@ -26,6 +26,7 @@ namespace libermedical.iOS
             new SfPdfDocumentViewRenderer();
             SfPickerRenderer.Init();
             CachedImageRenderer.Init();
+
             LoadApplication(application);
 			return base.FinishedLaunching(app, options);
         }

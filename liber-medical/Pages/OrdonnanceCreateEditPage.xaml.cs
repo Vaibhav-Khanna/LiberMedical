@@ -18,8 +18,12 @@ namespace libermedical.Pages
             InitializeComponent();
             SubscribeMessages();
             DoAsyncActions();
+            
+        }
 
-            //TODO subscribe to changes of frequencies
+        void Handle_Clicked(object sender, System.EventArgs e)
+        {
+            (BindingContext as OrdonnanceCreateEditViewModel).DeleteImage.Execute((sender as MenuItem).CommandParameter);
         }
 
         private async void DoAsyncActions()
@@ -55,6 +59,11 @@ namespace libermedical.Pages
                 StatusLabel.Text = "Statut: " + _ordonnance.StatusString;
             }
 
+            if((BindingContext as OrdonnanceCreateEditViewModel).Ordonnance?.Status == Enums.StatusEnum.refused.ToString())
+            {
+                StatusLabel.TextColor = Color.Red;
+                StatusLabel.Text = "Refusé : " + (BindingContext as OrdonnanceCreateEditViewModel).Ordonnance?.RefusedReason;
+            }
 
         }
 

@@ -24,7 +24,7 @@
                     <ListView x:Name="MyListView" Grid.Row="1" Refreshing="Handle_Refreshing" IsPullToRefreshEnabled="true" ItemsSource="{Binding Ordonnances}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected" ItemAppearing="MyListView_ItemAppearing">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <ViewCell>
+                                <ViewCell>                       
                                     <Grid Padding="15,0,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="60*" />
@@ -48,6 +48,7 @@
                                                <Button.FontSize>
                                                     <OnPlatform x:TypeArguments="x:Double">
                                                         <On Platform="Android" Value="10" />
+                                                         <On Platform="iOS" Value="12" />
                                                     </OnPlatform>
                                                 </Button.FontSize>
                                                 <Button.WidthRequest>

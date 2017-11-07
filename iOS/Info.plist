@@ -7,11 +7,11 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>CFBundleDisplayName</key>
-	<string>LIberMedical</string>
+	<string>Liber&apos;Médical</string>
 	<key>CFBundleName</key>
-	<string>LIberMedical</string>
+	<string>Liber&apos;Médical</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.matsiya.mobilecenter.libermedical</string>
+	<string>com.matsiya.libermedical</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>

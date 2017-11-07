@@ -71,6 +71,16 @@ namespace libermedical.ViewModels
 		public bool Creating;
 		public string SaveLabel { get; set; } = "Enregistrer";
 
+        public Command DeleteImage => new Command((obj) =>
+        {
+            if(Attachments.Contains((string)obj))
+            Attachments.Remove((string)obj);
+
+            if(Ordonnance.Attachments.Contains((string)obj))
+            Ordonnance?.Attachments.Remove((string)obj);           
+        });
+
+
 		public OrdonnanceCreateEditViewModel()
 		{
 			Attachments = new ObservableCollection<string>();
@@ -114,8 +124,11 @@ namespace libermedical.ViewModels
 			{
 				if (initData is string)
 				{
-					if (!string.IsNullOrEmpty((string)initData))
-						Ordonnance.Attachments.Add((string)initData);
+                    if (!string.IsNullOrEmpty((string)initData))
+                    {
+                        Ordonnance.Attachments.Add((string)initData);
+                        Attachments.Add((string)initData);
+                    }
 					else
 						Ordonnance.Attachments = new List<string>();
 					Creating = true;
@@ -183,7 +196,7 @@ namespace libermedical.ViewModels
 			{
 				if (CanEdit)
 				{
-					UserDialogs.Instance.ShowLoading("Processing...");
+                    UserDialogs.Instance.ShowLoading("Chargement...");
 					var storageService = new StorageService<Ordonnance>();
 					await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + Ordonnance.Id);
 					Ordonnance.Attachments = Attachments?.ToList();
@@ -205,6 +218,8 @@ namespace libermedical.ViewModels
 					await CoreMethods.PopPageModel(null, true);
 
 					UserDialogs.Instance.HideLoading();
+
+                    UserDialogs.Instance.Toast("Votre ordonnance a bien été enregistrée !");
 
 				}
 				else
@@ -238,23 +253,31 @@ namespace libermedical.ViewModels
 						return;
 					}
 
-                    var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                    { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30 });
-					if (file != null)
-					{
-						Attachments.Add(file.Path);
-						Ordonnance.Attachments.Add(file.Path);
-					}
+                    var per = await App.AskForCameraPermission();
+                    if (per)
+                    {
+                        await CrossMedia.Current.Initialize();
+                        var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                        { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30 });
+                        if (file != null)
+                        {
+                            Attachments.Add(file.Path);
+                            Ordonnance.Attachments.Add(file.Path);
+                        }
+                    }
 				}
 				else if (action == "Bibliothèque photo")
 				{
-                    var pickerOptions = new PickMediaOptions() { CompressionQuality = 30 };
-                    var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
-					if (file != null)
-					{
-						Attachments.Add(file.Path);
-						Ordonnance.Attachments.Add(file.Path);
-					}
+                    if (await App.AskForPhotoPermission())
+                    {
+                        var pickerOptions = new PickMediaOptions() { CompressionQuality = 30 };
+                        var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
+                        if (file != null)
+                        {
+                            Attachments.Add(file.Path);
+                            Ordonnance.Attachments.Add(file.Path);
+                        }
+                    }
 				}
 				MessagingCenter.Send(this, Events.UpdateAttachmentsViewCellHeight, Ordonnance.Attachments);
 
@@ -360,6 +383,8 @@ namespace libermedical.ViewModels
 					if (Ordonnance.Frequencies != null)
 						Ordonnance.Frequencies.Add(frequency);
 					Frequencies = Ordonnance.Frequencies != null ? new ObservableCollection<Frequency>(Ordonnance.Frequencies) : new ObservableCollection<Frequency>(new List<Frequency>() { frequency });
+
+                    UserDialogs.Instance.Toast("La fréquence "+ frequency.PeriodString +" a été ajoutée !");
 
 					MessagingCenter.Send(this, Events.UpdateFrequenciesViewCellHeight, Frequencies);
 				}

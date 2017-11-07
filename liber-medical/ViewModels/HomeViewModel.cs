@@ -12,6 +12,7 @@ using libermedical.Helpers;
 using Newtonsoft.Json;
 using libermedical.Request;
 using Acr.UserDialogs;
+using Plugin.Messaging;
 
 namespace libermedical.ViewModels
 {
@@ -40,6 +41,7 @@ namespace libermedical.ViewModels
 			WelcomeText = $"Bonjour {JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Firstname}, que souhaitez vous faire?";
 			CheckForAdvisor();
 		}
+
 		public ICommand AssistCommand => new Command(async () =>
 		{
 			var action = await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Appel vocal", "E-mail", "SMS");
@@ -48,14 +50,16 @@ namespace libermedical.ViewModels
 				case "Appel vocal":
 					Device.OpenUri(new System.Uri($"tel:{Settings.AdvisorContact}"));
 					break;
-
 				case "E-mail":
 					Device.OpenUri(new System.Uri($"mailto:{Settings.AdvisorEmail}"));
 					break;
-
 				case "SMS":
-					Device.OpenUri(new System.Uri($"sms:{Settings.AdvisorContact}"));
-					break;
+                    {
+                        var smsMessenger = CrossMessaging.Current.SmsMessenger;
+                        if (smsMessenger.CanSendSms)
+                            smsMessenger.SendSms(Settings.AdvisorContact, "Bonjour, je vous informe que mon TLA est branché");                        
+                        break;
+                    }
 			}
 
 		});
@@ -83,20 +87,23 @@ namespace libermedical.ViewModels
 					return;
 				}
 
-				var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30 });
-                //if photo ok
-                if (file != null)
-				{
-					var profilePicture = ImageSource.FromStream(() => file.GetStream());
-					var typeNavigation = "normal";
-                    _documentPath = file.Path;
-					await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "HomeSelectPatient", typeNavigation, typeDoc }, true);
+                var permission = await App.AskForCameraPermission();
+                if (permission)
+                {
+                    await CrossMedia.Current.Initialize();
+                    var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                    { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30 });
+                    //if photo ok
+                    if (file != null)
+                    {
+                        var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                        var typeNavigation = "normal";
+                        _documentPath = file.Path;
 
-					//var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
-					//var basicNavContainer = new FreshNavigationContainer(page, "HomeSelectPatient");
-					//await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
-				}
+                        CreatePrescription(_documentPath);
+
+                    }
+                }
 			}
 			else if (action == "Bibliothèque photo")
 			{
@@ -104,22 +111,33 @@ namespace libermedical.ViewModels
 
 				var pickerOptions = new PickMediaOptions() { CompressionQuality = 30 };
 
-				var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
+                if (await App.AskForPhotoPermission())
+                {
+                    var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
 
-                if (file!=null)
-				{
-					var profilePicture = ImageSource.FromStream(() => file.GetStream());
-					var typeNavigation = "normal";
-					_documentPath = file.Path;
-					await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "HomeSelectPatient", typeNavigation, typeDoc }, true);
+                    if (file != null)
+                    {
+                        var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                        var typeNavigation = "normal";
+                        _documentPath = file.Path;
 
-					//var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
-					//var basicNavContainer = new FreshNavigationContainer(page, "HomeSelectPatient");
-					//await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
+                        CreatePrescription(_documentPath);
 
-				}
+                        //await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "HomeSelectPatient", typeNavigation, typeDoc }, true);
+
+                        //var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
+                        //var basicNavContainer = new FreshNavigationContainer(page, "HomeSelectPatient");
+                        //await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
+
+                    }
+                }
 			}
 		});
+
+        public async void CreatePrescription(string filePath)
+        {
+            await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(filePath, true);
+        }
 
 		//This concern  ordonances or documents in fast process
 		public ICommand FastCommand => new Command(async () =>
@@ -136,22 +154,32 @@ namespace libermedical.ViewModels
 					return;
 				}
 
-				var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                { Directory = "Docs", Name = DateTime.UtcNow.Ticks.ToString(), CompressionQuality =30  });
-				if (file != null)
-				{
-					//if document we change typeDoc to document
-					if (action == "Document") { typeDoc = "document"; }
+                var permission = await App.AskForCameraPermission();
+               
+                if (permission)
+                {
+                    await CrossMedia.Current.Initialize();
+                    var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                    { Directory = "Docs", Name = DateTime.UtcNow.Ticks.ToString(), CompressionQuality = 30 });
+                    if (file != null)
+                    {
+                        //if document we change typeDoc to document
+                        if (action == "Document") { typeDoc = "document"; }
 
-					var profilePicture = ImageSource.FromStream(() => file.GetStream());
-					var typeNavigation = "fast";
-					_documentPath = file.Path;
-					await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "HomeSelectPatient", typeNavigation, typeDoc }, true);
+                        var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                        var typeNavigation = "fast";
+                        _documentPath = file.Path;
 
-					//var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
-					//var basicNavContainer = new FreshNavigationContainer(page, "HomeSelectPatient");
-					//await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
-				}
+                        if (action == "Document")
+                            await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "HomeSelectPatient", typeNavigation, typeDoc }, true);
+                        else
+                            CreatePrescription(_documentPath);
+
+                        //var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
+                        //var basicNavContainer = new FreshNavigationContainer(page, "HomeSelectPatient");
+                        //await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
+                    }
+                }
 			}
 		});
 
@@ -187,7 +215,7 @@ namespace libermedical.ViewModels
 				await new StorageService<Ordonnance>().AddAsync(ordannance);
                 if (App.IsConnected())
                 {
-                    UserDialogs.Instance.ShowLoading("Processing...");
+                    UserDialogs.Instance.ShowLoading("Chargement...");
                     await new StorageService<Ordonnance>().PushOrdonnance(ordannance, true);
                     UserDialogs.Instance.HideLoading();
                 }
@@ -206,13 +234,17 @@ namespace libermedical.ViewModels
 					PatientId = patient.Id,
 					AttachmentPath = _documentPath,
 				};
-				await new StorageService<Document>().AddAsync(document);
-                if (App.IsConnected())
-                {
-                    UserDialogs.Instance.ShowLoading("Processing...");
-                    await new StorageService<Document>().PushDocument(document, true);
-                    UserDialogs.Instance.HideLoading();
-                }
+
+                await CoreMethods.PushPageModel<AddDocumentViewModel>(document);
+
+				//await new StorageService<Document>().AddAsync(document);
+                //if (App.IsConnected())
+                //{
+                //    UserDialogs.Instance.ShowLoading("Chargement...");
+                //    await new StorageService<Document>().PushDocument(document, true);
+                //    UserDialogs.Instance.HideLoading();
+                //}
+                //UserDialogs.Instance.Toast("Votre ordonnance a bien été enregistrée !");
             }
 
 		}

@@ -17,8 +17,8 @@ namespace libermedical.Converters
 
 			if (status == "En attente")
 				return "#f6a623";
-			else if (status == "Traité")
-				return "#d1d1d1";
+            else if (status == "Traité" || status == "Validé")
+                return "#77D42A";
 			else if (status == "Refusé")
 				return "#ff7586";
 			else

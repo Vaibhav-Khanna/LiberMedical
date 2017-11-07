@@ -131,7 +131,7 @@ namespace libermedical.ViewModels
 					ImagePath = GetDocumentPath(Document.AttachmentPath);
 					Label = Document.Label;
 					OptionText = "Modifier";
-					_isNew = false;
+					_isNew = false;                                      
 				}
 			}
 		}
@@ -180,11 +180,13 @@ namespace libermedical.ViewModels
                             await storageService.AddAsync(Document);
 							if (App.IsConnected())
 							{
-								UserDialogs.Instance.ShowLoading("Processing...");
+                                UserDialogs.Instance.ShowLoading("Chargement...");
                                 await new StorageService<Document>().PushDocument(Document, _isNew && Document.UpdatedAt != null);
                                 await DownlaodDocuments();
 							}
 							await CoreMethods.PopPageModel();
+
+                            UserDialogs.Instance.Toast("Votre ordonnance a bien été enregistrée !");
 						}
 					}
 					catch (Exception e)
@@ -234,26 +236,35 @@ namespace libermedical.ViewModels
 								await CoreMethods.DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
 								return;
 							}
-							var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                            { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30 });
-                            if (file != null)
-							{
-								var profilePicture = ImageSource.FromStream(() => file.GetStream());
-								Document.AttachmentPath = file.Path;
-							}
+                            var permission = await App.AskForCameraPermission();
+
+                            if (permission)
+                            {
+                                await CrossMedia.Current.Initialize();
+                                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                                { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30 });
+                                if (file != null)
+                                {
+                                    var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                                    Document.AttachmentPath = file.Path;
+                                }
+                            }
 
 						}
 						else if (action == "Bibliothèque photo")
 						{
 							await CrossMedia.Current.Initialize();
 
-                            var pickerOptions = new PickMediaOptions() { CompressionQuality = 30 };
-                            var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
-							if (file != null)
-							{
-								var profilePicture = ImageSource.FromStream(() => file.GetStream());
-								Document.AttachmentPath = file.Path;
-							}
+                            if (await App.AskForPhotoPermission())
+                            {
+                                var pickerOptions = new PickMediaOptions() { CompressionQuality = 30 };
+                                var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
+                                if (file != null)
+                                {
+                                    var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                                    Document.AttachmentPath = file.Path;
+                                }
+                            }
 						}
 
 						ImagePath = Document.AttachmentPath;

@@ -39,6 +39,12 @@ namespace libermedical.Pages
             isExecuting = false;
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            MyListView.BeginRefresh();
+        }
 
         private void ApplyFilter(Filter filter)
         {
