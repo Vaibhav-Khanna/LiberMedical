@@ -118,7 +118,7 @@ namespace libermedical.ViewModels
 
 					if (App.IsConnected())
 					{
-						UserDialogs.Instance.ShowLoading("Processing...");
+                        UserDialogs.Instance.ShowLoading("Chargement...");
                         await new StorageService<Patient>().PushPatient(PatientProperty, _isNew && PatientProperty.UpdatedAt != null);
 					}
 					await CoreMethods.PopPageModel(PatientProperty);
@@ -126,7 +126,7 @@ namespace libermedical.ViewModels
 				}
 				else
 				{
-					await CoreMethods.DisplayAlert("Liber Medical", "Veuillez remplir les informations", "Ok");
+                    await CoreMethods.DisplayAlert("Liber'Médical", "Veuillez remplir les informations", "Ok");
 				}
 
 
@@ -145,7 +145,7 @@ namespace libermedical.ViewModels
 
 		private bool ValidateForm()
 		{
-			if (!string.IsNullOrEmpty(PatientProperty.FirstName) && !string.IsNullOrEmpty(PatientProperty.LastName) && PatientProperty.PhoneNumbers.Count > 0)
+			if (!string.IsNullOrEmpty(PatientProperty.FirstName) && !string.IsNullOrEmpty(PatientProperty.LastName))
 				return true;
 			return false;
 		}

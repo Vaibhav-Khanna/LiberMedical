@@ -8,11 +8,18 @@ namespace libermedical.Utility
     {
         public static async Task<MediaFile> TakePhoto()
         {
-            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+            if (await App.AskForCameraPermission())
             {
-                AllowCropping = true
-            });
-            return file;
+                await CrossMedia.Current.Initialize();
+                var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+                {
+                    AllowCropping = true
+                });
+                return file;
+            }
+            else
+                return null;
+            
         }
 
         public static bool CameraAvailable()

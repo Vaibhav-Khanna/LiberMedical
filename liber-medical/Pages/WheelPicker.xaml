@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:wp="clr-namespace:Vapolia.WheelPickerForms;assembly=Vapolia.WheelPickerForms"
@@ -8,9 +8,11 @@
                         ItemsSourceMulti="{Binding ItemsSource}"
                         Command="{Binding ItemSelectedCommand}"
                         SelectedItemsIndex="0,0,0">
+            <wp:WheelPicker.WheelDefinitions>
             <wp:WheelDefinition Width="*" HorizontalOptions="Left" Alignment="Left" />
             <wp:WheelDefinition Width="Auto" HorizontalOptions="Center" Alignment="Center" />
             <wp:WheelDefinition Width="*" HorizontalOptions="Right" Alignment="Right" />
+                </wp:WheelPicker.WheelDefinitions>
         </wp:WheelPicker>
     </StackLayout>
 </ContentPage>

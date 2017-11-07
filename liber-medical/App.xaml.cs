@@ -11,6 +11,8 @@ using libermedical.Request;
 using libermedical.Services;
 using libermedical.ViewModels;
 using Plugin.Connectivity;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using Xamarin.Forms;
 
 namespace libermedical
@@ -52,6 +54,7 @@ namespace libermedical
             {
                 MainPage = new NavigationPage(new LoginPage()); // { BarTextColor = Color.White };
             }
+
             if (IsConnected())
                 SyncData();
             
@@ -125,6 +128,82 @@ namespace libermedical
         {
             // Handle when your app resumes
         }
+
+
+        public static async Task<bool> AskForCameraPermission()
+        {
+            try
+            {
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
+               
+                if (status != PermissionStatus.Granted)
+                {
+                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Camera))
+                    {
+                        await tabbedNavigation.DisplayAlert("Accès à la caméra", "L'accès est requis pour les ordonnances et les documents", "Oui");
+                    }
+
+                    var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);
+                    //Best practice to always check that the key exists
+
+                    if (results.ContainsKey(Permission.Camera))
+                        status = results[Permission.Camera];
+                }
+
+                if (status == PermissionStatus.Granted)
+                {
+                    return true;
+                }
+                else
+                {
+                    await tabbedNavigation.DisplayAlert("Accès refusé", "Veuillez activer l'autorisation dans les paramètres pour utiliser cette fonctionnalité", "Oui");
+                    return false;
+                }
+               
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public static async Task<bool> AskForPhotoPermission()
+        {
+            try
+            {
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Photos);
+
+                if (status != PermissionStatus.Granted)
+                {
+                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Photos))
+                    {
+                        await tabbedNavigation.DisplayAlert("Accès à la caméra", "L'accès est requis pour les ordonnances et les documents", "Oui");
+                    }
+
+                    var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Photos);
+                    //Best practice to always check that the key exists
+
+                    if (results.ContainsKey(Permission.Photos))
+                        status = results[Permission.Photos];
+                }
+
+                if (status == PermissionStatus.Granted)
+                {
+                    return true;
+                }
+                else
+                {
+                    await tabbedNavigation.DisplayAlert("Accès refusé", "Veuillez activer l'autorisation dans les paramètres pour utiliser cette fonctionnalité", "Oui");
+                    return false;
+                }
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
 
         private Task updateProfile;
 

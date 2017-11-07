@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.HomePage" Style="{StaticResource AppBackgroundColor}" Title="LiberMedical">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.HomePage" Style="{StaticResource AppBackgroundColor}" Title="Liber'Médical">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="HomePageAsk" TargetType="Label">

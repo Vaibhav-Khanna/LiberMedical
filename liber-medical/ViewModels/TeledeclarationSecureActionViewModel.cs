@@ -42,7 +42,7 @@ namespace libermedical.ViewModels
 			{
 				return new Command(async (args) =>
 				{
-                    UserDialogs.Instance.ShowLoading("Processing...");
+                    UserDialogs.Instance.ShowLoading("Chargement...");
                     if (args as string == "Valid")
                         Teledeclaration.Status = Enums.StatusEnum.valid.ToString();
 					else
@@ -58,6 +58,11 @@ namespace libermedical.ViewModels
                         await _teledeclarationService.PushTeledeclaration(Teledeclaration);
                     }
                     //TODO: Display success toast
+
+                    if (Device.RuntimePlatform == Device.iOS)
+                    {
+                        UserDialogs.Instance.Toast("Votre télédéclaration vient d’être envoyée !");
+                    }
 
                     await CoreMethods.PopPageModel(true,true);
                     UserDialogs.Instance.HideLoading();

@@ -7,6 +7,7 @@ using Xamarin.Forms;
 using System.Threading.Tasks;
 using libermedical.Request;
 using Plugin.Share;
+using Plugin.Messaging;
 
 namespace libermedical.ViewModels
 {
@@ -62,7 +63,9 @@ namespace libermedical.ViewModels
                     Device.OpenUri(new System.Uri($"tel:{Settings.AdvisorContact}"));
                     break;
                 case "SMS":
-                    Device.OpenUri(new System.Uri($"sms:{Settings.AdvisorContact}"));
+                    var smsMessenger = CrossMessaging.Current.SmsMessenger;
+                    if (smsMessenger.CanSendSms)
+                        smsMessenger.SendSms(Settings.AdvisorContact, "Bonjour, je vous informe que mon TLA est branché");
                     break;
             }
         });
