@@ -73,11 +73,14 @@ namespace libermedical.ViewModels
 
         public Command DeleteImage => new Command((obj) =>
         {
-            if(Attachments.Contains((string)obj))
-            Attachments.Remove((string)obj);
+            if (CanEdit)
+            {
+                if (Attachments.Contains((string)obj))
+                    Attachments.Remove((string)obj);
 
-            if(Ordonnance.Attachments.Contains((string)obj))
-            Ordonnance?.Attachments.Remove((string)obj);           
+                if (Ordonnance.Attachments.Contains((string)obj))
+                    Ordonnance?.Attachments.Remove((string)obj);
+            }        
         });
 
 
@@ -95,9 +98,10 @@ namespace libermedical.ViewModels
 
 			SubscribeMessages();
 
+            MessagingCenter.Unsubscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance);
 			MessagingCenter.Subscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance, (sender, patient) =>
 			{
-				if (patient != null)
+                if (patient != null && Ordonnance!=null && PatientLabel!=null)
 				{
 					Ordonnance.Patient = patient;
 					Ordonnance.PatientId = patient.Id;
@@ -105,9 +109,11 @@ namespace libermedical.ViewModels
 					PatientLabel = patient.Fullname;
 				}
 			});
+
+            MessagingCenter.Unsubscribe<DetailsPatientListViewModel, Patient>(this, Events.PatientDetailsPageSetPatientToOrdonnance);
 			MessagingCenter.Subscribe<DetailsPatientListViewModel, Patient>(this, Events.PatientDetailsPageSetPatientToOrdonnance, (sender, patient) =>
 			{
-				if (patient != null)
+                if (patient != null && Ordonnance != null && PatientLabel != null)
 				{
 					Ordonnance.Patient = patient;
 					Ordonnance.PatientId = patient.Id;
@@ -115,6 +121,7 @@ namespace libermedical.ViewModels
 					PatientLabel = patient.Fullname;
 				}
 			});
+
 		}
 
 		public override async void Init(object initData)
@@ -186,8 +193,11 @@ namespace libermedical.ViewModels
 
 		public ICommand SelectPatientCommand => new Command(async () =>
 		{
-			if (!_isEditing)
-				await CoreMethods.PushPageModel<PatientListViewModel>(new[] { "OrdonanceSelectPatient", "normal", "ordonnance" }, true);
+            if (CanEdit)
+            {
+                if (Ordonnance.Status != Enums.StatusEnum.valid.ToString())
+                    await CoreMethods.PushPageModel<PatientListViewModel>(new[] { "OrdonanceSelectPatient", "normal", "ordonnance" }, true);
+            }
 		});
 
 		public ICommand SaveCommand => new Command(async () =>
@@ -196,10 +206,35 @@ namespace libermedical.ViewModels
 			{
 				if (CanEdit)
 				{
+                    
+                    if (Ordonnance.Patient == null || string.IsNullOrWhiteSpace(Ordonnance.PatientName))
+                    {
+                        await CoreMethods.DisplayAlert("Veuillez d'abord sélectionner un patient", "", "Ok");
+                        return;
+                    }
+
+                    if(Attachments?.Count()<=0)
+                    {
+                        await CoreMethods.DisplayAlert("S'il vous plaît ajouter un atleast une pièce jointe", "", "Ok");
+                        return;
+                    }
+
+                    if (_isNew)
+                    {
+                        if (Frequencies == null || Frequencies?.Count() <= 0)
+                        {
+                            await CoreMethods.DisplayAlert("S'il vous plaît ajouter un au moins une fréquence", "", "Ok");
+                            return;
+                        }
+                    }
+
+
                     UserDialogs.Instance.ShowLoading("Chargement...");
 					var storageService = new StorageService<Ordonnance>();
+
 					await storageService.DeleteItemAsync(typeof(Ordonnance).Name + "_" + Ordonnance.Id);
-					Ordonnance.Attachments = Attachments?.ToList();
+					
+                    Ordonnance.Attachments = Attachments?.ToList();
 					Ordonnance.Frequencies = Frequencies?.ToList();
 					Ordonnance.IsSynced = false;
 
@@ -221,14 +256,20 @@ namespace libermedical.ViewModels
 
                     if (Device.RuntimePlatform == Device.iOS)
                     {
-                        UserDialogs.Instance.Toast("Votre ordonnance a bien été enregistrée !");
+                        
+                        UserDialogs.Instance.Toast(new ToastConfig("Votre ordonnance a bien été enregistrée !"){ Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
+   
                     }
 
+                    MessagingCenter.Send(this,"RefreshOrdoList");
 				}
 				else
 				{
-					CanEdit = true;
-					SaveLabel = "Enregistrer";
+                    if (Ordonnance.Status != Enums.StatusEnum.valid.ToString())
+                    {
+                        CanEdit = true;
+                        SaveLabel = "Enregistrer";
+                    }
 				}
 			}
 			catch (Exception ex)
@@ -388,8 +429,8 @@ namespace libermedical.ViewModels
 					Frequencies = Ordonnance.Frequencies != null ? new ObservableCollection<Frequency>(Ordonnance.Frequencies) : new ObservableCollection<Frequency>(new List<Frequency>() { frequency });
 
                     if (Device.RuntimePlatform == Device.iOS)
-                    {
-                        UserDialogs.Instance.Toast("La fréquence " + frequency.PeriodString + " a été ajoutée !");
+                    {                       
+                        UserDialogs.Instance.Toast(new ToastConfig("La fréquence " + frequency.PeriodString + " a été ajoutée !") { Position = ToastPosition.Top,  BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
                     }
 
 					MessagingCenter.Send(this, Events.UpdateFrequenciesViewCellHeight, Frequencies);

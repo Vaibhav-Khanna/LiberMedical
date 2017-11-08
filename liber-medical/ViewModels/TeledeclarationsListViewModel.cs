@@ -194,11 +194,11 @@ namespace libermedical.ViewModels
                 async (args) =>
                 {
                     UserDialogs.Instance.ShowLoading("ouverture");
-                    var request = new GetListRequest(20, 1);
+                    var request = new GetListRequest(20, 1,sortField:"createdAt",sortDirection: SortDirectionEnum.Desc);
                     var invoices = await App.InvoicesManager.GetListAsync(request);
                     if (invoices != null && invoices.rows!=null && invoices.rows.Count > 0)
                     {
-                        var invoice = invoices.rows[invoices.rows.Count-1];
+                        var invoice = invoices.rows.First();
                         if (invoice.FilePath.Contains(".pdf"))
                             await CoreMethods.PushPageModel<SecuriseBillsViewModel>(invoice, true);
                         else

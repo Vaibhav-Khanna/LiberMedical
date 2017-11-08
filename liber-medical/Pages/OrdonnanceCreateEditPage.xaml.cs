@@ -34,9 +34,11 @@ namespace libermedical.Pages
             }
 
             _ordonnance = (BindingContext as OrdonnanceCreateEditViewModel).Ordonnance;
-            if ((BindingContext as OrdonnanceCreateEditViewModel).SaveLabel == "Enregistrer")
-                VisualiserSection.IsVisible = false;
+            //if ((BindingContext as OrdonnanceCreateEditViewModel).SaveLabel == "Enregistrer")
+                //VisualiserSection.IsVisible = false;
+            
             MyDatePicker.Date = _ordonnance.FirstCareAt;
+
             MyDatePicker.DateSelected += MyDatePickerOnDateSelected;
             SelectedDate.Text = $"Premier soin: {_ordonnance.FirstCareAt.ToString("dd-MM-yyyy")}";
             if (_ordonnance.Frequencies != null)
@@ -61,8 +63,14 @@ namespace libermedical.Pages
 
             if((BindingContext as OrdonnanceCreateEditViewModel).Ordonnance?.Status == Enums.StatusEnum.refused.ToString())
             {
+                statusIcon.Source = "cancel.png";
                 StatusLabel.TextColor = Color.Red;
                 StatusLabel.Text = "Refusé : " + (BindingContext as OrdonnanceCreateEditViewModel).Ordonnance?.RefusedReason;
+            }
+            else if((BindingContext as OrdonnanceCreateEditViewModel).Ordonnance?.Status == Enums.StatusEnum.valid.ToString())
+            {
+                statusIcon.Source = "send.png";
+                StatusLabel.Text = "Traité le " + (BindingContext as OrdonnanceCreateEditViewModel).Ordonnance?.StatusChangedAt.ToString("dd/MM/yyyy");
             }
 
         }
@@ -79,29 +87,6 @@ namespace libermedical.Pages
             SelectedDate.Text = $"Premier soin: {(sender as DatePicker).Date.ToString("dd-MM-yyyy")}";
         }
 
-        async void StatusChanged(object sender, System.EventArgs e)
-        {
-            if (_ordonnance.Status != StatusEnum.refused.ToString() || (this.BindingContext as OrdonnanceCreateEditViewModel).SaveLabel == "Modifier")
-                return;
-
-            var status = await DisplayActionSheet("Sélectionnez un statut", "Annuler", null, "En attente", "Traité", "Refusé");
-            if (status != null && status != "Annuler")
-            {
-                switch (status)
-                {
-                    case "En attente":
-                        (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.Status = StatusEnum.waiting.ToString();
-                        break;
-                    case "Traité":
-                        (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.Status = StatusEnum.valid.ToString();
-                        break;
-                    case "Refusé":
-                        (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.Status = StatusEnum.refused.ToString();
-                        break;
-                }
-                StatusLabel.Text = $"Statut:  {status}";
-            }
-        }
 
         async void Cancel_Tapped(object sender, EventArgs e)
         {

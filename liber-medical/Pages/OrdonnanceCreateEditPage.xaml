@@ -44,7 +44,7 @@
             <Image Source="user.png" VerticalOptions="Center" Grid.Column="0" />
             <Label Text="{Binding PatientLabel}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
           </Grid>
-          <Grid HeightRequest="60" x:Name="VisualiserSection" Style="{StaticResource ModalContentBackgroundColor}">
+         <!-- <Grid HeightRequest="60" x:Name="VisualiserSection" Style="{StaticResource ModalContentBackgroundColor}">
             <Grid.GestureRecognizers>
               <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ViewOrdonnance}" />
             </Grid.GestureRecognizers>
@@ -55,8 +55,8 @@
             </Grid.ColumnDefinitions>
             <Image Source="search.png" VerticalOptions="Center" Grid.Column="0" />
             <Label Text="Visualiser l'ordonnance" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
-          </Grid>
-          <Grid HeightRequest="60" Style="{StaticResource ModalContentBackgroundColor}">
+          </Grid>-->
+         <!-- <Grid HeightRequest="60" Style="{StaticResource ModalContentBackgroundColor}">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="15*" />
               <ColumnDefinition Width="75*" />
@@ -64,17 +64,14 @@
             </Grid.ColumnDefinitions>
             <Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
             <Label Text="{Binding Ordonnance.CreatedAt, StringFormat='Crée le {0:dd-MM-yyyy}'}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
-          </Grid>
+          </Grid>-->
           <Grid HeightRequest="60" Style="{StaticResource ModalContentBackgroundColor}">
-            <Grid.GestureRecognizers>
-              <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="StatusChanged" />
-            </Grid.GestureRecognizers>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="15*" />
               <ColumnDefinition Width="75*" />
               <ColumnDefinition Width="10*" />
             </Grid.ColumnDefinitions>
-            <Image x:Name="statusIcon" Source="clock.png" VerticalOptions="Center" Grid.Column="0" />
+            <Image x:Name="statusIcon" WidthRequest="25" HeightRequest="25" Source="clock.png" VerticalOptions="Center" Grid.Column="0" />
             <Label x:Name="StatusLabel" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
           </Grid>
           <Grid HeightRequest="60" Style="{StaticResource ModalContentBackgroundColor}">

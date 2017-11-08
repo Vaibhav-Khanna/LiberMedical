@@ -32,6 +32,18 @@ namespace libermedical.ViewModels
             }
         }
 
+        string refreshtext;
+        public string RefreshText 
+        {
+            get { return refreshtext; }
+            set
+            {
+                refreshtext = value;
+                RaisePropertyChanged();
+            }
+        }
+
+
         public OrdonnancesListViewModel(IStorageService<Ordonnance> storageService) : base(storageService)
         {
             _ordonnanceStorage = storageService;
@@ -54,6 +66,21 @@ namespace libermedical.ViewModels
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
             }
             Ordonnances = new ObservableCollection<Ordonnance>(list);
+
+            var left_sync = Ordonnances.Where( (Ordonnance arg) => !arg.IsSynced ).Count();
+
+            if (left_sync > 0)
+            {
+                if (left_sync != 1)
+                    RefreshText = left_sync + " fichiers en cours de synchronisation…";
+                else
+                    RefreshText = left_sync + " fichier en cours de synchronisation…";
+            }
+            else
+            {
+                RefreshText = null;
+            }
+
         }
 
         private async Task DownlaodDocuments()
@@ -80,6 +107,18 @@ namespace libermedical.ViewModels
         {
             await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(filePath, true);
         }
+
+        public Command DeleteOrdo => new Command( async(obj) =>
+       {
+            Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
+
+            await App.OrdonnanceManager.DeleteItemAsync((string)obj);
+
+            await BindData(0);
+
+            Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+       });
+
 
         public ICommand SelectItemCommand => new Command(async (item) =>
         {
@@ -160,7 +199,7 @@ namespace libermedical.ViewModels
                         MessagingCenter.Subscribe<PatientListViewModel, Patient>(this,
                             Events.OrdonnancePageSetPatientForOrdonnance, async (sender, patient) =>
                             {
-                                if (patient != null)
+                            if (patient != null && ordonnance!=null)
                                 {
                                     ordonnance.PatientId = patient.Id;
                                     ordonnance.Patient = patient;
@@ -209,6 +248,20 @@ namespace libermedical.ViewModels
             }
 
             Ordonnances = new ObservableCollection<Ordonnance>(list);
+
+            var left_sync = Ordonnances.Where((Ordonnance arg) => !arg.IsSynced).Count();
+
+            if (left_sync > 0)
+            {
+                if (left_sync!=1)
+                RefreshText = left_sync + " fichiers en cours de synchronisation…";
+                else
+                RefreshText = left_sync + " fichier en cours de synchronisation…";
+            }
+            else
+            {
+                RefreshText = null;
+            }
         }
 
 
