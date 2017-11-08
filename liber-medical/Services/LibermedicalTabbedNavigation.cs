@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FreshMvvm;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace libermedical.Services
 {
@@ -17,7 +18,7 @@ namespace libermedical.Services
 		public LibermedicalTabbedNavigation(string navigationServiceName)
 		{
 			NavigationServiceName = navigationServiceName;
-			RegisterNavigation();
+			RegisterNavigation();   
 		}
 
 		public IEnumerable<Page> TabbedPages => _tabs;
@@ -95,5 +96,12 @@ namespace libermedical.Services
 			}
 			return null;
 		}
+
+        protected override void OnCurrentPageChanged()
+        {
+            base.OnCurrentPageChanged();
+
+            MessagingCenter.Send<LibermedicalTabbedNavigation,int>(this,"PageChanged",this.TabbedPages.ToList().IndexOf((CurrentPage as NavigationPage).CurrentPage));
+        }
 	}
 }

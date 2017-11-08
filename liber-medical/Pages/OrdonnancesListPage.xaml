@@ -21,10 +21,14 @@
                 <SearchBar x:Name="searchBar" Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" TextChanged="SearchBar_OnTextChanged" />
             </StackLayout>
            
-                    <ListView x:Name="MyListView" Grid.Row="1" Refreshing="Handle_Refreshing" IsPullToRefreshEnabled="true" ItemsSource="{Binding Ordonnances}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected" ItemAppearing="MyListView_ItemAppearing">
-                        <ListView.ItemTemplate>
+                    <custom:CustomRefreshListView x:Name="MyListView" Grid.Row="1" Refreshing="Handle_Refreshing" IsPullToRefreshEnabled="true" ItemsSource="{Binding Ordonnances}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected" ItemAppearing="MyListView_ItemAppearing">
+                        <custom:CustomRefreshListView.ItemTemplate>
                             <DataTemplate>
-                                <ViewCell>                       
+                                <ViewCell> 
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="Handle_Remove_Clicked" IsDestructive="true" CommandParameter="{Binding .}"
+                        Text="Effacer" />
+                            </ViewCell.ContextActions>
                                     <Grid Padding="15,0,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="60*" />
@@ -71,13 +75,19 @@
                                     </Grid>
                                 </ViewCell>
                             </DataTemplate>
-                        </ListView.ItemTemplate>
-                <ListView.Footer>
+                        </custom:CustomRefreshListView.ItemTemplate>
+                <custom:CustomRefreshListView.Footer>
                     <ContentView HorizontalOptions="FillAndExpand" HeightRequest="80">
                         <ActivityIndicator x:Name="indicator" IsVisible="false" IsRunning="true" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
                     </ContentView>
-                </ListView.Footer>
-                    </ListView>
+                </custom:CustomRefreshListView.Footer>
+                <custom:CustomRefreshListView.Header>
+                    <StackLayout IsVisible="{Binding RefreshText,Converter={converter:StringToBoolConverter}" BackgroundColor="#f0f0f0" Orientation="Horizontal" HeightRequest="30" HorizontalOptions="FillAndExpand">
+                        <Image Source="sync.png" VerticalOptions="Center" HeightRequest="20" WidthRequest="20" HorizontalOptions="EndAndExpand" />
+                        <Label Text="{Binding RefreshText}" VerticalOptions="Center" FontSize="12" TextColor="Gray" HorizontalOptions="StartAndExpand" />
+                    </StackLayout>
+                </custom:CustomRefreshListView.Header>
+               </custom:CustomRefreshListView>
               
         </Grid>
     </ContentView>

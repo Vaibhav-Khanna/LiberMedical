@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using libermedical.Models;
+using libermedical.Services;
 using libermedical.ViewModels;
 using Xamarin.Forms;
 
@@ -20,6 +21,20 @@ namespace libermedical.Pages
         public OrdonnancesListPage()
         {
             InitializeComponent();
+
+            MessagingCenter.Subscribe<LibermedicalTabbedNavigation,int>(this,"PageChanged",(arg1, arg2) => 
+            {
+                if(arg2==2)
+                {
+                    MyListView.BeginRefresh();
+                }
+            });
+
+            MessagingCenter.Subscribe<OrdonnanceCreateEditViewModel>(this, "RefreshOrdoList", (arg1 ) =>
+            {
+                MyListView.BeginRefresh();
+            });
+
 
             MessagingCenter.Subscribe<FilterPage, Filter>(this, Events.UpdatePrescriptionFilters, (sender, filter) =>
             {
@@ -39,12 +54,7 @@ namespace libermedical.Pages
             isExecuting = false;
         }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            MyListView.BeginRefresh();
-        }
+       
 
         private void ApplyFilter(Filter filter)
         {
@@ -100,6 +110,19 @@ namespace libermedical.Pages
             }
         }
 
+        void Handle_Remove_Clicked(object sender, System.EventArgs e)
+        {
+            var item = (sender as MenuItem).CommandParameter as Ordonnance;
+
+            if(item!=null)
+            {
+                if(item.Status != Enums.StatusEnum.valid.ToString())
+                {
+                    (BindingContext as OrdonnancesListViewModel).DeleteOrdo.Execute(item.Id);
+                }
+            }
+        }
+
         async void Filter_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(new FilterPage("Ordonnance", _filter));
@@ -118,7 +141,6 @@ namespace libermedical.Pages
             //// disable the visual selection state.
             ((ListView)sender).SelectedItem = null;
         }
-
 
 
         private void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)

@@ -377,8 +377,11 @@ namespace libermedical.Services
                 var request = new GetListRequest(count, 1, sortField: "createdAt", sortDirection: Enums.SortDirectionEnum.Desc);
 
                 var response = await App.OrdonnanceManager.GetListAsync(request);
-                var Ordonnances =
-                    new ObservableCollection<Ordonnance>(response.rows);
+              
+                if (response.rows == null)
+                    return -1;
+                
+                var Ordonnances = new ObservableCollection<Ordonnance>(response.rows);
 
                 //Updating records in local cache
                 await InvalidateSyncedItems();
@@ -397,6 +400,8 @@ namespace libermedical.Services
                 var patients =
                     new ObservableCollection<Patient>(response.rows);
 
+                if (response.rows == null)
+                    return -1;
                 //Updating records in local cache
                 await InvalidateSyncedItems();
                 await AddManyAsync(patients.ToList() as List<TModel>);
@@ -414,6 +419,8 @@ namespace libermedical.Services
                 var teledeclarations =
                     new ObservableCollection<Teledeclaration>(response.rows);
 
+                if (response.rows == null)
+                    return -1;
                 //Updating records in local cache
                 await InvalidateSyncedItems();
                 await AddManyAsync(teledeclarations.ToList() as List<TModel>);

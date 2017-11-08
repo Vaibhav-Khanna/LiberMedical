@@ -119,14 +119,6 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Plugin.Connectivity">
-      <HintPath>..\packages\Xam.Plugin.Connectivity.3.0.2\lib\MonoAndroid10\Plugin.Connectivity.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Plugin.Connectivity.Abstractions">
-      <HintPath>..\packages\Xam.Plugin.Connectivity.3.0.2\lib\MonoAndroid10\Plugin.Connectivity.Abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Plugin.CurrentActivity">
       <HintPath>..\packages\Plugin.CurrentActivity.1.0.1\lib\MonoAndroid10\Plugin.CurrentActivity.dll</HintPath>
       <Private>True</Private>
@@ -368,6 +360,12 @@
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\packages\Xamarin.Forms.2.4.0.38779\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
+    <Reference Include="Plugin.Connectivity.Abstractions">
+      <HintPath>..\packages\Xam.Plugin.Connectivity.3.0.3\lib\MonoAndroid10\Plugin.Connectivity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.Connectivity">
+      <HintPath>..\packages\Xam.Plugin.Connectivity.3.0.3\lib\MonoAndroid10\Plugin.Connectivity.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\liber-medical\liber-medical.csproj">
@@ -486,6 +484,11 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\home_selected.png" />
     <AndroidResource Include="Resources\drawable\ion_alert_circled_ionicons.png" />
     <AndroidResource Include="Resources\xml\file_paths.xml" />
+    <AndroidResource Include="Resources\drawable-hdpi\sync.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\sync.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\sync.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\sync.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\sync.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />

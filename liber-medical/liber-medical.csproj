@@ -218,6 +218,8 @@
     <Compile Include="CustomControls\BorderlessPicker.cs" />
     <Compile Include="Models\Contract.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
+    <Compile Include="CustomControls\CustomRefreshListView.cs" />
+    <Compile Include="Converters\StringToBoolConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Acr.UserDialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

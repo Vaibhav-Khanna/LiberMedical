@@ -88,7 +88,7 @@ namespace libermedical.ViewModels
                     var selectedValue = ItemsSource[selectedItemIndex];
                 });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -111,31 +111,103 @@ namespace libermedical.ViewModels
                 {
                     if (CanEdit)
                     {
-                        if ((string)args == "1 AMI 1")
-                            AMI1 = !AMI1;
-                        if ((string)args == "1 AMI 2")
-                            AMI2 = !AMI2;
-                        if ((string)args == "1 AMI 4")
-                            AMI4 = !AMI4;
-                        if ((string)args == "1 AMI 1.5")
-                            AMI15 = !AMI15;
-                        if ((string)args == "1 AIS 3")
-                            AIS3 = !AIS3;
-                        if ((string)args == "1 AIS 4")
-                            AIS4 = !AIS4;
-                        if ((string)args == "2 AIS 3")
-                            AIS32 = !AIS32;
-                        if ((string)args == "1 AMS 7.5")
-                            AMS75 = !AMS75;
-                        if ((string)args == "1 AMS 9.5")
-                            AMS95 = !AMS95;
 
                         if (Frequency == null || Frequency.Quotations == null)
                         {
                             Frequency = new Frequency();
                             Frequency.Quotations = new List<string>();
                         }
-                        Frequency.Quotations.Add((string)args);
+
+                        try
+                        {
+
+                            if ((string)args == "1 AMI 1")
+                            {
+                                AMI1 = !AMI1;
+
+                                if (AMI1)
+                                    Frequency.Quotations.Add((string)args);
+                                else
+                                    Frequency.Quotations.Remove((string)args);
+
+                            }
+                            if ((string)args == "1 AMI 2")
+                            {
+                                AMI2 = !AMI2;
+
+                                if (AMI2)
+                                    Frequency.Quotations.Add((string)args);
+                                else
+                                    Frequency.Quotations.Remove((string)args);
+                            }
+                            if ((string)args == "1 AMI 4")
+                            {
+                                AMI4 = !AMI4;
+
+                                if (AMI4)
+                                    Frequency.Quotations.Add((string)args);
+                                else
+                                    Frequency.Quotations.Remove((string)args);
+                            }
+                            if ((string)args == "1 AMI 1.5")
+                            {
+                                AMI15 = !AMI15;
+
+                                if (AMI15)
+                                    Frequency.Quotations.Add((string)args);
+                                else
+                                    Frequency.Quotations.Remove((string)args);
+                            }
+                            if ((string)args == "1 AIS 3")
+                            {
+                                AIS3 = !AIS3;
+
+                                if (AIS3)
+                                    Frequency.Quotations.Add((string)args);
+                                else
+                                    Frequency.Quotations.Remove((string)args);
+                            }
+                            if ((string)args == "1 AIS 4")
+                            {
+                                AIS4 = !AIS4;
+
+                                if (AIS4)
+                                    Frequency.Quotations.Add((string)args);
+                                else
+                                    Frequency.Quotations.Remove((string)args);
+                            }
+                            if ((string)args == "2 AIS 3")
+                            {
+                                AIS32 = !AIS32;
+
+                                if (AIS32)
+                                    Frequency.Quotations.Add((string)args);
+                                else
+                                    Frequency.Quotations.Remove((string)args);
+                            }
+                            if ((string)args == "1 AMS 7.5")
+                            {
+                                AMS75 = !AMS75;
+
+                                if (AMS75)
+                                    Frequency.Quotations.Add((string)args);
+                                else
+                                    Frequency.Quotations.Remove((string)args);
+                            }
+                            if ((string)args == "1 AMS 9.5")
+                            {
+                                AMS95 = !AMS95;
+
+                                if (AMS95)
+                                    Frequency.Quotations.Add((string)args);
+                                else
+                                    Frequency.Quotations.Remove((string)args);
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                            
+                        }                        
                        
                     }
                 });
@@ -148,12 +220,19 @@ namespace libermedical.ViewModels
             {
                 return new Command(async () =>
                 {
+                    if (Frequency == null || Frequency.Quotations == null)
+                    {
+                        Frequency = new Frequency();
+                        Frequency.Quotations = new List<string>();
+                    }
+
+                    if (HasManualCotations)
+                        Frequency.Quotations.Add((string)Selected);
+
                     if (Frequency != null && Frequency.Quotations != null && Frequency.Quotations.Count != 0)
                     {
-                        if (HasManualCotations)
-						Frequency.Quotations.Add((string)Selected);
-                    MessagingCenter.Send(this, Events.UpdateCotations, Frequency);
-                    await App.Current.MainPage.Navigation.PopModalAsync(true);
+                        MessagingCenter.Send(this, Events.UpdateCotations, Frequency);
+                        await App.Current.MainPage.Navigation.PopModalAsync(true);
                     }
                     else
                     {
@@ -187,6 +266,8 @@ namespace libermedical.ViewModels
             set
             {
                 _ami1 = value;
+
+               
                 RaisePropertyChanged();
             }
         }

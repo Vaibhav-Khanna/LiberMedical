@@ -187,7 +187,7 @@ namespace libermedical.ViewModels
 							await CoreMethods.PopPageModel();
                             if (Device.RuntimePlatform == Device.iOS)
                             {
-                                UserDialogs.Instance.Toast(("Votre ordonnance a bien été enregistrée !"));
+                                UserDialogs.Instance.Toast(new ToastConfig("Votre ordonnance a bien été enregistrée !"){ Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
                             }
 						}
 					}

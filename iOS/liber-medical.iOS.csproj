@@ -29,7 +29,7 @@
     <MtouchDebug>true</MtouchDebug>
     <CodesignProvision></CodesignProvision>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <MtouchSdkVersion>11.0</MtouchSdkVersion>
+    <MtouchSdkVersion>11.1</MtouchSdkVersion>
     <MtouchFloat32>true</MtouchFloat32>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
@@ -51,14 +51,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <MtouchArch>ARM64</MtouchArch>
+    <MtouchArch>ARMv7, ARMv7s, ARM64</MtouchArch>
     <CodesignKey>iPhone Developer: manuel LLOP (WBF5L6BU5J)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchFastDev>false</MtouchFastDev>
     <CodesignProvision>libermedical UAT</CodesignProvision>
     <MtouchLink>SdkOnly</MtouchLink>
-    <MtouchSdkVersion>11.0</MtouchSdkVersion>
+    <MtouchSdkVersion>11.1</MtouchSdkVersion>
     <MtouchFloat32>true</MtouchFloat32>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
@@ -130,6 +130,7 @@
     <Compile Include="Renderers\BorderlessPickerRenderer.cs" />
     <Compile Include="Renderers\DefaultSearchBarRenderer.cs" />
     <Compile Include="Renderers\CustomViewCellRenderer.cs" />
+    <Compile Include="Renderers\CustomRefreshListviewRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -345,6 +346,9 @@
     <BundleResource Include="Resources\ionAlertCircledIonicons.png" />
     <BundleResource Include="Resources\ionAlertCircledIonicons%402x.png" />
     <BundleResource Include="Resources\ionAlertCircledIonicons%403x.png" />
+    <BundleResource Include="Resources\logo.png" />
+    <BundleResource Include="Resources\logo%402x.png" />
+    <BundleResource Include="Resources\logo%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\add%402x.png" />

@@ -61,7 +61,9 @@ namespace libermedical.ViewModels
 
                     if (Device.RuntimePlatform == Device.iOS)
                     {
-                        UserDialogs.Instance.Toast("Votre télédéclaration vient d’être envoyée !");
+                       
+                        UserDialogs.Instance.Toast(new ToastConfig("Votre télédéclaration vient d’être envoyée !"){ Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
+              
                     }
 
                     await CoreMethods.PopPageModel(true,true);

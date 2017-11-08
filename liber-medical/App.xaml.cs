@@ -89,14 +89,14 @@ namespace libermedical
 
         public static bool IsConnected()
         {
-            return  Plugin.Connectivity.CrossConnectivity.Current.IsConnected;
+            return Plugin.Connectivity.CrossConnectivity.Current.IsConnected;
         }
 
         static bool isSyncing = false;
 
         public async static Task SyncData()
         {
-            if (isSyncing)
+            if (isSyncing || !IsConnected())
                 return;
             
             isSyncing = true;
