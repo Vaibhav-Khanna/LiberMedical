@@ -42,7 +42,6 @@ namespace libermedical.ViewModels
         }
 
 
-
         public Frequency Frequency { get; set; }
         public IList<string> ItemsSource { get; } = new List<string>
         {
@@ -80,7 +79,9 @@ namespace libermedical.ViewModels
                 CotationManual.Add(CotationManual1);
                 CotationManual.Add(CotationManual2);
                 CotationManual.Add(CotationManual1);
-                Selected = new ObservableCollection<object>() { "1", "AMI", "1" };
+
+                //Selected = new ObservableCollection<object>() { "1", "AMI", "1" };
+              
                 ItemSelectedCommand = new Command<Tuple<int, int, IList<int>>>(tuple =>
                 {
                     var selectedWheelIndex = tuple.Item1;
@@ -226,8 +227,12 @@ namespace libermedical.ViewModels
                         Frequency.Quotations = new List<string>();
                     }
 
+
                     if (HasManualCotations)
+                    {
+                        if(Selected!=null)
                         Frequency.Quotations.Add((string)Selected);
+                    }
 
                     if (Frequency != null && Frequency.Quotations != null && Frequency.Quotations.Count != 0)
                     {

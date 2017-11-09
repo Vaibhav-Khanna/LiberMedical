@@ -5,6 +5,7 @@ using Android.OS;
 using Android.Runtime;
 using FFImageLoading.Forms.Droid;
 using Plugin.Permissions;
+using Syncfusion.SfPicker.XForms.Droid;
 using Xamarin.Forms;
 
 namespace libermedical.Droid
@@ -22,6 +23,7 @@ namespace libermedical.Droid
             Xamarin.Forms.Forms.Init(this, bundle);
 
             CachedImageRenderer.Init();
+
 
             UserDialogs.Init(() => (Activity)Forms.Context);
 
