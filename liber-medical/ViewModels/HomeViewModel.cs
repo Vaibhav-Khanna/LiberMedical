@@ -92,7 +92,7 @@ namespace libermedical.ViewModels
                 {
                     await CrossMedia.Current.Initialize();
                     var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                    { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30 });
+                    { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30, SaveToAlbum = false });
                     //if photo ok
                     if (file != null)
                     {
@@ -160,20 +160,26 @@ namespace libermedical.ViewModels
                 {
                     await CrossMedia.Current.Initialize();
                     var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                    { Directory = "Docs", Name = DateTime.UtcNow.Ticks.ToString(), CompressionQuality = 30 });
+                    { Directory = "Docs", Name = DateTime.UtcNow.Ticks.ToString(), CompressionQuality = 30, SaveToAlbum = false });
                     if (file != null)
                     {
                         //if document we change typeDoc to document
-                        if (action == "Document") { typeDoc = "document"; }
+                        if (action == "Document") 
+                        { typeDoc = "document"; }
+                        else
+                        {
+                            typeDoc = "ordonnance";
+                        }
 
                         var profilePicture = ImageSource.FromStream(() => file.GetStream());
                         var typeNavigation = "fast";
                         _documentPath = file.Path;
 
-                        if (action == "Document")
-                            await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "HomeSelectPatient", typeNavigation, typeDoc }, true);
-                        else
-                            CreatePrescription(_documentPath);
+                        //if (action == "Document")
+                        await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "HomeSelectPatient", typeNavigation, typeDoc }, true);
+                       
+                        //else
+                            //CreatePrescription(_documentPath);
 
                         //var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
                         //var basicNavContainer = new FreshNavigationContainer(page, "HomeSelectPatient");
@@ -212,13 +218,24 @@ namespace libermedical.ViewModels
 					PatientId = patient.Id,
 					PatientName = patient.Fullname
 				};
-				await new StorageService<Ordonnance>().AddAsync(ordannance);
+				
+                await new StorageService<Ordonnance>().AddAsync(ordannance);
                 if (App.IsConnected())
                 {
                     UserDialogs.Instance.ShowLoading("Chargement...");
                     await new StorageService<Ordonnance>().PushOrdonnance(ordannance, true);
                     UserDialogs.Instance.HideLoading();
                 }
+
+                if (Device.RuntimePlatform == Device.iOS)
+                {
+                    UserDialogs.Instance.Toast(new ToastConfig("    Votre ordonnance a bien été enregistrée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
+                }
+                else
+                {
+                    UserDialogs.Instance.Toast(new ToastConfig("Votre ordonnance a bien été enregistrée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
+                }
+            
             }
 			else
 			{

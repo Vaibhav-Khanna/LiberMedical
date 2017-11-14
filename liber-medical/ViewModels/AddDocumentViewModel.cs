@@ -131,7 +131,15 @@ namespace libermedical.ViewModels
 					ImagePath = GetDocumentPath(Document.AttachmentPath);
 					Label = Document.Label;
 					OptionText = "Modifier";
-					_isNew = false;                                      
+					_isNew = false;
+
+                    if(Document.UpdatedAt==null)
+                    {
+                        OptionText = "Enregistrer";
+                        CanEdit = true;
+                        _isNew = true;
+                    }
+
 				}
 			}
 		}
@@ -161,35 +169,40 @@ namespace libermedical.ViewModels
 				{
 					try
 					{
-						if (OptionText == "Modifier")
-						{
-							OptionText = "Enregistrer";
-							CanEdit = true;
-						}
-						else
-						{
-							var storageService = new StorageService<Document>();
-							await storageService.DeleteItemAsync(typeof(Document).Name + "_" + Document.Id);
-							Document.AttachmentPath = ImagePath;
-							Document.Label = Label;
+                        if (OptionText == "Modifier")
+                        {
+                            OptionText = "Enregistrer";
+                            CanEdit = true;
+                        }
+                        else
+                        {
+                            var storageService = new StorageService<Document>();
+                            await storageService.DeleteItemAsync(typeof(Document).Name + "_" + Document.Id);
+                            Document.AttachmentPath = ImagePath;
+                            Document.Label = Label;
                             Document.IsSynced = false;
 
-                            if(_isNew && Document.UpdatedAt != null)
-                            Document.UpdatedAt = DateTimeOffset.UtcNow;
-						
+                            if (_isNew && Document.UpdatedAt != null)
+                                Document.UpdatedAt = DateTimeOffset.UtcNow;
+
                             await storageService.AddAsync(Document);
-							if (App.IsConnected())
-							{
+                            if (App.IsConnected())
+                            {
                                 UserDialogs.Instance.ShowLoading("Chargement...");
                                 await new StorageService<Document>().PushDocument(Document, _isNew && Document.UpdatedAt != null);
                                 await DownlaodDocuments();
-							}
-							await CoreMethods.PopPageModel();
+                            }
+                            await CoreMethods.PopPageModel();
+
                             if (Device.RuntimePlatform == Device.iOS)
                             {
-                                UserDialogs.Instance.Toast(new ToastConfig("Votre ordonnance a bien été enregistrée !"){ Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
+                                UserDialogs.Instance.Toast(new ToastConfig("    Votre document a bien été enregistrée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
                             }
-						}
+                            else
+                            {
+                                UserDialogs.Instance.Toast(new ToastConfig("Votre document a bien été enregistrée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green }); 
+                            }
+                        }
 					}
 					catch (Exception e)
 					{
@@ -244,7 +257,7 @@ namespace libermedical.ViewModels
                             {
                                 await CrossMedia.Current.Initialize();
                                 var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                                { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30 });
+                                { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30, SaveToAlbum = false });
                                 if (file != null)
                                 {
                                     var profilePicture = ImageSource.FromStream(() => file.GetStream());

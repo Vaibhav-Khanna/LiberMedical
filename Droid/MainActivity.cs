@@ -10,7 +10,7 @@ using Xamarin.Forms;
 
 namespace libermedical.Droid
 {
-    [Activity(Label = "Liber'Médical", Icon = "@drawable/icon", Theme = "@style/MyTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Liber'Médical", Icon = "@drawable/icon", Theme = "@style/MyTheme", ScreenOrientation = ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.ScreenSize )]
     public class MainActivity : Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -23,7 +23,6 @@ namespace libermedical.Droid
             Xamarin.Forms.Forms.Init(this, bundle);
 
             CachedImageRenderer.Init();
-
 
             UserDialogs.Init(() => (Activity)Forms.Context);
 

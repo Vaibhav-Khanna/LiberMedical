@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using libermedical.Helpers;
 using Xamarin.Forms;
+using Acr.UserDialogs;
 
 namespace libermedical.ViewModels
 {
@@ -108,16 +109,27 @@ namespace libermedical.ViewModels
             await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(filePath, true);
         }
 
-        public Command DeleteOrdo => new Command( async(obj) =>
-       {
-            Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
+        public Command DeleteOrdo => new Command(async (obj) =>
+      {
+          Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
 
-            await App.OrdonnanceManager.DeleteItemAsync((string)obj);
+          await App.OrdonnanceManager.DeleteItemAsync((string)obj);
 
-            await BindData(0);
+          await BindData(0);
 
-            Acr.UserDialogs.UserDialogs.Instance.HideLoading();
-       });
+          Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+
+          if (Device.RuntimePlatform == Device.iOS)
+          {
+              UserDialogs.Instance.Toast(new ToastConfig("   L’ordonnance a été supprimée avec succès") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
+          }
+          else
+          {
+              UserDialogs.Instance.Toast(new ToastConfig("L’ordonnance a été supprimée avec succès") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
+
+          }
+
+      });
 
 
         public ICommand SelectItemCommand => new Command(async (item) =>

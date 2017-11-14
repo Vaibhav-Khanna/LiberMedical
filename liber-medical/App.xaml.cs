@@ -32,6 +32,7 @@ namespace libermedical
         public App()
         {
             InitializeComponent();
+
             BlobCache.ApplicationName = "LiberMedical";
             FreshIOC.Container.Register<IStorageService<Patient>, StorageService<Patient>>();
             FreshIOC.Container.Register<IStorageService<Ordonnance>, StorageService<Ordonnance>>();

@@ -156,12 +156,12 @@
       </ScrollView>
     </ContentView>
   </custom:BasePage.ContentPresenter>
-  <custom:BasePage.Footer>
-    <ContentView Style="{StaticResource HeaderFooterBackground}">
+  <custom:BasePage.Footer >
+    <ContentView BackgroundColor="{Binding ShowButton, Converter={converter:BoolToColorConverter}}" >
       <ContentView.GestureRecognizers>
         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SaveCommand}" />
       </ContentView.GestureRecognizers>
-      <Label Text="{Binding SaveLabel}" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource FooterLabel}" />
+      <Label IsVisible="{Binding ShowButton}" Text="{Binding SaveLabel}" BackgroundColor="{Binding ShowButton, Converter={converter:BoolToColorConverter}}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" VerticalOptions="FillAndExpand" Style="{StaticResource FooterLabel}" />
     </ContentView>
   </custom:BasePage.Footer>
 </custom:BasePage>
