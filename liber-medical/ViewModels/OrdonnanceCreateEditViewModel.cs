@@ -149,7 +149,11 @@ namespace libermedical.ViewModels
 					var ordonnance = initData as Ordonnance;
 					if (ordonnance.Id != null)
 						Ordonnance = await new StorageService<Ordonnance>().GetItemAsync($"Ordonnance_{ordonnance.Id}");
-					Ordonnance.Patient = ordonnance.Patient;
+
+                    if (Ordonnance == null)
+                        Ordonnance = ordonnance;
+                    
+                    Ordonnance.Patient = ordonnance.Patient;
 					Ordonnance.PatientId = ordonnance.PatientId;
 					Ordonnance.PatientName = ordonnance.PatientName;
 					PatientLabel = Ordonnance?.PatientName;
@@ -159,6 +163,7 @@ namespace libermedical.ViewModels
 					Creating = false;
 					_isEditing = true;
 				}
+
 				MessagingCenter.Send(this, Events.UpdateFrequenciesViewCellHeight, Ordonnance.Frequencies);
 				MessagingCenter.Send(this, Events.UpdateAttachmentsViewCellHeight, Ordonnance.Attachments);
 
@@ -206,7 +211,16 @@ namespace libermedical.ViewModels
 			{
 				if (CanEdit)
 				{
-                    
+                    var stored = await new StorageService<Ordonnance>().GetItemAsync($"Ordonnance_{Ordonnance.Id}");
+
+                    if (!_isNew && stored == null)
+                    {
+                        MessagingCenter.Send(this, "RefreshOrdoList");
+                        await CoreMethods.PopPageModel(null, true);
+                        return;
+                    }
+                        
+
                     if (Ordonnance.Patient == null || string.IsNullOrWhiteSpace(Ordonnance.PatientName))
                     {
                         await CoreMethods.DisplayAlert("Veuillez d'abord sélectionner un patient", "", "Ok");
