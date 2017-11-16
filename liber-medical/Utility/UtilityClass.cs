@@ -13,7 +13,7 @@ namespace libermedical.Utility
                 await CrossMedia.Current.Initialize();
                 var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
                 {
-                    AllowCropping = true
+                    AllowCropping = true, SaveToAlbum = false
                 });
                 return file;
             }

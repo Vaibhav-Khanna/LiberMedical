@@ -143,6 +143,7 @@ namespace libermedical.Pages
             // disable the visual selection state.
             ((ListView)sender).SelectedItem = null;
         }
+
         private void AttachmentsListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             try
@@ -167,6 +168,8 @@ namespace libermedical.Pages
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
+           
         }
 
         private void SubscribeMessages()

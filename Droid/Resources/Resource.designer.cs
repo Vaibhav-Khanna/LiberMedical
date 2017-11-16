@@ -63,6 +63,7 @@ namespace libermedical.Droid
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahText = global::libermedical.Droid.Resource.Styleable.ProgressWheel_ahText;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextColor = global::libermedical.Droid.Resource.Styleable.ProgressWheel_ahTextColor;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::libermedical.Droid.Resource.Styleable.ProgressWheel_ahTextSize;
+			global::Splat.Resource.String.library_name = global::libermedical.Droid.Resource.String.library_name;
 			global::Syncfusion.SfPdfViewer.XForms.Droid.Resource.Animation.abc_fade_in = global::libermedical.Droid.Resource.Animation.abc_fade_in;
 			global::Syncfusion.SfPdfViewer.XForms.Droid.Resource.Animation.abc_fade_out = global::libermedical.Droid.Resource.Animation.abc_fade_out;
 			global::Syncfusion.SfPdfViewer.XForms.Droid.Resource.Animation.abc_grow_fade_in_from_bottom = global::libermedical.Droid.Resource.Animation.abc_grow_fade_in_from_bottom;

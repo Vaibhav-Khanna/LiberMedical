@@ -22,6 +22,13 @@ namespace libermedical.Pages
         {
             InitializeComponent();
 
+            MessagingCenter.Unsubscribe<StorageService<BaseDTO>>(this, "RefreshOrdoList");
+            MessagingCenter.Subscribe<StorageService<BaseDTO>>(this,"RefreshOrdoList", (obj) => 
+            {
+                if(MyListView!=null)
+                 MyListView.BeginRefresh();
+            });
+
             MessagingCenter.Subscribe<LibermedicalTabbedNavigation,int>(this,"PageChanged",(arg1, arg2) => 
             {
                 if(arg2==2)
@@ -71,8 +78,8 @@ namespace libermedical.Pages
                         if (filter.EnableDateSearch)
                         {
                             foundItems =
-                                (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.Status == status.ToString() && x.FirstCareAt.Date >= filter.StartDate.Value.Date &&
-                                                                                          x.FirstCareAt.Date <= filter.EndDate.Value.Date).ToList();
+                                (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.Status == status.ToString() && ((DateTimeOffset)x.CreatedAt).Date >= filter.StartDate.Value.Date &&
+                                                                                               ((DateTimeOffset)x.CreatedAt).Date <= filter.EndDate.Value.Date).ToList();
                         }
                         else
                         {
@@ -87,8 +94,8 @@ namespace libermedical.Pages
                     if (filter.EnableDateSearch)
                     {
                         foundItems =
-                           (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.FirstCareAt.Date >= filter.StartDate.Value.Date &&
-                                                                                         x.FirstCareAt.Date <= filter.EndDate.Value.Date).ToList();
+                            (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => ((DateTimeOffset)x.CreatedAt).Date >= filter.StartDate.Value.Date &&
+                                                                                           ((DateTimeOffset)x.CreatedAt).Date <= filter.EndDate.Value.Date).ToList();
                         filteredItems.AddRange(foundItems);
                     }
                     else

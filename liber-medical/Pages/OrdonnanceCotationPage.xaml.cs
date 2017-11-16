@@ -3,6 +3,8 @@ using libermedical.ViewModels;
 using Syncfusion.SfPicker.XForms;
 using System.Collections;
 using Xamarin.Forms;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace libermedical.Pages
 {
@@ -23,19 +25,30 @@ namespace libermedical.Pages
 
         void Handle_OnChanged(object sender, Xamarin.Forms.ToggledEventArgs e)
         {
-            if (Switch.IsToggled)
+            if (e.Value)
             {
                 Picker.IsVisible = true;
-                //Footer.IsVisible = true;
-                //(this.BindingContext as OrdonnanceCotationViewModel).ShouldEnableAdd = true;
+
+                Device.StartTimer(new System.TimeSpan(0,0,0,0,200), () => 
+                {
+                    Device.BeginInvokeOnMainThread( () => 
+                    {
+                        scrollview.ScrollToAsync(Picker, ScrollToPosition.End, false);      
+                    });
+                               
+                    return false;
+                });
+
+                Picker.Focus();
             }
             else
             {
                 Picker.IsVisible = false;
-                //Footer.IsVisible = false;
-                //(this.BindingContext as OrdonnanceCotationViewModel).ShouldEnableAdd = false;
+               
             }
         }
+
+
 
         private void picker_SelectionChanged(object sender, Syncfusion.SfPicker.XForms.SelectionChangedEventArgs e)
         {

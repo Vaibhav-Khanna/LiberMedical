@@ -220,6 +220,7 @@
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="CustomControls\CustomRefreshListView.cs" />
     <Compile Include="Converters\StringToBoolConverter.cs" />
+    <Compile Include="Converters\BoolToColorConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Acr.UserDialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

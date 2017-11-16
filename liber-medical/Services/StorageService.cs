@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using libermedical.Request;
 using System.Collections.ObjectModel;
+using Xamarin.Forms;
 
 namespace libermedical.Services
 {
@@ -327,7 +328,7 @@ namespace libermedical.Services
                         ordonnance.IsSynced = false;
                     }
                     await UpdateAsync(ordonnance as TModel, typeof(Ordonnance).Name + "_" + ordonnance.Id);
-
+                    MessagingCenter.Send(this,"RefreshOrdoList");
 
                 }
             }
