@@ -10,24 +10,44 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="Ordonnances" Icon="filters.png" Clicked="Filter_Clicked" />
         <ToolbarItem Name="Ordonnances" Icon="plus.png" Command="{Binding AddCommand}" />
-    </ContentPage.ToolbarItems>
-    <ContentView>
-        <Grid RowSpacing="0">
+    </ContentPage.ToolbarItems>   
+      <Grid RowSpacing="0" VerticalOptions="FillAndExpand">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <StackLayout BackgroundColor="#c8c7cc" Grid.Row="0" Padding="8,7" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
+
+           <StackLayout Orientation="Vertical" VerticalOptions="Start" Spacing="0" Grid.Row="0"  >
+            
+            <StackLayout BackgroundColor="#c8c7cc"  Padding="8,7" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
                 <SearchBar x:Name="searchBar" Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" TextChanged="SearchBar_OnTextChanged" />
             </StackLayout>
+
            
-                    <custom:CustomRefreshListView x:Name="MyListView" Grid.Row="1" Refreshing="Handle_Refreshing" IsPullToRefreshEnabled="true" ItemsSource="{Binding Ordonnances}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected" ItemAppearing="MyListView_ItemAppearing">
-                        <custom:CustomRefreshListView.ItemTemplate>
+                 <StackLayout VerticalOptions="Start" IsVisible="{Binding RefreshText,Converter={converter:StringToBoolConverter}" BackgroundColor="#f0f0f0" Orientation="Horizontal" HeightRequest="30" HorizontalOptions="FillAndExpand">
+                        <Image Source="sync.png" VerticalOptions="Center" HeightRequest="20" WidthRequest="20" HorizontalOptions="EndAndExpand" />
+                        <Label Text="{Binding RefreshText}" VerticalOptions="Center" FontSize="12" TextColor="Gray" HorizontalOptions="StartAndExpand" />
+                    </StackLayout>
+
+
+                 <StackLayout VerticalOptions="Start" IsVisible="{Binding FilterActiveText,Converter={converter:StringToBoolConverter}" BackgroundColor="#F5A623" Orientation="Horizontal" HeightRequest="30" Spacing="10" HorizontalOptions="FillAndExpand">
+                        <Label Text="!" FontAttributes="Bold" FontSize="20" TextColor="White" VerticalOptions="Center" HorizontalOptions="EndAndExpand" />
+                        <Label Text="{Binding FilterActiveText}" VerticalOptions="Center" FontSize="12" TextColor="White" HorizontalOptions="StartAndExpand" />
+                    </StackLayout>
+
+                     <StackLayout VerticalOptions="FillAndExpand" HeightRequest="300" IsVisible="{Binding NoResultText,Converter={converter:StringToBoolConverter}" BackgroundColor="White" Orientation="Vertical" Spacing="10" HorizontalOptions="FillAndExpand">                      
+                       <Label Text="{Binding NoResultText}" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" FontSize="16" TextColor="Gray" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                    </StackLayout>
+            
+                 </StackLayout>
+    
+                       <ListView x:Name="MyListView" Grid.Row="1" VerticalOptions="FillAndExpand" Refreshing="Handle_Refreshing" IsPullToRefreshEnabled="true" ItemsSource="{Binding Ordonnances}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected" ItemAppearing="MyListView_ItemAppearing">
+                        <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell> 
                             <ViewCell.ContextActions>
                                 <MenuItem Clicked="Handle_Remove_Clicked" IsDestructive="true" CommandParameter="{Binding .}"
-                        Text="Effacer" />
+                                 Text="Effacer" />
                             </ViewCell.ContextActions>
                                     <Grid Padding="15,0,0,0">
                                         <Grid.ColumnDefinitions>
@@ -75,20 +95,16 @@
                                     </Grid>
                                 </ViewCell>
                             </DataTemplate>
-                        </custom:CustomRefreshListView.ItemTemplate>
+                        </ListView.ItemTemplate>
                 <custom:CustomRefreshListView.Footer>
                     <ContentView HorizontalOptions="FillAndExpand" HeightRequest="80">
                         <ActivityIndicator x:Name="indicator" IsVisible="false" IsRunning="true" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
                     </ContentView>
-                </custom:CustomRefreshListView.Footer>
-                <custom:CustomRefreshListView.Header>
-                    <StackLayout IsVisible="{Binding RefreshText,Converter={converter:StringToBoolConverter}" BackgroundColor="#f0f0f0" Orientation="Horizontal" HeightRequest="30" HorizontalOptions="FillAndExpand">
-                        <Image Source="sync.png" VerticalOptions="Center" HeightRequest="20" WidthRequest="20" HorizontalOptions="EndAndExpand" />
-                        <Label Text="{Binding RefreshText}" VerticalOptions="Center" FontSize="12" TextColor="Gray" HorizontalOptions="StartAndExpand" />
-                    </StackLayout>
-                </custom:CustomRefreshListView.Header>
-               </custom:CustomRefreshListView>
-              
-        </Grid>
-    </ContentView>
+                </custom:CustomRefreshListView.Footer>              
+               </ListView>
+
+                
+          
+       </Grid>
+      
 </ContentPage>

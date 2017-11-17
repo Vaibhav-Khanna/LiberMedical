@@ -104,6 +104,12 @@ namespace libermedical.ViewModels
 
         public ICommand SaveTappedCommand => new Command(async () =>
         {
+            if(Cotations==null || !Cotations.Any())
+            {
+                await CoreMethods.DisplayAlert("Alerte","Veuillez d’abord ajouter une cotation","Ok");
+                return;
+            }
+
             Frequency.Quotations = Cotations.ToList();
             await CoreMethods.PopPageModel(null, true);
             //await CoreMethods.PopPageModel(null, true);
@@ -120,12 +126,13 @@ namespace libermedical.ViewModels
             }
 
         });
+
         public ICommand DeleteCotation => new Command((args) =>
         {
             if (CanEdit)
             {
                 Cotations.Remove(args as string);
-                Frequency.Quotations = Cotations.ToList();
+                //Frequency.Quotations = Cotations.ToList();
                 MessagingCenter.Send(this, Events.UpdateCotationsViewCellHeight, Cotations);
             }
 

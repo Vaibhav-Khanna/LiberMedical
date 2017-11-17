@@ -28,7 +28,7 @@
 		<ContentView BackgroundColor="White">
 			<Grid>
 				<Grid.RowDefinitions>
-					<RowDefinition Height="100" />
+					<RowDefinition Height="Auto" />
 					<RowDefinition Height="50" />
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
@@ -36,11 +36,12 @@
 					<Label Margin="0,20,0,0" Text="{Binding Patient.Fullname}" HorizontalOptions="Center" VerticalOptions="Fill" Style="{StaticResource PatientNameTitle}" />
 					<!--<Label Margin="0,0,0,0" Text="portable" HorizontalOptions="Center" VerticalOptions="Fill" Style="{StaticResource PortableTitle}" />
 					<Label Margin="0,0,0,21" Text="{Binding Patient.PhoneNumbers[0]}" HorizontalOptions="Center" VerticalOptions="Fill" Style="{StaticResource PortableNumber}" />-->
-          <Image Source="phone.png" HorizontalOptions="Center">
+          <Image Source="phone2.png" HeightRequest="50" WidthRequest="50" HorizontalOptions="Center">                        
             <Image.GestureRecognizers>
               <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CallCommand}" />
             </Image.GestureRecognizers>
           </Image>
+                    <Label Text="Contacter" Margin="0,5,0,10" HorizontalOptions="Center" FontSize="14" TextColor="#91c602"  />
 				</StackLayout>
 				<StackLayout Grid.Row="1" Padding="40,10">
 					<Grid>
