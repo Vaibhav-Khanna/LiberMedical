@@ -14,8 +14,9 @@
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
+    <ScrollView Orientation="Vertical" >
         <ContentView>
-            <Grid RowSpacing="0">
+            <Grid RowSpacing="0" Margin="0,10,0,20" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="10*" />
                     <RowDefinition Height="30*" />
@@ -49,4 +50,5 @@
                 </StackLayout>
             </Grid>
         </ContentView>
+        </ScrollView>
 </ContentPage>

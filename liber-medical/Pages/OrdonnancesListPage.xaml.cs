@@ -108,9 +108,14 @@ namespace libermedical.Pages
 
                 _filteredItems = new ObservableCollection<Ordonnance>(filteredItems);
                 MyListView.ItemsSource = _filteredItems;
+
+                (BindingContext as OrdonnancesListViewModel).FilterActiveText = "Vous avez des filtres activés";
+
             }
             else
             {
+                (BindingContext as OrdonnancesListViewModel).FilterActiveText = null;
+
                 _filteredItems = null;
 
                 MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;

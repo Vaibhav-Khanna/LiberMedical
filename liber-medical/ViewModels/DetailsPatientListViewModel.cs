@@ -225,8 +225,8 @@ namespace libermedical.ViewModels
                 {
                     if (Patient.PhoneNumbers != null && Patient.PhoneNumbers.Any())
                     {
-                        var contactPhone = await CoreMethods.DisplayActionSheet("Contact Numbers", "Cancel", null, Patient.PhoneNumbers.ToArray());
-                        if (contactPhone != "Cancel")
+                        var contactPhone = await CoreMethods.DisplayActionSheet("Numéro(s) de téléphone", "Annuler", null, Patient.PhoneNumbers.ToArray());
+                        if (contactPhone != "Annuler")
                             Device.OpenUri(new System.Uri($"tel:{contactPhone}"));
                     }
                 });

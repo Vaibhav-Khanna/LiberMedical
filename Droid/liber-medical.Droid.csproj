@@ -484,6 +484,7 @@
     <AndroidResource Include="Resources\drawable-xhdpi\sync.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\sync.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\sync.png" />
+    <AndroidResource Include="Resources\drawable\phone2.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />

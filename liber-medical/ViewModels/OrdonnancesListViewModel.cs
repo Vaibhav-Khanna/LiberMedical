@@ -33,7 +33,7 @@ namespace libermedical.ViewModels
             }
         }
 
-        string refreshtext;
+        string refreshtext = string.Empty;
         public string RefreshText 
         {
             get { return refreshtext; }
@@ -44,6 +44,16 @@ namespace libermedical.ViewModels
             }
         }
 
+        string filteracctivetext = string.Empty;
+        public string FilterActiveText
+        {
+            get { return filteracctivetext; }
+            set
+            {
+                filteracctivetext = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public OrdonnancesListViewModel(IStorageService<Ordonnance> storageService) : base(storageService)
         {
@@ -211,30 +221,31 @@ namespace libermedical.ViewModels
                         MessagingCenter.Subscribe<PatientListViewModel, Patient>(this,
                             Events.OrdonnancePageSetPatientForOrdonnance, async (sender, patient) =>
                             {
-                            if (patient != null && ordonnance!=null)
+                                if (patient != null && ordonnance != null)
                                 {
                                     ordonnance.PatientId = patient.Id;
                                     ordonnance.Patient = patient;
                                     ordonnance.PatientName = $"{patient.FirstName} {patient.LastName}";
                                     ordonnance.IsSynced = false;
                                     ordonnance.UpdatedAt = null;
+                                    ordonnance.First_Care_At = App.ConvertToUnixTimestamp(DateTime.UtcNow);
 
-                                    var storageService =  new StorageService<Ordonnance>();
-                                    
+                                    var storageService = new StorageService<Ordonnance>();
+
                                     await storageService.AddAsync(ordonnance);
 
                                     if (App.IsConnected())
                                     {
-                                    Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
+                                        Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
                                         await storageService.PushOrdonnance(ordonnance, true);
                                         await BindData(20);
                                         Acr.UserDialogs.UserDialogs.Instance.HideLoading();
                                     }
+                                    else
+                                    {
+                                        await BindData(0);
+                                    }
 
-                                    //display toast
-                                    //pop to root
-                                    var list = await storageService.GetList();
-                                    Ordonnances = new ObservableCollection<Ordonnance>(list);
 
                                     MessagingCenter.Unsubscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance);
                                 }
