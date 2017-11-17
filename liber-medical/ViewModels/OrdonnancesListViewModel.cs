@@ -55,6 +55,17 @@ namespace libermedical.ViewModels
             }
         }
 
+        string noresulttext = string.Empty;
+        public string NoResultText
+        {
+            get { return noresulttext; }
+            set
+            {
+                noresulttext = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public OrdonnancesListViewModel(IStorageService<Ordonnance> storageService) : base(storageService)
         {
             _ordonnanceStorage = storageService;

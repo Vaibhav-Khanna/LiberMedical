@@ -34,7 +34,11 @@
                         <Label Text="!" FontAttributes="Bold" FontSize="20" TextColor="White" VerticalOptions="Center" HorizontalOptions="EndAndExpand" />
                         <Label Text="{Binding FilterActiveText}" VerticalOptions="Center" FontSize="12" TextColor="White" HorizontalOptions="StartAndExpand" />
                     </StackLayout>
-                
+
+                     <StackLayout VerticalOptions="FillAndExpand" HeightRequest="300" IsVisible="{Binding NoResultText,Converter={converter:StringToBoolConverter}" BackgroundColor="White" Orientation="Vertical" Spacing="10" HorizontalOptions="FillAndExpand">                      
+                       <Label Text="{Binding NoResultText}" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" FontSize="16" TextColor="Gray" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                    </StackLayout>
+            
                  </StackLayout>
     
                        <ListView x:Name="MyListView" Grid.Row="1" VerticalOptions="FillAndExpand" Refreshing="Handle_Refreshing" IsPullToRefreshEnabled="true" ItemsSource="{Binding Ordonnances}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected" ItemAppearing="MyListView_ItemAppearing">
