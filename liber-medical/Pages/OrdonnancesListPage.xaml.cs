@@ -48,6 +48,13 @@ namespace libermedical.Pages
                 _filter = filter;
                 ApplyFilter(filter);
             });
+
+            MessagingCenter.Subscribe<OrdonnancesListViewModel, Filter>(this, Events.UpdatePrescriptionFilters, (sender, filter) =>
+            {
+                _filter = filter;
+                ApplyFilter(filter);
+                MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
+            });
         }
 
 
@@ -57,11 +64,11 @@ namespace libermedical.Pages
                 await App.SyncData();
           
             await (BindingContext as OrdonnancesListViewModel).BindData(0);
+            MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
             MyListView.IsRefreshing = false;
             isExecuting = false;
         }
-
-       
+              
 
         private void ApplyFilter(Filter filter)
         {
@@ -112,7 +119,7 @@ namespace libermedical.Pages
                 if (filteredItems.Any())
                     (BindingContext as OrdonnancesListViewModel).NoResultText = null;
                 else
-                    (BindingContext as OrdonnancesListViewModel).NoResultText = "Aucun resutats";
+                    (BindingContext as OrdonnancesListViewModel).NoResultText = "Aucun résultat";
 
 
                 _filteredItems = new ObservableCollection<Ordonnance>(filteredItems);

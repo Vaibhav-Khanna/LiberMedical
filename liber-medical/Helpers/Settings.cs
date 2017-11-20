@@ -74,5 +74,6 @@ namespace libermedical.Helpers
             get { return AppSettings.GetValueOrDefault(AdvisorMail, stringDefault); }
             set { AppSettings.AddOrUpdateValue(AdvisorMail, value); }
         }
+              
     }
 }

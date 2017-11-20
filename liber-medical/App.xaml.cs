@@ -46,7 +46,7 @@ namespace libermedical
                 CreateTabbedPage();
             });
 
-            if (Settings.IsLoggedIn)
+            if (!string.IsNullOrEmpty(Settings.Token))
             {
                 CreateTabbedPage();
                 MainPage = tabbedNavigation;

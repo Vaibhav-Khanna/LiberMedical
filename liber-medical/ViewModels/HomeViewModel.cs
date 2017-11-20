@@ -47,19 +47,19 @@ namespace libermedical.ViewModels
 			var action = await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Appel vocal", "E-mail", "SMS");
 			switch (action)
 			{
-				case "Appel vocal":
-					Device.OpenUri(new System.Uri($"tel:{Settings.AdvisorContact}"));
-					break;
-				case "E-mail":
-					Device.OpenUri(new System.Uri($"mailto:{Settings.AdvisorEmail}"));
-					break;
-				case "SMS":
-                    {
-                        var smsMessenger = CrossMessaging.Current.SmsMessenger;
-                        if (smsMessenger.CanSendSms)
-                            smsMessenger.SendSms(Settings.AdvisorContact, "Bonjour, je vous informe que mon TLA est branché");                        
-                        break;
-                    }
+                case "Appel vocal":
+                    if (CrossMessaging.Current.PhoneDialer.CanMakePhoneCall)
+                        CrossMessaging.Current.PhoneDialer.MakePhoneCall(Settings.AdvisorContact);                   
+                    break;
+                case "SMS":
+                    var smsMessenger = CrossMessaging.Current.SmsMessenger;
+                    if (smsMessenger.CanSendSms)
+                        smsMessenger.SendSms(Settings.AdvisorContact, "Bonjour, je vous informe que mon TLA est branché");
+                    break;
+                case "E-mail":
+                    if (CrossMessaging.Current.EmailMessenger.CanSendEmail)
+                        CrossMessaging.Current.EmailMessenger.SendEmail(Settings.AdvisorEmail);
+                    break; 
 			}
 
 		});
@@ -117,7 +117,7 @@ namespace libermedical.ViewModels
 
                     if (file != null)
                     {
-                        var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                       
                         var typeNavigation = "normal";
                         _documentPath = file.Path;
 
@@ -154,15 +154,65 @@ namespace libermedical.ViewModels
 					return;
 				}
 
-                var permission = await App.AskForCameraPermission();
-               
-                if (permission)
+
+                var Photo_action = await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Appareil photo", "Bibliothèque photo");
+
+                bool permission;
+
+                if (Photo_action == "Appareil photo")
                 {
-                    await CrossMedia.Current.Initialize();
-                    var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                    { Directory = "Docs", Name = DateTime.UtcNow.Ticks.ToString(), CompressionQuality = 30, SaveToAlbum = false });
-                    if (file != null)
+                    permission = await App.AskForCameraPermission();
+
+                    if (permission)
                     {
+                        await CrossMedia.Current.Initialize();
+                        var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                        {
+                            Directory = "Docs",
+                            Name = DateTime.UtcNow.Ticks.ToString(),
+                            CompressionQuality = 30,
+                            SaveToAlbum = false
+                        });
+
+                        if (file != null)
+                        {
+                            _documentPath = file.Path;
+                        }
+                        else
+                            return;
+                    }
+                    else
+                        return;
+
+                }
+                else if (Photo_action == "Bibliothèque photo")
+                {
+                    permission = await App.AskForPhotoPermission();
+
+                    if (permission)
+                    {
+                        await CrossMedia.Current.Initialize();
+                      
+                        var pickerOptions = new PickMediaOptions() { CompressionQuality = 30 };
+                        var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
+
+                        if (file != null)
+                        {
+                            _documentPath = file.Path;
+                        }
+                        else
+                            return;
+                    }
+                    else
+                        return;
+                }
+                else
+                    return;
+
+
+                              
+                if (permission)
+                {                  
                         //if document we change typeDoc to document
                         if (action == "Document") 
                         { typeDoc = "document"; }
@@ -171,20 +221,12 @@ namespace libermedical.ViewModels
                             typeDoc = "ordonnance";
                         }
 
-                        var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                     
                         var typeNavigation = "fast";
-                        _documentPath = file.Path;
-
-                        //if (action == "Document")
+                      
+                      
                         await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "HomeSelectPatient", typeNavigation, typeDoc }, true);
-                       
-                        //else
-                            //CreatePrescription(_documentPath);
-
-                        //var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
-                        //var basicNavContainer = new FreshNavigationContainer(page, "HomeSelectPatient");
-                        //await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
-                    }
+                                      
                 }
 			}
 		});

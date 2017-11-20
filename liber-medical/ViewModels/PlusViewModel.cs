@@ -56,17 +56,22 @@ namespace libermedical.ViewModels
 
 		public ICommand ConnectCommand => new Command(async () =>
 		{	
-			var action = await CoreMethods.DisplayActionSheet("Contacter mon conseiller via:", "Annuler", null, "Appel vocal", "SMS");
+            var action = await CoreMethods.DisplayActionSheet("Contacter mon conseiller via:", "Annuler", null, "Appel vocal","E-mail", "SMS" );
             switch (action)
             {
                 case "Appel vocal":
-                    Device.OpenUri(new System.Uri($"tel:{Settings.AdvisorContact}"));
+                    if (CrossMessaging.Current.PhoneDialer.CanMakePhoneCall)
+                        CrossMessaging.Current.PhoneDialer.MakePhoneCall(Settings.AdvisorContact);                   
                     break;
                 case "SMS":
                     var smsMessenger = CrossMessaging.Current.SmsMessenger;
                     if (smsMessenger.CanSendSms)
                         smsMessenger.SendSms(Settings.AdvisorContact, "Bonjour, je vous informe que mon TLA est branché");
                     break;
+                case "E-mail":
+                    if (CrossMessaging.Current.EmailMessenger.CanSendEmail)
+                        CrossMessaging.Current.EmailMessenger.SendEmail(Settings.AdvisorEmail);
+                    break;                        
             }
         });
 
