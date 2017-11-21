@@ -27,7 +27,7 @@ namespace libermedical.Pages
 
             if (response)
             {
-                Settings.Token = "";
+                Settings.Token = string.Empty;
                 Settings.TokenExpiration = 0;
                 Settings.IsLoggedIn = false;
                 Application.Current.MainPage = new NavigationPage(new LoginPage());

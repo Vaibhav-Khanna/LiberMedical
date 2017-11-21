@@ -155,12 +155,17 @@ namespace libermedical.Managers
                 return true;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Settings.Token = "";
+                Settings.Token = string.Empty;
                 Settings.TokenExpiration = 0;
                 Settings.IsLoggedIn = false;
-                Application.Current.MainPage = new NavigationPage(new LoginPage());
+            
+                Device.BeginInvokeOnMainThread( () => 
+                {
+                    Application.Current.MainPage = new NavigationPage(new LoginPage());
+                });
+
                 return false;
             }
         }

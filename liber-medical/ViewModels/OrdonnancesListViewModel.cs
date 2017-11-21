@@ -16,13 +16,14 @@ using Acr.UserDialogs;
 
 namespace libermedical.ViewModels
 {
+    
     public class OrdonnancesListViewModel : ListViewModelBase<Ordonnance>
     {
         int _initCount = 0;
         public int MaxCount { get; set; }
         public IStorageService<Ordonnance> _ordonnanceStorage;
-        private ObservableCollection<Ordonnance> _ordonnances;
 
+        private ObservableCollection<Ordonnance> _ordonnances;
         public ObservableCollection<Ordonnance> Ordonnances
         {
             get { return _ordonnances; }
@@ -223,6 +224,9 @@ namespace libermedical.ViewModels
                         Frequencies = new List<Frequency>()
                     };
 
+                    Filter _filters = null;
+                  
+
                     if (action == "Ordonnance rapide")
                     {
                         await CoreMethods.PushPageModel<PatientListViewModel>(
@@ -257,6 +261,7 @@ namespace libermedical.ViewModels
                                         await BindData(0);
                                     }
 
+                                    MessagingCenter.Send(this, Events.UpdatePrescriptionFilters, _filters);
 
                                     MessagingCenter.Unsubscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance);
                                 }
