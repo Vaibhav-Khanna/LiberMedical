@@ -253,7 +253,7 @@ namespace libermedical.ViewModels
                     CreatedAt = DateTime.UtcNow,
                     IsSynced = false,
                     UpdatedAt = null,
-                    First_Care_At = App.ConvertToUnixTimestamp(DateTime.UtcNow),
+                    First_Care_At = 0,
 					Attachments = new List<string>() { _documentPath },
 					Frequencies = new List<Frequency>(),
 					Patient = patient,
@@ -262,6 +262,7 @@ namespace libermedical.ViewModels
 				};
 				
                 await new StorageService<Ordonnance>().AddAsync(ordannance);
+               
                 if (App.IsConnected())
                 {
                     UserDialogs.Instance.ShowLoading("Chargement...");
@@ -277,7 +278,7 @@ namespace libermedical.ViewModels
                 {
                     UserDialogs.Instance.Toast(new ToastConfig("Votre ordonnance a bien été enregistrée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
                 }
-            
+
             }
 			else
 			{

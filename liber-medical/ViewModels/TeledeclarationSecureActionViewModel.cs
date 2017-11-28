@@ -92,16 +92,25 @@ namespace libermedical.ViewModels
 				});
 		}
 
+        bool isOpening = false;
+
 		public ICommand DocumentViewCommand
 		{
 			get
 			{
 				return new Command(async () =>
 				{
+                    if (isOpening)
+                        return;
+
+                    isOpening = true;
+
 					if (Teledeclaration.FilePath.Contains(".pdf"))
 						await CoreMethods.PushPageModel<SecuriseBillsViewModel>(Teledeclaration, true);
 					else
 						await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(Teledeclaration, true);
+                    
+                    isOpening = false;
 				});
 			}
 		}

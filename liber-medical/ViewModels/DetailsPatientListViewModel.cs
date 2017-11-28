@@ -43,8 +43,8 @@ namespace libermedical.ViewModels
         public DetailsPatientListViewModel()
         {
             ShowStackOrdonnance = ShowBoxViewOrdonnances = true;
-            BottomTitle = "+ Ajoutez une ordonnance";
-            
+            BottomTitle = "+ Ajouter une ordonnance";
+
         }
        
         private async void BindData()
@@ -85,7 +85,7 @@ namespace libermedical.ViewModels
                     ShowStackOrdonnance = true;
                     ShowBoxViewOrdonnances = true;
                     ShowBoxViewDocuments = false;
-                    BottomTitle = "+ Ajoutez une ordonnance";
+                    BottomTitle = "+ Ajouter une ordonnance";
                 });
             }
         }
@@ -100,7 +100,7 @@ namespace libermedical.ViewModels
                     ShowStackOrdonnance = false;
                     ShowBoxViewDocuments = true;
                     ShowBoxViewOrdonnances = false;
-                    BottomTitle = "+ Ajoutez un document";
+                    BottomTitle = "+ Ajouter un document";
                 });
             }
         }
@@ -111,7 +111,7 @@ namespace libermedical.ViewModels
             {
                 return new Command(async () =>
                 {
-                    if (BottomTitle == "+ Ajoutez une ordonnance")
+                    if (BottomTitle == "+ Ajouter une ordonnance")
                     {
                         await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(string.Empty, true);
                         MessagingCenter.Send(this, Events.PatientDetailsPageSetPatientToOrdonnance, Patient);

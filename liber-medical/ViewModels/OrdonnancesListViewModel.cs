@@ -132,7 +132,7 @@ namespace libermedical.ViewModels
         }
 
         public Command DeleteOrdo => new Command(async (obj) =>
-      {
+       {
           Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
 
           await App.OrdonnanceManager.DeleteItemAsync((string)obj);
@@ -221,7 +221,8 @@ namespace libermedical.ViewModels
                     {
                         Id = Guid.NewGuid().ToString(),
                         Attachments = new List<string> { filePath },
-                        Frequencies = new List<Frequency>()
+                        Frequencies = new List<Frequency>(),
+                        First_Care_At = 0
                     };
 
                     Filter _filters = null;
@@ -243,7 +244,7 @@ namespace libermedical.ViewModels
                                     ordonnance.PatientName = $"{patient.FirstName} {patient.LastName}";
                                     ordonnance.IsSynced = false;
                                     ordonnance.UpdatedAt = null;
-                                    ordonnance.First_Care_At = App.ConvertToUnixTimestamp(DateTime.UtcNow);
+                                    ordonnance.First_Care_At = 0;                      
 
                                     var storageService = new StorageService<Ordonnance>();
 
@@ -265,6 +266,7 @@ namespace libermedical.ViewModels
 
                                     MessagingCenter.Unsubscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance);
                                 }
+
                             });
                     }
                     else if (action == "Ordonnance classique")
@@ -274,6 +276,7 @@ namespace libermedical.ViewModels
                 }
             }
         });
+
 
         public async Task CachedList()
         {

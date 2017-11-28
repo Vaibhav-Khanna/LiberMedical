@@ -73,6 +73,11 @@ namespace libermedical.Pages
                 StatusLabel.Text = "Traité le " + (BindingContext as OrdonnanceCreateEditViewModel).Ordonnance?.StatusChangedAt.ToString("dd/MM/yyyy");
             }
 
+            if (_ordonnance.First_Care_At == 0)
+            {
+                FirstCareCell.IsVisible = false;
+            }
+
         }
 
         private void MyDatePickerOnDateSelected(object sender, DateChangedEventArgs dateChangedEventArgs)

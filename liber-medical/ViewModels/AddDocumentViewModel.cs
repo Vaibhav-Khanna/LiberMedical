@@ -196,12 +196,13 @@ namespace libermedical.ViewModels
 
                             if (Device.RuntimePlatform == Device.iOS)
                             {
-                                UserDialogs.Instance.Toast(new ToastConfig("    Votre document a bien été enregistrée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
+                                UserDialogs.Instance.Toast(new ToastConfig("    Votre document a bien été envoyé") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
                             }
                             else
                             {
-                                UserDialogs.Instance.Toast(new ToastConfig("Votre document a bien été enregistrée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green }); 
+                                UserDialogs.Instance.Toast(new ToastConfig("Votre document a bien été envoyé") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green }); 
                             }
+
                         }
 					}
 					catch (Exception e)
