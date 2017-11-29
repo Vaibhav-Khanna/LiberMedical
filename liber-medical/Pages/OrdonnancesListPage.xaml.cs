@@ -84,7 +84,7 @@ namespace libermedical.Pages
                 //await App.SyncData();
           
             await (BindingContext as OrdonnancesListViewModel).BindData(0);
-            MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
+            ApplyFilter(_filter);
             MyListView.IsRefreshing = false;
             isExecuting = false;
         }
