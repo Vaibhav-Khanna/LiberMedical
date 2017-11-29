@@ -67,28 +67,36 @@
 				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="5"></BoxView>
 				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding PhoneNumber}" Grid.Row="6"/>
 				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="7"></BoxView>
-				<Grid Margin="15,0,21,0" VerticalOptions="Center" IsVisible="{Binding IsContractVisible}" Grid.Row="8">
+
+                <Grid Margin="15,0,21,0" ColumnSpacing="10" VerticalOptions="Center" Grid.Row="8">
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="10*" />
 									<ColumnDefinition Width="88*" />
 									<ColumnDefinition Width="13" />
 								</Grid.ColumnDefinitions>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ViewContract}" />
+                    </Grid.GestureRecognizers>
+                    
 								<Image
 									Grid.Column="0"
 									HorizontalOptions="EndAndExpand"
 									Source="contrat.png"
+                        IsEnabled="{Binding IsContractVisible}"
 									VerticalOptions="Center" />
 								<Label
 									Grid.Column="1"
 									HorizontalOptions="StartAndExpand"
 									Style="{StaticResource PlusList}"
 									Text="Mon contrat"
+                        IsEnabled="{Binding IsContractVisible}"
 									VerticalOptions="Center">
 								</Label>
 								<Image
 									Grid.Column="2"
 									HorizontalOptions="CenterAndExpand"
 									Source="back_arrow_green.png"
+                        IsEnabled="{Binding IsContractVisible}"
 									VerticalOptions="Center" />
 							</Grid>
 			</Grid>

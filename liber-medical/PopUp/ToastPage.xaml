@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    x:Class="libermedical.PopUp.ToastPage" HasSystemPadding="true" InputTransparent="true" BackgroundColor="Transparent" CloseWhenBackgroundIsClicked="true"  >
+	<pages:PopupPage.Animation>
+    <animations:ScaleAnimation 
+      PositionIn="Center"
+      PositionOut="Center"
+      ScaleIn="1.2"
+      ScaleOut="0.8"
+      DurationIn="400"
+      DurationOut="300"
+      EasingIn="SinOut"
+      EasingOut="SinIn"
+      HasBackgroundAnimation="True"/>
+  </pages:PopupPage.Animation>
+    <pages:PopupPage.Content>
+        <Frame  CornerRadius="8" VerticalOptions="Start" Padding="10,20,10,20"  Margin="10,0,10,0" BackgroundColor="White" OutlineColor="#A8A8A8" HasShadow="true">
+            <Label x:Name="ToastLabel" TextColor="#91c602" LineBreakMode="WordWrap" FontAttributes="Bold" FontSize="18" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" />
+        </Frame> 
+    </pages:PopupPage.Content>
+</pages:PopupPage>

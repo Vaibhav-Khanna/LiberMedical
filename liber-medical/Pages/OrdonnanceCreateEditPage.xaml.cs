@@ -26,6 +26,11 @@ namespace libermedical.Pages
             (BindingContext as OrdonnanceCreateEditViewModel).DeleteImage.Execute((sender as MenuItem).CommandParameter);
         }
 
+        void DeleteFrequency(object sender, System.EventArgs e)
+        {
+            (BindingContext as OrdonnanceCreateEditViewModel).DeleteFrequency.Execute((sender as MenuItem).CommandParameter);
+        }
+
         private async void DoAsyncActions()
         {
             while (this.BindingContext == null)
@@ -196,7 +201,7 @@ namespace libermedical.Pages
             Device.BeginInvokeOnMainThread(() =>
                 {
                     if (frequencies != null)
-                        FrequencesListView.ItemsSource = frequencies;
+                        //FrequencesListView.ItemsSource = frequencies;
                     FrequencesListView.HeightRequest = frequencies.Count * 43;
 
                 });

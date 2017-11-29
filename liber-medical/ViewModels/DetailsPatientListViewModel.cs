@@ -10,6 +10,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using System.Collections.Generic;
+using Acr.UserDialogs;
+using libermedical.PopUp;
 
 namespace libermedical.ViewModels
 {
@@ -111,62 +114,135 @@ namespace libermedical.ViewModels
             {
                 return new Command(async () =>
                 {
+                    string Ordo_action = null;
+
                     if (BottomTitle == "+ Ajouter une ordonnance")
                     {
-                        await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(string.Empty, true);
-                        MessagingCenter.Send(this, Events.PatientDetailsPageSetPatientToOrdonnance, Patient);
+                        Ordo_action =
+                                       await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Ordonnance rapide",
+                                       "Ordonnance classique");
+
+                        if (string.IsNullOrWhiteSpace(Ordo_action) || Ordo_action == "Annuler")
+                            return;
                     }
-                    else
+
+                    //else
+                    //{
+                    var _documentPath = string.Empty;
+                    var action = await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Appareil photo", "Bibliothèque photo");
+
+                    if (action == "Appareil photo")
                     {
-                        var _documentPath = string.Empty;
-                        var action = await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Appareil photo", "Bibliothèque photo");
-                        if (action == "Appareil photo")
+                        await CrossMedia.Current.Initialize();
+
+                        if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                        {
+                            await CoreMethods.DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
+                            return;
+                        }
+
+                        var permission = await App.AskForCameraPermission();
+                        if (permission)
                         {
                             await CrossMedia.Current.Initialize();
-
-                            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions() { SaveToAlbum = false, Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30 });
+                            if (file != null)
                             {
-                                await CoreMethods.DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
-                                return;
-                            }
 
-                            var permission = await App.AskForCameraPermission();
-                            if (permission)
-                            {
-                                await CrossMedia.Current.Initialize();
-                                var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions() { SaveToAlbum = false, Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30 });
-                                if (file != null)
+                                if (BottomTitle == "+ Ajouter une ordonnance")
                                 {
-                                    var profilePicture = ImageSource.FromStream(() => file.GetStream());
+                                    if (Ordo_action == "Ordonnance rapide")
+                                    {
+                                        await AddQuickPrescription(file.Path);
+                                    }
+                                    else
+                                    {
+                                        await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(file.Path, true);
+                                        MessagingCenter.Send(this, Events.PatientDetailsPageSetPatientToOrdonnance, Patient);
+                                    }
+                                }
+                                else
+                                {
                                     _documentPath = file.Path;
                                     await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient);
                                     MessagingCenter.Send(this, Events.DocumentPathFromPatientDetail, _documentPath);
                                 }
                             }
                         }
-                        else if (action == "Bibliothèque photo")
-                        {
-                            await CrossMedia.Current.Initialize();
-
-                            var pickerOptions = new PickMediaOptions() {  CompressionQuality = 30 };
-
-                            if (await App.AskForPhotoPermission())
-                            {
-                                var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
-                                if (file != null)
-                                {
-                                    var profilePicture = ImageSource.FromStream(() => file.GetStream());
-                                    _documentPath = file.Path;
-                                    await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient);
-                                    MessagingCenter.Send(this, Events.DocumentPathFromPatientDetail, _documentPath);
-                                }
-                            }
-                        }
-                        
                     }
+                    else if (action == "Bibliothèque photo")
+                    {
+                        await CrossMedia.Current.Initialize();
+
+                        var pickerOptions = new PickMediaOptions() { CompressionQuality = 30 };
+
+                        if (await App.AskForPhotoPermission())
+                        {
+                            var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
+                            if (file != null)
+                            {
+                                if (BottomTitle == "+ Ajouter une ordonnance")
+                                {
+                                    if (Ordo_action == "Ordonnance rapide")
+                                    {
+                                        await AddQuickPrescription(file.Path);
+                                    }
+                                    else
+                                    {
+                                        await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(file.Path, true);
+                                        MessagingCenter.Send(this, Events.PatientDetailsPageSetPatientToOrdonnance, Patient);
+                                    }
+                                }
+                                else
+                                {                                   
+                                    _documentPath = file.Path;
+                                    await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient);
+                                    MessagingCenter.Send(this, Events.DocumentPathFromPatientDetail, _documentPath);
+                                }
+                            }
+                        }
+                    }
+
+                    //}
+
+
+
+
                 });
             }
         }
+
+        private async Task AddQuickPrescription(string documentPath)
+        {
+            var ordannance = new Ordonnance()
+            {
+                Id = Guid.NewGuid().ToString(),
+                CreatedAt = DateTime.UtcNow,
+                IsSynced = false,
+                UpdatedAt = null,
+                First_Care_At = 0,
+                Attachments = new List<string>() { documentPath },
+                Frequencies = new List<Frequency>(),
+                Patient = Patient,
+                PatientId = Patient.Id,
+                PatientName = Patient.Fullname
+            };
+
+            await new StorageService<Ordonnance>().AddAsync(ordannance);
+
+            if (App.IsConnected())
+            {
+                UserDialogs.Instance.ShowLoading("Chargement...");
+                new StorageService<Ordonnance>().PushOrdonnance(ordannance, true);
+                UserDialogs.Instance.HideLoading();
+            }
+
+            BindData();
+
+            await ToastService.Show("Votre ordonnance a bien été enregistrée !");
+
+        }
+
 
         private Ordonnance _selectedOrdonnance;
         public Ordonnance SelectedOrdonnance

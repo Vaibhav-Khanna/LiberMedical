@@ -9,9 +9,6 @@ namespace libermedical.Pages
             InitializeComponent();
         }
 
-        void Handle_Tapped(object sender, System.EventArgs e)
-        {
-            (BindingContext as MyAccountViewModel).ViewContract.Execute(null);
-        }
+       
     }
 }

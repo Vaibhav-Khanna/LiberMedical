@@ -13,7 +13,7 @@ namespace libermedical.Pages
 {
     public partial class OrdonnancesListPage
     {
-        private int _previousCount = 0;
+       
         private ObservableCollection<Ordonnance> _filteredItems { get; set; }
 
         private Filter _filter;
@@ -57,11 +57,31 @@ namespace libermedical.Pages
             });
         }
 
+        protected override void OnBindingContextChanged()
+        {
+            base.OnBindingContextChanged();
+            var context = BindingContext as OrdonnancesListViewModel;
+           
+            if(context != null)
+            {
+                context.PropertyChanged -= Context_PropertyChanged;
+                context.PropertyChanged += Context_PropertyChanged;
+            }
+
+        }
+
+        void Context_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "Ordonnances")
+            {
+                MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel)?.Ordonnances;
+            }
+        }
 
         async void Handle_Refreshing(object sender, System.EventArgs e)
         {
-            if(App.IsConnected())
-                await App.SyncData();
+            //if(App.IsConnected())
+                //await App.SyncData();
           
             await (BindingContext as OrdonnancesListViewModel).BindData(0);
             MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;

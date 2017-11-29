@@ -205,6 +205,7 @@ namespace libermedical.Services
 
                 var localId = teledeclaration.Id;
                 var tele = await App.TeledeclarationsManager.SaveOrUpdateAsync(teledeclaration.Id, teledeclaration, false);
+
                 if (tele != null)
                 {
                     tele.IsSynced = true;
@@ -272,10 +273,12 @@ namespace libermedical.Services
 
                 var localId = document.Id;
                 var doc = await App.DocumentsManager.SaveOrUpdateAsync(document.Id, document, document.UpdatedAt == null);
+
                 if (doc != null)
                 {
                     doc.IsSynced = true;
                     doc.UpdatedAt = DateTime.UtcNow;
+                    await DeleteItemAsync(typeof(Document).Name + "_" + localId);
                     await UpdateAsync(doc as TModel, typeof(Document).Name + "_" + document.Id);
                 }
                 else
@@ -294,14 +297,18 @@ namespace libermedical.Services
         {
             try
             {
-
-                var localId = ordonnanceObject.Id;
+                var localId = ordonnanceObject.Id;            
                 var ordonnance = await App.OrdonnanceManager.SaveOrUpdateAsync(ordonnanceObject.Id, ordonnanceObject, ordonnanceObject.UpdatedAt == null );
+            
                 if (ordonnance != null)
                 {
-                    ordonnance.IsSynced = true;
-                    await UpdateAsync(ordonnance as TModel, typeof(Ordonnance).Name + "_" + localId);
+                    ordonnance.UpdatedAt = DateTime.UtcNow;
+
+                    await DeleteItemAsync(typeof(Ordonnance).Name + "_" + localId);
+                    await UpdateAsync(ordonnance as TModel, typeof(Ordonnance).Name + "_" + ordonnance.Id);
+
                     var attachments = new Dictionary<string, string>();
+
                     foreach (var attachment in ordonnance.Attachments)
                     {
                         if (!attachment.StartsWith("PatientDocuments") && !attachment.StartsWith("Ordonnance"))
@@ -310,13 +317,14 @@ namespace libermedical.Services
                             if (res)
                                 attachments.Add(attachment, $"Ordonnance/{ordonnance.Id}/{Path.GetFileName(attachment)}");
                         }
-
                     }
+
                     if (attachments.Keys.Count > 0)
                         foreach (var key in attachments.Keys)
                             ordonnance.Attachments[ordonnance.Attachments.IndexOf(key)] = attachments[key];
 
                     var ordonnanceUpdated = await App.OrdonnanceManager.SaveOrUpdateAsync(ordonnance.Id, ordonnance, false);
+                   
                     if (ordonnanceUpdated != null)
                     {
                         ordonnance = ordonnanceUpdated;
@@ -327,6 +335,7 @@ namespace libermedical.Services
                     {
                         ordonnance.IsSynced = false;
                     }
+
                     await UpdateAsync(ordonnance as TModel, typeof(Ordonnance).Name + "_" + ordonnance.Id);
                     MessagingCenter.Send(this,"RefreshOrdoList");
 

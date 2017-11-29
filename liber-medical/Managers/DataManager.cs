@@ -40,7 +40,9 @@ namespace libermedical.Managers
                 _firstAuthFail = !_firstAuthFail;
 
                 if (await RegenerateLoginToken())
-                    await GetListAsync(request);
+                {
+                   res = await GetListAsync(request);
+                }
             }
             catch (Exception e)
             {
@@ -64,7 +66,9 @@ namespace libermedical.Managers
                 _firstAuthFail = !_firstAuthFail;
 
                 if (await RegenerateLoginToken())
-                    await GetListAsync();
+                {
+                    res = await GetListAsync();
+                }
             }
             catch (Exception e)
             {
@@ -88,7 +92,9 @@ namespace libermedical.Managers
                 _firstAuthFail = !_firstAuthFail;
 
                 if (await RegenerateLoginToken())
-                    await GetAsync(id);
+                { 
+                    res = await GetAsync(id);
+                }
             }
             catch (Exception e)
             {
@@ -101,6 +107,7 @@ namespace libermedical.Managers
         public async Task<TModel> SaveOrUpdateAsync(string id, TModel model, bool isNew = false)
         {
             TModel res = null;
+           
             try
             {
                 res = await _restService.SaveItemAsync(model, id, isNew);
@@ -112,7 +119,9 @@ namespace libermedical.Managers
                 _firstAuthFail = !_firstAuthFail;
 
                 if (await RegenerateLoginToken())
-                    await _restService.SaveItemAsync(model, id, isNew);
+                {
+                    res = await _restService.SaveItemAsync(model, id, isNew);
+                }
             }
             catch (Exception e)
             {

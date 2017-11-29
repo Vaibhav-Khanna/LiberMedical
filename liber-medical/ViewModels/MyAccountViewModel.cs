@@ -6,6 +6,7 @@ using libermedical.ViewModels.Base;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using libermedical.PopUp;
 
 namespace libermedical.ViewModels
 {
@@ -17,7 +18,7 @@ namespace libermedical.ViewModels
 		public string PhoneNumber { get; set; }
 		public string EmailAddress { get; set; }
 
-        public string AttachmentPath { get; set; }
+        public string AttachmentPath { get; set; } = null;
         public bool IsContractVisible { get; set; }
 
 
@@ -38,13 +39,15 @@ namespace libermedical.ViewModels
 
         async Task GetContract()
         {
+            
             var response =  await App.UserManager.GetContract();
 
             if(response!=null)
             {
                 AttachmentPath = response.AttachmentPath;
                 IsContractVisible = true;
-            }else
+            }
+            else
             {
                 IsContractVisible = false;
             }
@@ -57,13 +60,17 @@ namespace libermedical.ViewModels
 
         public Command ViewContract => new Command( async() =>
        {
-           if (AttachmentPath!= null)
+            if (AttachmentPath != null && IsContractVisible)
            {
                if (AttachmentPath.Contains(".pdf"))
                     await CoreMethods.PushPageModel<SecuriseBillsViewModel>(new Document(){ AttachmentPath = AttachmentPath, Patient = new Patient() { FirstName = "Mon Contrat" } }, true);
                else
                     await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(AttachmentPath, true);
-           }
+            }
+            else
+            {
+                await ToastService.Show("Contrat non disponible");
+            }
        });
 
 		public ICommand EditCommand => new Command(async () =>

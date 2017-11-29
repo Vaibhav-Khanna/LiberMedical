@@ -13,6 +13,7 @@ using libermedical.Request;
 using libermedical.Services;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
+using libermedical.PopUp;
 
 namespace libermedical.ViewModels
 {
@@ -203,6 +204,7 @@ namespace libermedical.ViewModels
                 return new Command(
                 async (args) =>
                 {
+                    
                     UserDialogs.Instance.ShowLoading("ouverture");
                     var request = new GetListRequest(20, 1,sortField:"createdAt",sortDirection: SortDirectionEnum.Desc);
                     var invoices = await App.InvoicesManager.GetListAsync(request);

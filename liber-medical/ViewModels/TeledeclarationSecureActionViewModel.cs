@@ -5,6 +5,7 @@ using libermedical.Services;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Acr.UserDialogs;
+using libermedical.PopUp;
 
 namespace libermedical.ViewModels
 {
@@ -59,15 +60,9 @@ namespace libermedical.ViewModels
                     }
                     //TODO: Display success toast
 
+                    await ToastService.Show("Votre télédéclaration vient d’être envoyée !");
 
-                    if (Device.RuntimePlatform == Device.iOS)
-                    {
-                        UserDialogs.Instance.Toast(new ToastConfig("    Votre télédéclaration vient d’être envoyée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
-                    }
-                    else
-                    {
-                        UserDialogs.Instance.Toast(new ToastConfig("Votre télédéclaration vient d’être envoyée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green }); 
-                    }
+                 
 
                     await CoreMethods.PopPageModel(true,true);
                     UserDialogs.Instance.HideLoading();

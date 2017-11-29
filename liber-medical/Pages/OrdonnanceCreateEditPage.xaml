@@ -101,6 +101,10 @@
               <ListView.ItemTemplate>
                 <DataTemplate>
                   <ViewCell>
+                  <ViewCell.ContextActions>
+                   <MenuItem Clicked="DeleteFrequency" IsDestructive="true" CommandParameter="{Binding .}"
+                        Text="Supprimer" /> 
+                     </ViewCell.ContextActions>
                     <Grid>
                       <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="90*" />
@@ -126,7 +130,7 @@
             <custom:NonScrollableList  x:Name="AttachmentsListView" SeparatorVisibility="None" VerticalOptions="Start" ItemsSource="{Binding Attachments}" ItemSelected="AttachmentsListView_OnItemSelected">
               <ListView.ItemTemplate>
                 <DataTemplate>
-                  <ViewCell x:Name = "viewcellAttachment">
+                  <ViewCell x:Name = "viewcellAttachment" >
                   <ViewCell.ContextActions>
                    <MenuItem Clicked="Handle_Clicked" IsDestructive="true" CommandParameter="{Binding .}"
                         Text="Supprimer" /> 

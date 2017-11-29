@@ -16,6 +16,7 @@ namespace libermedical.ViewModels
 
         public ObservableCollection<object> CotationManual1 = new ObservableCollection<object>() { "1", "2", "3", "4", "5" };
         public ObservableCollection<object> CotationManual2 = new ObservableCollection<object>() { "AMI", "AMS", "AMK", "AMT", "AMJ" };
+        public ObservableCollection<object> CotationManual3 = new ObservableCollection<object>() {  };
 
         public bool CanEdit { get; set; }
 
@@ -74,11 +75,17 @@ namespace libermedical.ViewModels
         {
             try
             {
+                for (double i = 1; i <= 10; i = i + 0.25)
+                {
+                    CotationManual3.Add(i.ToString());
+                }
+
+
                 SubscribeMessages();
                 CotationManual = new ObservableCollection<object>();
                 CotationManual.Add(CotationManual1);
                 CotationManual.Add(CotationManual2);
-                CotationManual.Add(CotationManual1);
+                CotationManual.Add(CotationManual3);
 
                 //Selected = new ObservableCollection<object>() { "1", "AMI", "1" };
               

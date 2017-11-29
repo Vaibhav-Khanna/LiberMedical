@@ -13,6 +13,7 @@ using System.Windows.Input;
 using libermedical.Helpers;
 using Xamarin.Forms;
 using Acr.UserDialogs;
+using libermedical.PopUp;
 
 namespace libermedical.ViewModels
 {
@@ -88,6 +89,7 @@ namespace libermedical.ViewModels
                 list = list.DistinctBy((arg) => arg.Id);
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
             }
+        
             Ordonnances = new ObservableCollection<Ordonnance>(list);
 
             var left_sync = Ordonnances.Where( (Ordonnance arg) => !arg.IsSynced ).Count();
@@ -141,15 +143,8 @@ namespace libermedical.ViewModels
 
           Acr.UserDialogs.UserDialogs.Instance.HideLoading();
 
-          if (Device.RuntimePlatform == Device.iOS)
-          {
-              UserDialogs.Instance.Toast(new ToastConfig("   L’ordonnance a été supprimée avec succès") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
-          }
-          else
-          {
-              UserDialogs.Instance.Toast(new ToastConfig("L’ordonnance a été supprimée avec succès") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
+          await ToastService.Show("L’ordonnance a été supprimée avec succès");
 
-          }
 
       });
 
@@ -253,15 +248,12 @@ namespace libermedical.ViewModels
                                     if (App.IsConnected())
                                     {
                                         Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
-                                        await storageService.PushOrdonnance(ordonnance, true);
-                                        await BindData(20);
+                                        storageService.PushOrdonnance(ordonnance, true);                                       
                                         Acr.UserDialogs.UserDialogs.Instance.HideLoading();
                                     }
-                                    else
-                                    {
-                                        await BindData(0);
-                                    }
-
+                                   
+                                    await BindData(0);
+                                   
                                     MessagingCenter.Send(this, Events.UpdatePrescriptionFilters, _filters);
 
                                     MessagingCenter.Unsubscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance);
