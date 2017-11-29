@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using libermedical.PopUp;
+using System.Collections.ObjectModel;
 
 namespace libermedical.ViewModels
 {
@@ -21,6 +22,7 @@ namespace libermedical.ViewModels
         public string AttachmentPath { get; set; } = null;
         public bool IsContractVisible { get; set; }
 
+        public ObservableCollection<string> Bills { get; set; } = new ObservableCollection<string>();
 
 		public MyAccountViewModel()
 		{

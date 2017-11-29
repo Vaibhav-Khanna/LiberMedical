@@ -43,7 +43,10 @@
 	<custom:BasePage.ContentPresenter>
 		<ContentView Style="{StaticResource ModalContentBackgroundColor}" VerticalOptions="FillAndExpand" >
 
-			<Grid Padding="10,0,0,0">
+            <ListView ItemsSource="{Binding Bills}" SeparatorVisibility="Default" HasUnevenRows="false" RowHeight="50" >
+            <ListView.Header>
+
+                    <Grid Padding="10,0,0,0" VerticalOptions="Start">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
@@ -57,7 +60,7 @@
 					<RowDefinition Height="50"/>
 					<RowDefinition Height="1"/>
 					<RowDefinition Height="50"/>
-					<RowDefinition Height="1"/>
+
 				</Grid.RowDefinitions>
 				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding FirstName}"  Grid.Row="0"/>
 				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="1"></BoxView>
@@ -68,7 +71,7 @@
 				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding PhoneNumber}" Grid.Row="6"/>
 				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="7"></BoxView>
 
-                <Grid Margin="15,0,21,0" ColumnSpacing="10" VerticalOptions="Center" Grid.Row="8">
+                <Grid Margin="15,0,21,0"  ColumnSpacing="10" VerticalOptions="Center" Grid.Row="8">
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="10*" />
 									<ColumnDefinition Width="88*" />
@@ -100,6 +103,40 @@
 									VerticalOptions="Center" />
 							</Grid>
 			</Grid>
+            </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                             <Grid Margin="15,0,21,0"  ColumnSpacing="10" VerticalOptions="Center" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10*" />
+                                    <ColumnDefinition Width="88*" />
+                                    <ColumnDefinition Width="13" />
+                                </Grid.ColumnDefinitions>                  
+                               <!-- <Image
+                                    Grid.Column="0"
+                                    HorizontalOptions="EndAndExpand"
+                                    Source="contrat.png"
+                                    VerticalOptions="Center" />-->
+                                <Label
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    HorizontalOptions="StartAndExpand"
+                                    Style="{StaticResource PlusList}"
+                                    Text="{Binding BillName}"   
+                                    LineBreakMode="TailTruncation"
+                                    VerticalOptions="Center">
+                                </Label>
+                                <Image
+                                    Grid.Column="2"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Source="back_arrow_green.png"                       
+                                    VerticalOptions="Center" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+         </ListView>
 
 		</ContentView>
 		</custom:BasePage.ContentPresenter>
