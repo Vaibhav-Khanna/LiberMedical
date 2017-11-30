@@ -104,6 +104,8 @@ namespace libermedical.ViewModels
             }
        });
 
+
+
 		public ICommand EditCommand => new Command(async () =>
 		                                           await CoreMethods.PushPageModel<MyAccountEditViewModel>(null, true));
 
