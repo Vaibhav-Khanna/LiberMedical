@@ -13,6 +13,7 @@ using System.Linq;
 using libermedical.Managers;
 using System.Diagnostics;
 using Acr.UserDialogs;
+using libermedical.PopUp;
 
 namespace libermedical.ViewModels
 {
@@ -52,6 +53,7 @@ namespace libermedical.ViewModels
 			set
 			{
 				_frequencies = value;
+
 				RaisePropertyChanged();
 			}
 		}
@@ -79,7 +81,8 @@ namespace libermedical.ViewModels
 				RaisePropertyChanged();
 			}
 		}
-		public bool Creating;
+		
+        public bool Creating;
 		public string SaveLabel { get; set; } = "Enregistrer";
 
         public Command DeleteImage => new Command((obj) =>
@@ -95,9 +98,26 @@ namespace libermedical.ViewModels
         });
 
 
+       public Command DeleteFrequency => new Command((obj) =>
+       {            
+            if (CanEdit)
+            {
+                if (Frequencies.Contains(((obj as Frequency))))
+                    Frequencies.Remove((obj as Frequency));
+
+                if (Ordonnance.Frequencies.Contains((obj as Frequency)))
+                    Ordonnance?.Frequencies.Remove((obj as Frequency));
+
+                //Frequencies = new ObservableCollection<Frequency>(Frequencies.ToList());
+                //RaisePropertyChanged(nameof(Frequencies));
+            } 
+       });
+
 		public OrdonnanceCreateEditViewModel()
 		{
 			Attachments = new ObservableCollection<string>();
+            Frequencies = new ObservableCollection<Frequency>();
+
 			Ordonnance = new Ordonnance
 			{
 				Id = Guid.NewGuid().ToString(),
@@ -177,6 +197,15 @@ namespace libermedical.ViewModels
 
                     Frequencies = Ordonnance.Frequencies != null ? new ObservableCollection<Frequency>(Ordonnance.Frequencies) : new ObservableCollection<Frequency>();
                     Attachments = Ordonnance.Attachments != null ? new ObservableCollection<string>(Ordonnance.Attachments) : new ObservableCollection<string>();
+                  
+                    //if (Ordonnance.Attachments != null && Ordonnance.Attachments.Any())
+                    //{
+                    //    foreach (var item in Ordonnance.Attachments)
+                    //    {
+                    //        Attachments.Add(item);
+                    //    }
+                    //}
+
                     _isNew = false;
                     Creating = false;
                     _isEditing = true;
@@ -276,22 +305,15 @@ namespace libermedical.ViewModels
 
 					if (App.IsConnected())
 					{
-                        await storageService.PushOrdonnance(Ordonnance, _isNew && Ordonnance.UpdatedAt == null );
+                        storageService.PushOrdonnance(Ordonnance, _isNew && Ordonnance.UpdatedAt == null );
 					}
 
 					await CoreMethods.PopPageModel(null, true);
 
 					UserDialogs.Instance.HideLoading();
 
-                    if (Device.RuntimePlatform == Device.iOS)
-                    {
-                        UserDialogs.Instance.Toast(new ToastConfig("    Votre ordonnance a bien été enregistrée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
-                    }
-                    else
-                    {
-                        UserDialogs.Instance.Toast(new ToastConfig("Votre ordonnance a bien été enregistrée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
-                    }
-
+                    await ToastService.Show("Votre ordonnance a bien été enregistrée !");
+                               
                     MessagingCenter.Send(this,"RefreshOrdoList");
 				}
 				else
@@ -449,7 +471,8 @@ namespace libermedical.ViewModels
 
 		private void SubscribeFrequencyMessages()
 		{
-			MessagingCenter.Subscribe<OrdonnanceFrequence2ViewModel, Frequency>(this, Events.UpdateFrequencies, ((sender, args) =>
+            MessagingCenter.Unsubscribe<OrdonnanceFrequence2ViewModel, Frequency>(this, Events.UpdateFrequencies);
+            MessagingCenter.Subscribe<OrdonnanceFrequence2ViewModel, Frequency>(this, Events.UpdateFrequencies, ((sender, args) =>
 			{
 
 				if (args != null)
@@ -457,22 +480,15 @@ namespace libermedical.ViewModels
 					var frequency = args as Frequency;
 					if (Ordonnance.Frequencies != null)
 						Ordonnance.Frequencies.Add(frequency);
-					Frequencies = Ordonnance.Frequencies != null ? new ObservableCollection<Frequency>(Ordonnance.Frequencies) : new ObservableCollection<Frequency>(new List<Frequency>() { frequency });
 
+                    Frequencies.Add(frequency);
 
-                    if (Device.RuntimePlatform == Device.iOS)
-                    {
-                        UserDialogs.Instance.Toast(new ToastConfig("    La fréquence " + frequency.PeriodString + " a été ajoutée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
-                    }
-                    else
-                    {
-                        UserDialogs.Instance.Toast(new ToastConfig("La fréquence " + frequency.PeriodString + " a été ajoutée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
-                    }
+                    ToastService.Show("La fréquence " + frequency.PeriodString + " a été ajoutée !");
+
 
 					MessagingCenter.Send(this, Events.UpdateFrequenciesViewCellHeight, Frequencies);
 				}
-
-				MessagingCenter.Unsubscribe<OrdonnanceFrequence2ViewModel, Frequency>(this, Events.UpdateFrequencies);
+               	
 			}));
 		}
 	}

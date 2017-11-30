@@ -12,6 +12,7 @@ using Acr.UserDialogs;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using libermedical.Request;
+using libermedical.PopUp;
 
 namespace libermedical.ViewModels
 {
@@ -186,22 +187,19 @@ namespace libermedical.ViewModels
                                 Document.UpdatedAt = DateTimeOffset.UtcNow;
 
                             await storageService.AddAsync(Document);
+                          
                             if (App.IsConnected())
                             {
                                 UserDialogs.Instance.ShowLoading("Chargement...");
-                                await new StorageService<Document>().PushDocument(Document, _isNew && Document.UpdatedAt != null);
+                                new StorageService<Document>().PushDocument(Document, _isNew && Document.UpdatedAt != null);
                                 await DownlaodDocuments();
+                                UserDialogs.Instance.HideLoading();
                             }
+
                             await CoreMethods.PopPageModel();
 
-                            if (Device.RuntimePlatform == Device.iOS)
-                            {
-                                UserDialogs.Instance.Toast(new ToastConfig("    Votre document a bien été enregistrée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
-                            }
-                            else
-                            {
-                                UserDialogs.Instance.Toast(new ToastConfig("Votre document a bien été enregistrée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green }); 
-                            }
+                            await ToastService.Show("Votre document a bien été envoyé");
+                                                  
                         }
 					}
 					catch (Exception e)
@@ -210,7 +208,7 @@ namespace libermedical.ViewModels
 					}
 					finally
 					{
-						UserDialogs.Instance.HideLoading();
+						
 					}
 				});
 			}

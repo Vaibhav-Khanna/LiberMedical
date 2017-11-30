@@ -13,6 +13,7 @@ using System.Windows.Input;
 using libermedical.Helpers;
 using Xamarin.Forms;
 using Acr.UserDialogs;
+using libermedical.PopUp;
 
 namespace libermedical.ViewModels
 {
@@ -88,6 +89,7 @@ namespace libermedical.ViewModels
                 list = list.DistinctBy((arg) => arg.Id);
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
             }
+        
             Ordonnances = new ObservableCollection<Ordonnance>(list);
 
             var left_sync = Ordonnances.Where( (Ordonnance arg) => !arg.IsSynced ).Count();
@@ -132,7 +134,7 @@ namespace libermedical.ViewModels
         }
 
         public Command DeleteOrdo => new Command(async (obj) =>
-      {
+       {
           Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
 
           await App.OrdonnanceManager.DeleteItemAsync((string)obj);
@@ -141,15 +143,8 @@ namespace libermedical.ViewModels
 
           Acr.UserDialogs.UserDialogs.Instance.HideLoading();
 
-          if (Device.RuntimePlatform == Device.iOS)
-          {
-              UserDialogs.Instance.Toast(new ToastConfig("   L’ordonnance a été supprimée avec succès") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
-          }
-          else
-          {
-              UserDialogs.Instance.Toast(new ToastConfig("L’ordonnance a été supprimée avec succès") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
+          await ToastService.Show("L’ordonnance a été supprimée avec succès");
 
-          }
 
       });
 
@@ -221,7 +216,8 @@ namespace libermedical.ViewModels
                     {
                         Id = Guid.NewGuid().ToString(),
                         Attachments = new List<string> { filePath },
-                        Frequencies = new List<Frequency>()
+                        Frequencies = new List<Frequency>(),
+                        First_Care_At = 0
                     };
 
                     Filter _filters = null;
@@ -243,7 +239,7 @@ namespace libermedical.ViewModels
                                     ordonnance.PatientName = $"{patient.FirstName} {patient.LastName}";
                                     ordonnance.IsSynced = false;
                                     ordonnance.UpdatedAt = null;
-                                    ordonnance.First_Care_At = App.ConvertToUnixTimestamp(DateTime.UtcNow);
+                                    ordonnance.First_Care_At = 0;                      
 
                                     var storageService = new StorageService<Ordonnance>();
 
@@ -252,19 +248,17 @@ namespace libermedical.ViewModels
                                     if (App.IsConnected())
                                     {
                                         Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
-                                        await storageService.PushOrdonnance(ordonnance, true);
-                                        await BindData(20);
+                                        storageService.PushOrdonnance(ordonnance, true);                                       
                                         Acr.UserDialogs.UserDialogs.Instance.HideLoading();
                                     }
-                                    else
-                                    {
-                                        await BindData(0);
-                                    }
-
+                                   
+                                    await BindData(0);
+                                   
                                     MessagingCenter.Send(this, Events.UpdatePrescriptionFilters, _filters);
 
                                     MessagingCenter.Unsubscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance);
                                 }
+
                             });
                     }
                     else if (action == "Ordonnance classique")
@@ -274,6 +268,7 @@ namespace libermedical.ViewModels
                 }
             }
         });
+
 
         public async Task CachedList()
         {

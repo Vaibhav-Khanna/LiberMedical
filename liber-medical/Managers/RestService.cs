@@ -213,18 +213,17 @@ namespace libermedical.Managers
 		public async Task<TokenResponse> RegenerateLoginToken()
 		{
 			var uri = new Uri(string.Format(Constants.RestUrl + "regenerate" + "?" + _auth));
-			var response = await _client.GetAsync(uri);
-			var content = await response.Content.ReadAsStringAsync();
+            var response = await _client.GetAsync(uri).ConfigureAwait(false);
+            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 			switch (response.StatusCode)
 			{
 				case HttpStatusCode.OK:
 					var resp = JsonConvert.DeserializeObject<TokenResponse>(content);
 					return resp;
-				case HttpStatusCode.BadRequest:
-					var r = JsonConvert.DeserializeObject<ErrorResponse>(content);
-					throw new Exception(r.Error);
+				case HttpStatusCode.BadRequest:					
+					throw new Exception("Bad Request Error");
 				default:
-					throw new Exception();
+					throw new Exception("CustomError");
 			}
 		}
 

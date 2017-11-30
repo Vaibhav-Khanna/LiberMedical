@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using libermedical.Request;
 using Acr.UserDialogs;
 using Plugin.Messaging;
+using libermedical.PopUp;
 
 namespace libermedical.ViewModels
 {
@@ -148,12 +149,11 @@ namespace libermedical.ViewModels
 			{
 				await CrossMedia.Current.Initialize();
 
-				if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+				if (!CrossMedia.Current.IsCameraAvailable && !CrossMedia.Current.IsTakePhotoSupported)
 				{
 					await CoreMethods.DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
 					return;
 				}
-
 
                 var Photo_action = await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Appareil photo", "Bibliothèque photo");
 
@@ -253,7 +253,7 @@ namespace libermedical.ViewModels
                     CreatedAt = DateTime.UtcNow,
                     IsSynced = false,
                     UpdatedAt = null,
-                    First_Care_At = App.ConvertToUnixTimestamp(DateTime.UtcNow),
+                    First_Care_At = 0,
 					Attachments = new List<string>() { _documentPath },
 					Frequencies = new List<Frequency>(),
 					Patient = patient,
@@ -262,22 +262,16 @@ namespace libermedical.ViewModels
 				};
 				
                 await new StorageService<Ordonnance>().AddAsync(ordannance);
+               
                 if (App.IsConnected())
                 {
                     UserDialogs.Instance.ShowLoading("Chargement...");
-                    await new StorageService<Ordonnance>().PushOrdonnance(ordannance, true);
+                    new StorageService<Ordonnance>().PushOrdonnance(ordannance, true);
                     UserDialogs.Instance.HideLoading();
                 }
 
-                if (Device.RuntimePlatform == Device.iOS)
-                {
-                    UserDialogs.Instance.Toast(new ToastConfig("    Votre ordonnance a bien été enregistrée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
-                }
-                else
-                {
-                    UserDialogs.Instance.Toast(new ToastConfig("Votre ordonnance a bien été enregistrée !") { Position = ToastPosition.Top, BackgroundColor = System.Drawing.Color.White, MessageTextColor = System.Drawing.Color.Green });
-                }
-            
+                await ToastService.Show("Votre ordonnance a bien été enregistrée !");
+
             }
 			else
 			{
@@ -296,14 +290,7 @@ namespace libermedical.ViewModels
 
                 await CoreMethods.PushPageModel<AddDocumentViewModel>(document);
 
-				//await new StorageService<Document>().AddAsync(document);
-                //if (App.IsConnected())
-                //{
-                //    UserDialogs.Instance.ShowLoading("Chargement...");
-                //    await new StorageService<Document>().PushDocument(document, true);
-                //    UserDialogs.Instance.HideLoading();
-                //}
-                //UserDialogs.Instance.Toast("Votre ordonnance a bien été enregistrée !");
+			
             }
 
 		}

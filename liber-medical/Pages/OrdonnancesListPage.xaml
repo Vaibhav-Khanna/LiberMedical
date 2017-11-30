@@ -47,7 +47,7 @@
                                 <ViewCell> 
                             <ViewCell.ContextActions>
                                 <MenuItem Clicked="Handle_Remove_Clicked" IsDestructive="true" CommandParameter="{Binding .}"
-                                 Text="Effacer" />
+                                 Text="Supprimer" />
                             </ViewCell.ContextActions>
                                     <Grid Padding="15,0,0,0">
                                         <Grid.ColumnDefinitions>

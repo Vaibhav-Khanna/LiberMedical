@@ -74,7 +74,7 @@
             <Image x:Name="statusIcon" WidthRequest="25" HeightRequest="25" Source="clock.png" VerticalOptions="Center" Grid.Column="0" />
             <Label x:Name="StatusLabel" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
           </Grid>
-          <Grid HeightRequest="60" Style="{StaticResource ModalContentBackgroundColor}">
+          <Grid HeightRequest="60" x:Name ="FirstCareCell" Style="{StaticResource ModalContentBackgroundColor}">
             <Grid.GestureRecognizers>
               <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="DatePicker_Tapped" />
             </Grid.GestureRecognizers>
@@ -101,6 +101,10 @@
               <ListView.ItemTemplate>
                 <DataTemplate>
                   <ViewCell>
+                  <ViewCell.ContextActions>
+                   <MenuItem Clicked="DeleteFrequency" IsDestructive="true" CommandParameter="{Binding .}"
+                        Text="Supprimer" /> 
+                     </ViewCell.ContextActions>
                     <Grid>
                       <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="90*" />
@@ -126,10 +130,10 @@
             <custom:NonScrollableList  x:Name="AttachmentsListView" SeparatorVisibility="None" VerticalOptions="Start" ItemsSource="{Binding Attachments}" ItemSelected="AttachmentsListView_OnItemSelected">
               <ListView.ItemTemplate>
                 <DataTemplate>
-                  <ViewCell x:Name = "viewcellAttachment">
+                  <ViewCell x:Name = "viewcellAttachment" >
                   <ViewCell.ContextActions>
                    <MenuItem Clicked="Handle_Clicked" IsDestructive="true" CommandParameter="{Binding .}"
-                        Text="Effacer" /> 
+                        Text="Supprimer" /> 
                      </ViewCell.ContextActions>
                     <StackLayout Padding="15,0,0,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                       <!--<Label Text="Pièce jointe" Style="{StaticResource JoinDocumentLabel}" VerticalOptions="Center" />-->

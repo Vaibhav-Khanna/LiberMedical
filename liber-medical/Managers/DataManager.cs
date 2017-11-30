@@ -40,7 +40,9 @@ namespace libermedical.Managers
                 _firstAuthFail = !_firstAuthFail;
 
                 if (await RegenerateLoginToken())
-                    await GetListAsync(request);
+                {
+                   res = await GetListAsync(request);
+                }
             }
             catch (Exception e)
             {
@@ -64,7 +66,9 @@ namespace libermedical.Managers
                 _firstAuthFail = !_firstAuthFail;
 
                 if (await RegenerateLoginToken())
-                    await GetListAsync();
+                {
+                    res = await GetListAsync();
+                }
             }
             catch (Exception e)
             {
@@ -88,7 +92,9 @@ namespace libermedical.Managers
                 _firstAuthFail = !_firstAuthFail;
 
                 if (await RegenerateLoginToken())
-                    await GetAsync(id);
+                { 
+                    res = await GetAsync(id);
+                }
             }
             catch (Exception e)
             {
@@ -101,6 +107,7 @@ namespace libermedical.Managers
         public async Task<TModel> SaveOrUpdateAsync(string id, TModel model, bool isNew = false)
         {
             TModel res = null;
+           
             try
             {
                 res = await _restService.SaveItemAsync(model, id, isNew);
@@ -112,7 +119,9 @@ namespace libermedical.Managers
                 _firstAuthFail = !_firstAuthFail;
 
                 if (await RegenerateLoginToken())
-                    await _restService.SaveItemAsync(model, id, isNew);
+                {
+                    res = await _restService.SaveItemAsync(model, id, isNew);
+                }
             }
             catch (Exception e)
             {
@@ -145,29 +154,31 @@ namespace libermedical.Managers
 
         }
 
-        public async Task<bool> RegenerateLoginToken()
+        private async Task<bool> RegenerateLoginToken()
         {
-            try
-            {
-                var newToken = await _restService.RegenerateLoginToken();
-                Settings.Token = newToken.token;
-                Settings.TokenExpiration = newToken.tokenExpiration;
-                return true;
-
-            }
-            catch (Exception)
-            {
-                Settings.Token = string.Empty;
-                Settings.TokenExpiration = 0;
-                Settings.IsLoggedIn = false;
-            
-                Device.BeginInvokeOnMainThread( () => 
+           
+                try
                 {
-                    Application.Current.MainPage = new NavigationPage(new LoginPage());
-                });
+                    var newToken = await _restService.RegenerateLoginToken().ConfigureAwait(false);
+                    Settings.Token = newToken.token;
+                    Settings.TokenExpiration = newToken.tokenExpiration;
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Token has been expired and this is the error message : " + ex.Message);
+                 
+                // Settings.Token = string.Empty;
+                   // Settings.TokenExpiration = 0;
+                   // Settings.IsLoggedIn = false;
 
-                return false;
-            }
+                   // Device.BeginInvokeOnMainThread(() =>
+                   //{
+                   //    Application.Current.MainPage = new NavigationPage(new LoginPage());
+                   //});
+
+                    return false;
+                }
         }
     }
 }

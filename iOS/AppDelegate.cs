@@ -7,6 +7,8 @@ using Syncfusion.SfPicker.XForms.iOS;
 using FFImageLoading.Forms.Touch;
 using Social;
 
+
+
 namespace libermedical.iOS
 {
 	[Register("AppDelegate")]
@@ -15,7 +17,11 @@ namespace libermedical.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             Vapolia.WheelPickerForms.Ios.WheelPickerRenderer.InitializeForms();
+           
             Forms.Init();
+           
+           
+
             var application = new App();
 			var color = ((Color)application.Resources["HeaderFooterBackgroundColor"]).ToUIColor();
             //Vapolia.WheelPickerForms.Ios.WheelPickerRenderer.InitializeForms();
@@ -41,4 +47,8 @@ namespace libermedical.iOS
 			return base.FinishedLaunching(app, options);
         }
     }
+
+   
+
+
 }

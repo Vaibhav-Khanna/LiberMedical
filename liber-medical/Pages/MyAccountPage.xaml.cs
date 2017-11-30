@@ -1,4 +1,5 @@
-﻿using libermedical.ViewModels;
+﻿using libermedical.Models;
+using libermedical.ViewModels;
 
 namespace libermedical.Pages
 {
@@ -9,9 +10,11 @@ namespace libermedical.Pages
             InitializeComponent();
         }
 
-        void Handle_Tapped(object sender, System.EventArgs e)
+
+        void Handle_ItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
-            (BindingContext as MyAccountViewModel).ViewContract.Execute(null);
+            (BindingContext as MyAccountViewModel).OpenBill.Execute(e.Item as Invoice);
+            listView.SelectedItem = null;
         }
     }
 }
