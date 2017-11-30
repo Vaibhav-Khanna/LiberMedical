@@ -40,6 +40,7 @@ namespace libermedical.ViewModels
             }
 
         }
+
         public SecuriseBillsViewModel()
         {
         }

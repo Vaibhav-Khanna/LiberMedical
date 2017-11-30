@@ -43,7 +43,7 @@
 	<custom:BasePage.ContentPresenter>
 		<ContentView Style="{StaticResource ModalContentBackgroundColor}" VerticalOptions="FillAndExpand" >
 
-            <ListView ItemsSource="{Binding Bills}" SeparatorVisibility="Default" HasUnevenRows="false" RowHeight="50" >
+            <ListView ItemsSource="{Binding Bills}" x:Name="listView" ItemTapped="Handle_ItemTapped" SeparatorVisibility="Default" HasUnevenRows="false" RowHeight="50" >
             <ListView.Header>
 
                     <Grid Padding="10,0,0,0" VerticalOptions="Start">
@@ -59,8 +59,8 @@
 					<RowDefinition Height="1"/>
 					<RowDefinition Height="50"/>
 					<RowDefinition Height="1"/>
-					<RowDefinition Height="50"/>
-
+                    <RowDefinition Height="50"/>
+                    
 				</Grid.RowDefinitions>
 				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding FirstName}"  Grid.Row="0"/>
 				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="1"></BoxView>
@@ -102,6 +102,8 @@
                         IsEnabled="{Binding IsContractVisible}"
 									VerticalOptions="Center" />
 							</Grid>
+
+                       
 			</Grid>
             </ListView.Header>
                 <ListView.ItemTemplate>
@@ -123,7 +125,7 @@
                                     Grid.ColumnSpan="2"
                                     HorizontalOptions="StartAndExpand"
                                     Style="{StaticResource PlusList}"
-                                    Text="{Binding BillName}"   
+                                    Text="{Binding Label}"   
                                     LineBreakMode="TailTruncation"
                                     VerticalOptions="Center">
                                 </Label>
@@ -136,6 +138,11 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <ContentView HeightRequest="250" IsVisible="{Binding NoBillsFound}" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                        <Label Text="No Bills Found" IsVisible="{Binding NoBillsFound}"  TextColor="Gray" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Center" FontAttributes="Bold" FontSize="20"  />
+                    </ContentView>
+                </ListView.Footer>
          </ListView>
 
 		</ContentView>

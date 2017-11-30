@@ -246,5 +246,9 @@ namespace libermedical
         public static IInvoicesManager InvoicesManager => _invoicesManager ??
                                                       (_invoicesManager = new InvoicesManager(new RestService<Invoice>("invoicesToSecure")));
 
+        public static IInvoicesManager BillsManager => _invoicesManager ??
+        (_invoicesManager = new InvoicesManager(new RestService<Invoice>("invoices")));
+
+
     }
 }
