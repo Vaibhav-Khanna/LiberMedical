@@ -46,7 +46,7 @@
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AssistCommand}" />
                         </Image.GestureRecognizers>
                     </Image>
-                    <Label Margin="0,5,0,25" Text="Contacter un conseiller" HorizontalOptions="Center" Style="{StaticResource HomePageTask}" />
+                    <Label Margin="0,5,0,25" Text="Contacter mon conseiller" HorizontalOptions="Center" Style="{StaticResource HomePageTask}" />
                 </StackLayout>
             </Grid>
         </ContentView>

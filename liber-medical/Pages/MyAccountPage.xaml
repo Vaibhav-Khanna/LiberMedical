@@ -140,7 +140,7 @@
                 </ListView.ItemTemplate>
                 <ListView.Footer>
                     <ContentView HeightRequest="250" IsVisible="{Binding NoBillsFound}" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                        <Label Text="No Bills Found" IsVisible="{Binding NoBillsFound}"  TextColor="Gray" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Center" FontAttributes="Bold" FontSize="20"  />
+                        <Label Text="Aucune facture disponible" IsVisible="{Binding NoBillsFound}"  TextColor="Gray" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" VerticalOptions="Center" FontAttributes="Bold" FontSize="20"  />
                     </ContentView>
                 </ListView.Footer>
          </ListView>

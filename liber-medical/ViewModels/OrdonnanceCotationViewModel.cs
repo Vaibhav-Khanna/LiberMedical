@@ -15,8 +15,8 @@ namespace libermedical.ViewModels
         public ObservableCollection<object> CotationManual { get; set; }
 
         public ObservableCollection<object> CotationManual1 = new ObservableCollection<object>() { "1", "2", "3", "4", "5" };
-        public ObservableCollection<object> CotationManual2 = new ObservableCollection<object>() { "AMI", "AMS", "AMK", "AMT", "AMJ" };
-        public ObservableCollection<object> CotationManual3 = new ObservableCollection<object>() {  };
+        public ObservableCollection<object> CotationManual2 = new ObservableCollection<object>() { "AMI", "AIS","AMS","AMK" };
+        public ObservableCollection<object> CotationManual3 = new ObservableCollection<object>() { "1","1/2","1,5/2","1.25","1.5","2","2/2","2,5","2.25","3","4","4/2","4.1","5","5,8","6","7","7.5","8","8.1","9","9.5","10","11","12","13","14","15" };
 
         public bool CanEdit { get; set; }
 
@@ -75,11 +75,7 @@ namespace libermedical.ViewModels
         {
             try
             {
-                for (double i = 1; i <= 10; i = i + 0.25)
-                {
-                    CotationManual3.Add(i.ToString());
-                }
-
+                
 
                 SubscribeMessages();
                 CotationManual = new ObservableCollection<object>();

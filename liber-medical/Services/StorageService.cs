@@ -337,7 +337,7 @@ namespace libermedical.Services
                     }
 
                     await UpdateAsync(ordonnance as TModel, typeof(Ordonnance).Name + "_" + ordonnance.Id);
-                    MessagingCenter.Send(this,"RefreshOrdoList");
+                    MessagingCenter.Send(this,"RefreshOrdonanceList");
 
                 }
             }
