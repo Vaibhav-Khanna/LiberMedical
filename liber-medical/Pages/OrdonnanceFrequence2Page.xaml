@@ -42,7 +42,7 @@
               <DataTemplate>
                 <ViewCell>
                   <ViewCell.ContextActions>
-                    <MenuItem Command="{Binding Path=BindingContext.DeleteCotation, Source={x:Reference Name=Root}}" CommandParameter="{Binding .}" Text="Delete" IsDestructive="True" />
+                    <MenuItem Command="{Binding Path=BindingContext.DeleteCotation, Source={x:Reference Name=Root}}" CommandParameter="{Binding .}" Text="Supprimer" IsDestructive="True" />
                   </ViewCell.ContextActions>
                   <Grid>
                     <Grid.ColumnDefinitions>

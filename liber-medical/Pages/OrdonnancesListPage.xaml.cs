@@ -22,11 +22,10 @@ namespace libermedical.Pages
         {
             InitializeComponent();
 
-            MessagingCenter.Unsubscribe<StorageService<BaseDTO>>(this, "RefreshOrdoList");
-            MessagingCenter.Subscribe<StorageService<BaseDTO>>(this,"RefreshOrdoList", (obj) => 
-            {
-                if(MyListView!=null)
-                 MyListView.BeginRefresh();
+           
+            MessagingCenter.Subscribe<StorageService<Ordonnance>>(this,"RefreshOrdonanceList", (obj) => 
+            {                
+                 MyListView?.BeginRefresh();
             });
 
             MessagingCenter.Subscribe<LibermedicalTabbedNavigation,int>(this,"PageChanged",(arg1, arg2) => 
@@ -87,6 +86,8 @@ namespace libermedical.Pages
             ApplyFilter(_filter);
             MyListView.IsRefreshing = false;
             isExecuting = false;
+
+            MyListView.ScrollTo((BindingContext as OrdonnancesListViewModel).Ordonnances.First(), ScrollToPosition.Center, false);
         }
               
 
