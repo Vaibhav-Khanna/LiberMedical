@@ -166,7 +166,11 @@ namespace libermedical.ViewModels
             else
             {
                 FilterActiveText = null;
-                NoResultText = null;
+              
+                if (!_teledeclarationsAll.Any())
+                    NoResultText = "Aucun résultat";
+                else
+                    NoResultText = null;
 
                 Teledeclarations = _teledeclarationsAll;
             }
