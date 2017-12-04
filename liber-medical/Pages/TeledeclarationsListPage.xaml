@@ -14,50 +14,65 @@
 			<Grid.RowDefinitions>
 				<RowDefinition Height="50" />
 				<RowDefinition Height="*" />
-                <RowDefinition Height="60" />
 			</Grid.RowDefinitions>
+            
 			<StackLayout Grid.Row="0" Padding="8,7" BackgroundColor="#c8c7cc" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
 				<SearchBar x:Name="searchBar" BackgroundColor="White" HeightRequest="30" HorizontalOptions="FillAndExpand" Placeholder="Rechercher" Style="{StaticResource ResearchBar}" VerticalOptions="FillAndExpand" TextChanged="Handle_TextChanged" />
 			</StackLayout>
 
-            <ListView x:Name="TeledeclarationsList" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing" Grid.Row="1" ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" RowHeight="60" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default" ItemAppearing="TeledeclarationsList_ItemAppearing">
-						<ListView.ItemTemplate>
-							<DataTemplate>
-								<ViewCell>
-									<Grid Padding="20,0,0,0">
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="60*" />
-											<ColumnDefinition Width="30*" />
-											<ColumnDefinition Width="10*" />
-										</Grid.ColumnDefinitions>
-										<Grid.RowDefinitions>
-											<RowDefinition Height="60*" />
-											<RowDefinition Height="40*" />
-										</Grid.RowDefinitions>
-										<Label Grid.Row="0" Grid.Column="0" HorizontalOptions="StartAndExpand" Style="{StaticResource Ordonnance}" Text="{Binding Label}" VerticalOptions="EndAndExpand"  />
+            <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" Grid.Row="1">
+
+                 <StackLayout VerticalOptions="Start" IsVisible="{Binding FilterActiveText,Converter={converter:StringToBoolConverter}" BackgroundColor="#F5A623" Orientation="Horizontal" HeightRequest="30" Spacing="10" HorizontalOptions="FillAndExpand">
+                        <Label Text="!" FontAttributes="Bold" FontSize="20" TextColor="White" VerticalOptions="Center" HorizontalOptions="EndAndExpand" />
+                        <Label Text="{Binding FilterActiveText}" VerticalOptions="Center" FontSize="12" TextColor="White" HorizontalOptions="StartAndExpand" />
+                    </StackLayout>
+
+                     <StackLayout VerticalOptions="FillAndExpand" HeightRequest="300" IsVisible="{Binding NoResultText,Converter={converter:StringToBoolConverter}" BackgroundColor="White" Orientation="Vertical" Spacing="10" HorizontalOptions="FillAndExpand">                      
+                       <Label Text="{Binding NoResultText}" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" FontSize="16" TextColor="Gray" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                    </StackLayout>
+
+                  <ListView x:Name="TeledeclarationsList" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing" Grid.Row="1" ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default" ItemAppearing="TeledeclarationsList_ItemAppearing">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Padding="20,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="60*" />
+                                            <ColumnDefinition Width="30*" />
+                                            <ColumnDefinition Width="10*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="60*" />
+                                            <RowDefinition Height="40*" />
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" Grid.Column="0" HorizontalOptions="StartAndExpand" Style="{StaticResource Ordonnance}" Text="{Binding Label}" VerticalOptions="EndAndExpand"  />
                                         <Label Grid.Row="1" Grid.Column="0" HorizontalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Text="{Binding CreatedAt, StringFormat='{0:dd-MM-yyyy}'}" VerticalOptions="StartAndExpand" />
-										<Button Grid.RowSpan="2" Grid.Column="1" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" HorizontalOptions="Center" Text="{Binding StatusString}" TextColor="#ffffff" VerticalOptions="Center" Command="{Binding Source={x:Reference Root}, Path=BindingContext.TeledeclarationTappedCommand}" CommandParameter="{Binding .}">
-											<Button.HeightRequest>
-												<OnPlatform x:TypeArguments="x:Double" Android="40" iOS="20" />
-											</Button.HeightRequest>
-											<Button.WidthRequest>
-												<OnPlatform x:TypeArguments="x:Double" Android="100" iOS="90" />
-											</Button.WidthRequest>
-											<Button.BorderRadius>
-												<OnPlatform x:TypeArguments="x:Int32" Android="0" iOS="10" />
-											</Button.BorderRadius>
-										</Button>
-										<Image Grid.RowSpan="2" Grid.Column="2" HorizontalOptions="Start" Source="back_arrow_green.png" VerticalOptions="Center" />
-									</Grid>
-								</ViewCell>
-							</DataTemplate>
-						</ListView.ItemTemplate>
+                                        <Button Grid.RowSpan="2" Grid.Column="1" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" HorizontalOptions="Center" Text="{Binding StatusString}" TextColor="#ffffff" VerticalOptions="Center" Command="{Binding Source={x:Reference Root}, Path=BindingContext.TeledeclarationTappedCommand}" CommandParameter="{Binding .}">
+                                            <Button.HeightRequest>
+                                                <OnPlatform x:TypeArguments="x:Double" Android="40" iOS="20" />
+                                            </Button.HeightRequest>
+                                            <Button.WidthRequest>
+                                                <OnPlatform x:TypeArguments="x:Double" Android="100" iOS="90" />
+                                            </Button.WidthRequest>
+                                            <Button.BorderRadius>
+                                                <OnPlatform x:TypeArguments="x:Int32" Android="0" iOS="10" />
+                                            </Button.BorderRadius>
+                                        </Button>
+                                        <Image Grid.RowSpan="2" Grid.Column="2" HorizontalOptions="Start" Source="back_arrow_green.png" VerticalOptions="Center" />
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
                  <ListView.Footer>
                     <ContentView HorizontalOptions="FillAndExpand" HeightRequest="80">
                         <ActivityIndicator x:Name="indicator" IsVisible="false" IsRunning="true" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
                     </ContentView>
                 </ListView.Footer>
-					</ListView>
+                    </ListView>
+                
+            </StackLayout>
+            
+          
            
 		</Grid>
 

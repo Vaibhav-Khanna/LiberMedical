@@ -52,6 +52,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pages\MyBillsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AkavacheSqliteLinkerOverride.cs" />
@@ -227,6 +231,10 @@
       <DependentUpon>ToastPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="PopUp\ToastService.cs" />
+    <Compile Include="Pages\MyBillsPage.xaml.cs">
+      <DependentUpon>MyBillsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\MyBillsPageModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Acr.UserDialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

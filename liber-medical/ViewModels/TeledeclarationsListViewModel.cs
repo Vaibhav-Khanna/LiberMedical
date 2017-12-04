@@ -24,6 +24,30 @@ namespace libermedical.ViewModels
         private IStorageService<Teledeclaration> _teledeclarationsStorage;
         private Filter _filter;
         private ObservableCollection<Teledeclaration> _teledeclarationsAll;
+
+
+        string filteracctivetext = string.Empty;
+        public string FilterActiveText
+        {
+            get { return filteracctivetext; }
+            set
+            {
+                filteracctivetext = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        string noresulttext = string.Empty;
+        public string NoResultText
+        {
+            get { return noresulttext; }
+            set
+            {
+                noresulttext = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private ObservableCollection<Teledeclaration> _teledeclarations;
         public ObservableCollection<Teledeclaration> Teledeclarations
         {
@@ -52,6 +76,14 @@ namespace libermedical.ViewModels
         public TeledeclarationsListViewModel(IStorageService<Teledeclaration> storageService) : base(storageService)
         {
             _teledeclarationsStorage = storageService;
+           
+            MessagingCenter.Unsubscribe<FilterPage, Filter>(this, Events.UpdateTeledeclarationsFilters);
+            MessagingCenter.Subscribe<FilterPage, Filter>(this, Events.UpdateTeledeclarationsFilters, (sender, filter) =>
+            {
+                _filter = filter;
+                ApplyFilter(filter);
+            });
+
             BindData(20);
         }
 
@@ -68,7 +100,10 @@ namespace libermedical.ViewModels
                 await new StorageService<Document>().AddManyAsync(documents.ToList());
             }
         }
-        private void ApplyFilter(Filter filter)
+
+
+
+        public void ApplyFilter(Filter filter)
         {
             if (filter != null)
             {
@@ -106,13 +141,37 @@ namespace libermedical.ViewModels
                     else
                     {
                         Teledeclarations = _teledeclarationsAll;
+
+                        if (!_teledeclarationsAll.Any())
+                            NoResultText = "Aucun résultat";
+                        else
+                            NoResultText = null;
+
+                        FilterActiveText = "Attention des filtres sont actifs";
+
                         return;
                     }
                 }
+
+                if (filteredItems.Any())
+                    NoResultText = null;
+                else
+                    NoResultText = "Aucun résultat";
+
+                FilterActiveText = "Attention des filtres sont actifs";
+
                 Teledeclarations = new ObservableCollection<Teledeclaration>(filteredItems);
+
             }
             else
             {
+                FilterActiveText = null;
+              
+                if (!_teledeclarationsAll.Any())
+                    NoResultText = "Aucun résultat";
+                else
+                    NoResultText = null;
+
                 Teledeclarations = _teledeclarationsAll;
             }
         }
@@ -134,12 +193,9 @@ namespace libermedical.ViewModels
 
             _teledeclarationsAll = Teledeclarations;
 
-            MessagingCenter.Unsubscribe<FilterPage, Filter>(this, Events.UpdateTeledeclarationsFilters);
-            MessagingCenter.Subscribe<FilterPage, Filter>(this, Events.UpdateTeledeclarationsFilters, (sender, filter) =>
-           {
-               _filter = filter;
-               ApplyFilter(filter);
-           });
+          
+
+           ApplyFilter(_filter);
 
            await DownlaodDocuments();
 
@@ -177,9 +233,9 @@ namespace libermedical.ViewModels
             }
         }
 
-        protected override async void ViewIsAppearing(object sender, EventArgs e)
+        public async override void Init(object initData)
         {
-            base.ViewIsAppearing(sender, e);
+            base.Init(initData);
 
             var list = await _teledeclarationsStorage.GetList();
 
@@ -189,6 +245,7 @@ namespace libermedical.ViewModels
             }
 
             Teledeclarations = new ObservableCollection<Teledeclaration>(list);
+
         }
 
         public ICommand FilterTappedCommand => new Command(
