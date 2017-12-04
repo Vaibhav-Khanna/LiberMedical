@@ -54,7 +54,13 @@ namespace libermedical.Pages
 		async void Back_Tapped(object sender, System.EventArgs e)
 		{
 			_filter = null;
-			MessagingCenter.Send(this, Events.UpdatePrescriptionFilters, _filter);
+
+            if (_parentScreen == "Teledeclarations")
+                MessagingCenter.Send(this, Events.UpdateTeledeclarationsFilters, _filter);
+            else
+                MessagingCenter.Send(this, Events.UpdatePrescriptionFilters, _filter);
+
+
 			await Navigation.PopModalAsync();
 		}
 

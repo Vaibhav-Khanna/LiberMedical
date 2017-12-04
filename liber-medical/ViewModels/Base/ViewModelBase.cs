@@ -17,7 +17,7 @@ namespace libermedical.ViewModels.Base
 			var page = FreshPageModelResolver.ResolvePageModel<T>(data);
 			var navigationName = "CustomNavigation";
 			FreshIOC.Container.Resolve<IFreshNavigationService>(this.CurrentNavigationServiceName);
-			var navigationContainer = new CustomNavigationContainer(page, navigationName);
+            var navigationContainer = new CustomNavigationContainer(page, navigationName){ BarTextColor = Color.White };
 			await CoreMethods.PushNewNavigationServiceModal(navigationContainer, page.GetModel(), animate);
 			return navigationName;
 		}

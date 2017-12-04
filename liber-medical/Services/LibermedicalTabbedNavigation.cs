@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace libermedical.Services
 {
-	public class LibermedicalTabbedNavigation :TabbedPage, IFreshNavigationService
+	public class LibermedicalTabbedNavigation : TabbedPage, IFreshNavigationService
 	{
 		private readonly List<Page> _tabs = new List<Page>();
 
@@ -54,13 +54,14 @@ namespace libermedical.Services
 
 		protected virtual Page CreateContainerPage(Page page)
 		{
-			return new NavigationPage(page) {BarTextColor = Color.White};
+            return new NavigationPage(page) {BarTextColor = Color.White};
 		}
 
 		public Task PushPage(Page page, FreshBasePageModel model, bool modal = false, bool animate = true)
 		{
 			if (modal)
-				return CurrentPage.Navigation.PushModalAsync(CreateContainerPageSafe(page));
+                return CurrentPage.Navigation.PushModalAsync(CreateContainerPageSafe(page),animate);
+            
 			return CurrentPage.Navigation.PushAsync(page);
 		}
 
@@ -68,6 +69,7 @@ namespace libermedical.Services
 		{
 			if (modal)
 				return CurrentPage.Navigation.PopModalAsync(animate);
+            
 			return CurrentPage.Navigation.PopAsync(animate);
 		}
 

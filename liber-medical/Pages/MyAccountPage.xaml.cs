@@ -11,10 +11,6 @@ namespace libermedical.Pages
         }
 
 
-        void Handle_ItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
-        {
-            (BindingContext as MyAccountViewModel).OpenBill.Execute(e.Item as Invoice);
-            listView.SelectedItem = null;
-        }
+
     }
 }

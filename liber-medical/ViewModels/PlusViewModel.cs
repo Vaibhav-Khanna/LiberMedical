@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using libermedical.Request;
 using Plugin.Share;
 using Plugin.Messaging;
+using libermedical.Pages;
 
 namespace libermedical.ViewModels
 {
@@ -49,9 +50,12 @@ namespace libermedical.ViewModels
             await CrossShare.Current.OpenBrowser("https://www.google.com", options);
         });
 
-        public ICommand GoToProfileCommand => new Command(async () => 
-			await CoreMethods.PushPageModel<MyAccountViewModel>(null, false));
-
+        public ICommand GoToProfileCommand => new Command(
+            async () =>
+        {          
+            await CoreMethods.PushPageModelWithNewNavigation<MyAccountViewModel>(null,false);
+        }
+        );
 
 
 		public ICommand ConnectCommand => new Command(async () =>
