@@ -168,14 +168,14 @@ namespace libermedical.Managers
                 {
                     Debug.WriteLine("Token has been expired and this is the error message : " + ex.Message);
                  
-                // Settings.Token = string.Empty;
-                   // Settings.TokenExpiration = 0;
-                   // Settings.IsLoggedIn = false;
+                    Settings.Token = string.Empty;
+                    Settings.TokenExpiration = 0;
+                    Settings.IsLoggedIn = false;
 
-                   // Device.BeginInvokeOnMainThread(() =>
-                   //{
-                   //    Application.Current.MainPage = new NavigationPage(new LoginPage());
-                   //});
+                    Device.BeginInvokeOnMainThread(() =>
+                   {
+                       Application.Current.MainPage = new NavigationPage(new LoginPage());
+                   });
 
                     return false;
                 }
