@@ -11,6 +11,7 @@ namespace libermedical.ViewModels
 {
 	public class TeledeclarationSecureActionViewModel : FreshBasePageModel
 	{
+        
 		private StorageService<Teledeclaration> _teledeclarationService;
 
 		private Teledeclaration _teledeclaration;
@@ -26,11 +27,13 @@ namespace libermedical.ViewModels
 				RaisePropertyChanged();
 			}
 		}
+
 		public TeledeclarationSecureActionViewModel()
 		{
 			SubscribeMessages();
 		}
-		public bool CanValidate { get; set; }
+
+        public bool CanValidate { get; set; } = false;
 
 		public override void Init(object initData)
 		{
@@ -72,7 +75,9 @@ namespace libermedical.ViewModels
 
 		public ICommand CloseCommand
 		{
-			get { return new Command(async () => { await CoreMethods.PopPageModel(true,true); }); }
+			get { return new Command(async () => {
+             
+                await CoreMethods.PopPageModel(true,false); }); }
 		}
 
 		private void SubscribeMessages()

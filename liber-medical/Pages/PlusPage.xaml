@@ -8,13 +8,15 @@
   Style="{StaticResource AppBackgroundColor}">
 	<custom:BasePage.ContentPresenter>
 		<ContentView Padding="15,0,0,0">
-			<Grid>
+		<!--	<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="70*" />
 					<RowDefinition Height="30*" />
-				</Grid.RowDefinitions>
+				</Grid.RowDefinitions>-->
+                <ScrollView Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+              
 				<StackLayout
-				  Grid.Row="0"
+				  
 				  HorizontalOptions="FillAndExpand"
 				  Orientation="Vertical"
 				  Style="{StaticResource ModalContentBackgroundColor}">
@@ -46,6 +48,71 @@
 							<TapGestureRecognizer Command="{Binding GoToProfileCommand}" />
 						</Grid.GestureRecognizers>
 					</Grid>
+                    <BoxView Style="{StaticResource GreyBoxViewLine}" ></BoxView>
+                     <Grid Margin="0,0,10,0" HeightRequest="50"  VerticalOptions="Center" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10*" />
+                                    <ColumnDefinition Width="80*" />
+                                    <ColumnDefinition Width="10*" />
+                                </Grid.ColumnDefinitions>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ViewContract}" />
+                    </Grid.GestureRecognizers>
+                    
+                                <Image
+                                    Grid.Column="0"
+                                    HorizontalOptions="Center"
+                                    Source="contrat.png" 
+                        HeightRequest="25"
+                        IsEnabled="{Binding IsContractVisible}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Column="1"
+                                    HorizontalOptions="StartAndExpand"
+                                    Style="{StaticResource PlusList}"
+                                    Text="Mon contrat"
+                        IsEnabled="{Binding IsContractVisible}"
+                                    VerticalOptions="Center">
+                                </Label>
+                                <Image
+                                    Grid.Column="2"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Source="back_arrow_green.png"
+                        IsEnabled="{Binding IsContractVisible}"
+                                    VerticalOptions="Center" />
+                            </Grid>
+
+                  <BoxView Style="{StaticResource GreyBoxViewLine}" ></BoxView>
+
+                    <Grid Margin="0,0,10,0" VerticalOptions="Center" HeightRequest="50" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10*" />
+                                    <ColumnDefinition Width="88*" />
+                                    <ColumnDefinition Width="10*" />
+                                </Grid.ColumnDefinitions>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ViewBills}" />
+                    </Grid.GestureRecognizers>
+                    
+                                <Image
+                                    Grid.Column="0"
+                                    HorizontalOptions="Center"
+                                    Source="contrat.png"
+                        HeightRequest="25"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Column="1"
+                                    HorizontalOptions="StartAndExpand"
+                                    Style="{StaticResource PlusList}"
+                                    Text="Mes factures"                     
+                                    VerticalOptions="Center">
+                                </Label>
+                                <Image
+                                    Grid.Column="2"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Source="back_arrow_green.png"                       
+                                    VerticalOptions="Center" />
+                            </Grid>
 					<BoxView Style="{StaticResource GreyBoxViewLine}"/>
 					<StackLayout
 					  Padding="0,0,21,0"
@@ -101,26 +168,28 @@
                         </StackLayout.GestureRecognizers>
 					</StackLayout>
 					<BoxView Style="{StaticResource GreyBoxViewLine}"/>
-				</StackLayout>
-				<Button
+                    <Button
                   IsEnabled="{Binding ShouldShowContact}"
-				  Grid.Row="1"
+                 
                   x:Name = "bt"
-				  BackgroundColor="White"
-				  BorderColor="#91c602"
-				  BorderWidth="1"
+                  BackgroundColor="White"
+                  BorderColor="#91c602"
+                  BorderWidth="1"
                   BorderRadius="5"
-                  Margin="30,0,45,0"
-				  Command="{Binding ConnectCommand}"
-				  FontFamily="SFUIText-Medium.otf"
-				  FontSize="18"
-				  HeightRequest="69"
-				  HorizontalOptions="FillAndExpand"
-				  Text="Contacter mon conseiller"
-				  TextColor="#91c602"
-				  VerticalOptions="CenterAndExpand"
-				  />
-			</Grid>
+                  Margin="30,70,45,100"
+                  Command="{Binding ConnectCommand}"
+                  FontFamily="SFUIText-Medium.otf"
+                  FontSize="18"
+                  HeightRequest="69"
+                  HorizontalOptions="FillAndExpand"
+                  Text="Contacter mon conseiller"
+                  TextColor="#91c602"
+                  VerticalOptions="StartAndExpand"
+                  />
+				</StackLayout>
+               </ScrollView>
+				
+			<!--</Grid>-->
 		</ContentView>
 	</custom:BasePage.ContentPresenter>
 </custom:BasePage>

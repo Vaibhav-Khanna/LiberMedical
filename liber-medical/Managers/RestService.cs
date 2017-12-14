@@ -328,8 +328,8 @@ namespace libermedical.Managers
 
         public async Task<Contract> GetContract()
         {
-            
-            var uri = new Uri(string.Format(Constants.RestUrl + "contracts?limit=5&page=0&start=0&end=0&sortField=field1=asc"+ "&" + _auth));
+            //&sortField=field1=desc
+            var uri = new Uri(string.Format(Constants.RestUrl + "contracts?limit=1&page=1"+ "&" + _auth));
 
             try
             {
@@ -339,9 +339,10 @@ namespace libermedical.Managers
                 if (response.IsSuccessStatusCode)
                 {
                     var resp = await response.Content.ReadAsStringAsync();
+
                     var con = JsonConvert.DeserializeObject<PaginationResponse<Contract>>(resp);
 
-                    if (con.rows.Count != 0)
+                    if (con?.rows?.Count != 0)
                     {
                         return con.rows[0];
                     }

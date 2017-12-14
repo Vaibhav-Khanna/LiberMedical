@@ -11,6 +11,7 @@ using System.Linq;
 using libermedical.Request;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
+using System.Collections;
 
 namespace libermedical.Services
 {
@@ -21,7 +22,6 @@ namespace libermedical.Services
 		{
 			try
 			{
-
 				var key = typeof(TModel).Name + "_" + item.Id;
 				await BlobCache.UserAccount.InsertObject(key, item);
 				return true;
@@ -379,6 +379,45 @@ namespace libermedical.Services
 				Debug.WriteLine(e.Message);
 			}
 		}
+
+        public async Task<IEnumerable<Ordonnance>> SearchOrdonnance(string query)
+        {
+            if (App.IsConnected())
+            {
+                var request = new GetListRequest(100,1,searchValue: query,searchFields: "patientName", sortField: "createdAt", sortDirection: Enums.SortDirectionEnum.Desc);
+
+                var response = await App.OrdonnanceManager.GetListAsync(request);
+
+                if (response.rows!=null && response.rows.Any())
+                {
+                    return response.rows;
+                }
+                else
+                    return new List<Ordonnance>();
+            }
+            else
+            {
+                IEnumerable<Ordonnance> list;
+
+                try
+                {
+                    list = await BlobCache.UserAccount.GetAllObjects<Ordonnance>();
+                }
+                catch (Exception)
+                {
+                    list = null;
+                }
+
+                if (list != null && list.Any())
+                {
+                    return list.Where((arg) => arg.PatientName.ToLower().Contains(query.Trim().ToLower()));
+                }
+                else
+                    return new List<Ordonnance>();
+
+            }
+        }
+
 
 		public async Task<int> DownloadOrdonnances(int count)
 		{

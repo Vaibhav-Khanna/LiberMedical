@@ -149,7 +149,7 @@ namespace libermedical.ViewModels
 				else
 				{
                     ItemsSource = Patients;
-					await GetDataAsync();
+					//await GetDataAsync();
 				}
 
 			}
