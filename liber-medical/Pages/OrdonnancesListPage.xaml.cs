@@ -75,6 +75,7 @@ namespace libermedical.Pages
             if(e.PropertyName == "Ordonnances")
             {
                 MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel)?.Ordonnances;
+                ApplyFilter(_filter);
             }
         }
 
