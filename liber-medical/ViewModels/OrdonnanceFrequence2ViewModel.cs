@@ -68,7 +68,7 @@ namespace libermedical.ViewModels
                 {
                     var frequency = args as Frequency;
                     Cotations = frequency.Quotations != null ? new ObservableCollection<string>(frequency.Quotations) : new ObservableCollection<string>();
-                    Frequency.Quotations = Cotations.ToList();
+                    //Frequency.Quotations = Cotations.ToList();
                     MessagingCenter.Send(this, Events.UpdateCotationsViewCellHeight, Cotations);
                 }
 
@@ -121,7 +121,8 @@ namespace libermedical.ViewModels
             if (CanEdit)
             {
                 SubscribeCotationsMessage();
-                await CoreMethods.PushPageModel<OrdonnanceCotationViewModel>(Frequency, true);
+
+                await CoreMethods.PushPageModel<OrdonnanceCotationViewModel>(new Frequency(){ Quotations = Cotations.ToList() }, true);
                 MessagingCenter.Send(this, Events.EnableCotationsEditMode, true);
             }
 
@@ -135,7 +136,6 @@ namespace libermedical.ViewModels
                 //Frequency.Quotations = Cotations.ToList();
                 MessagingCenter.Send(this, Events.UpdateCotationsViewCellHeight, Cotations);
             }
-
         });
     }
 }

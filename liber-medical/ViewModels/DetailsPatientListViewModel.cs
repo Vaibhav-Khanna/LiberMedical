@@ -53,10 +53,16 @@ namespace libermedical.ViewModels
         private async void BindData()
         {
             var list = (await new StorageService<Ordonnance>().GetList()).Where(x => x.PatientId == Patient.Id);
+
             if(list != null&& list.Any())
             {
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
+                for (int i = 0; i < list.Count(); i++)
+                {
+                    list.ElementAt(i).Index = (i+1);
+                }
             }
+
             Ordonnances = new ObservableCollection<Ordonnance>(list);
 
             var Dlist = (await new StorageService<Document>().GetList()).Where(x => x.PatientId == Patient.Id);

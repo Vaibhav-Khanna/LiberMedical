@@ -43,8 +43,8 @@
 					<Label Text="Détails déclaration" HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
 					<Image Source="back_arrow_green.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
 				</StackLayout>
-				<StackLayout Grid.Row="5" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsVisible="{Binding CanValidate}">
-					<Grid>
+				<StackLayout x:Name ="stack" Grid.Row="5" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >
+					<Grid IsVisible="{Binding CanValidate}">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="50*" />
 							<ColumnDefinition Width="50*" />

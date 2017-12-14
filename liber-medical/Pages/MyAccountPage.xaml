@@ -21,7 +21,7 @@
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="40" />
 					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="40" />
 				</Grid.ColumnDefinitions>
 					<Image Grid.Column="0"  HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center">
 						<View.GestureRecognizers>
@@ -31,11 +31,11 @@
                
 				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" FontAttributes="Bold" Style="{StaticResource HeaderLabel}" Text="Mon compte" />
 			
-				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Style="{StaticResource HeaderLabel}" Text="Editer">
+				<!--<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Style="{StaticResource HeaderLabel}" Text="Editer">
 					<View.GestureRecognizers>
 						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding EditCommand}" />
 					</View.GestureRecognizers>
-				</Label>
+				</Label>-->
 			</Grid>
 		</ContentView>
 	</custom:BasePage.Header>
@@ -57,9 +57,7 @@
 					<RowDefinition Height="1"/>
 					<RowDefinition Height="50"/>
 					<RowDefinition Height="1"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="1"/>
-                    <RowDefinition Height="50"/>
+                   
                     
 				</Grid.RowDefinitions>
 				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding FirstName}"  Grid.Row="0"/>
@@ -71,68 +69,7 @@
 				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding PhoneNumber}" Grid.Row="6"/>
 				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="7"></BoxView>
 
-                <Grid Margin="15,0,21,0"  ColumnSpacing="10" VerticalOptions="Center" Grid.Row="8">
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="10*" />
-									<ColumnDefinition Width="88*" />
-									<ColumnDefinition Width="13" />
-								</Grid.ColumnDefinitions>
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ViewContract}" />
-                    </Grid.GestureRecognizers>
-                    
-								<Image
-									Grid.Column="0"
-									HorizontalOptions="EndAndExpand"
-									Source="contrat.png"
-                        IsEnabled="{Binding IsContractVisible}"
-									VerticalOptions="Center" />
-								<Label
-									Grid.Column="1"
-									HorizontalOptions="StartAndExpand"
-									Style="{StaticResource PlusList}"
-									Text="Mon contrat"
-                        IsEnabled="{Binding IsContractVisible}"
-									VerticalOptions="Center">
-								</Label>
-								<Image
-									Grid.Column="2"
-									HorizontalOptions="CenterAndExpand"
-									Source="back_arrow_green.png"
-                        IsEnabled="{Binding IsContractVisible}"
-									VerticalOptions="Center" />
-							</Grid>
-
-                  <BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="9"></BoxView>
-                         <Grid Margin="15,0,21,0"  ColumnSpacing="10" VerticalOptions="Center" Grid.Row="10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="10*" />
-                                    <ColumnDefinition Width="88*" />
-                                    <ColumnDefinition Width="13" />
-                                </Grid.ColumnDefinitions>
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ViewBills}" />
-                    </Grid.GestureRecognizers>
-                    
-                                <Image
-                                    Grid.Column="0"
-                                    HorizontalOptions="EndAndExpand"
-                                    Source="contrat.png"
-                        
-                                    VerticalOptions="Center" />
-                                <Label
-                                    Grid.Column="1"
-                                    HorizontalOptions="StartAndExpand"
-                                    Style="{StaticResource PlusList}"
-                                    Text="Mes factures"                     
-                                    VerticalOptions="Center">
-                                </Label>
-                                <Image
-                                    Grid.Column="2"
-                                    HorizontalOptions="CenterAndExpand"
-                                    Source="back_arrow_green.png"                       
-                                    VerticalOptions="Center" />
-                            </Grid>
+               
 		            	</Grid>
           
 		</ContentView>

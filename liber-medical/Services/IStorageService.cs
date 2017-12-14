@@ -14,5 +14,6 @@ namespace libermedical.Services
 		Task<bool> DeleteItemAsync(string key);
 		Task<bool> DeleteAllAsync();
 		Task<bool> InvalidateSyncedItems();
+        Task<IEnumerable<Ordonnance>> SearchOrdonnance(string query);
 	}
 }

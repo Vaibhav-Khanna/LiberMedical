@@ -217,5 +217,10 @@ namespace libermedical.Pages
 
                 });
         }
+
+        void Handle_Tapped(object sender, System.EventArgs e)
+        {
+            FirstCareCell.IsVisible = true;
+        }
     }
 }

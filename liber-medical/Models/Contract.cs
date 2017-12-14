@@ -14,13 +14,13 @@ namespace libermedical.Models
         public string AttachmentPath { get; set; }
 
         [JsonProperty("lastUpdatedAt")]
-        public long LastUpdatedAt { get; set; }
+        public DateTime LastUpdatedAt { get; set; }
 
         [JsonProperty("_id")]
         public string Id { get; set; }
 
         [JsonProperty("createdAt")]
-        public long CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         [JsonProperty("nurse_id")]
         public string NurseId { get; set; }

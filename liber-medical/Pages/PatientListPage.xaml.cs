@@ -24,7 +24,8 @@ namespace libermedical.Pages
 		{
 			var vm = (PatientListViewModel)BindingContext;
 			var cell = (ViewCell)sender;
-			if (cell == null) return;
+			if (cell == null)
+            return;
 			vm.ListElementTapCommand.Execute(cell);
 		}
 
@@ -52,6 +53,8 @@ namespace libermedical.Pages
                         searchBar.Unfocus();
                         PatientListView.Focus();
                         PatientListView.SetBinding(ListView.ItemsSourceProperty, "ItemsSource");
+                        
+                        if(BindingContext!=null)
                         (BindingContext as PatientListViewModel).ItemsSource = (BindingContext as PatientListViewModel).ItemsSource;
                     });
             }

@@ -135,6 +135,7 @@ namespace libermedical.ViewModels
 
         public Command DeleteOrdo => new Command(async (obj) =>
        {
+            
           Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
 
           await App.OrdonnanceManager.DeleteItemAsync((string)obj);
@@ -144,7 +145,6 @@ namespace libermedical.ViewModels
           Acr.UserDialogs.UserDialogs.Instance.HideLoading();
 
           await ToastService.Show("L’ordonnance a été supprimée avec succès");
-
 
       });
 

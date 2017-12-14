@@ -9,12 +9,15 @@ using libermedical.Request;
 using Plugin.Share;
 using Plugin.Messaging;
 using libermedical.Pages;
+using libermedical.PopUp;
 
 namespace libermedical.ViewModels
 {
 	public class PlusViewModel: ViewModelBase
 	{
         private bool _shouldShowContact;
+        public string AttachmentPath { get; set; } = null;
+        public bool IsContractVisible { get; set; }
 
         private Plugin.Share.Abstractions.BrowserOptions options = new Plugin.Share.Abstractions.BrowserOptions() {  ChromeShowTitle = true, SafariBarTintColor = new Plugin.Share.Abstractions.ShareColor(145,198,2), ChromeToolbarColor = new Plugin.Share.Abstractions.ShareColor(145, 198, 2), SafariControlTintColor = new Plugin.Share.Abstractions.ShareColor(255,255,255), UseSafariWebViewController = true };
 
@@ -28,26 +31,32 @@ namespace libermedical.ViewModels
             }
         }
 
-
         public PlusViewModel()
         {
             ShouldShowContact = string.IsNullOrEmpty(Settings.AdvisorContact) ? false : true;
+            GetContract();
         }
 
+        protected override void ViewIsAppearing(object sender, System.EventArgs e)
+        {
+            base.ViewIsAppearing(sender, e);
+
+            GetContract();
+        }
 
         public Command CGVCommand => new Command(async(obj) =>
        {
-            await CrossShare.Current.OpenBrowser("https://www.google.com",options);
+            await CrossShare.Current.OpenBrowser("https://libermedical.fr/_tos.html",options);
        });
 
         public Command CGUCommand => new Command(async (obj) =>
         {
-            await CrossShare.Current.OpenBrowser("https://www.google.com", options);
+            await CrossShare.Current.OpenBrowser("https://libermedical.fr/cgu.html", options);
         });
 
         public Command FAQCommand => new Command(async (obj) =>
         {
-            await CrossShare.Current.OpenBrowser("https://www.google.com", options);
+            await CrossShare.Current.OpenBrowser("https://libermedical.fr/faq-mobile.php", options);
         });
 
         public ICommand GoToProfileCommand => new Command(
@@ -79,7 +88,42 @@ namespace libermedical.ViewModels
             }
         });
 
-       
+        async Task GetContract()
+        {
+
+            var response = await App.UserManager.GetContract();
+
+            if (response != null)
+            {
+                AttachmentPath = response.AttachmentPath;
+                IsContractVisible = true;
+            }
+            else
+            {
+                IsContractVisible = false;
+            }
+        } 
+
+        public Command ViewBills => new Command(async () =>
+        {
+            await CoreMethods.PushPageModel<MyBillsPageModel>();
+        });
+
+        public Command ViewContract => new Command(async () =>
+        {
+            if (AttachmentPath != null && IsContractVisible)
+            {
+                if (AttachmentPath.Contains(".pdf"))
+                    await CoreMethods.PushPageModel<SecuriseBillsViewModel>(new Document() { AttachmentPath = AttachmentPath, Patient = new Patient() { FirstName = "Mon Contrat" } }, true);
+                else
+                    await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(AttachmentPath, true);
+            }
+            else
+            {
+                await ToastService.Show("Contrat non disponible");
+            }
+        });
+
 
 	}
 }

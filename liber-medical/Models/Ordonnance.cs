@@ -32,7 +32,11 @@ namespace libermedical.Models
         [JsonProperty("nurseName")]
         public string NurseName { get; set; }
 
+        [JsonIgnore]
+        public int Index { get; set; }
+
         public long Reference { set; get; }
+
         public Patient Patient { set; get; }
 
         [JsonIgnore]

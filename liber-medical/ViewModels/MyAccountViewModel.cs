@@ -37,53 +37,17 @@ namespace libermedical.ViewModels
 			LastName = _userInfo.Lastname;
 			PhoneNumber = _userInfo.Phone;
 			EmailAddress = _userInfo.Email;
-            GetContract();           
+                  
 		}
 
-        async Task GetContract()
-        {
-            
-            var response =  await App.UserManager.GetContract();
-
-            if(response!=null)
-            {
-                AttachmentPath = response.AttachmentPath;
-                IsContractVisible = true;
-            }
-            else
-            {
-                IsContractVisible = false;
-            }
-        }
-
-       
-
+     
 
         public Command BackCommand => new Command(async() =>
        {
             await App.tabbedNavigation.PopPage(true, false);
        });
 
-        public Command ViewBills => new Command(async () =>
-        {
-            await CoreMethods.PushPageModel<MyBillsPageModel>();
-        });
-
-        public Command ViewContract => new Command( async() =>
-       {
-            if (AttachmentPath != null && IsContractVisible)
-           {
-               if (AttachmentPath.Contains(".pdf"))
-                    await CoreMethods.PushPageModel<SecuriseBillsViewModel>(new Document(){ AttachmentPath = AttachmentPath, Patient = new Patient() { FirstName = "Mon Contrat" } }, true);
-               else
-                    await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(AttachmentPath, true);
-            }
-            else
-            {
-                await ToastService.Show("Contrat non disponible");
-            }
-       });
-
+      
 
 
 		public ICommand EditCommand => new Command(async () =>
