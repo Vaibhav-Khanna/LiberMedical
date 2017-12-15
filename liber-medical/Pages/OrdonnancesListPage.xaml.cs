@@ -107,7 +107,6 @@ namespace libermedical.Pages
                 if (filter.Statuses.Count > 0)
                 {
                     
-
                     foreach (var status in filter.Statuses)
                     {
                         if (filter.EnableDateSearch)
@@ -138,6 +137,8 @@ namespace libermedical.Pages
                     else
                     {
                         _filteredItems = null;
+                        (BindingContext as OrdonnancesListViewModel).NoResultText = null;
+                        (BindingContext as OrdonnancesListViewModel).FilterActiveText = null;
                         MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
                         return;
                     }
@@ -146,7 +147,15 @@ namespace libermedical.Pages
                 if (filteredItems.Any())
                     (BindingContext as OrdonnancesListViewModel).NoResultText = null;
                 else
+                {
                     (BindingContext as OrdonnancesListViewModel).NoResultText = "Aucun résultat";
+
+                    if ((BindingContext as OrdonnancesListViewModel).Ordonnances.Count < (BindingContext as OrdonnancesListViewModel).MaxCount)
+                    {
+                        (BindingContext as OrdonnancesListViewModel).BindData(20);
+                    }
+
+                }
 
 
                 _filteredItems = new ObservableCollection<Ordonnance>(filteredItems);

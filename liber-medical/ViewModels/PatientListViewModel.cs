@@ -39,7 +39,7 @@ namespace libermedical.ViewModels
 
             MaxCount = await new StorageService<Patient>().DownloadPatients(_initCount);
 
-            await DownlaodDocuments();
+            DownlaodDocuments();
 
             var list = await _storageService.GetList();
             if (list != null && list.Count() != 0)
@@ -128,8 +128,8 @@ namespace libermedical.ViewModels
 				if (!string.IsNullOrEmpty(searchString))
 				{
 					var groupedList = new ObservableCollection<GroupedItem<Patient>>();
-
-                    var patientsList = (await _patientsStorage.GetList()).Where(x => x.Fullname.ToLower().Contains(searchString) ).ToList();
+                    var xlist = (await _patientsStorage.GetList());
+                    var patientsList = xlist.Where(x => x.Fullname.ToLower().Contains(searchString) ).ToList();
 					var headers = patientsList.Select(x => x.LastName.Substring(0, 1)).Distinct().OrderBy(x => x);
 					foreach (var headerkey in headers)
 					{
@@ -142,9 +142,17 @@ namespace libermedical.ViewModels
 						groupedList.Add((GroupedItem<Patient>)(object)patientGroup);
 					}
 
-
 					_filteredPatients = (ObservableCollection<GroupedItem<Patient>>)(object)groupedList;
+                                      
 					ItemsSource = _filteredPatients;
+
+
+                    if (!_filteredPatients.Any() && xlist.Count() < MaxCount)
+                    {
+                        MaxCount = await new StorageService<Patient>().DownloadPatients(MaxCount);
+                        FilterGroupItems(searchString);
+                    }
+
 				}
 				else
 				{

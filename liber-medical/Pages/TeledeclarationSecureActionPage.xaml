@@ -9,7 +9,7 @@
 				</Grid.ColumnDefinitions>
 				<Grid Grid.Column="0">
 					<Grid.GestureRecognizers>
-						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CloseCommand}" />
+						<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
 					</Grid.GestureRecognizers>
 					<Image HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center" />
 				</Grid>
@@ -43,8 +43,8 @@
 					<Label Text="Détails déclaration" HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
 					<Image Source="back_arrow_green.png" HorizontalOptions="EndAndExpand" VerticalOptions="Center" />
 				</StackLayout>
-				<StackLayout x:Name ="stack" Grid.Row="5" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >
-					<Grid IsVisible="{Binding CanValidate}">
+				<StackLayout IsVisible="{Binding CanValidate}" x:Name ="stack" Grid.Row="5" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >
+					<Grid x:Name="grid">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="50*" />
 							<ColumnDefinition Width="50*" />
@@ -54,19 +54,19 @@
 							<RowDefinition Height="*" />
 							<RowDefinition Height="50" />
 						</Grid.RowDefinitions>
-						<Label Text="Que souhaitez vous faire ?" Style="{StaticResource TeledeclarationActionAsk}" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalOptions="CenterAndExpand" />
-						<Image Source="cancel.png" Grid.Column="0" Grid.Row="1" HorizontalOptions="CenterAndExpand">
+						<Label x:Name="label1" Text="Que souhaitez vous faire ?" Style="{StaticResource TeledeclarationActionAsk}" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" HorizontalOptions="CenterAndExpand" />
+						<Image x:Name="image1" Source="cancel.png" Grid.Column="0" Grid.Row="1" HorizontalOptions="CenterAndExpand">
 							<Image.GestureRecognizers>
 								<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ValidateCommand}" CommandParameter="Refuse" />
 							</Image.GestureRecognizers>
 						</Image>
-						<Image Source="send.png" Grid.Column="1" Grid.Row="1" HorizontalOptions="CenterAndExpand">
+						<Image x:Name="image2" Source="send.png" Grid.Column="1" Grid.Row="1" HorizontalOptions="CenterAndExpand">
 							<Image.GestureRecognizers>
 								<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ValidateCommand}" CommandParameter="Valid" />
 							</Image.GestureRecognizers>
 						</Image>
-						<Label Text="Refuser" Style="{StaticResource TeledeclarationCancelAction}" Grid.Column="0" Grid.Row="2" HorizontalOptions="CenterAndExpand" />
-						<Label Text="Valider" Style="{StaticResource TeledeclarationSendAction}" Grid.Column="1" Grid.Row="2" HorizontalOptions="CenterAndExpand" />
+						<Label x:Name="label2" Text="Refuser" Style="{StaticResource TeledeclarationCancelAction}" Grid.Column="0" Grid.Row="2" HorizontalOptions="CenterAndExpand" />
+						<Label x:Name ="label3" Text="Valider" Style="{StaticResource TeledeclarationSendAction}" Grid.Column="1" Grid.Row="2" HorizontalOptions="CenterAndExpand" />
 					</Grid>
 				</StackLayout>
 			</Grid>

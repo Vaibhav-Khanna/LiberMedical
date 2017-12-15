@@ -22,8 +22,8 @@ namespace libermedical.ViewModels
         int _initCount = 0;
         public int MaxCount { get; set; }
         private IStorageService<Teledeclaration> _teledeclarationsStorage;
-        private Filter _filter;
-        private ObservableCollection<Teledeclaration> _teledeclarationsAll;
+        public Filter _filter;
+        public ObservableCollection<Teledeclaration> _teledeclarationsAll;
 
 
         string filteracctivetext = string.Empty;
@@ -189,16 +189,12 @@ namespace libermedical.ViewModels
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
                 list = list.DistinctBy( (arg) => arg.Id); 
             }
+
             Teledeclarations = new ObservableCollection<Teledeclaration>(list);
 
             _teledeclarationsAll = Teledeclarations;
-
-          
-
-           ApplyFilter(_filter);
-
-           await DownlaodDocuments();
-
+                      
+            ApplyFilter(_filter);         
         }
 
         protected override async Task TapCommandFunc(Cell cell)
