@@ -29,7 +29,6 @@ namespace libermedical.Pages
             TeledeclarationsList.EndRefresh();
         }
 
-
         private async void Bill_Tapped(object sender, EventArgs e)
         {
             (BindingContext as TeledeclarationsListViewModel).OpenInvoiceToSecuriseCommand.Execute(null);
@@ -37,7 +36,7 @@ namespace libermedical.Pages
 
         private void Handle_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            //((ListView)sender).SelectedItem = null;
+           //((ListView)sender).SelectedItem = null;
         }
 
         void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
@@ -46,17 +45,14 @@ namespace libermedical.Pages
             {
                 IEnumerable<Teledeclaration> foundItems;
 
-                if (_filteredItems != null)
+                foundItems = (BindingContext as TeledeclarationsListViewModel).Teledeclarations.Where(x => x.Label.ToLower().Contains(e.NewTextValue.ToLower()));
+
+                (BindingContext as TeledeclarationsListViewModel).Teledeclarations = new ObservableCollection<Teledeclaration>(foundItems);
+
+                if(!foundItems.Any() && (BindingContext as TeledeclarationsListViewModel)._teledeclarationsAll.Count < (BindingContext as TeledeclarationsListViewModel).MaxCount)
                 {
-                    foundItems =
-                        _filteredItems.Where(x => x.Label.ToLower().Contains(e.NewTextValue.ToLower()));
+                    
                 }
-                else
-                {
-                    foundItems =
-                        (BindingContext as TeledeclarationsListViewModel).Teledeclarations.Where(x => x.Label.ToLower().Contains(e.NewTextValue.ToLower()));
-                }
-                TeledeclarationsList.ItemsSource = foundItems;
             }
             else
             {
@@ -71,7 +67,7 @@ namespace libermedical.Pages
                     });
                 }
 
-                TeledeclarationsList.ItemsSource = _filteredItems ?? (BindingContext as TeledeclarationsListViewModel).Teledeclarations;
+                (BindingContext as TeledeclarationsListViewModel).Teledeclarations = (BindingContext as TeledeclarationsListViewModel).Teledeclarations;
             }
         }
 

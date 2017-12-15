@@ -15,7 +15,18 @@ namespace libermedical.Pages
 
         async void Back_Tapped(object sender, System.EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            if (!(BindingContext as TeledeclarationSecureActionViewModel).CanValidate)
+            {
+                label1.IsVisible = false;
+                label2.IsVisible = false;
+                label3.IsVisible = false;
+                label1.Text = "";
+                label2.Text = "";
+                label3.Text = "";
+                image1.Source = "";
+                image2.Source = "";
+            }
+            (BindingContext as TeledeclarationSecureActionViewModel).CloseCommand.Execute(null);
         }
 
         async void Detail_Tapped(object sender, System.EventArgs e)
@@ -23,13 +34,6 @@ namespace libermedical.Pages
             await Navigation.PushAsync(new TeledeclarationDetailPage());
         }
 
-        protected override void OnDisappearing()
-        {
-            stack.Opacity = 0;
-            stack.IsVisible = false; 
-            base.OnDisappearing();
-            stack.Opacity = 0;
-            stack.IsVisible = false; 
-        }
+      
     }
 }
