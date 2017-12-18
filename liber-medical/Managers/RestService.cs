@@ -305,6 +305,27 @@ namespace libermedical.Managers
 			}
 		}
 
+        public async Task<Stream> DownloadBill(string filePath)
+        {
+            var uri = new Uri(string.Format(filePath));
+
+            try
+            {
+                var response = await _client.GetAsync(uri);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsStreamAsync();
+                }
+                return new System.IO.MemoryStream();
+            }
+            catch (Exception ex)
+            {
+                return new System.IO.MemoryStream();
+                Debug.WriteLine(@"              ERROR {0}", ex.Message);
+            }
+        }
+
 		public async Task<Stream> DownloadFile(string filePath, bool shouldSave)
 		{
 			var uri = new Uri(string.Format(Constants.RestUrl + "file?path=" + filePath + "&" + _auth));

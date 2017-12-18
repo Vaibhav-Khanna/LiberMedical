@@ -48,6 +48,7 @@ namespace libermedical.ViewModels
         public override void Init(object initData)
         {
             base.Init(initData);
+           
             if (initData != null)
             {
                 if (initData is Teledeclaration)
@@ -82,14 +83,24 @@ namespace libermedical.ViewModels
                 {
                     var invoice = initData as Invoice;
                     Title = invoice.Label;
+                   
+                    if (invoice.IsBill)
+                        DownloadBill(invoice.FilePath);
+                    else
                     DownloadFile(invoice.FilePath);
                 }
 
             }
         }
+       
         private async void DownloadFile(string filePath)
         {
             PdfDocumentStream = await new RestService<BaseDTO>("file").DownloadFile(filePath, false);
+        }
+
+        private async void DownloadBill(string filePath)
+        {
+            PdfDocumentStream = await new RestService<BaseDTO>("file").DownloadBill(filePath);
         }
 
         public ICommand BackCommand => new Command(async () => await Application.Current.MainPage.Navigation.PopModalAsync());
