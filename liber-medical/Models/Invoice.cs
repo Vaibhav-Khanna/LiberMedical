@@ -12,5 +12,8 @@ namespace libermedical.Models
 
         [JsonProperty("nurse_id")]
         public string NurseId { get; set; }
+
+        [JsonIgnore]
+        public bool IsBill { get; set; }
     }
 }

@@ -31,7 +31,9 @@ namespace libermedical.ViewModels
 
         public Command OpenBill => new Command(async (obj) =>
         {
-            if (((Invoice)obj).FilePath.Contains(".pdf"))
+            ((Invoice)obj).IsBill = true;
+
+            if (((Invoice)obj).FilePath.ToLower().Contains(".pdf"))
                 await CoreMethods.PushPageModel<SecuriseBillsViewModel>(((Invoice)obj), true);
             else
                 await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(((Invoice)obj), true);
