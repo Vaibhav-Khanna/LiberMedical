@@ -57,9 +57,12 @@ namespace libermedical.ViewModels
             if(list != null&& list.Any())
             {
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
+
+                var count = list.Count();
+
                 for (int i = 0; i < list.Count(); i++)
                 {
-                    list.ElementAt(i).Index = (i+1);
+                    list.ElementAt(i).Index = (count-i);
                 }
             }
 

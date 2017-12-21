@@ -55,16 +55,16 @@
 				<TableRoot>
 					<TableSection>
 						<ViewCell>
-							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" Text="{Binding CurrentUser.Firstname}" />
+							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" IsEnabled="false" Text="{Binding CurrentUser.Firstname}" />
 						</ViewCell>
 						<ViewCell>
-							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" Text="{Binding CurrentUser.Lastname}" />
+							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" IsEnabled="false" Text="{Binding CurrentUser.Lastname}" />
 						</ViewCell>
 						<ViewCell>
-							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" Text="{Binding CurrentUser.Email}" />
+							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" IsEnabled="false" Text="{Binding CurrentUser.Email}" />
 						</ViewCell>
 						<ViewCell>
-							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" Text="{Binding CurrentUser.Phone}" />
+							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" IsEnabled="false" Text="{Binding CurrentUser.Phone}" />
 						</ViewCell>
 					</TableSection>
 				  <TableSection Title="Changer le mot de passe">

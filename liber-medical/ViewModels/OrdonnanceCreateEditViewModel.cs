@@ -355,7 +355,7 @@ namespace libermedical.ViewModels
                     {
                         await CrossMedia.Current.Initialize();
                         var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                        { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30 });
+                        { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30,SaveToAlbum = false });
                         if (file != null)
                         {
                             Attachments.Add(file.Path);
@@ -472,24 +472,40 @@ namespace libermedical.ViewModels
 		private void SubscribeFrequencyMessages()
 		{
             MessagingCenter.Unsubscribe<OrdonnanceFrequence2ViewModel, Frequency>(this, Events.UpdateFrequencies);
-            MessagingCenter.Subscribe<OrdonnanceFrequence2ViewModel, Frequency>(this, Events.UpdateFrequencies, ((sender, args) =>
+            MessagingCenter.Subscribe<OrdonnanceFrequence2ViewModel, Frequency>(this, Events.UpdateFrequencies, async (sender, args) =>
 			{
 
 				if (args != null)
 				{
 					var frequency = args as Frequency;
-					if (Ordonnance.Frequencies != null)
-						Ordonnance.Frequencies.Add(frequency);
 
-                    Frequencies.Add(frequency);
+                    if (Ordonnance.Frequencies != null)
+                    {
+                        if (Ordonnance.Frequencies.Contains(frequency))
+                        {
 
-                    ToastService.Show("La fréquence " + frequency.PeriodString + " a été ajoutée !");
+                        }
+                        else
+                        {
+                            Ordonnance.Frequencies.Add(frequency);
+                        }
+                    }
 
+                    if (Frequencies.Contains(frequency))
+                    {
 
-					MessagingCenter.Send(this, Events.UpdateFrequenciesViewCellHeight, Frequencies);
+                    }
+                    else
+                    {
+                        Frequencies.Add(frequency);
+                        MessagingCenter.Send(this, Events.UpdateFrequenciesViewCellHeight, Frequencies);
+                    }
+
+                    await ToastService.Show("La fréquence " + frequency.PeriodString + " a été ajoutée !");
+					
 				}
                	
-			}));
+			});
 		}
 	}
 

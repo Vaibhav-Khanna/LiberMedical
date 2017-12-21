@@ -98,7 +98,7 @@ namespace libermedical.ViewModels
                     if (file != null)
                     {
                         var profilePicture = ImageSource.FromStream(() => file.GetStream());
-                        var typeNavigation = "normal";
+                      
                         _documentPath = file.Path;
 
                         CreatePrescription(_documentPath);
@@ -119,16 +119,11 @@ namespace libermedical.ViewModels
                     if (file != null)
                     {
                        
-                        var typeNavigation = "normal";
+                       
+                      
                         _documentPath = file.Path;
 
                         CreatePrescription(_documentPath);
-
-                        //await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "HomeSelectPatient", typeNavigation, typeDoc }, true);
-
-                        //var page = FreshPageModelResolver.ResolvePageModel<PatientListViewModel>();
-                        //var basicNavContainer = new FreshNavigationContainer(page, "HomeSelectPatient");
-                        //await CoreMethods.PushNewNavigationServiceModal(basicNavContainer, new FreshBasePageModel[] { page.GetModel() });
 
                     }
                 }
@@ -260,17 +255,18 @@ namespace libermedical.ViewModels
 					PatientId = patient.Id,
 					PatientName = patient.Fullname
 				};
-				
+			
                 await new StorageService<Ordonnance>().AddAsync(ordannance);
+
                
                 if (App.IsConnected())
                 {
-                    UserDialogs.Instance.ShowLoading("Chargement...");
+                    //UserDialogs.Instance.ShowLoading("Chargement...");
                     new StorageService<Ordonnance>().PushOrdonnance(ordannance, true);
-                    UserDialogs.Instance.HideLoading();
+                    //UserDialogs.Instance.HideLoading();
                 }
-
-                await ToastService.Show("Votre ordonnance a bien été enregistrée !");
+                 
+                ShowMessage();
 
             }
 			else
@@ -294,5 +290,11 @@ namespace libermedical.ViewModels
             }
 
 		}
+
+        async void ShowMessage()
+        {
+            await CoreMethods.DisplayAlert("Votre ordonnance a bien été enregistrée !","","Ok");
+        }
+       
 	}
 }
