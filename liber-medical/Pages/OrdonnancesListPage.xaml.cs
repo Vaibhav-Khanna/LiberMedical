@@ -81,19 +81,20 @@ namespace libermedical.Pages
 
         async void Handle_Refreshing(object sender, System.EventArgs e)
         {
-            //if(App.IsConnected())
-            //await App.SyncData();
-
-                await (BindingContext as OrdonnancesListViewModel).BindData(0);
-                ApplyFilter(_filter);
-                MyListView.IsRefreshing = false;
-                isExecuting = false;
-                MyListView.ScrollTo((BindingContext as OrdonnancesListViewModel).Ordonnances.First(), ScrollToPosition.Center, false);
-
-            if(!string.IsNullOrWhiteSpace(searchBar.Text))
+            if (!string.IsNullOrWhiteSpace(searchBar.Text))
             {
-                searchBar.Text += " ";  
+                SearchBar_OnTextChanged(null,new TextChangedEventArgs(searchBar.Text,searchBar.Text));
+                await Task.Delay(2000);
+                MyListView.IsRefreshing = false;
+                return;
             }
+
+            await (BindingContext as OrdonnancesListViewModel).BindData(0);
+            ApplyFilter(_filter);
+            MyListView.IsRefreshing = false;
+            isExecuting = false;
+            MyListView.ScrollTo((BindingContext as OrdonnancesListViewModel).Ordonnances.First(), ScrollToPosition.Center, false);
+
         }
               
 
@@ -215,27 +216,26 @@ namespace libermedical.Pages
             {
                 IEnumerable<Ordonnance> foundItems;
 
-                //if (_filteredItems != null)
-                //{
-                //    foundItems =
-                //        _filteredItems.Where(x => x.PatientName.ToLower().Contains(e.NewTextValue.ToLower()));
-                //}
-                //else
-                //{
-                //    foundItems =
-                //        (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.PatientName.ToLower().Contains(e.NewTextValue.ToLower()));
-                //}
 
                 foundItems = await (BindingContext as OrdonnancesListViewModel)._ordonnanceStorage.SearchOrdonnance(e.NewTextValue);
 
-                if (!string.IsNullOrWhiteSpace(e.NewTextValue))
+
+                if (!string.IsNullOrWhiteSpace(searchBar.Text))
                 {
-                    MyListView.ItemsSource = foundItems;
-                   
-                    if (foundItems.Any())
-                        (BindingContext as OrdonnancesListViewModel).NoResultText = null;
-                    else
-                        (BindingContext as OrdonnancesListViewModel).NoResultText = "Aucun résultat";
+                    foreach (var item in foundItems)
+                    {
+                        item.IsSynced = true;
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(searchBar.Text))
+                    {
+                        MyListView.ItemsSource = foundItems;
+
+                        if (foundItems.Any())
+                            (BindingContext as OrdonnancesListViewModel).NoResultText = null;
+                        else
+                            (BindingContext as OrdonnancesListViewModel).NoResultText = "Aucun résultat";
+                    }
                 }
                 
             }

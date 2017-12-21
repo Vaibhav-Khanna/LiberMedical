@@ -187,8 +187,8 @@ namespace libermedical.ViewModels
                                     Directory = "Docs",
                                     Name = DateTime.Now.Ticks.ToString(),
                                     CompressionQuality = 30,
-                                    RotateImage = false
-
+                                    RotateImage = false,
+                                    SaveToAlbum = false
                                 });
                             if (file != null)
                             {
@@ -253,7 +253,12 @@ namespace libermedical.ViewModels
                                     }
                                    
                                     await BindData(0);
-                                   
+
+                                    Device.BeginInvokeOnMainThread(() =>
+                                    {
+                                        ToastService.Show("Votre ordonnance a bien été enregistrée !");
+                                    });
+
                                     MessagingCenter.Send(this, Events.UpdatePrescriptionFilters, _filters);
 
                                     MessagingCenter.Unsubscribe<PatientListViewModel, Patient>(this, Events.OrdonnancePageSetPatientForOrdonnance);
