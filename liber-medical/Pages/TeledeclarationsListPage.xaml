@@ -16,7 +16,7 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
             
-			<StackLayout Grid.Row="0" Padding="8,7" BackgroundColor="#c8c7cc" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
+			<StackLayout Grid.Row="0" Padding="8,7" HeightRequest="40" BackgroundColor="#c8c7cc" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
 				<SearchBar x:Name="searchBar" BackgroundColor="White" HeightRequest="30" HorizontalOptions="FillAndExpand" Placeholder="Rechercher" Style="{StaticResource ResearchBar}" VerticalOptions="FillAndExpand" TextChanged="Handle_TextChanged" />
 			</StackLayout>
 

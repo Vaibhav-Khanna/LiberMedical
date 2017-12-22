@@ -9,7 +9,7 @@
 				<RowDefinition Height="50" />
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
-			<StackLayout BackgroundColor="#c8c7cc" Grid.Row="0" Padding="8,7" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
+			<StackLayout BackgroundColor="#c8c7cc" Grid.Row="0" HeightRequest="40" Padding="8,7" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
 				<SearchBar x:Name="searchBar" TextChanged="Handle_TextChanged" Placeholder="Rechercher" Text="{Binding SearchString, Mode=TwoWay}" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" />
 			</StackLayout>
 			<ListView x:Name="PatientListView" SeparatorVisibility="Default" Refreshing="Handle_Refreshing" IsPullToRefreshEnabled="true" Grid.Row="1" Style="{StaticResource StandartListViewStyle}" ItemSelected="Handle_ItemSelected" IsGroupingEnabled="true" GroupDisplayBinding="{Binding HeaderKey}" GroupShortNameBinding="{Binding HeaderKey}"
