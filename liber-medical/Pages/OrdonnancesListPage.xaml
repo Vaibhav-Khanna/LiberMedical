@@ -19,8 +19,8 @@
 
            <StackLayout Orientation="Vertical" VerticalOptions="Start" Spacing="0" Grid.Row="0"  >
             
-            <StackLayout BackgroundColor="#c8c7cc"  Padding="8,7" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
-                <SearchBar x:Name="searchBar" Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" HorizontalTextAlignment="Center" TextChanged="SearchBar_OnTextChanged" />
+            <StackLayout BackgroundColor="#c8c7cc" HeightRequest="40" Padding="8,7" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
+                <SearchBar x:Name="searchBar" Placeholder="Rechercher" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" TextChanged="SearchBar_OnTextChanged" />
             </StackLayout>
 
            
