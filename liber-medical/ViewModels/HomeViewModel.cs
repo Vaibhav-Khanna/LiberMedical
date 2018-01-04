@@ -285,7 +285,6 @@ namespace libermedical.ViewModels
 				};
 
                 await CoreMethods.PushPageModel<AddDocumentViewModel>(document);
-
 			
             }
 
@@ -293,7 +292,8 @@ namespace libermedical.ViewModels
 
         async void ShowMessage()
         {
-            await CoreMethods.DisplayAlert("Votre ordonnance a bien été enregistrée !","","Ok");
+            await ToastService.Show("Votre ordonnance a bien été enregistrée !");
+            MessagingCenter.Send(this,"Showhomemessage");
         }
        
 	}

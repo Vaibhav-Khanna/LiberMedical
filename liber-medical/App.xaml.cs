@@ -7,6 +7,7 @@ using libermedical.Helpers;
 using libermedical.Managers;
 using libermedical.Models;
 using libermedical.Pages;
+using libermedical.PopUp;
 using libermedical.Request;
 using libermedical.Services;
 using libermedical.ViewModels;
@@ -212,13 +213,14 @@ namespace libermedical
 
         public void UpdateProfile(MyAccountEditViewModel myAccountEditViewModel)
         {
-            updateProfile = UpdateProfileAsync();
+             UpdateProfileAsync();
         }
 
-        private Task UpdateProfileAsync()
+        private void UpdateProfileAsync()
         {
             //TODO: Send new profile from Settings to server.
-            return null;
+            //await Task.Delay(400);
+            //await ToastService.Show("Un nouveau mot de passe vient de vous etre transmis par email");
         }
 
         //public static IUserManager UserManager(string id, string route)

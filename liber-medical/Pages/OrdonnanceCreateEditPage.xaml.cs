@@ -220,6 +220,11 @@ namespace libermedical.Pages
 
         void Handle_Tapped(object sender, System.EventArgs e)
         {
+            MyDatePicker.Date = DateTime.UtcNow;
+            (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.First_Care_At = App.ConvertToUnixTimestamp(DateTime.UtcNow);
+            SelectedDate.Text = $"Premier soin: {DateTime.UtcNow.ToString("dd-MM-yyyy")}";
+           
+
             FirstCareCell.IsVisible = true;
         }
     }

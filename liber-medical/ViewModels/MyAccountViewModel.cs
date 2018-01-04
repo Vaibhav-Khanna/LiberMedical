@@ -36,18 +36,26 @@ namespace libermedical.ViewModels
 			FirstName = _userInfo.Firstname;
 			LastName = _userInfo.Lastname;
 			PhoneNumber = _userInfo.Phone;
-			EmailAddress = _userInfo.Email;
-                  
+			EmailAddress = _userInfo.Email;                  
 		}
-
      
+        public override void Init(object initData)
+        {
+            base.Init(initData);
+
+            MessagingCenter.Subscribe<MyAccountEditViewModel>(this, "ShowPasswordMessage", async (obj) =>
+            {                
+                BackCommand.Execute(null);
+                await Task.Delay(800);
+                await ToastService.Show("Un nouveau mot de passe vient de vous etre transmis par email");
+            });
+        }
 
         public Command BackCommand => new Command(async() =>
        {
+            MessagingCenter.Unsubscribe<MyAccountEditViewModel>(this, "ShowPasswordMessage");
             await App.tabbedNavigation.PopPage(true, false);
        });
-
-      
 
 
 		public ICommand EditCommand => new Command(async () =>

@@ -279,7 +279,7 @@ namespace libermedical.Services
                     doc.IsSynced = true;
                     doc.UpdatedAt = DateTime.UtcNow;
                     await DeleteItemAsync(typeof(Document).Name + "_" + localId);
-                    await UpdateAsync(doc as TModel, typeof(Document).Name + "_" + document.Id);
+                    await UpdateAsync(doc as TModel, typeof(Document).Name + "_" + doc.Id);
                 }
                 else
                 {

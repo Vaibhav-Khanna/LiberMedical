@@ -111,37 +111,38 @@ namespace libermedical.ViewModels
 			});
 		}
 
-		public override void Init(object initData)
+        public override void Init(object initData)
 		{
 			base.Init(initData);
 			if (initData != null)
 			{
-				if (initData is Patient)
-				{
-					var patient = initData as Patient;
-					Document.Patient = patient;
-					Document.PatientId = patient.Id;
-					OptionText = "Enregistrer";
-					CanEdit = true;
-					_isNew = true;
-				}
-				else if (initData is Document)
-				{
-					Document = initData as Document;
-					CreatedDate = Document.AddDate.ToString("dd-MM-yyyy");
-					ImagePath = GetDocumentPath(Document.AttachmentPath);
-					Label = Document.Label;
-					OptionText = "Modifier";
-					_isNew = false;
+                if (initData is Patient)
+                {
+                    var patient = initData as Patient;
+                    Document.Patient = patient;
+                    Document.PatientId = patient.Id;
+                    OptionText = "Enregistrer";
+                    CanEdit = true;
+                    _isNew = true;
+                }
+                else if (initData is Document)
+                {
+                    Document = initData as Document;
+                    CreatedDate = Document.AddDate.ToString("dd-MM-yyyy");
+                    ImagePath = GetDocumentPath(Document.AttachmentPath);
+                    Label = Document.Label;
+                    OptionText = "Modifier";
+                    _isNew = false;
 
-                    if(Document.UpdatedAt==null)
+
+                    if (Document.UpdatedAt == null)
                     {
                         OptionText = "Enregistrer";
                         CanEdit = true;
                         _isNew = true;
                     }
 
-				}
+                }
 			}
 		}
 
