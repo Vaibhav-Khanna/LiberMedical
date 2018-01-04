@@ -16,7 +16,6 @@ namespace libermedical.Pages
             InitializeComponent();
         }
 
-
         private void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             ((ListView)sender).SelectedItem = null;
@@ -41,7 +40,7 @@ namespace libermedical.Pages
 
         void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(e.NewTextValue))
+            if (!string.IsNullOrWhiteSpace(e.NewTextValue))
             {
                 IEnumerable<Teledeclaration> foundItems;
 
@@ -67,7 +66,7 @@ namespace libermedical.Pages
                     });
                 }
 
-                (BindingContext as TeledeclarationsListViewModel).Teledeclarations = (BindingContext as TeledeclarationsListViewModel).Teledeclarations;
+                (BindingContext as TeledeclarationsListViewModel).Teledeclarations = (BindingContext as TeledeclarationsListViewModel)._teledeclarationsAll;
             }
         }
 
@@ -82,7 +81,7 @@ namespace libermedical.Pages
 
             if ((BindingContext as TeledeclarationsListViewModel).Teledeclarations.Count < (BindingContext as TeledeclarationsListViewModel).MaxCount)
             {
-                if (string.IsNullOrWhiteSpace(searchBar.Text))
+                if (string.IsNullOrWhiteSpace(searchBar.Text) || (BindingContext as TeledeclarationsListViewModel)._filter == null)
                     indicator.IsVisible = true;
                 else
                     indicator.IsVisible = false;

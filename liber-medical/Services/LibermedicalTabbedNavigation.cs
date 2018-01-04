@@ -65,12 +65,14 @@ namespace libermedical.Services
 			return CurrentPage.Navigation.PushAsync(page);
 		}
 
-		public Task PopPage(bool modal = false, bool animate = true)
+        public async Task PopPage(bool modal = false, bool animate = true)
 		{
-			if (modal)
-				return CurrentPage.Navigation.PopModalAsync(animate);
+            if (modal)
+            {
+                await CurrentPage.Navigation.PopModalAsync(animate);
+            }
             
-			return CurrentPage.Navigation.PopAsync(animate);
+            await CurrentPage.Navigation.PopAsync(animate);
 		}
 
 		public Task PopToRoot(bool animate = true)

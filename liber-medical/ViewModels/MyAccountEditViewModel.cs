@@ -3,6 +3,7 @@ using System.Windows.Input;
 using Acr.UserDialogs;
 using libermedical.Helpers;
 using libermedical.Models;
+using libermedical.PopUp;
 using libermedical.Utility;
 using libermedical.ViewModels.Base;
 using Newtonsoft.Json;
@@ -50,7 +51,7 @@ namespace libermedical.ViewModels
             using (_dialogs.Loading("Enregistrement..."))
 			{
 				Settings.CurrentUser = JsonConvert.SerializeObject(CurrentUser);
-				MessagingCenter.Send(this, "ProfileUpdate");
+				
 				var passwd = await ChangePassword();
 
                 if(passwd)
@@ -58,9 +59,15 @@ namespace libermedical.ViewModels
 			
                 if (App.IsConnected())
 					await App.UserManager.SaveOrUpdateAsync(CurrentUser.Id, CurrentUser, false);
-				if (passwd)
-					NavBackCommand.Execute(null);
 
+                if (passwd)
+                {                    
+                    NavBackCommand.Execute(null);
+
+                    await Task.Delay(400);
+
+                    MessagingCenter.Send(this, "ShowPasswordMessage");
+                }
 			}
 		}
 
@@ -80,7 +87,7 @@ namespace libermedical.ViewModels
 			}
 
 			//TODO: Change password through API
-			await Task.Delay(2000);
+			await Task.Delay(10);
 			return true;
 		}
 	}

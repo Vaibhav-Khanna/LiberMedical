@@ -114,6 +114,28 @@
                                     VerticalOptions="Center" />
                             </Grid>
 					<BoxView Style="{StaticResource GreyBoxViewLine}"/>
+                    <StackLayout
+                      Padding="0,0,21,0"
+                      HeightRequest="50"
+                      Orientation="Horizontal">
+                        <Label
+                          HorizontalOptions="StartAndExpand"
+                          Style="{StaticResource PlusList}"
+                          Text="Autres"
+                          VerticalOptions="Center" />
+                        <Image
+                          HorizontalOptions="EndAndExpand"
+                          Source="back_arrow_green.png"
+                          x:Name="image"
+                          Rotation="90"
+                          VerticalOptions="Center" />
+                         <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Handle_Tapped" />
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                    
+                    <StackLayout x:Name="listS" Padding="20,0,0,0" IsVisible="false" Orientation="Vertical">
+                   
 					<StackLayout
 					  Padding="0,0,21,0"
 					  HeightRequest="50"
@@ -168,6 +190,8 @@
                         </StackLayout.GestureRecognizers>
 					</StackLayout>
 					<BoxView Style="{StaticResource GreyBoxViewLine}"/>
+
+                    </StackLayout>
                     <Button
                   IsEnabled="{Binding ShouldShowContact}"
                  

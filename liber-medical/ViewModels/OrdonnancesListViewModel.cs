@@ -72,6 +72,11 @@ namespace libermedical.ViewModels
         {
             _ordonnanceStorage = storageService;
            
+            MessagingCenter.Subscribe<HomeViewModel>(this,"Showhomemessage", async (obj) => 
+            {
+                await ToastService.Show("Votre ordonnance a bien été enregistrée !");
+            });
+
             CachedList();
 
             BindData(20);

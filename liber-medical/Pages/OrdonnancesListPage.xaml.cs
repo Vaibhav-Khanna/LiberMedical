@@ -45,7 +45,15 @@ namespace libermedical.Pages
             MessagingCenter.Subscribe<FilterPage, Filter>(this, Events.UpdatePrescriptionFilters, (sender, filter) =>
             {
                 _filter = filter;
-                ApplyFilter(filter);
+
+                if (string.IsNullOrWhiteSpace(searchBar.Text))
+                {
+                    ApplyFilter(filter);
+                }
+                else
+                {
+                    SearchBar_OnTextChanged(null,new TextChangedEventArgs(searchBar.Text,searchBar.Text));
+                }
             });
 
             MessagingCenter.Subscribe<OrdonnancesListViewModel, Filter>(this, Events.UpdatePrescriptionFilters, (sender, filter) =>
@@ -98,12 +106,20 @@ namespace libermedical.Pages
         }
               
 
-        private void ApplyFilter(Filter filter)
+        private void ApplyFilter(Filter filter, bool isSearch = false, List<Ordonnance> Source = null)
         {
             if (filter != null)
             {
                 List<Ordonnance> filteredItems = new List<Ordonnance>();
                 List<Ordonnance> foundItems = new List<Ordonnance>();
+
+
+                ObservableCollection<Ordonnance> source;
+
+                if (isSearch)
+                    source = new ObservableCollection<Ordonnance>(Source);
+                else
+                    source = (BindingContext as OrdonnancesListViewModel).Ordonnances;
 
                 if (filter.Statuses.Count > 0)
                 {
@@ -113,13 +129,13 @@ namespace libermedical.Pages
                         if (filter.EnableDateSearch)
                         {
                             foundItems =
-                                (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.Status == status.ToString() && ((DateTimeOffset)x.CreatedAt).Date >= filter.StartDate.Value.Date &&
+                                source.Where(x => x.Status == status.ToString() && ((DateTimeOffset)x.CreatedAt).Date >= filter.StartDate.Value.Date &&
                                                                                                ((DateTimeOffset)x.CreatedAt).Date <= filter.EndDate.Value.Date).ToList();
                         }
                         else
                         {
                             foundItems =
-                                (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => x.Status == status.ToString()).ToList();
+                                source.Where(x => x.Status == status.ToString()).ToList();
                         }
                         filteredItems.AddRange(foundItems);
                     }
@@ -127,11 +143,10 @@ namespace libermedical.Pages
                 else
                 {
                     
-
                     if (filter.EnableDateSearch)
                     {
                         foundItems =
-                            (BindingContext as OrdonnancesListViewModel).Ordonnances.Where(x => ((DateTimeOffset)x.CreatedAt).Date >= filter.StartDate.Value.Date &&
+                            source.Where(x => ((DateTimeOffset)x.CreatedAt).Date >= filter.StartDate.Value.Date &&
                                                                                            ((DateTimeOffset)x.CreatedAt).Date <= filter.EndDate.Value.Date).ToList();
                         filteredItems.AddRange(foundItems);
                     }
@@ -140,7 +155,7 @@ namespace libermedical.Pages
                         _filteredItems = null;
                         (BindingContext as OrdonnancesListViewModel).NoResultText = null;
                         (BindingContext as OrdonnancesListViewModel).FilterActiveText = null;
-                        MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
+                        MyListView.ItemsSource = source;
                         return;
                     }
                 }
@@ -151,13 +166,15 @@ namespace libermedical.Pages
                 {
                     (BindingContext as OrdonnancesListViewModel).NoResultText = "Aucun résultat";
 
-                    if ((BindingContext as OrdonnancesListViewModel).Ordonnances.Count < (BindingContext as OrdonnancesListViewModel).MaxCount)
+                    if (!isSearch)
                     {
-                        (BindingContext as OrdonnancesListViewModel).BindData(20);
+                        if ((BindingContext as OrdonnancesListViewModel).Ordonnances.Count < (BindingContext as OrdonnancesListViewModel).MaxCount)
+                        {
+                            (BindingContext as OrdonnancesListViewModel).BindData(20);
+                        }
                     }
 
                 }
-
 
                 _filteredItems = new ObservableCollection<Ordonnance>(filteredItems);
                 MyListView.ItemsSource = _filteredItems;
@@ -172,9 +189,17 @@ namespace libermedical.Pages
 
                 _filteredItems = null;
 
-                MyListView.ItemsSource = (BindingContext as OrdonnancesListViewModel).Ordonnances;
+                ObservableCollection<Ordonnance> source;
+
+                if (isSearch)
+                    source = new ObservableCollection<Ordonnance>(Source);
+                else
+                    source = (BindingContext as OrdonnancesListViewModel).Ordonnances;
+                
+                MyListView.ItemsSource = source;
                
             }
+
         }
 
         void Handle_Remove_Clicked(object sender, System.EventArgs e)
@@ -212,13 +237,11 @@ namespace libermedical.Pages
 
         private async void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(e.NewTextValue))
+            if (!string.IsNullOrWhiteSpace(searchBar.Text))
             {
                 IEnumerable<Ordonnance> foundItems;
 
-
-                foundItems = await (BindingContext as OrdonnancesListViewModel)._ordonnanceStorage.SearchOrdonnance(e.NewTextValue);
-
+                foundItems = await (BindingContext as OrdonnancesListViewModel)._ordonnanceStorage.SearchOrdonnance(searchBar.Text.Trim());
 
                 if (!string.IsNullOrWhiteSpace(searchBar.Text))
                 {
@@ -229,12 +252,13 @@ namespace libermedical.Pages
 
                     if (!string.IsNullOrWhiteSpace(searchBar.Text))
                     {
-                        MyListView.ItemsSource = foundItems;
+                        //MyListView.ItemsSource = foundItems;
 
-                        if (foundItems.Any())
-                            (BindingContext as OrdonnancesListViewModel).NoResultText = null;
-                        else
-                            (BindingContext as OrdonnancesListViewModel).NoResultText = "Aucun résultat";
+                        //if (foundItems.Any())
+                        //    (BindingContext as OrdonnancesListViewModel).NoResultText = null;
+                        //else
+                            //(BindingContext as OrdonnancesListViewModel).NoResultText = "Aucun résultat";
+                        ApplyFilter(_filter,true,foundItems.ToList());
                     }
                 }
                 
@@ -247,13 +271,13 @@ namespace libermedical.Pages
                     {
                         searchBar.Unfocus();
                         MyListView.Focus();
-                        MyListView.SetBinding(ListView.ItemsSourceProperty,"Ordonnances");
-                        (BindingContext as OrdonnancesListViewModel).Ordonnances = (BindingContext as OrdonnancesListViewModel).Ordonnances;
+                        //(BindingContext as OrdonnancesListViewModel).Ordonnances = (BindingContext as OrdonnancesListViewModel).Ordonnances;
                     });
                 }
 
                 MyListView.ItemsSource = _filteredItems ?? (BindingContext as OrdonnancesListViewModel).Ordonnances;
-                ApplyFilter(_filter);
+               
+                ApplyFilter(_filter,true,(BindingContext as OrdonnancesListViewModel).Ordonnances.ToList());
             }
         }
 
