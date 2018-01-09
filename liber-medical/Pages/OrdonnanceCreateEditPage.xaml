@@ -139,7 +139,7 @@
                       <!--<Label Text="Pièce jointe" Style="{StaticResource JoinDocumentLabel}" VerticalOptions="Center" />-->
                       <Image Source="attachment.png">
                       </Image>
-                      <ffimageloading:CachedImage Source="{Binding .,Converter={converter:DocumentPathConverter}}" DownsampleToViewSize="true" BitmapOptimizations="true" LoadingPlaceholder = "sync.png" ErrorPlaceholder="ionAlertCircledIonicons.png" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,1,3,1" />
+                      <ffimageloading:CachedImage Source="{Binding .,Converter={converter:DocumentPathConverter}}" DownsampleToViewSize="true" BitmapOptimizations="true" LoadingPlaceholder = "sync.png"  HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,1,3,1" />
                     </StackLayout>
                     <!--<Grid>
                       <Grid.ColumnDefinitions>
@@ -154,7 +154,7 @@
           </StackLayout>
           <StackLayout Padding="18,10,20,10" Orientation="Vertical" HeightRequest="200" Style="{StaticResource ModalContentBackgroundColor}">
             <Label Text="Commentaire" TextColor="#000000" />
-            <Editor x:Name="MyEditor" IsEnabled="{Binding CanEdit}" BackgroundColor="#f0f0f0" FontFamily="SFUIText-Regular.otf" FontSize="12" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Focused="Editor_Focused" Unfocused="Editor_Unfocused" />
+            <Editor x:Name="MyEditor" BackgroundColor="#f0f0f0" FontFamily="SFUIText-Regular.otf" FontSize="12" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Focused="Editor_Focused" Unfocused="Editor_Unfocused" />
           </StackLayout>
         </StackLayout>
       </ScrollView>

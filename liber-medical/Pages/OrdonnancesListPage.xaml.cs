@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using libermedical.Enums;
 using libermedical.Models;
 using libermedical.Services;
 using libermedical.ViewModels;
@@ -315,5 +316,18 @@ namespace libermedical.Pages
             isExecuting = false;
         }
 
+        void Handle_BindingContextChanged(object sender, System.EventArgs e)
+        {
+            var item = sender as ViewCell;
+            var context = item.BindingContext as Ordonnance;
+
+            if (item != null && context != null)
+            {
+                if (context.Status == StatusEnum.valid.ToString())
+                {
+                    item.ContextActions.Clear();
+                }
+            }
+        }
     }
 }

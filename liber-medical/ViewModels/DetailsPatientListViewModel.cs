@@ -50,7 +50,7 @@ namespace libermedical.ViewModels
 
         }
        
-        private async void BindData()
+        private async Task BindData()
         {
             var list = (await new StorageService<Ordonnance>().GetList()).Where(x => x.PatientId == Patient.Id);
 
@@ -173,7 +173,7 @@ namespace libermedical.ViewModels
                                 else
                                 {
                                     _documentPath = file.Path;
-                                    await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient);
+                                    await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient,true,false);
                                     MessagingCenter.Send(this, Events.DocumentPathFromPatientDetail, _documentPath);
                                 }
                             }
@@ -205,7 +205,7 @@ namespace libermedical.ViewModels
                                 else
                                 {                                   
                                     _documentPath = file.Path;
-                                    await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient);
+                                    await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient,true,false);
                                     MessagingCenter.Send(this, Events.DocumentPathFromPatientDetail, _documentPath);
                                 }
                             }
@@ -297,10 +297,26 @@ namespace libermedical.ViewModels
             {
                 return new Command(async () =>
                 {
-                    await CoreMethods.PushPageModel<AddDocumentViewModel>(SelectedDocument);
+                    await CoreMethods.PushPageModel<AddDocumentViewModel>(SelectedDocument,true,false);
                 });
             }
         }
+
+        public Command DeleteOrdo => new Command(async (obj) =>
+        {            
+            Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
+
+            await App.OrdonnanceManager.DeleteItemAsync((string)obj);
+
+            await new StorageService<Ordonnance>().DownloadOrdonnances(400);
+
+            await BindData();
+
+            Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+
+            await ToastService.Show("L’ordonnance a été supprimée avec succès");
+        });
+
 
         public ICommand CallCommand
         {

@@ -74,7 +74,11 @@
 						<ListView ItemsSource="{Binding Ordonnances}" x:Name="stackOrdonnance" SelectedItem="{Binding SelectedOrdonnance}" SeparatorVisibility="Default" RowHeight="60" IsVisible="{Binding ShowStackOrdonnance}" >
 							<ListView.ItemTemplate>
 								<DataTemplate>
-									<ViewCell>
+									<ViewCell BindingContextChanged="Handle_BindingContextChanged">
+                                     <ViewCell.ContextActions>
+                                <MenuItem Clicked="Handle_Clicked"  IsDestructive="true" CommandParameter="{Binding .}"
+                                 Text="Supprimer" />
+                            </ViewCell.ContextActions>
 										<Grid Padding="20,0,0,0" >
 											<Grid.ColumnDefinitions>
 												<ColumnDefinition Width="50*" />

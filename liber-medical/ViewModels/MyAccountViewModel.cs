@@ -47,7 +47,7 @@ namespace libermedical.ViewModels
             {                
                 BackCommand.Execute(null);
                 await Task.Delay(800);
-                await ToastService.Show("Un nouveau mot de passe vient de vous etre transmis par email");
+                await ToastService.Show("Votre nouveau mot de passe à bien été enregistré");
             });
         }
 

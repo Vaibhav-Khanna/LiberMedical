@@ -23,7 +23,7 @@ namespace libermedical.ViewModels
         public ObservableCollection<GroupedItem<Patient>> Patients;
         public IStorageService<Patient> _patientsStorage;
 		private string NavigationType;
-        private string ParentScreen;
+        public string ParentScreen=null;
         private string DocType;
 		
 		public PatientListViewModel(IStorageService<Patient> storageService) : base(storageService)
@@ -119,6 +119,12 @@ namespace libermedical.ViewModels
 
 			});
 
+
+        public Command CloseCommand => new Command((obj) =>
+       {
+            CoreMethods.PopPageModel(true,false);
+       });
+
 		private async void FilterGroupItems(string searchString)
 		{
 			try
@@ -172,9 +178,9 @@ namespace libermedical.ViewModels
 		protected override async Task TapCommandFunc(Cell cell)
 		{
 			if (ParentScreen == "HomeSelectPatient")
-			{
-			    MessagingCenter.Send(this, Events.HomePageSetPatientForOrdonnance, cell.BindingContext as Patient);
-                await Application.Current.MainPage.Navigation.PopModalAsync();
+			{                 
+                MessagingCenter.Send(this, Events.HomePageSetPatientForOrdonnance, cell.BindingContext as Patient);
+                await CoreMethods.PopPageModel(true);
 			}
             else if (ParentScreen == "OrdonanceSelectPatient")
 			{

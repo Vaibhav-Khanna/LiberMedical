@@ -62,6 +62,26 @@ namespace libermedical.Pages
 
         bool isExecuting = false;
 
+
+        protected override void OnBindingContextChanged()
+        {
+            base.OnBindingContextChanged();
+
+            var context = BindingContext as PatientListViewModel;
+
+            if(context!=null){
+                if(context.ParentScreen!=null)
+                {
+                    ToolbarItems.Add(new ToolbarItem("Annuler","",() => 
+                    {
+                        context.CloseCommand.Execute(null);
+
+                    },priority:1));
+                }
+            }
+        }
+
+
         private async void PatientListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             if (isExecuting)

@@ -8,7 +8,7 @@ namespace libermedical.Pages
 {
     public partial class MyBillsPage 
     {
-        public MyBillsPage()
+        public MyBillsPage() : base(-1,0, false)
         {
             NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();

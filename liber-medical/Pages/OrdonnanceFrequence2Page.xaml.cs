@@ -128,7 +128,7 @@ namespace libermedical.Pages
             }
             else
             {
-                listCotations.HeightRequest = listCotations.HeightRequest = (listCotations.ItemsSource as ObservableCollection<string>).Count * 40 + 10;
+                listCotations.HeightRequest  = (listCotations.ItemsSource as ObservableCollection<string>).Count * 41 + 10;
             }
         }
         protected override void OnAppearing()
