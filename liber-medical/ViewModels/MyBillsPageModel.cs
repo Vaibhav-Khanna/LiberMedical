@@ -20,7 +20,7 @@ namespace libermedical.ViewModels
 
         public Command BackCommand => new Command(async() =>
        {
-            await CoreMethods.PopPageModel(false, true);
+            await CoreMethods.PopPageModel(true,false);
        });
 
         public MyBillsPageModel()

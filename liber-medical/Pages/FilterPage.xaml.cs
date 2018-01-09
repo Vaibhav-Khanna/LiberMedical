@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using libermedical.CustomControls;
 using libermedical.Enums;
 using libermedical.Models;
@@ -23,8 +24,8 @@ namespace libermedical.Pages
 				{
                     StartDatePicker.Date = filter.StartDate.Value;
                     EndDatePicker.Date = filter.EndDate.Value;
-                    EndDate.Text = _filter.EndDate.Value.ToString("MM-dd-yyyy");
-					StartDate.Text = _filter.StartDate.Value.ToString("MM-dd-yyyy");
+                    EndDate.Text = _filter.EndDate.Value.ToString("dd-MM-yyyy");
+					StartDate.Text = _filter.StartDate.Value.ToString("dd-MM-yyyy");
 				}
 				if (filter.Statuses.Contains(StatusEnum.waiting))
 				{
@@ -70,6 +71,14 @@ namespace libermedical.Pages
 			StartDate.Text = EndDate.Text = string.Empty;
             _filter = null;
 
+            await Task.Delay(500);
+
+            if (_parentScreen == "Teledeclarations")
+                MessagingCenter.Send(this, Events.UpdateTeledeclarationsFilters, _filter);
+            else
+                MessagingCenter.Send(this, Events.UpdatePrescriptionFilters, _filter);
+
+            await Navigation.PopModalAsync();
         }
 
 		void HandleEndDateTapped(object sender, System.EventArgs e)
@@ -82,7 +91,7 @@ namespace libermedical.Pages
 			_filter.IsActivated = true;
 			_filter.EnableDateSearch = true;
 			_filter.EndDate = ((DatePicker)sender).Date;
-			EndDate.Text = _filter.EndDate.Value.ToString("MM-dd-yyyy");
+			EndDate.Text = _filter.EndDate.Value.ToString("dd-MM-yyyy");
 		}
 
 		void EndDateUnfocused(object sender, Xamarin.Forms.FocusEventArgs e)
@@ -90,7 +99,7 @@ namespace libermedical.Pages
 			_filter.IsActivated = true;
 			_filter.EnableDateSearch = true;
 			_filter.EndDate = ((DatePicker)sender).Date;
-			EndDate.Text = _filter.EndDate.Value.ToString("MM-dd-yyyy");
+			EndDate.Text = _filter.EndDate.Value.ToString("dd-MM-yyyy");
 		}
 
 		public void Handle_StartDateSelected(object sender, Xamarin.Forms.DateChangedEventArgs e)
@@ -105,7 +114,7 @@ namespace libermedical.Pages
 			_filter.IsActivated = true;
 			_filter.EnableDateSearch = true;
 			_filter.StartDate = ((DatePicker)sender).Date;
-			StartDate.Text = _filter.StartDate.Value.ToString("MM-dd-yyyy");
+			StartDate.Text = _filter.StartDate.Value.ToString("dd-MM-yyyy");
 		}
 
 		void HandleStartDateTapped(object sender, System.EventArgs e)
@@ -130,10 +139,17 @@ namespace libermedical.Pages
                 {
                     _filter.Statuses.Add(StatusEnum.refused);
                 }
+
                 if (_filter.Statuses.Count >= 1)
                     _filter.IsActivated = true;
                 else
                     _filter.IsActivated = false; 
+
+                if(!_filter.IsActivated && !_filter.EnableDateSearch)
+                {
+                    _filter = null; 
+                }
+                   
             }
 
 			if (_parentScreen == "Teledeclarations")

@@ -284,8 +284,9 @@ namespace libermedical.ViewModels
 					AttachmentPath = _documentPath,
 				};
 
-                await CoreMethods.PushPageModel<AddDocumentViewModel>(document);
-			
+                await Task.Delay(1000);
+
+                await CoreMethods.PushPageModel<AddDocumentViewModel>(document,true,false);			
             }
 
 		}

@@ -44,9 +44,9 @@
                        <ListView x:Name="MyListView" Grid.Row="1" VerticalOptions="FillAndExpand" Refreshing="Handle_Refreshing" IsPullToRefreshEnabled="true" ItemsSource="{Binding Ordonnances}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected" ItemAppearing="MyListView_ItemAppearing">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <ViewCell> 
+                                <ViewCell BindingContextChanged="Handle_BindingContextChanged"> 
                             <ViewCell.ContextActions>
-                                <MenuItem Clicked="Handle_Remove_Clicked" IsDestructive="true" CommandParameter="{Binding .}"
+                                <MenuItem Clicked="Handle_Remove_Clicked"  IsDestructive="true" CommandParameter="{Binding .}"
                                  Text="Supprimer" />
                             </ViewCell.ContextActions>
                                     <Grid Padding="15,0,0,0">

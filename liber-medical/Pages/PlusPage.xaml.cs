@@ -13,19 +13,7 @@ namespace libermedical.Pages
 
         }
 
-        void Handle_Tapped(object sender, System.EventArgs e)
-        {
-            if (listS.IsVisible)
-            {
-                listS.IsVisible = false;
-                image.Rotation = 90;
-            }              
-            else
-            {
-                image.Rotation = -90;
-                listS.IsVisible = true;
-            }
-        }
+      
 
         protected override void OnAppearing()
         {

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+     xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
+     xmlns:converters="clr-namespace:libermedical.Converters;assembly=libermedical"  
+    x:Class="libermedical.Pages.PlusOtherPage"
+    Style="{StaticResource ModalBackgroundColor}"
+    >
+
+    <custom:BasePage.Header>
+        <ContentView Style="{StaticResource HeaderFooterBackground}">
+            <Grid Padding="5,5,15,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0"  HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center">
+                        <View.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding BackCommand}" />
+                        </View.GestureRecognizers>
+                    </Image>
+               
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" FontAttributes="Bold" Style="{StaticResource HeaderLabel}" Text="Autres" />
+                         
+            </Grid>
+        </ContentView>
+    </custom:BasePage.Header>
+
+
+     <custom:BasePage.ContentPresenter>
+        <ContentView BackgroundColor="White">
+               <StackLayout x:Name="listS" Padding="20,20,0,0" Orientation="Vertical">
+                   
+                    <StackLayout
+                      Padding="0,0,21,0"
+                      HeightRequest="50"
+                      Orientation="Horizontal">
+                        <Label
+                          HorizontalOptions="StartAndExpand"
+                          Style="{StaticResource PlusList}"
+                          Text="CGV"
+                          VerticalOptions="Center" />
+                        <Image
+                          HorizontalOptions="EndAndExpand"
+                          Source="back_arrow_green.png"
+                          VerticalOptions="Center" />
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CGVCommand}" />
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                    <BoxView Style="{StaticResource GreyBoxViewLine}"/>
+                    <StackLayout
+                      Padding="0,0,21,0"
+                      HeightRequest="50"
+                      Orientation="Horizontal">
+                        <Label
+                          HorizontalOptions="StartAndExpand"
+                          Style="{StaticResource PlusList}"
+                          Text="CGU"
+                          VerticalOptions="Center" />
+                        <Image
+                          HorizontalOptions="EndAndExpand"
+                          Source="back_arrow_green.png"
+                          VerticalOptions="Center" />
+                         <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CGUCommand}" />
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                    <BoxView Style="{StaticResource GreyBoxViewLine}"/>
+                    <StackLayout
+                      Padding="0,0,21,0"
+                      HeightRequest="50"
+                      Orientation="Horizontal">
+                        <Label
+                          HorizontalOptions="StartAndExpand"
+                          Style="{StaticResource PlusList}"
+                          Text="FAQ"
+                          VerticalOptions="Center" />
+                        <Image
+                          HorizontalOptions="EndAndExpand"
+                          Source="back_arrow_green.png"
+                          VerticalOptions="Center" />
+                         <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding FAQCommand}" />
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                    <BoxView Style="{StaticResource GreyBoxViewLine}"/>
+
+                    </StackLayout>
+        </ContentView>
+     </custom:BasePage.ContentPresenter>
+
+     <custom:BasePage.Footer>
+            <ContentView HeightRequest="0" BackgroundColor="White"/>
+        </custom:BasePage.Footer> 
+    
+</custom:BasePage>

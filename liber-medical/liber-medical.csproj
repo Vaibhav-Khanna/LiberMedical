@@ -56,6 +56,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pages\PlusOtherPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AkavacheSqliteLinkerOverride.cs" />
@@ -235,6 +239,11 @@
       <DependentUpon>MyBillsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MyBillsPageModel.cs" />
+    <Compile Include="ViewModels\PlusOtherPageModel.cs" />
+    <Compile Include="Pages\PlusOtherPage.xaml.cs">
+      <DependentUpon>PlusOtherPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\ToolbarContentPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Acr.UserDialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

@@ -24,7 +24,7 @@ namespace libermedical.ViewModels
         private IStorageService<Teledeclaration> _teledeclarationsStorage;
         public Filter _filter;
         public ObservableCollection<Teledeclaration> _teledeclarationsAll;
-
+        public List<Teledeclaration> FilteredItems;
 
         string filteracctivetext = string.Empty;
         public string FilterActiveText
@@ -55,6 +55,7 @@ namespace libermedical.ViewModels
             set
             {
                 _teledeclarations = value;
+
                 RaisePropertyChanged();
             }
         }
@@ -141,13 +142,12 @@ namespace libermedical.ViewModels
                     else
                     {
                         Teledeclarations = _teledeclarationsAll;
+                         
+                        NoResultText = null;
 
-                        if (!_teledeclarationsAll.Any())
-                            NoResultText = "Aucun résultat";
-                        else
-                            NoResultText = null;
-
-                        FilterActiveText = "Attention des filtres sont actifs";
+                        FilterActiveText = null;
+                       
+                        FilteredItems = Teledeclarations.ToList();
 
                         return;
                     }
@@ -160,6 +160,8 @@ namespace libermedical.ViewModels
 
                 FilterActiveText = "Attention des filtres sont actifs";
 
+                FilteredItems = filteredItems;
+
                 Teledeclarations = new ObservableCollection<Teledeclaration>(filteredItems);
 
             }
@@ -171,6 +173,8 @@ namespace libermedical.ViewModels
                     NoResultText = "Aucun résultat";
                 else
                     NoResultText = null;
+
+                FilteredItems = _teledeclarationsAll.ToList();
 
                 Teledeclarations = _teledeclarationsAll;
             }
@@ -193,7 +197,7 @@ namespace libermedical.ViewModels
             Teledeclarations = new ObservableCollection<Teledeclaration>(list);
 
             _teledeclarationsAll = Teledeclarations;
-                      
+
             ApplyFilter(_filter);         
         }
 

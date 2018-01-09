@@ -44,7 +44,7 @@ namespace libermedical.Pages
             {
                 IEnumerable<Teledeclaration> foundItems;
 
-                foundItems = (BindingContext as TeledeclarationsListViewModel).Teledeclarations.Where(x => x.Label.ToLower().Contains(e.NewTextValue.ToLower()));
+                foundItems = (BindingContext as TeledeclarationsListViewModel).FilteredItems?.Where(x => x.Label.ToLower().Contains(e.NewTextValue.ToLower()));
 
                 (BindingContext as TeledeclarationsListViewModel).Teledeclarations = new ObservableCollection<Teledeclaration>(foundItems);
 
@@ -66,7 +66,17 @@ namespace libermedical.Pages
                     });
                 }
 
-                (BindingContext as TeledeclarationsListViewModel).Teledeclarations = (BindingContext as TeledeclarationsListViewModel)._teledeclarationsAll;
+                var context = (BindingContext as TeledeclarationsListViewModel);
+
+                if (context?._filter != null )
+                {
+                    (BindingContext as TeledeclarationsListViewModel).Teledeclarations = new ObservableCollection<Teledeclaration>((BindingContext as TeledeclarationsListViewModel).FilteredItems);
+                }
+                else
+                {
+                    (BindingContext as TeledeclarationsListViewModel).Teledeclarations = (BindingContext as TeledeclarationsListViewModel)._teledeclarationsAll;
+                }
+
             }
         }
 

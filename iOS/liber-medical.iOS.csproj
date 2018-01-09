@@ -131,6 +131,7 @@
     <Compile Include="Renderers\DefaultSearchBarRenderer.cs" />
     <Compile Include="Renderers\CustomViewCellRenderer.cs" />
     <Compile Include="Renderers\CustomRefreshListviewRenderer.cs" />
+    <Compile Include="Renderers\ContentPageButtonRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

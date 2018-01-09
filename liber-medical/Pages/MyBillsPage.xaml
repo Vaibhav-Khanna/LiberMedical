@@ -52,7 +52,7 @@
         </ContentView>
 
 
-         <ListView IsVisible="{Binding NoBillsFound,Converter={StaticResource cnvInvert}}" ItemsSource="{Binding Bills}" x:Name="listView" ItemTapped="Handle_ItemTapped" SeparatorVisibility="Default" HasUnevenRows="true"  >
+         <ListView  IsVisible="{Binding NoBillsFound,Converter={StaticResource cnvInvert}}" ItemsSource="{Binding Bills}" x:Name="listView" ItemTapped="Handle_ItemTapped" SeparatorVisibility="Default" HasUnevenRows="true"  >
           <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -71,7 +71,8 @@
                                     Grid.Column="0"
                                     Grid.ColumnSpan="2"
                                     HorizontalOptions="StartAndExpand"
-                                    Style="{StaticResource PlusList}"
+                                    TextColor="Black"
+                                    FontSize="16"
                                     Text="{Binding Label}"   
                                     LineBreakMode="WordWrap"
                                     VerticalOptions="Center">
@@ -89,12 +90,10 @@
           </StackLayout>
         
     </StackLayout>
-        </ContentView>
+  </ContentView>
 
     </custom:BasePage.ContentPresenter> 
 
-      <custom:BasePage.Footer>
-            <ContentView HeightRequest="0" BackgroundColor="White"/>
-        </custom:BasePage.Footer> 
+
     
 </custom:BasePage>

@@ -158,7 +158,7 @@ namespace libermedical.ViewModels
 						OptionText = "Modifier";
 					}
 					else
-						await CoreMethods.PopPageModel();
+                        await CoreMethods.PopPageModel(true,false);
 				});
 			}
 		}
@@ -197,7 +197,7 @@ namespace libermedical.ViewModels
                                 UserDialogs.Instance.HideLoading();
                             }
 
-                            await CoreMethods.PopPageModel();
+                            await CoreMethods.PopPageModel(true,false);
 
                             await ToastService.Show("Votre document a bien été envoyé");
                                                   

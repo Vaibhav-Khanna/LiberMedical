@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using libermedical.Enums;
 using libermedical.Models;
+using libermedical.ViewModels;
 using Xamarin.Forms;
 
 namespace libermedical.Pages
@@ -35,6 +36,33 @@ namespace libermedical.Pages
             base.OnAppearing();
             if (stackOrdonnance.SelectedItem != null)
                 stackOrdonnance.SelectedItem = null;
+        }
+
+        void Handle_Clicked(object sender, System.EventArgs e)
+        {
+            var item = (sender as MenuItem).CommandParameter as Ordonnance;
+
+            if (item != null)
+            {
+                if (item.Status != Enums.StatusEnum.valid.ToString())
+                {
+                    (BindingContext as DetailsPatientListViewModel).DeleteOrdo.Execute(item.Id);
+                }
+            }
+        }
+
+        void Handle_BindingContextChanged(object sender, System.EventArgs e)
+        {
+            var item = sender as ViewCell;
+            var context = item.BindingContext as Ordonnance;
+
+            if (item != null && context != null)
+            {
+                if (context.Status == StatusEnum.valid.ToString())
+                {
+                    item.ContextActions.Clear();
+                }
+            }
         }
     }
 }
