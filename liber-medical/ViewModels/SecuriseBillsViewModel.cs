@@ -92,17 +92,28 @@ namespace libermedical.ViewModels
 
             }
         }
-       
+
+
+        protected override void ViewIsAppearing(object sender, EventArgs e)
+        {
+            base.ViewIsAppearing(sender, e);
+
+
+        }
+
         private async void DownloadFile(string filePath)
         {
+            await Task.Delay(800);
             PdfDocumentStream = await new RestService<BaseDTO>("file").DownloadFile(filePath, false);
         }
 
         private async void DownloadBill(string filePath)
         {
+            await Task.Delay(800);
             PdfDocumentStream = await new RestService<BaseDTO>("file").DownloadBill(filePath);
         }
 
         public ICommand BackCommand => new Command(async () => await Application.Current.MainPage.Navigation.PopModalAsync());
     }
 }
+ 

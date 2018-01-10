@@ -31,11 +31,11 @@
                        <Label Text="{Binding NoResultText}" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" FontSize="16" TextColor="Gray" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
                     </StackLayout>
 
-                  <ListView x:Name="TeledeclarationsList" HasUnevenRows="false" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing" Grid.Row="1" ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default" ItemAppearing="TeledeclarationsList_ItemAppearing">
+                  <ListView x:Name="TeledeclarationsList" RowHeight="70" HasUnevenRows="false" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing" Grid.Row="1" ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default" ItemAppearing="TeledeclarationsList_ItemAppearing">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
-                                    <Grid VerticalOptions="Start" Padding="20,8,0,8">
+                                    <Grid VerticalOptions="Start" Margin="0,8,0,8" Padding="20,0,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="60*" />
                                             <ColumnDefinition Width="30*" />

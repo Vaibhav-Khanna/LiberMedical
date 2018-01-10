@@ -46,7 +46,7 @@ namespace libermedical.ViewModels
        
         public Command OpenOtherCommand => new Command(async () =>
        {
-            await CoreMethods.PushPageModel<PlusOtherPageModel>(null,false,true);
+            await CoreMethods.PushPageModel<PlusOtherPageModel>(null,true,false);
        });
 
         public ICommand GoToProfileCommand => new Command(

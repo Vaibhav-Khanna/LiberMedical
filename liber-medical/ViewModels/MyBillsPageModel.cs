@@ -33,10 +33,14 @@ namespace libermedical.ViewModels
         {
             ((Invoice)obj).IsBill = true;
 
+            if (((Invoice)obj).FilePath == null)
+                return;
+
             if (((Invoice)obj).FilePath.ToLower().Contains(".pdf"))
                 await CoreMethods.PushPageModel<SecuriseBillsViewModel>(((Invoice)obj), true);
             else
                 await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(((Invoice)obj), true);
+            
         });
 
 
