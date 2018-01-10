@@ -53,7 +53,7 @@ namespace libermedical.Pages
                 }
                 else
                 {
-                    SearchBar_OnTextChanged(null,new TextChangedEventArgs(searchBar.Text,searchBar.Text));
+                    Handle_SearchButtonPressed(null,new TextChangedEventArgs(searchBar.Text,searchBar.Text));
                 }
             });
 
@@ -92,7 +92,7 @@ namespace libermedical.Pages
         {
             if (!string.IsNullOrWhiteSpace(searchBar.Text))
             {
-                SearchBar_OnTextChanged(null,new TextChangedEventArgs(searchBar.Text,searchBar.Text));
+                Handle_SearchButtonPressed(null,new TextChangedEventArgs(searchBar.Text,searchBar.Text));
                 await Task.Delay(2000);
                 MyListView.IsRefreshing = false;
                 return;
@@ -235,8 +235,30 @@ namespace libermedical.Pages
             ((ListView)sender).SelectedItem = null;
         }
 
+        void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(searchBar.Text))
+            {
+               
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(e.OldTextValue))
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        searchBar.Unfocus();
+                        MyListView.Focus();
+                    });
+                }
 
-        private async void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
+                MyListView.ItemsSource = _filteredItems ?? (BindingContext as OrdonnancesListViewModel).Ordonnances;
+
+                ApplyFilter(_filter, true, (BindingContext as OrdonnancesListViewModel).Ordonnances.ToList());
+            }
+        }
+
+        async void Handle_SearchButtonPressed(object sender, System.EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(searchBar.Text))
             {
@@ -252,33 +274,26 @@ namespace libermedical.Pages
                     }
 
                     if (!string.IsNullOrWhiteSpace(searchBar.Text))
-                    {
-                        //MyListView.ItemsSource = foundItems;
-
-                        //if (foundItems.Any())
-                        //    (BindingContext as OrdonnancesListViewModel).NoResultText = null;
-                        //else
-                            //(BindingContext as OrdonnancesListViewModel).NoResultText = "Aucun résultat";
-                        ApplyFilter(_filter,true,foundItems.ToList());
+                    {                        
+                        ApplyFilter(_filter, true, foundItems.ToList());
                     }
                 }
-                
+
             }
             else
             {
-                if (!string.IsNullOrWhiteSpace(e.OldTextValue))
+                if (string.IsNullOrWhiteSpace(searchBar.Text))
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         searchBar.Unfocus();
                         MyListView.Focus();
-                        //(BindingContext as OrdonnancesListViewModel).Ordonnances = (BindingContext as OrdonnancesListViewModel).Ordonnances;
                     });
                 }
 
                 MyListView.ItemsSource = _filteredItems ?? (BindingContext as OrdonnancesListViewModel).Ordonnances;
-               
-                ApplyFilter(_filter,true,(BindingContext as OrdonnancesListViewModel).Ordonnances.ToList());
+
+                ApplyFilter(_filter, true, (BindingContext as OrdonnancesListViewModel).Ordonnances.ToList());
             }
         }
 
