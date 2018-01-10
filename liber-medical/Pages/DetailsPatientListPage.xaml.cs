@@ -25,6 +25,10 @@ namespace libermedical.Pages
             await Navigation.PushAsync(new PatientDetailModify());
         }
 
+        void Handle_ItemSelected1(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+        {
+            ((ListView)sender).SelectedItem = null;
+        }
 
         void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
         {

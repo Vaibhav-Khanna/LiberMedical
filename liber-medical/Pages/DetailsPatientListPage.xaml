@@ -71,7 +71,7 @@
 				</StackLayout>
 
 					<StackLayout Padding="0,0,0,0" Grid.Row="2" >
-						<ListView ItemsSource="{Binding Ordonnances}" x:Name="stackOrdonnance" SelectedItem="{Binding SelectedOrdonnance}" SeparatorVisibility="Default" RowHeight="60" IsVisible="{Binding ShowStackOrdonnance}" >
+						<ListView ItemsSource="{Binding Ordonnances}" x:Name="stackOrdonnance" SelectedItem="{Binding SelectedOrdonnance}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected1" IsVisible="{Binding ShowStackOrdonnance}" >
 							<ListView.ItemTemplate>
 								<DataTemplate>
 									<ViewCell BindingContextChanged="Handle_BindingContextChanged">
