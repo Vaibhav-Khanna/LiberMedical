@@ -278,8 +278,8 @@ namespace libermedical.Services
                 {
                     doc.IsSynced = true;
                     doc.UpdatedAt = DateTime.UtcNow;
-                    await DeleteItemAsync(typeof(Document).Name + "_" + localId);
-                    await UpdateAsync(doc as TModel, typeof(Document).Name + "_" + doc.Id);
+                    await DeleteItemAsync(typeof(Document).Name + "_" + localId); 
+                    await BlobCache.UserAccount.InsertObject(typeof(Document).Name + "_" + doc.Id, doc);
                 }
                 else
                 {

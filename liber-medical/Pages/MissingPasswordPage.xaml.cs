@@ -1,5 +1,7 @@
 ﻿using System;
+using Acr.UserDialogs;
 using libermedical.CustomControls;
+using libermedical.PopUp;
 using libermedical.Request;
 using Xamarin.Forms;
 
@@ -40,11 +42,21 @@ namespace libermedical.Pages
         {
             if (_validEmail)
             {
+                MyButton.IsEnabled = false;
+
+                UserDialogs.Instance.ShowLoading("");
+
                 await App.LoginManager.RequestNewPassword(new ForgotPasswordRequest
                 {
                     email = _email
                 });
-                await DisplayAlert("Your new password was sent to your email", null, "OK");
+
+                UserDialogs.Instance.HideLoading();
+
+                await ToastService.Show("Un nouveau mot de passe vient de vous etre transmis par email");
+
+                MyButton.IsEnabled = true;
+
                 await Navigation.PopAsync();
             }
             else

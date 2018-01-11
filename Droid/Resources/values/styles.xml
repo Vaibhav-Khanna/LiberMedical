@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <!-- Splash styles -->
-  <style name="Theme.Splash" parent="android:Theme">
-    <item name="android:windowBackground">@drawable/splash</item>
+
+  <style name="splashscreen" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:windowBackground">@drawable/splashscreen</item>
     <item name="android:windowNoTitle">true</item>
     <item name="android:windowIsTranslucent">false</item>
     <item name="android:windowIsFloating">false</item>
     <item name="android:backgroundDimEnabled">true</item>
-    <item name="android:windowFullscreen">true</item>
   </style>
 
   <style name="MyTheme" parent="MyTheme.Base">

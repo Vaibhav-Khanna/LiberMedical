@@ -3958,26 +3958,26 @@ namespace libermedical.Droid
 			// aapt resource value: 0x7f020057
 			public const int avd_hide_password = 2130837591;
 			
-			// aapt resource value: 0x7f020137
-			public const int avd_hide_password_1 = 2130837815;
-			
-			// aapt resource value: 0x7f020138
-			public const int avd_hide_password_2 = 2130837816;
-			
 			// aapt resource value: 0x7f020139
-			public const int avd_hide_password_3 = 2130837817;
+			public const int avd_hide_password_1 = 2130837817;
+			
+			// aapt resource value: 0x7f02013a
+			public const int avd_hide_password_2 = 2130837818;
+			
+			// aapt resource value: 0x7f02013b
+			public const int avd_hide_password_3 = 2130837819;
 			
 			// aapt resource value: 0x7f020058
 			public const int avd_show_password = 2130837592;
 			
-			// aapt resource value: 0x7f02013a
-			public const int avd_show_password_1 = 2130837818;
-			
-			// aapt resource value: 0x7f02013b
-			public const int avd_show_password_2 = 2130837819;
-			
 			// aapt resource value: 0x7f02013c
-			public const int avd_show_password_3 = 2130837820;
+			public const int avd_show_password_1 = 2130837820;
+			
+			// aapt resource value: 0x7f02013d
+			public const int avd_show_password_2 = 2130837821;
+			
+			// aapt resource value: 0x7f02013e
+			public const int avd_show_password_3 = 2130837822;
 			
 			// aapt resource value: 0x7f020059
 			public const int back_arrow = 2130837593;
@@ -4579,11 +4579,11 @@ namespace libermedical.Droid
 			// aapt resource value: 0x7f020120
 			public const int notification_icon_background = 2130837792;
 			
-			// aapt resource value: 0x7f020135
-			public const int notification_template_icon_bg = 2130837813;
+			// aapt resource value: 0x7f020137
+			public const int notification_template_icon_bg = 2130837815;
 			
-			// aapt resource value: 0x7f020136
-			public const int notification_template_icon_low_bg = 2130837814;
+			// aapt resource value: 0x7f020138
+			public const int notification_template_icon_low_bg = 2130837816;
 			
 			// aapt resource value: 0x7f020121
 			public const int notification_tile_bg = 2130837793;
@@ -4628,22 +4628,28 @@ namespace libermedical.Droid
 			public const int splash = 2130837806;
 			
 			// aapt resource value: 0x7f02012f
-			public const int success = 2130837807;
+			public const int splashscreen = 2130837807;
 			
 			// aapt resource value: 0x7f020130
-			public const int support = 2130837808;
+			public const int splasht = 2130837808;
 			
 			// aapt resource value: 0x7f020131
-			public const int sync = 2130837809;
+			public const int success = 2130837809;
 			
 			// aapt resource value: 0x7f020132
-			public const int teledeclaration = 2130837810;
+			public const int support = 2130837810;
 			
 			// aapt resource value: 0x7f020133
-			public const int user = 2130837811;
+			public const int sync = 2130837811;
 			
 			// aapt resource value: 0x7f020134
-			public const int warning = 2130837812;
+			public const int teledeclaration = 2130837812;
+			
+			// aapt resource value: 0x7f020135
+			public const int user = 2130837813;
+			
+			// aapt resource value: 0x7f020136
+			public const int warning = 2130837814;
 			
 			static Drawable()
 			{
@@ -6637,9 +6643,6 @@ namespace libermedical.Droid
 			// aapt resource value: 0x7f0c0006
 			public const int Theme_MediaRouter_LightControlPanel = 2131492870;
 			
-			// aapt resource value: 0x7f0c018a
-			public const int Theme_Splash = 2131493258;
-			
 			// aapt resource value: 0x7f0c011f
 			public const int ThemeOverlay_AppCompat = 2131493151;
 			
@@ -6930,6 +6933,9 @@ namespace libermedical.Droid
 			
 			// aapt resource value: 0x7f0c000a
 			public const int Widget_MediaRouter_MediaRouteButton = 2131492874;
+			
+			// aapt resource value: 0x7f0c018a
+			public const int splashscreen = 2131493258;
 			
 			static Style()
 			{
