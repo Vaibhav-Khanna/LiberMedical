@@ -504,15 +504,18 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\sync.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\sync.png" />
     <AndroidResource Include="Resources\drawable\phone2.png" />
+    <AndroidResource Include="Resources\drawable\splashscreen.axml" />
+    <AndroidResource Include="Resources\drawable-hdpi\splasht.9.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\splasht.9.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\splasht.9.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\splasht.9.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\splasht.9.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\splash.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\splash.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xhdpi\splash.png" />

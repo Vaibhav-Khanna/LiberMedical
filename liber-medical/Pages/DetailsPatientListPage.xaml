@@ -116,7 +116,12 @@
 									</ViewCell>
 								</DataTemplate>
 							</ListView.ItemTemplate>
+                        <ListView.Footer>
+                            <StackLayout HeightRequest="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+                            </StackLayout>
+                        </ListView.Footer>
 						</ListView>
+                    
 						<ListView ItemsSource="{Binding Documents}" x:Name="stackDocument" SelectedItem="{Binding SelectedDocument}" IsVisible="{Binding ShowStackDocument}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected">
 							<ListView.ItemTemplate>
 								<DataTemplate>
@@ -137,6 +142,10 @@
 									</ViewCell>
 								</DataTemplate>
 							</ListView.ItemTemplate>
+                         <ListView.Footer>
+                            <StackLayout HeightRequest="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+                            </StackLayout>
+                        </ListView.Footer>
 						</ListView>
 					</StackLayout>
 				
