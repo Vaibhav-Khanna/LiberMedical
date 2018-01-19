@@ -21,7 +21,8 @@ namespace libermedical.ViewModels
     public class OrdonnancesListViewModel : ListViewModelBase<Ordonnance>
     {
         int _initCount = 0;
-        public int MaxCount { get; set; }
+      
+        public int MaxCount { get; set; } = 0;
         public IStorageService<Ordonnance> _ordonnanceStorage;
 
         private ObservableCollection<Ordonnance> _ordonnances;
@@ -79,15 +80,13 @@ namespace libermedical.ViewModels
 
             CachedList();
 
-            BindData(20);
         }
 
-        public async Task BindData(int count)
-        {            
-            _initCount = _initCount + count;
+        public async Task BindData()
+        {
+            
+            MaxCount = await new StorageService<Ordonnance>().DownloadOrdonnances();
 
-            MaxCount = await new StorageService<Ordonnance>().DownloadOrdonnances(_initCount);
-           
             var list = await _ordonnanceStorage.GetList();
             if (list != null && list.Count() != 0)
             {
@@ -145,7 +144,7 @@ namespace libermedical.ViewModels
 
           await App.OrdonnanceManager.DeleteItemAsync((string)obj);
 
-          await BindData(0);
+          await BindData();
 
           Acr.UserDialogs.UserDialogs.Instance.HideLoading();
 
@@ -257,7 +256,7 @@ namespace libermedical.ViewModels
                                         Acr.UserDialogs.UserDialogs.Instance.HideLoading();
                                     }
                                    
-                                    await BindData(0);
+                                    await BindData();
 
                                     Device.BeginInvokeOnMainThread(() =>
                                     {

@@ -308,7 +308,7 @@ namespace libermedical.ViewModels
 
             await App.OrdonnanceManager.DeleteItemAsync((string)obj);
 
-            await new StorageService<Ordonnance>().DownloadOrdonnances(400);
+            await new StorageService<Ordonnance>().DownloadOrdonnances();
 
             await BindData();
 

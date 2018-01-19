@@ -35,6 +35,7 @@ namespace libermedical.Pages
                 {
                     MyListView.BeginRefresh();
                 }
+
             });
 
             MessagingCenter.Subscribe<OrdonnanceCreateEditViewModel>(this, "RefreshOrdoList", (arg1 ) =>
@@ -98,7 +99,7 @@ namespace libermedical.Pages
                 return;
             }
 
-            await (BindingContext as OrdonnancesListViewModel).BindData(0);
+            await (BindingContext as OrdonnancesListViewModel).BindData();
             ApplyFilter(_filter);
             MyListView.IsRefreshing = false;
             isExecuting = false;
@@ -171,7 +172,7 @@ namespace libermedical.Pages
                     {
                         if ((BindingContext as OrdonnancesListViewModel).Ordonnances.Count < (BindingContext as OrdonnancesListViewModel).MaxCount)
                         {
-                            (BindingContext as OrdonnancesListViewModel).BindData(20);
+                            //(BindingContext as OrdonnancesListViewModel).BindData(20);
                         }
                     }
 
@@ -319,7 +320,7 @@ namespace libermedical.Pages
 
                 if (currentItem == lastItem && string.IsNullOrWhiteSpace(searchBar.Text))
                 {
-                    await (BindingContext as OrdonnancesListViewModel).BindData(20);
+                    await (BindingContext as OrdonnancesListViewModel).BindData();
                 }
 
             }
