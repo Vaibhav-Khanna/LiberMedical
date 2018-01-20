@@ -389,20 +389,20 @@ namespace libermedical.Services
 
         public async Task<IEnumerable<Ordonnance>> SearchOrdonnance(string query)
         {
-            if (App.IsConnected())
-            {
-                var request = new GetListRequest(100,1,searchValue: query,searchFields: "patientName", sortField: "createdAt", sortDirection: Enums.SortDirectionEnum.Desc);
+            //if (App.IsConnected())
+            //{
+            //    var request = new GetListRequest(100,1,searchValue: query,searchFields: "patientName", sortField: "createdAt", sortDirection: Enums.SortDirectionEnum.Desc);
 
-                var response = await App.OrdonnanceManager.GetListAsync(request);
+            //    var response = await App.OrdonnanceManager.GetListAsync(request);
 
-                if (response.rows!=null && response.rows.Any())
-                {
-                    return response.rows;
-                }
-                else
-                    return new List<Ordonnance>();
-            }
-            else
+            //    if (response.rows!=null && response.rows.Any())
+            //    {
+            //        return response.rows;
+            //    }
+            //    else
+            //        return new List<Ordonnance>();
+            //}
+            //else
             {
                 IEnumerable<Ordonnance> list;
 

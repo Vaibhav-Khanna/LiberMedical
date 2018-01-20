@@ -82,10 +82,12 @@ namespace libermedical.ViewModels
 
         }
 
-        public async Task BindData()
+        public async Task BindData(bool download = true)
         {
-            
-            MaxCount = await new StorageService<Ordonnance>().DownloadOrdonnances();
+            if (download)
+            {
+                MaxCount = await new StorageService<Ordonnance>().DownloadOrdonnances();
+            }
 
             var list = await _ordonnanceStorage.GetList();
             if (list != null && list.Count() != 0)
@@ -139,18 +141,23 @@ namespace libermedical.ViewModels
 
         public Command DeleteOrdo => new Command(async (obj) =>
        {
-            
-          Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
 
-          await App.OrdonnanceManager.DeleteItemAsync((string)obj);
+           Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
 
-          await BindData();
+           var resp = await App.OrdonnanceManager.DeleteItemAsync((string)obj);
 
-          Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+           if (resp)
+           {
+              await _ordonnanceStorage.DeleteItemAsync(typeof(Ordonnance).Name + "_" + (string)obj);
+           }
 
-          await ToastService.Show("L’ordonnance a été supprimée avec succès");
+           await BindData(false);
 
-      });
+           Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+
+           await ToastService.Show("L’ordonnance a été supprimée avec succès");
+
+       });
 
 
         public ICommand SelectItemCommand => new Command(async (item) =>
@@ -256,7 +263,7 @@ namespace libermedical.ViewModels
                                         Acr.UserDialogs.UserDialogs.Instance.HideLoading();
                                     }
                                    
-                                    await BindData();
+                                    await BindData(false);
 
                                     Device.BeginInvokeOnMainThread(() =>
                                     {

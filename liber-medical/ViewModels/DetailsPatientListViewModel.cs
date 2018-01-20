@@ -73,6 +73,8 @@ namespace libermedical.ViewModels
             {
                 Dlist = Dlist.OrderByDescending((arg) => arg.CreatedAt);
             }
+
+
             Documents = new ObservableCollection<Document>(Dlist);
         }
 
@@ -214,9 +216,6 @@ namespace libermedical.ViewModels
 
                     //}
 
-
-
-
                 });
             }
         }
@@ -306,9 +305,12 @@ namespace libermedical.ViewModels
         {            
             Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
 
-            await App.OrdonnanceManager.DeleteItemAsync((string)obj);
+            var response = await App.OrdonnanceManager.DeleteItemAsync((string)obj);
 
-            await new StorageService<Ordonnance>().DownloadOrdonnances();
+            if(response)
+            {
+                await new StorageService<Ordonnance>().DeleteItemAsync(typeof(Ordonnance).Name + "_" + (string)obj);
+            }
 
             await BindData();
 

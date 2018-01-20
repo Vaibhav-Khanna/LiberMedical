@@ -19,6 +19,6 @@ namespace libermedical.Managers
 
         Task<TModel> SaveOrUpdateAsync(string id, TModel model, bool isNew = false);
 
-        Task DeleteItemAsync(string id);
+        Task<bool> DeleteItemAsync(string id);
     }
 }

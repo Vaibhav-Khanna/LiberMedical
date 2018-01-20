@@ -27,11 +27,11 @@
                         <Label Text="{Binding FilterActiveText}" VerticalOptions="Center" FontSize="12" TextColor="White" HorizontalOptions="StartAndExpand" />
                     </StackLayout>
 
-                     <StackLayout VerticalOptions="FillAndExpand" HeightRequest="300" IsVisible="{Binding NoResultText,Converter={converter:StringToBoolConverter}" BackgroundColor="White" Orientation="Vertical" Spacing="10" HorizontalOptions="FillAndExpand">                      
+                     <StackLayout VerticalOptions="FillAndExpand" HeightRequest="600" IsVisible="{Binding NoResultText,Converter={converter:StringToBoolConverter}" BackgroundColor="White" Orientation="Vertical" Spacing="10" HorizontalOptions="FillAndExpand">                      
                        <Label Text="{Binding NoResultText}" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" FontSize="16" TextColor="Gray" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
                     </StackLayout>
 
-                  <ListView x:Name="TeledeclarationsList" RowHeight="70" HasUnevenRows="false" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing" Grid.Row="1" ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default" ItemAppearing="TeledeclarationsList_ItemAppearing">
+                  <ListView  x:Name="TeledeclarationsList" RowHeight="70" HasUnevenRows="false" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing"  ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default" ItemAppearing="TeledeclarationsList_ItemAppearing" VerticalOptions="FillAndExpand" >
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>

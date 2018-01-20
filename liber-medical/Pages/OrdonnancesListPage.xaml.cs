@@ -18,6 +18,7 @@ namespace libermedical.Pages
         private ObservableCollection<Ordonnance> _filteredItems { get; set; }
 
         private Filter _filter;
+        private bool AppearRefresh = false;
 
         public OrdonnancesListPage()
         {
@@ -33,6 +34,7 @@ namespace libermedical.Pages
             {
                 if(arg2==2)
                 {
+                    AppearRefresh = true;
                     MyListView.BeginRefresh();
                 }
 
@@ -40,6 +42,7 @@ namespace libermedical.Pages
 
             MessagingCenter.Subscribe<OrdonnanceCreateEditViewModel>(this, "RefreshOrdoList", (arg1 ) =>
             {
+                AppearRefresh = true;
                 MyListView.BeginRefresh();
             });
 
@@ -99,7 +102,9 @@ namespace libermedical.Pages
                 return;
             }
 
-            await (BindingContext as OrdonnancesListViewModel).BindData();
+            await (BindingContext as OrdonnancesListViewModel).BindData(!AppearRefresh);
+
+            AppearRefresh = false;
             ApplyFilter(_filter);
             MyListView.IsRefreshing = false;
             isExecuting = false;
@@ -107,7 +112,6 @@ namespace libermedical.Pages
 
         }
               
-
         private void ApplyFilter(Filter filter, bool isSearch = false, List<Ordonnance> Source = null)
         {
             if (filter != null)
@@ -236,11 +240,26 @@ namespace libermedical.Pages
             ((ListView)sender).SelectedItem = null;
         }
 
-        void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
+        async void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(searchBar.Text))
             {
-               
+                IEnumerable<Ordonnance> foundItems;
+
+                foundItems = await(BindingContext as OrdonnancesListViewModel)._ordonnanceStorage.SearchOrdonnance(searchBar.Text.Trim());
+
+                if (!string.IsNullOrWhiteSpace(searchBar.Text))
+                {
+                    //foreach (var item in foundItems)
+                    //{
+                    //    item.IsSynced = true;
+                    //}
+
+                    if (!string.IsNullOrWhiteSpace(searchBar.Text))
+                    {
+                        ApplyFilter(_filter, true, foundItems.ToList());
+                    }
+                }
             }
             else
             {
@@ -269,10 +288,10 @@ namespace libermedical.Pages
 
                 if (!string.IsNullOrWhiteSpace(searchBar.Text))
                 {
-                    foreach (var item in foundItems)
-                    {
-                        item.IsSynced = true;
-                    }
+                    //foreach (var item in foundItems)
+                    //{
+                    //    item.IsSynced = true;
+                    //}
 
                     if (!string.IsNullOrWhiteSpace(searchBar.Text))
                     {                        
@@ -300,36 +319,38 @@ namespace libermedical.Pages
 
         bool isExecuting = false;
 
-        private async void MyListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
+        private void MyListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
-            if (isExecuting)
-                return;
+            indicator.IsVisible = false;
+
+            //if (isExecuting)
+            //    return;
             
-            isExecuting = true;
+            //isExecuting = true;
 
-            if ((BindingContext as OrdonnancesListViewModel).Ordonnances.Count < (BindingContext as OrdonnancesListViewModel).MaxCount && string.IsNullOrWhiteSpace(searchBar.Text))
-            {
-                if (string.IsNullOrWhiteSpace(searchBar.Text))
-                    indicator.IsVisible = true;
-                else
-                    indicator.IsVisible = false;
+            //if ((BindingContext as OrdonnancesListViewModel).Ordonnances.Count < (BindingContext as OrdonnancesListViewModel).MaxCount && string.IsNullOrWhiteSpace(searchBar.Text))
+            //{
+            //    if (string.IsNullOrWhiteSpace(searchBar.Text))
+            //        indicator.IsVisible = true;
+            //    else
+            //        indicator.IsVisible = false;
               
-                var currentItem = e.Item as Ordonnance;
+            //    var currentItem = e.Item as Ordonnance;
                
-                var lastItem = (BindingContext as OrdonnancesListViewModel).Ordonnances[(BindingContext as OrdonnancesListViewModel).Ordonnances.Count - 1];
+            //    var lastItem = (BindingContext as OrdonnancesListViewModel).Ordonnances[(BindingContext as OrdonnancesListViewModel).Ordonnances.Count - 1];
 
-                if (currentItem == lastItem && string.IsNullOrWhiteSpace(searchBar.Text))
-                {
-                    await (BindingContext as OrdonnancesListViewModel).BindData();
-                }
+            //    if (currentItem == lastItem && string.IsNullOrWhiteSpace(searchBar.Text))
+            //    {
+            //        await (BindingContext as OrdonnancesListViewModel).BindData();
+            //    }
 
-            }
-            else
-            {
-                indicator.IsVisible = false;
-            }
+            //}
+            //else
+            //{
+            //    indicator.IsVisible = false;
+            //}
 
-            isExecuting = false;
+            //isExecuting = false;
         }
 
         void Handle_BindingContextChanged(object sender, System.EventArgs e)
