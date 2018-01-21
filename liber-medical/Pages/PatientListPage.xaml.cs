@@ -15,7 +15,6 @@ namespace libermedical.Pages
 		public PatientListPage()
 		{
 			//ToolItemBarConstruction because we arrive from TabbedPage Directely
-
 			Title = "Patients";
 			InitializeComponent();
 		}
@@ -34,7 +33,7 @@ namespace libermedical.Pages
             if (App.IsConnected())
                 await App.SyncData();
            
-            await (BindingContext as PatientListViewModel).BindData(20);
+            await (BindingContext as PatientListViewModel).BindData();
             PatientListView.EndRefresh();
             isExecuting = false;
         }
@@ -101,7 +100,7 @@ namespace libermedical.Pages
                
                 if (currentItem == lastItem[lastItem.Count - 1] && string.IsNullOrWhiteSpace(searchBar.Text))
                 {
-                    await (BindingContext as PatientListViewModel).BindData(20);
+                    await (BindingContext as PatientListViewModel).BindData();
                 }
             }
             else

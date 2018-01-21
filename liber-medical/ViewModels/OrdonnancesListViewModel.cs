@@ -21,7 +21,8 @@ namespace libermedical.ViewModels
     public class OrdonnancesListViewModel : ListViewModelBase<Ordonnance>
     {
         int _initCount = 0;
-        public int MaxCount { get; set; }
+      
+        public int MaxCount { get; set; } = 0;
         public IStorageService<Ordonnance> _ordonnanceStorage;
 
         private ObservableCollection<Ordonnance> _ordonnances;
@@ -79,15 +80,15 @@ namespace libermedical.ViewModels
 
             CachedList();
 
-            BindData(20);
         }
 
-        public async Task BindData(int count)
-        {            
-            _initCount = _initCount + count;
+        public async Task BindData(bool download = true)
+        {
+            if (download)
+            {
+                MaxCount = await new StorageService<Ordonnance>().DownloadOrdonnances();
+            }
 
-            MaxCount = await new StorageService<Ordonnance>().DownloadOrdonnances(_initCount);
-           
             var list = await _ordonnanceStorage.GetList();
             if (list != null && list.Count() != 0)
             {
@@ -140,18 +141,23 @@ namespace libermedical.ViewModels
 
         public Command DeleteOrdo => new Command(async (obj) =>
        {
-            
-          Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
 
-          await App.OrdonnanceManager.DeleteItemAsync((string)obj);
+           Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
 
-          await BindData(0);
+           var resp = await App.OrdonnanceManager.DeleteItemAsync((string)obj);
 
-          Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+           if (resp)
+           {
+              await _ordonnanceStorage.DeleteItemAsync(typeof(Ordonnance).Name + "_" + (string)obj);
+           }
 
-          await ToastService.Show("L’ordonnance a été supprimée avec succès");
+           await BindData(false);
 
-      });
+           Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+
+           await ToastService.Show("L’ordonnance a été supprimée avec succès");
+
+       });
 
 
         public ICommand SelectItemCommand => new Command(async (item) =>
@@ -257,7 +263,7 @@ namespace libermedical.ViewModels
                                         Acr.UserDialogs.UserDialogs.Instance.HideLoading();
                                     }
                                    
-                                    await BindData(0);
+                                    await BindData(false);
 
                                     Device.BeginInvokeOnMainThread(() =>
                                     {

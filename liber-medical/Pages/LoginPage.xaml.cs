@@ -5,6 +5,7 @@ using libermedical.Models;
 using libermedical.Request;
 using Newtonsoft.Json;
 using Xamarin.Forms;
+using libermedical.Services;
 
 namespace libermedical.Pages
 {
@@ -94,9 +95,13 @@ namespace libermedical.Pages
                 return;
             }
 
-            IsBusy = true;
+           // IsBusy = true;
 
-            ShowLoading();
+            loginentry.IsEnabled = false;
+            password.IsEnabled = false;
+            button.IsEnabled = false;
+            Indicator.IsVisible = true;
+            signText.Text = "Connexion en cours ...";
 
             var login = new LoginRequest
             {
@@ -111,6 +116,19 @@ namespace libermedical.Pages
                 Settings.Token = token.token;
                 Settings.TokenExpiration = token.tokenExpiration;
 
+                signText.Text = "Synchronisation des données...";
+
+                var ordoStorage = new StorageService<Ordonnance>();
+                var count = await ordoStorage.DownloadOrdonnances();
+
+
+                var patStorage = new StorageService<Patient>();
+                count = await patStorage.DownloadPatients();
+
+
+                var teleStorage = new StorageService<Teledeclaration>();
+                count = await teleStorage.DownloadTeledeclarations(); 
+                             
                 var user = new User
                 {
                     Email = _email
@@ -124,14 +142,23 @@ namespace libermedical.Pages
             }
             else
             {
-                HideAllPopup();
+                //HideAllPopup();
+
+                Indicator.IsVisible = false;
+
                 await DisplayAlert("Mauvais email et/ou mot de passe. Merci de réessayer", null, null, "OK");
-                IsBusy = false;
+              
+                loginentry.IsEnabled = true;
+                password.IsEnabled = true;
+                button.IsEnabled = true;
+               
+
+                //IsBusy = false;
             }
 
             HideAllPopup();
 
-            IsBusy = false;
+           // IsBusy = false;
         }
 
         public static bool IsEmail(string email)

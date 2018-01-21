@@ -131,27 +131,32 @@ namespace libermedical.Managers
             return res;
         }
 
-        public async Task DeleteItemAsync(string id)
+        public async Task<bool> DeleteItemAsync(string id)
         {
-
             try
             {
                 await _restService.DeleteItemAsync(id);
+                return true;
             }
             catch (UnauthorizedAccessException e)
             {
-                if (!_firstAuthFail) return;
+                if (!_firstAuthFail) return false;
 
                 _firstAuthFail = !_firstAuthFail;
 
                 if (await RegenerateLoginToken())
+                {
                     await _restService.DeleteItemAsync(id);
+                    return true;
+                }
             }
             catch (Exception e)
             {
                 Debug.WriteLine(@"				ERROR {0}", e.Message);
+                return false;
             }
 
+            return false;
         }
 
         private async Task<bool> RegenerateLoginToken()

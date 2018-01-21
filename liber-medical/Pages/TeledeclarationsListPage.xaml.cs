@@ -24,7 +24,7 @@ namespace libermedical.Pages
 
         async void Handle_Refreshing(object sender, System.EventArgs e)
         {
-            await (BindingContext as TeledeclarationsListViewModel).BindData(20);
+            await (BindingContext as TeledeclarationsListViewModel).BindData();
             TeledeclarationsList.EndRefresh();
         }
 
@@ -100,7 +100,7 @@ namespace libermedical.Pages
                 var lastItem = (BindingContext as TeledeclarationsListViewModel).Teledeclarations[(BindingContext as TeledeclarationsListViewModel).Teledeclarations.Count - 1];
               
                 if (currentItem == lastItem && string.IsNullOrWhiteSpace(searchBar.Text))
-                    await (BindingContext as TeledeclarationsListViewModel).BindData(20);
+                    await (BindingContext as TeledeclarationsListViewModel).BindData();
             }
             else
             {

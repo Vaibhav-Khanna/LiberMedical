@@ -20,7 +20,7 @@ namespace libermedical.ViewModels
     public class TeledeclarationsListViewModel : ListViewModelBase<Teledeclaration>
     {
         int _initCount = 0;
-        public int MaxCount { get; set; }
+        public int MaxCount { get; set; } = 0;
         private IStorageService<Teledeclaration> _teledeclarationsStorage;
         public Filter _filter;
         public ObservableCollection<Teledeclaration> _teledeclarationsAll;
@@ -84,8 +84,7 @@ namespace libermedical.ViewModels
                 _filter = filter;
                 ApplyFilter(filter);
             });
-
-            BindData(20);
+                      
         }
 
         private async Task DownlaodDocuments()
@@ -180,11 +179,11 @@ namespace libermedical.ViewModels
             }
         }
 
-        public async Task BindData(int count)
+        public async Task BindData()
         {
-            _initCount = _initCount + count;
+          
 
-            MaxCount = await new StorageService<Teledeclaration>().DownloadTeledeclarations(_initCount);
+            MaxCount = await new StorageService<Teledeclaration>().DownloadTeledeclarations();
 
             var list = await _teledeclarationsStorage.GetList();
 

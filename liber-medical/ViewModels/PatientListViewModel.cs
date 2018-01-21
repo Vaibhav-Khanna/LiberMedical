@@ -17,7 +17,7 @@ namespace libermedical.ViewModels
 	public class PatientListViewModel : ListViewModelBase<Patient>
 	{
         int _initCount = 0;
-        public int MaxCount { get; set; }
+        public int MaxCount { get; set; } = 0;
         public int CurrentCount { get; set; }
         private ObservableCollection<GroupedItem<Patient>> _filteredPatients;
         public ObservableCollection<GroupedItem<Patient>> Patients;
@@ -29,15 +29,13 @@ namespace libermedical.ViewModels
 		public PatientListViewModel(IStorageService<Patient> storageService) : base(storageService)
 		{
 			_patientsStorage = storageService;
-			BindData(20);
         }
 
 
-        public async Task BindData(int count)
+        public async Task BindData()
         {
-            _initCount = _initCount + count;
-
-            MaxCount = await new StorageService<Patient>().DownloadPatients(_initCount);
+            
+            MaxCount = await new StorageService<Patient>().DownloadPatients();
 
             DownlaodDocuments();
 
@@ -153,11 +151,11 @@ namespace libermedical.ViewModels
 					ItemsSource = _filteredPatients;
 
 
-                    if (!_filteredPatients.Any() && xlist.Count() < MaxCount)
-                    {
-                        MaxCount = await new StorageService<Patient>().DownloadPatients(MaxCount);
-                        FilterGroupItems(searchString);
-                    }
+                    //if (!_filteredPatients.Any() && xlist.Count() < MaxCount)
+                    //{
+                    //    MaxCount = await new StorageService<Patient>().DownloadPatients(MaxCount);
+                    //    FilterGroupItems(searchString);
+                    //}
 
 				}
 				else
