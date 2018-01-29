@@ -133,7 +133,7 @@ namespace libermedical.ViewModels
                     Label = Document.Label;
                     OptionText = "Modifier";
                     _isNew = false;
-
+                    CanEdit = false;
 
                     if (Document.UpdatedAt == null)
                     {
@@ -199,7 +199,7 @@ namespace libermedical.ViewModels
 
                             await CoreMethods.PopPageModel(true,false);
 
-                            await ToastService.Show("Votre document a bien été envoyé");
+                            await ToastService.Show("Informations enregistrées avec succès ");
                                                   
                         }
 					}

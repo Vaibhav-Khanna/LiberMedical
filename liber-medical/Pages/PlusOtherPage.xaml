@@ -11,16 +11,20 @@
         <ContentView Style="{StaticResource HeaderFooterBackground}">
             <Grid Padding="5,5,15,5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="50" />
                 </Grid.ColumnDefinitions>
                     <Image Grid.Column="0"  HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center">
-                        <View.GestureRecognizers>
+                     
+                    </Image>
+
+                      <BoxView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  Grid.Column="0" BackgroundColor="Transparent">
+                    <View.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding BackCommand}" />
                         </View.GestureRecognizers>
-                    </Image>
-               
+                </BoxView>
+                
                 <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" FontAttributes="Bold" Style="{StaticResource HeaderLabel}" Text="Autres" />
                          
             </Grid>

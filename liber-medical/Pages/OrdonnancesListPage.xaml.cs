@@ -20,11 +20,12 @@ namespace libermedical.Pages
         private Filter _filter;
         private bool AppearRefresh = false;
 
+
         public OrdonnancesListPage()
         {
+            
             InitializeComponent();
-
-           
+                
             MessagingCenter.Subscribe<StorageService<Ordonnance>>(this,"RefreshOrdonanceList", (obj) => 
             {                
                  MyListView?.BeginRefresh();

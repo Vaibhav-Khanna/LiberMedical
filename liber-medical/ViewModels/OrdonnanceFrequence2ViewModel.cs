@@ -5,6 +5,8 @@ using Xamarin.Forms;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using libermedical.PopUp;
+using System.Threading.Tasks;
 
 namespace libermedical.ViewModels
 {
@@ -69,15 +71,26 @@ namespace libermedical.ViewModels
                     var frequency = args as Frequency;
                     Cotations = frequency.Quotations != null ? new ObservableCollection<string>(frequency.Quotations) : new ObservableCollection<string>();
                     //Frequency.Quotations = Cotations.ToList();
+
+                    Show.Execute(null);
+
                     MessagingCenter.Send(this, Events.UpdateCotationsViewCellHeight, Cotations);
                 }
 
-                MessagingCenter.Unsubscribe<OrdonnanceCotationViewModel, Frequency>(this, Events.UpdateCotations);
+                 MessagingCenter.Unsubscribe<OrdonnanceCotationViewModel, Frequency>(this, Events.UpdateCotations);
             }));
-
-
-
         }
+
+
+        public ICommand Show => new Command(async (args) =>
+        {
+            await Task.Delay(1000);
+            Device.BeginInvokeOnMainThread( async() => 
+            {
+                await ToastService.Show("Informations enregistrées avec succès");
+            }); 
+        }); 
+
 
         private void SubscribeEditModeMessage()
         {
@@ -133,6 +146,7 @@ namespace libermedical.ViewModels
             if (CanEdit)
             {
                 Cotations.Remove(args as string);
+                ToastService.Show("Informations enregistrées avec succès");
                 //Frequency.Quotations = Cotations.ToList();
                 MessagingCenter.Send(this, Events.UpdateCotationsViewCellHeight, Cotations);
             }

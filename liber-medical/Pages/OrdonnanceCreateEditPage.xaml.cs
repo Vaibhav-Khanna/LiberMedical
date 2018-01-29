@@ -13,12 +13,12 @@ namespace libermedical.Pages
     public partial class OrdonnanceCreateEditPage
     {
         private Ordonnance _ordonnance = null;
+      
         public OrdonnanceCreateEditPage() : base(-1, 67, false)
         {
             InitializeComponent();
             SubscribeMessages();
-            DoAsyncActions();
-            
+            DoAsyncActions();            
         }
 
         void Handle_Clicked(object sender, System.EventArgs e)
@@ -42,10 +42,13 @@ namespace libermedical.Pages
             //if ((BindingContext as OrdonnanceCreateEditViewModel).SaveLabel == "Enregistrer")
                 //VisualiserSection.IsVisible = false;
             
-            MyDatePicker.Date = _ordonnance.FirstCareAt;
+            MyDatePicker.Date = Ordonnance.ConvertFromUnixTimestamp(_ordonnance.First_Care_At);
 
             MyDatePicker.DateSelected += MyDatePickerOnDateSelected;
-            SelectedDate.Text = $"Premier soin: {_ordonnance.FirstCareAt.ToString("dd-MM-yyyy")}";
+
+             
+            SelectedDate.Text = $"Premier soin: {Ordonnance.ConvertFromUnixTimestamp(_ordonnance.First_Care_At).ToString("dd-MM-yyyy")}";
+           
             if (_ordonnance.Frequencies != null)
                 UpdateFrequenciesViewCellHeight(new ObservableCollection<Frequency>(_ordonnance.Frequencies));
             else
@@ -75,6 +78,7 @@ namespace libermedical.Pages
             else if((BindingContext as OrdonnanceCreateEditViewModel).Ordonnance?.Status == Enums.StatusEnum.valid.ToString())
             {
                 statusIcon.Source = "send.png";
+                this.Footer = null;
                 StatusLabel.Text = "Traité le " + (BindingContext as OrdonnanceCreateEditViewModel).Ordonnance?.StatusChangedAt.ToString("dd/MM/yyyy");
             }
 
@@ -220,12 +224,20 @@ namespace libermedical.Pages
 
         void Handle_Tapped(object sender, System.EventArgs e)
         {
-            MyDatePicker.Date = DateTime.UtcNow;
-            (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.First_Care_At = App.ConvertToUnixTimestamp(DateTime.UtcNow);
-            SelectedDate.Text = $"Premier soin: {DateTime.UtcNow.ToString("dd-MM-yyyy")}";
-           
+            if ((this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.Status != Enums.StatusEnum.valid.ToString())
+            {
+                if ((this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.First_Care_At == 0)
+                {
+                    MyDatePicker.Date = DateTime.UtcNow;
+                    (this.BindingContext as OrdonnanceCreateEditViewModel).Ordonnance.First_Care_At = App.ConvertToUnixTimestamp(DateTime.UtcNow);
+                    SelectedDate.Text = $"Premier soin: {DateTime.UtcNow.ToString("dd-MM-yyyy")}";
+                }
 
-            FirstCareCell.IsVisible = true;
+                SelectedDate.TextColor = Color.Black;
+                arrowimg.Source = "back_arrow_green.png";
+
+                FirstCareCell.IsVisible = true;
+            }
         }
     }
 }
