@@ -21,8 +21,7 @@ namespace libermedical.ViewModels
 	public class OrdonnanceCreateEditViewModel : ViewModelBase
 	{
 		private string[] _frequenciesAll = new string[] { "Matin", "Midi", "Après-midi", "Soir" };
-		private bool _isNew;
-		private bool _isEditing;
+		private bool _isNew;		
 		private bool _canEdit;
 		
         public bool CanEdit
@@ -197,18 +196,9 @@ namespace libermedical.ViewModels
 
                     Frequencies = Ordonnance.Frequencies != null ? new ObservableCollection<Frequency>(Ordonnance.Frequencies) : new ObservableCollection<Frequency>();
                     Attachments = Ordonnance.Attachments != null ? new ObservableCollection<string>(Ordonnance.Attachments) : new ObservableCollection<string>();
-                  
-                    //if (Ordonnance.Attachments != null && Ordonnance.Attachments.Any())
-                    //{
-                    //    foreach (var item in Ordonnance.Attachments)
-                    //    {
-                    //        Attachments.Add(item);
-                    //    }
-                    //}
-
+                                
                     _isNew = false;
                     Creating = false;
-                    _isEditing = true;
                 }
 
 				MessagingCenter.Send(this, Events.UpdateFrequenciesViewCellHeight, Ordonnance.Frequencies);
@@ -301,8 +291,7 @@ namespace libermedical.ViewModels
 
 					await storageService.AddAsync(Ordonnance);
 
-					//TODO: Display success toast
-
+					
 					if (App.IsConnected())
 					{
                         storageService.PushOrdonnance(Ordonnance, _isNew && Ordonnance.UpdatedAt == null );
@@ -324,6 +313,7 @@ namespace libermedical.ViewModels
                         SaveLabel = "Enregistrer";
                     }
 				}
+
 			}
 			catch (Exception ex)
 			{
@@ -487,22 +477,23 @@ namespace libermedical.ViewModels
                         }
                         else
                         {
+                            
                             Ordonnance.Frequencies.Add(frequency);
                         }
                     }
 
                     if (Frequencies.Contains(frequency))
                     {
-
+                      
                     }
                     else
                     {
                         Frequencies.Add(frequency);
+                        await ToastService.Show("Fréquence ajoutée avec succès"); 
                         MessagingCenter.Send(this, Events.UpdateFrequenciesViewCellHeight, Frequencies);
                     }
 
-                    await ToastService.Show("La fréquence " + frequency.PeriodString + " a été ajoutée !");
-					
+                   
 				}
                	
 			});

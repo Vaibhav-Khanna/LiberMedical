@@ -14,10 +14,61 @@ namespace libermedical.Pages
 			InitializeComponent();
 
 		}
-		async void Cancel_Tapped(object sender, System.EventArgs e)
+
+        protected override void OnBindingContextChanged()
+        {
+            base.OnBindingContextChanged();
+
+            if (BindingContext != null)
+            {
+                (BindingContext as AddDocumentViewModel).PropertyChanged -= Handle_PropertyChanged;
+                (BindingContext as AddDocumentViewModel).PropertyChanged += Handle_PropertyChanged;
+            }
+        }
+
+
+        void Handle_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "CanEdit")
+            {
+                if((BindingContext as AddDocumentViewModel).CanEdit)
+                {
+                    SelectedDate.TextColor = Color.Black;
+                    name.TextColor = Color.Black;
+                    name.Opacity = 1;
+                }
+                else
+                {
+                    SelectedDate.TextColor = Color.Gray;
+                    name.TextColor = Color.Black;
+                    name.Opacity = 0.5;
+                }
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if ((BindingContext as AddDocumentViewModel).CanEdit)
+            {
+                SelectedDate.TextColor = Color.Black;
+                name.TextColor = Color.Black;
+                name.Opacity = 1;
+            }
+            else
+            {
+                SelectedDate.TextColor = Color.Gray;
+                name.TextColor = Color.Black;
+                name.Opacity = 0.5;
+            }
+
+        }
+
+        async void Cancel_Tapped(object sender, System.EventArgs e)
 		{
 			await Navigation.PopModalAsync();
-		}
+        }
 		async void Save_Tapped(object sender, System.EventArgs e)
 		{
 
@@ -44,8 +95,8 @@ namespace libermedical.Pages
 			
 		}
 
-		private void MyDatePickerOnDateSelected(object sender, DateChangedEventArgs dateChangedEventArgs)
-		{
+        private void MyDatePickerOnDateSelected(object sender, DateChangedEventArgs dateChangedEventArgs)
+        {
 			(this.BindingContext as AddDocumentViewModel).Document.AddDate = dateChangedEventArgs.NewDate;
 			SelectedDate.Text = $"Date : {(sender as DatePicker).Date.ToString("dd-MM-yyyy")}";
 		}

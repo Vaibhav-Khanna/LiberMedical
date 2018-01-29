@@ -40,6 +40,20 @@ namespace libermedical.CustomControls
 			{
 				if (_mainLayout != null)
 				{
+                    if (_footer != null && value == null && _mainLayout.Children.Contains(_footer))
+                    {
+                        _mainLayout.Children.Remove(_footer);
+
+                        if (Device.RuntimePlatform == Device.iOS)
+                        {
+                            _mainLayout.RowDefinitions.RemoveAt(3);
+                        }
+                        else
+                            _mainLayout.RowDefinitions.RemoveAt(2);
+                        
+                        return;
+                    }
+
 					if (_footer != null && _mainLayout.Children.Contains(_footer))
 						_mainLayout.Children.Remove(_footer);
 
@@ -48,7 +62,8 @@ namespace libermedical.CustomControls
 						_mainLayout.Children.Add(_footer, 0, 3);
 					else
 						_mainLayout.Children.Add(_footer, 0, 2);
-				}
+                }
+               
 			}
 		}
 

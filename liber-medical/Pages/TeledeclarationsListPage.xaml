@@ -13,6 +13,7 @@
 		<Grid RowSpacing="0" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" >
 			<Grid.RowDefinitions>
 				<RowDefinition Height="50" />
+                <RowDefinition Height="Auto" />
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
             
@@ -20,7 +21,7 @@
 				<SearchBar x:Name="searchBar" BackgroundColor="White" HeightRequest="30" HorizontalOptions="FillAndExpand" Placeholder="Rechercher" Style="{StaticResource ResearchBar}" VerticalOptions="FillAndExpand" TextChanged="Handle_TextChanged" />
 			</StackLayout>
 
-            <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" Grid.Row="1">
+            <StackLayout Orientation="Vertical" VerticalOptions="Start" Grid.Row="1">
 
                  <StackLayout VerticalOptions="Start" IsVisible="{Binding FilterActiveText,Converter={converter:StringToBoolConverter}" BackgroundColor="#F5A623" Orientation="Horizontal" HeightRequest="30" Spacing="10" HorizontalOptions="FillAndExpand">
                         <Label Text="!" FontAttributes="Bold" FontSize="20" TextColor="White" VerticalOptions="Center" HorizontalOptions="EndAndExpand" />
@@ -30,8 +31,9 @@
                      <StackLayout VerticalOptions="FillAndExpand" HeightRequest="600" IsVisible="{Binding NoResultText,Converter={converter:StringToBoolConverter}" BackgroundColor="White" Orientation="Vertical" Spacing="10" HorizontalOptions="FillAndExpand">                      
                        <Label Text="{Binding NoResultText}" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" FontSize="16" TextColor="Gray" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
                     </StackLayout>
-
-                  <ListView  x:Name="TeledeclarationsList" RowHeight="70" HasUnevenRows="false" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing"  ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default" ItemAppearing="TeledeclarationsList_ItemAppearing" VerticalOptions="FillAndExpand" >
+            </StackLayout>
+         
+                  <ListView Grid.Row="2" x:Name="TeledeclarationsList" RowHeight="70" HasUnevenRows="false" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing"  ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default" ItemAppearing="TeledeclarationsList_ItemAppearing" VerticalOptions="FillAndExpand" >
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
@@ -70,7 +72,7 @@
                 </ListView.Footer>
                     </ListView>
                 
-            </StackLayout>
+           
             
           
            

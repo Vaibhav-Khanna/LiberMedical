@@ -25,7 +25,7 @@
         </Image>
         <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Style="{StaticResource HeaderLabelAction}" IsVisible="{Binding CanEdit}" Text="Annuler">
           <Label.GestureRecognizers>
-            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CancelCommand}" />
+            <TapGestureRecognizer NumberOfTapsRequired="1"  Command="{Binding CancelCommand}" />
           </Label.GestureRecognizers>
         </Label>
 
@@ -52,11 +52,11 @@
           <RowDefinition Height="45" />
           <RowDefinition Height="1" />
         </Grid.RowDefinitions>
-        <local:BorderlessEntry Text="{Binding Label}" Placeholder="Nom" IsEnabled="{Binding CanEdit}" Keyboard="Text" Style="{StaticResource PatientNameEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Row="0" />
+        <local:BorderlessEntry x:Name="name" Text="{Binding Label}" Placeholder="Nom" IsEnabled="{Binding CanEdit}" Keyboard="Text" Style="{StaticResource PatientNameEntry}" TextColor="Gray" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Row="0" />
         <BoxView BackgroundColor="#c8c7cc" HeightRequest="1" Grid.Row="1">
         </BoxView>
         <StackLayout Grid.Row="2" HorizontalOptions="FillAndExpand">
-          <Label x:Name="SelectedDate" Text="{Binding CreatedDate}" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand"  />
+          <Label x:Name="SelectedDate" TextColor="Gray" Text="{Binding CreatedDate}" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand"  />
         </StackLayout>
         <BoxView BackgroundColor="#c8c7cc" HeightRequest="1" Grid.Row="3">
         </BoxView>

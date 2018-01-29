@@ -11,6 +11,8 @@ namespace libermedical.Pages
 {
     public partial class LoginPage : BasePage
     {
+
+
         private string _email;
         private string _pass;
         private Color green = Color.FromHex("#91c602");

@@ -85,8 +85,8 @@
             </Grid.ColumnDefinitions>
             <Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
             <DatePicker x:Name="MyDatePicker" IsVisible="False" Grid.Column="1" Unfocused="Handle_Unfocused" />
-            <Label x:Name="SelectedDate" Text="Date de premier soin" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
-            <Image Source="back_arrow_green.png" VerticalOptions="Center" Grid.Column="2" />
+            <Label x:Name="SelectedDate" TextColor="Gray" Text="Date de premier soin" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+            <Image Source="back_arrow_grey.png" x:Name="arrowimg" VerticalOptions="Center" Grid.Column="2" />
           </Grid>
           <StackLayout  Padding="10,10,0,10" Style="{StaticResource ModalContentBackgroundColor}">
             <StackLayout>

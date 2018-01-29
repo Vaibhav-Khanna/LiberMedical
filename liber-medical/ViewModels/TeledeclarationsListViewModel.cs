@@ -241,10 +241,12 @@ namespace libermedical.ViewModels
             if (list != null && list.Count() != 0)
             {
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
+                list = list.DistinctBy( (arg) => arg.Id); 
             }
 
             Teledeclarations = new ObservableCollection<Teledeclaration>(list);
 
+            _teledeclarationsAll = Teledeclarations;
         }
 
         public ICommand FilterTappedCommand => new Command(

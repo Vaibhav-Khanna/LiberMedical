@@ -53,20 +53,7 @@
 	  <ContentView BackgroundColor="White">
 			<TableView Intent="Form" RowHeight="50">
 				<TableRoot>
-					<TableSection>
-						<ViewCell>
-							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" IsEnabled="false" Text="{Binding CurrentUser.Firstname}" />
-						</ViewCell>
-						<ViewCell>
-							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" IsEnabled="false" Text="{Binding CurrentUser.Lastname}" />
-						</ViewCell>
-						<ViewCell>
-							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" IsEnabled="false" Text="{Binding CurrentUser.Email}" />
-						</ViewCell>
-						<ViewCell>
-							<renderers:BorderlessEntry Style="{StaticResource EntryStyle}" IsEnabled="false" Text="{Binding CurrentUser.Phone}" />
-						</ViewCell>
-					</TableSection>
+					
 				  <TableSection Title="Changer le mot de passe">
 					<!--<ViewCell>
 					  <renderers:BorderlessEntry 

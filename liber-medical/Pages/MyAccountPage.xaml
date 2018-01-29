@@ -19,23 +19,23 @@
 		<ContentView Style="{StaticResource HeaderFooterBackground}">
 			<Grid Padding="5,5,15,5">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="45" />
+					<ColumnDefinition Width="50" />
 					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="45" />
+					<ColumnDefinition Width="50" />
 				</Grid.ColumnDefinitions>
 					<Image Grid.Column="0"  HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center">
-						<View.GestureRecognizers>
-							<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding BackCommand}" />
-						</View.GestureRecognizers>
+						
 					</Image>
-               
+
+                      <BoxView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  Grid.Column="0" BackgroundColor="Transparent">
+                    <View.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding BackCommand}" />
+                        </View.GestureRecognizers>
+                </BoxView>
+                
 				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" FontAttributes="Bold" Style="{StaticResource HeaderLabel}" Text="Mon compte" />
 			
-				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Style="{StaticResource HeaderLabel}" Text="Editer">
-					<View.GestureRecognizers>
-						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding EditCommand}" />
-					</View.GestureRecognizers>
-				</Label>
+				
 			</Grid>
 		</ContentView>
 	</custom:BasePage.Header>
@@ -57,7 +57,7 @@
 					<RowDefinition Height="1"/>
 					<RowDefinition Height="50"/>
 					<RowDefinition Height="1"/>
-                   
+                   <RowDefinition Height="50"/>
                     
 				</Grid.RowDefinitions>
 				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding FirstName}"  Grid.Row="0"/>
@@ -68,7 +68,11 @@
 				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="5"></BoxView>
 				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding PhoneNumber}" Grid.Row="6"/>
 				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="7"></BoxView>
-
+                <Label Style="{StaticResource LabellabelStyle}" TextColor="Blue" Text="Modifier votre mot de passe" Grid.Row="8">
+                    <View.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding EditCommand}" />
+                    </View.GestureRecognizers>
+                </Label>
                
 		            	</Grid>
           

@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Collections;
+using libermedical.PopUp;
 
 namespace libermedical.ViewModels
 {
@@ -239,6 +240,7 @@ namespace libermedical.ViewModels
 
                     if (Frequency != null && Frequency.Quotations != null && Frequency.Quotations.Count != 0)
                     {
+                       
                         MessagingCenter.Send(this, Events.UpdateCotations, Frequency);
                         await App.Current.MainPage.Navigation.PopModalAsync(true);
                     }

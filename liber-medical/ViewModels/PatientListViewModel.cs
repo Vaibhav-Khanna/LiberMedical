@@ -195,20 +195,24 @@ namespace libermedical.ViewModels
 		public override async void Init(object initData)
 		{
 			base.Init(initData);
-			if (initData != null)
+
+            if (initData != null)
             {
                 var values = initData as string[];
                 NavigationType = values[1];
                 ParentScreen = values[0];
                 DocType = values[2];
             }
+            else
+                await BindData();
         }
 
 
 		protected override async void ViewIsAppearing(object sender, EventArgs e)
 		{
 			base.ViewIsAppearing(sender, e);
-			SearchString = string.Empty;
+			
+            SearchString = string.Empty;
 
             var list = await _storageService.GetList();
             if (list != null && list.Count() != 0)
