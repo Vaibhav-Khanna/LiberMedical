@@ -27,6 +27,7 @@ namespace libermedical.Pages
 
             MessagingCenter.Subscribe<OrdonnanceFrequence2ViewModel>(this, Events.SetInitialPickerValue, async (sender) =>
             {
+                
                 while (this.BindingContext == null)
                 {
                     await Task.Delay(100);
@@ -61,6 +62,18 @@ namespace libermedical.Pages
                 }
             });
             // UpdateListAsync();
+
+        }
+
+        protected override void OnBindingContextChanged()
+        {
+            base.OnBindingContextChanged();
+
+            if(BindingContext!=null)
+            {
+                if (!(this.BindingContext as OrdonnanceFrequence2ViewModel).CanEdit)
+                    this.Footer = null;
+            }
 
         }
 
@@ -131,6 +144,7 @@ namespace libermedical.Pages
                 listCotations.HeightRequest  = (listCotations.ItemsSource as ObservableCollection<string>).Count * 41 + 10;
             }
         }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
