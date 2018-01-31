@@ -57,7 +57,7 @@
 					<RowDefinition Height="1"/>
 					<RowDefinition Height="50"/>
 					<RowDefinition Height="1"/>
-                   <RowDefinition Height="50"/>
+                   <RowDefinition Height="90"/>
                     
 				</Grid.RowDefinitions>
 				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding FirstName}"  Grid.Row="0"/>
@@ -68,7 +68,7 @@
 				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="5"></BoxView>
 				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding PhoneNumber}" Grid.Row="6"/>
 				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="7"></BoxView>
-                <Label Style="{StaticResource LabellabelStyle}" TextColor="Blue" Text="Modifier votre mot de passe" Grid.Row="8">
+                <Label Style="{StaticResource LabellabelStyle}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Center" Margin="0,0,10,0" TextColor="#91c602" Text="Modifier votre mot de passe" Grid.Row="8">
                     <View.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding EditCommand}" />
                     </View.GestureRecognizers>

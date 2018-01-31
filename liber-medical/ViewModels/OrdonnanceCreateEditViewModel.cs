@@ -405,7 +405,7 @@ namespace libermedical.ViewModels
 				if (action == "Annuler")
 					return;
 
-				await CoreMethods.PushPageModel<OrdonnanceFrequence2ViewModel>(frequency, true);
+                await CoreMethods.PushPageModel<OrdonnanceFrequence2ViewModel>(new Tuple<Frequency,bool>(frequency,true), true);
 				SubscribeFrequencyMessages();
 				MessagingCenter.Send(this, Events.EnableCotationsEditMode, true);
 			}
@@ -420,7 +420,7 @@ namespace libermedical.ViewModels
 
 		public ICommand ModifyFrequenceTappedCommand => new Command(async frequency =>
 		{
-			await CoreMethods.PushPageModel<OrdonnanceFrequence2ViewModel>(frequency, true);
+            await CoreMethods.PushPageModel<OrdonnanceFrequence2ViewModel>(new Tuple<Frequency,bool>((frequency as Frequency), CanEdit), true);
 			if (CanEdit)
 				MessagingCenter.Send(this, Events.EnableCotationsEditMode, true);
 

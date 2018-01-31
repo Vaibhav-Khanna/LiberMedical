@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using libermedical.PopUp;
 using System.Threading.Tasks;
+using System;
 
 namespace libermedical.ViewModels
 {
@@ -58,7 +59,7 @@ namespace libermedical.ViewModels
 
         public OrdonnanceFrequence2ViewModel()
         {
-            SubscribeEditModeMessage();
+           // SubscribeEditModeMessage();
         }
 
         private void SubscribeCotationsMessage()
@@ -105,9 +106,11 @@ namespace libermedical.ViewModels
         public override void Init(object initData)
         {
             base.Init(initData);
+
             if (initData != null)
             {
-                Frequency = initData as Frequency;
+                Frequency = (initData as Tuple<Frequency,bool>).Item1;
+                CanEdit = (initData as Tuple<Frequency, bool>).Item2;
                 Cotations = Frequency.Quotations != null ? new ObservableCollection<string>(Frequency.Quotations) : new ObservableCollection<string>();
                 MessagingCenter.Send(this, Events.UpdateCotationsViewCellHeight, Cotations);
             }
