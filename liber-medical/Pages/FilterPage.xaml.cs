@@ -67,11 +67,11 @@ namespace libermedical.Pages
 
 		async void Reset_Tapped(object sender, System.EventArgs e)
 		{
+            
 			attente.On = traite.On = refuse.On = false;
 			StartDate.Text = EndDate.Text = string.Empty;
+          
             _filter = null;
-
-            await Task.Delay(500);
 
             if (_parentScreen == "Teledeclarations")
                 MessagingCenter.Send(this, Events.UpdateTeledeclarationsFilters, _filter);
