@@ -62,12 +62,18 @@ namespace libermedical.Pages
                 MessagingCenter.Send(this, Events.UpdatePrescriptionFilters, _filter);
 
 
-			await Navigation.PopModalAsync();
+            await Navigation.PopModalAsync(Device.RuntimePlatform == Device.iOS);
 		}
+
+        bool isclosing = false;
 
 		async void Reset_Tapped(object sender, System.EventArgs e)
 		{
-            
+            if (isclosing)
+                return;
+
+            isclosing = true;
+
 			attente.On = traite.On = refuse.On = false;
 			StartDate.Text = EndDate.Text = string.Empty;
           
@@ -78,7 +84,9 @@ namespace libermedical.Pages
             else
                 MessagingCenter.Send(this, Events.UpdatePrescriptionFilters, _filter);
 
-            await Navigation.PopModalAsync();
+            await Navigation.PopModalAsync(Device.RuntimePlatform == Device.iOS);
+
+            isclosing = false;
         }
 
 		void HandleEndDateTapped(object sender, System.EventArgs e)

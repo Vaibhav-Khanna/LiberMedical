@@ -249,10 +249,19 @@ namespace libermedical.ViewModels
             _teledeclarationsAll = Teledeclarations;
         }
 
+        bool isopening = false;
+
         public ICommand FilterTappedCommand => new Command(
             async () =>
             {
-                await Application.Current.MainPage.Navigation.PushModalAsync(new FilterPage("Teledeclarations", _filter));
+               if (isopening)
+                    return;
+               
+               isopening = true;
+
+            await Application.Current.MainPage.Navigation.PushModalAsync(new FilterPage("Teledeclarations", _filter), Device.RuntimePlatform == Device.iOS );
+             
+                isopening = false;
             });
 
         public ICommand OpenInvoiceToSecuriseCommand
