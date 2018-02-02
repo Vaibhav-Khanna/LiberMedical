@@ -222,9 +222,17 @@ namespace libermedical.Pages
             }
         }
 
+        bool isopening = false;
+
         async void Filter_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new FilterPage("Ordonnance", _filter));
+            if (isopening)
+                return;
+            isopening = true;
+
+            await Navigation.PushModalAsync(new FilterPage("Ordonnance", _filter),Device.RuntimePlatform == Device.iOS);
+
+            isopening = false;
         }
 
         void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
