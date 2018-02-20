@@ -33,7 +33,7 @@
                     </StackLayout>
             </StackLayout>
          
-                  <ListView Grid.Row="2" x:Name="TeledeclarationsList" RowHeight="70" HasUnevenRows="false" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing"  ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default" ItemAppearing="TeledeclarationsList_ItemAppearing" VerticalOptions="FillAndExpand" >
+                  <ListView Grid.Row="2" x:Name="TeledeclarationsList" IsRefreshing="{Binding IsRefreshing}" RowHeight="70" HasUnevenRows="false" IsPullToRefreshEnabled="true" Refreshing="Handle_Refreshing"  ItemSelected="Handle_ItemSelected" ItemTapped="Handle_ItemTapped" ItemsSource="{Binding Teledeclarations}" SelectedItem="{Binding SelectedTeledeclaration}" SeparatorVisibility="Default" ItemAppearing="TeledeclarationsList_ItemAppearing" VerticalOptions="FillAndExpand" >
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>

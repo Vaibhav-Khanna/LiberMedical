@@ -139,7 +139,9 @@ namespace libermedical.Pages
 
                 MessagingCenter.Send(this, Events.CreateTabbedPage);
 
-                await Navigation.PushModalAsync(App.tabbedNavigation);
+                //await Navigation.PushModalAsync(App.tabbedNavigation);
+
+                App.Current.MainPage = App.tabbedNavigation;
 
             }
             else

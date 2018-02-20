@@ -109,6 +109,8 @@ namespace libermedical.Pages
             ApplyFilter(_filter);
             MyListView.IsRefreshing = false;
             isExecuting = false;
+
+            if((BindingContext as OrdonnancesListViewModel).Ordonnances.Any())
             MyListView.ScrollTo((BindingContext as OrdonnancesListViewModel).Ordonnances.First(), ScrollToPosition.Center, false);
 
         }

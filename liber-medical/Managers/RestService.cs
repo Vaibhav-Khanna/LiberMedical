@@ -220,10 +220,10 @@ namespace libermedical.Managers
 				case HttpStatusCode.OK:
 					var resp = JsonConvert.DeserializeObject<TokenResponse>(content);
 					return resp;
-				case HttpStatusCode.BadRequest:					
-					throw new Exception("Bad Request Error");
+				case HttpStatusCode.BadRequest:
+                    return null;
 				default:
-					throw new Exception("CustomError");
+                    return null;
 			}
 		}
 
