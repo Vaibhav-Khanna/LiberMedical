@@ -22,7 +22,16 @@ namespace libermedical.Managers
 
         public virtual async Task<PaginationResponse<TModel>> GetListAsync(GetListRequest request)
         {
-            var res = new PaginationResponse<TModel>();
+            var res = new PaginationResponse<TModel>()
+            { 
+                rows = new System.Collections.Generic.List<TModel>()
+            };
+           
+            if(Device.RuntimePlatform== Device.Android)
+            {
+                res.rows = new System.Collections.Generic.List<TModel>();
+            }
+
             try
             {
                 res = (await _restService.GetAllDataAsyncWithParameters(
@@ -35,7 +44,8 @@ namespace libermedical.Managers
             }
             catch (UnauthorizedAccessException)
             {
-                if (!_firstAuthFail) return res;
+                if (!_firstAuthFail) 
+                    return res;
 
                 _firstAuthFail = !_firstAuthFail;
 
@@ -159,31 +169,72 @@ namespace libermedical.Managers
             return false;
         }
 
+        bool isOpening = false;
+
         private async Task<bool> RegenerateLoginToken()
         {
-           
-                try
+            if (isOpening)
+                return false;
+
+            isOpening = true;
+
+            try
+            {
+                var newToken = await _restService.RegenerateLoginToken().ConfigureAwait(false);
+
+                if (newToken != null)
                 {
-                    var newToken = await _restService.RegenerateLoginToken().ConfigureAwait(false);
                     Settings.Token = newToken.token;
                     Settings.TokenExpiration = newToken.tokenExpiration;
+                    isOpening = false;
                     return true;
                 }
-                catch (Exception ex)
+                else
                 {
-                    Debug.WriteLine("Token has been expired and this is the error message : " + ex.Message);
-                 
                     Settings.Token = string.Empty;
                     Settings.TokenExpiration = 0;
                     Settings.IsLoggedIn = false;
 
-                    Device.BeginInvokeOnMainThread(() =>
-                   {
-                       Application.Current.MainPage = new NavigationPage(new LoginPage());
-                   });
+                    if (Device.RuntimePlatform == Device.Android)
+                    {
+                        App.MoveToLogin();
+                    }
+                    else
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            Application.Current.MainPage = new NavigationPage(new LoginPage());
+                        });
+                    }
 
+                    isOpening = false;
                     return false;
                 }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Token has been expired and this is the error message : " + ex.Message);
+
+                Settings.Token = string.Empty;
+                Settings.TokenExpiration = 0;
+                Settings.IsLoggedIn = false;
+
+                if (Device.RuntimePlatform == Device.Android)
+                {
+                    App.MoveToLogin();
+                }
+                else
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        Application.Current.MainPage = new NavigationPage(new LoginPage());
+                    });
+                }
+
+                isOpening = false;
+                return false;
+            }
         }
     }
 }

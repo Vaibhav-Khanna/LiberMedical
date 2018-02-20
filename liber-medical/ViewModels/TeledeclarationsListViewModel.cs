@@ -87,19 +87,19 @@ namespace libermedical.ViewModels
                       
         }
 
-        private async Task DownlaodDocuments()
-        {
-            if (App.IsConnected())
-            {
-                var request = new GetListRequest(600, 0);
-                var documents =
-                    new ObservableCollection<Document>((await App.DocumentsManager.GetListAsync(request)).rows);
+        //private async Task DownlaodDocuments()
+        //{
+        //    if (App.IsConnected())
+        //    {
+        //        var request = new GetListRequest(600, 0);
+        //        var documents =
+        //            new ObservableCollection<Document>((await App.DocumentsManager.GetListAsync(request)).rows);
 
-                //Updating records in local cache
-                await new StorageService<Document>().InvalidateSyncedItems();
-                await new StorageService<Document>().AddManyAsync(documents.ToList());
-            }
-        }
+        //        //Updating records in local cache
+        //        await new StorageService<Document>().InvalidateSyncedItems();
+        //        await new StorageService<Document>().AddManyAsync(documents.ToList());
+        //    }
+        //}
 
 
 
@@ -181,8 +181,6 @@ namespace libermedical.ViewModels
 
         public async Task BindData()
         {
-          
-
             MaxCount = await new StorageService<Teledeclaration>().DownloadTeledeclarations();
 
             var list = await _teledeclarationsStorage.GetList();
@@ -247,6 +245,12 @@ namespace libermedical.ViewModels
             Teledeclarations = new ObservableCollection<Teledeclaration>(list);
 
             _teledeclarationsAll = Teledeclarations;
+
+            IsRefreshing = true;
+
+            await BindData();
+
+            IsRefreshing = false;
         }
 
         bool isopening = false;

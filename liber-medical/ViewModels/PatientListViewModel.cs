@@ -54,9 +54,11 @@ namespace libermedical.ViewModels
         {
             if (App.IsConnected())
             {
-                var request = new GetListRequest(600, 0);
+                var request = new GetListRequest(10, 0);
                
                 var documents = await App.DocumentsManager.GetListAsync(request);
+
+                documents = await App.DocumentsManager.GetListAsync(new GetListRequest(documents.total, 0));
 
                 //Updating records in local cache
                 if(documents!=null && documents.rows!=null)
@@ -110,11 +112,19 @@ namespace libermedical.ViewModels
 
 		public ICommand BackArrowCommand => new Command(
 			async () => await CoreMethods.PopModalNavigationService());
-		public ICommand AddUserCommand => new Command(
+
+
+        bool isOpening = false;
+
+        public ICommand AddUserCommand => new Command(
 			async () =>
 			{
-				await PushPageModelWithNewNavigation<AddEditPatientViewModel>(null);
-
+                if (isOpening)
+                    return;
+            
+                isOpening = true;
+            await PushPageModelWithNewNavigation<AddEditPatientViewModel>(null,Device.RuntimePlatform == Device.iOS);
+                isOpening = false;
 			});
 
 
@@ -187,8 +197,13 @@ namespace libermedical.ViewModels
 			}
 			else
 			{
+                if (isOpening)
+                    return;
+                
+                isOpening = true;
 				var ctx = cell.BindingContext;
-				await CoreMethods.PushPageModelWithNewNavigation<DetailsPatientListViewModel>(ctx);
+                await CoreMethods.PushPageModelWithNewNavigation<DetailsPatientListViewModel>(ctx,Device.RuntimePlatform == Device.iOS);
+                isOpening = false;
 			}
 		}
 
@@ -221,8 +236,7 @@ namespace libermedical.ViewModels
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
             }
 
-            GroupItems(list.ToList());
-           
+            GroupItems(list.ToList());           
         }
 
 	}

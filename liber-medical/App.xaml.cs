@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Acr.UserDialogs;
 using Akavache;
+using Com.OneSignal;
 using FreshMvvm;
 using libermedical.Helpers;
 using libermedical.Managers;
@@ -59,6 +60,10 @@ namespace libermedical
                 MainPage = new NavigationPage(new LoginPage()); // { BarTextColor = Color.White };
             }
 
+
+            OneSignal.Current.StartInit("YOUR_ONESIGNAL_APP_ID").EndInit();
+                  
+
             if (IsConnected())
                 SyncData();
             
@@ -73,6 +78,22 @@ namespace libermedical
                 if(e.IsConnected)
                     SyncData();
             };
+
+        }
+
+        static bool IsOpening = false;
+
+        public static void MoveToLogin()
+        {
+            if (IsOpening)
+                return;
+
+            IsOpening = true;
+
+            Device.BeginInvokeOnMainThread( () => 
+            {
+                App.Current.MainPage = new NavigationPage(new LoginPage());
+            });
 
         }
 

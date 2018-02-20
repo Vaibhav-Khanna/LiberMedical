@@ -79,22 +79,24 @@ namespace libermedical.ViewModels
             });
 
             CachedList();
-
         }
 
         public async Task BindData(bool download = true)
         {
-            if (download)
+            //if (download)
             {
                 MaxCount = await new StorageService<Ordonnance>().DownloadOrdonnances();
             }
 
             var list = await _ordonnanceStorage.GetList();
+
             if (list != null && list.Count() != 0)
             {
                 list = list.DistinctBy((arg) => arg.Id);
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
             }
+            else
+                list = new List<Ordonnance>();
         
             Ordonnances = new ObservableCollection<Ordonnance>(list);
 
@@ -296,6 +298,8 @@ namespace libermedical.ViewModels
                 list = list.DistinctBy((arg) => arg.Id);
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
             }
+            else
+                list = new List<Ordonnance>();
 
             Ordonnances = new ObservableCollection<Ordonnance>(list);
 

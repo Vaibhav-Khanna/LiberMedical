@@ -219,9 +219,11 @@ namespace libermedical.ViewModels
         {
             if (App.IsConnected())
             {
-                var request = new GetListRequest(600, 0);
+                var request = new GetListRequest(10, 0);
 
                 var documents = await App.DocumentsManager.GetListAsync(request);
+
+                documents = await App.DocumentsManager.GetListAsync(new GetListRequest(documents.total, 0));
 
                 //Updating records in local cache
                 if (documents != null && documents.rows != null)

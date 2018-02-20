@@ -265,14 +265,20 @@ namespace libermedical.ViewModels
             }
         }
 
+        bool isOpening = false;
+
         public ICommand OrdonnanceSelectCommand
         {
             get
             {
                 return new Command(async () =>
                 {
-                    await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(SelectedOrdonnance, true);
-
+                    if (isOpening)
+                        return;
+                    
+                    isOpening = true;
+                    await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(SelectedOrdonnance,true,Device.RuntimePlatform == Device.iOS);
+                    isOpening = false;
                 });
             }
         }
@@ -296,7 +302,13 @@ namespace libermedical.ViewModels
             {
                 return new Command(async () =>
                 {
-                    await CoreMethods.PushPageModel<AddDocumentViewModel>(SelectedDocument,true,false);
+                    if (isOpening)
+                        return;
+
+                    isOpening = true;
+                    await CoreMethods.PushPageModel<AddDocumentViewModel>(SelectedDocument,true,Device.RuntimePlatform == Device.iOS);
+                    isOpening = false;
+
                 });
             }
         }
