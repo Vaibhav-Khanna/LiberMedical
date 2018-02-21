@@ -88,8 +88,8 @@ namespace libermedical.ViewModels
 		});
 
 		public ICommand CancelCommand => new Command(async () =>
-		{
-			await CoreMethods.PopPageModel(true);
+		{            
+            await CoreMethods.PopPageModel(true);
 		});
 
 

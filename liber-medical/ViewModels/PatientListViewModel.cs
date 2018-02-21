@@ -117,13 +117,13 @@ namespace libermedical.ViewModels
         bool isOpening = false;
 
         public ICommand AddUserCommand => new Command(
-			async () =>
+            async () =>
 			{
                 if (isOpening)
                     return;
             
                 isOpening = true;
-            await PushPageModelWithNewNavigation<AddEditPatientViewModel>(null,Device.RuntimePlatform == Device.iOS);
+                await CoreMethods.PushPageModelWithNewNavigation<AddEditPatientViewModel>(null,Device.RuntimePlatform == Device.iOS);
                 isOpening = false;
 			});
 
@@ -160,12 +160,6 @@ namespace libermedical.ViewModels
                                       
 					ItemsSource = _filteredPatients;
 
-
-                    //if (!_filteredPatients.Any() && xlist.Count() < MaxCount)
-                    //{
-                    //    MaxCount = await new StorageService<Patient>().DownloadPatients(MaxCount);
-                    //    FilterGroupItems(searchString);
-                    //}
 
 				}
 				else
