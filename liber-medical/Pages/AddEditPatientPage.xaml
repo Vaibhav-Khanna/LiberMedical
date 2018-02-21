@@ -10,7 +10,7 @@
 				</Grid.ColumnDefinitions>
 				<Grid Grid.Column="0">
 					<Grid.GestureRecognizers>
-						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CancelCommand}" />
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CancelCommand}" />
 					</Grid.GestureRecognizers>
 					<Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}" Text="Annuler" />
 				</Grid>
