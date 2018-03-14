@@ -14,6 +14,7 @@ using libermedical.Request;
 using Acr.UserDialogs;
 using Plugin.Messaging;
 using libermedical.PopUp;
+using Com.OneSignal;
 
 namespace libermedical.ViewModels
 {
@@ -41,7 +42,34 @@ namespace libermedical.ViewModels
 			SubscribeToMessages();
             WelcomeText = $"Bonjour {JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Firstname}, que souhaitez-vous faire?";
 			CheckForAdvisor();
+
+          
+            OneSignal.Current.RegisterForPushNotifications();
+
+            Com.OneSignal.Abstractions.IdsAvailableCallback callback = new Com.OneSignal.Abstractions.IdsAvailableCallback(HandleIdsAvailableCallback);
+
+            OneSignal.Current.IdsAvailable(callback);
 		}
+
+
+        async void HandleIdsAvailableCallback(string playerID, string pushToken)
+        {
+            if (!string.IsNullOrWhiteSpace(playerID))
+            {
+                var CurrentUser = JsonConvert.DeserializeObject<User>(Settings.CurrentUser);
+
+                if (CurrentUser != null)
+                {
+                    CurrentUser.OneSignalId = playerID;
+
+                    var return_user = await App.UserManager.SaveOrUpdateAsync(CurrentUser.Id,CurrentUser,false);
+
+                    if(return_user!=null)
+                    Settings.CurrentUser = JsonConvert.SerializeObject(return_user);
+                }
+            }
+        }
+
 
 		public ICommand AssistCommand => new Command(async () =>
 		{
