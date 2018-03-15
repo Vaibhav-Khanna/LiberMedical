@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<custom:BasePage
+  x:Class="libermedical.Pages.MyAccountPage"
+  xmlns="http://xamarin.com/schemas/2014/forms"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
+  Title="Mon Compte"
+  Style="{StaticResource ModalBackgroundColor}">
+	<custom:BasePage.Resources>
+		<ResourceDictionary>
+			  <Style x:Key="LabellabelStyle" TargetType="Label" >
+				  <Setter Property="Margin" Value="15,0,0,0"/>
+				  <Setter Property="VerticalOptions" Value="Center"/>
+			  </Style>
+		</ResourceDictionary>
+	</custom:BasePage.Resources>
+  
+	<custom:BasePage.Header>
+		<ContentView Style="{StaticResource HeaderFooterBackground}">
+			<Grid Padding="5,5,15,5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="50" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="50" />
+				</Grid.ColumnDefinitions>
+					<Image Grid.Column="0"  HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center">
+						
+					</Image>
+
+                      <BoxView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  Grid.Column="0" BackgroundColor="Transparent">
+                    <View.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding BackCommand}" />
+                        </View.GestureRecognizers>
+                </BoxView>
+                
+				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" FontAttributes="Bold" Style="{StaticResource HeaderLabel}" Text="Mon compte" />
+			
+				
+			</Grid>
+		</ContentView>
+	</custom:BasePage.Header>
+	  
+	<custom:BasePage.ContentPresenter>
+		<ContentView Style="{StaticResource ModalContentBackgroundColor}" VerticalOptions="FillAndExpand" >
+
+         
+                    <Grid Padding="10,0,0,0" VerticalOptions="Start">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="1"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="1"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="1"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="1"/>
+                   <RowDefinition Height="90"/>
+                    
+				</Grid.RowDefinitions>
+				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding FirstName}"  Grid.Row="0"/>
+				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="1"></BoxView>
+				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding LastName}"  Grid.Row="2"/>
+				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="3"></BoxView>
+				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding EmailAddress}"  Grid.Row="4"/>
+				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="5"></BoxView>
+				<Label Style="{StaticResource LabellabelStyle}" Text="{Binding PhoneNumber}" Grid.Row="6"/>
+				<BoxView Style="{StaticResource GreyBoxViewLine}" Grid.Row="7"></BoxView>
+                <Label Style="{StaticResource LabellabelStyle}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Center" Margin="0,0,10,0" TextColor="#91c602" Text="Modifier votre mot de passe" Grid.Row="8">
+                    <View.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding EditCommand}" />
+                    </View.GestureRecognizers>
+                </Label>
+               
+		            	</Grid>
+          
+		</ContentView>
+		</custom:BasePage.ContentPresenter>
+</custom:BasePage>

@@ -20,6 +20,7 @@
 bld/
 [Bb]in/
 [Oo]bj/
+Droid/Resources/Resource.designer.cs
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -67,6 +68,7 @@ artifacts/
 *.pidb
 *.svclog
 *.scc
+*.csproj.bak
 
 # Chutzpah Test files
 _Chutzpah*

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<custom:BasePage
+  x:Class="libermedical.Pages.MyAccountEditPage"
+  xmlns="http://xamarin.com/schemas/2014/forms"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
+  xmlns:renderers="clr-namespace:libermedical.Renderers;assembly=libermedical"
+  Title="Mon Compte"
+  Style="{StaticResource ModalBackgroundColor}">
+	<custom:BasePage.Resources>
+		<ResourceDictionary>
+			<Style x:Key="EntryStyle" TargetType="Entry">
+				<Setter Property="HorizontalOptions" Value="FillAndExpand" />
+				<Setter Property="Margin" Value="15,0,0,0" />
+			</Style>
+		</ResourceDictionary>
+	</custom:BasePage.Resources>
+	<custom:BasePage.Header>
+		<ContentView Style="{StaticResource HeaderFooterBackground}">
+			<Grid Padding="15,5,15,5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+
+				<Label
+				  Grid.Column="0"
+				  HorizontalOptions="Center"
+				  Style="{StaticResource HeaderLabelAction}"
+				  Text="Annuler"
+				  VerticalOptions="Center">
+					<View.GestureRecognizers>
+						<TapGestureRecognizer Command="{Binding NavBackCommand}" />
+					</View.GestureRecognizers>
+				</Label>
+				<Grid Grid.Column="2">
+					<Label
+					  HorizontalOptions="Center"
+					  Style="{StaticResource HeaderLabelAction}"
+					  Text="Enregistrer"
+					  VerticalOptions="Center">
+						<View.GestureRecognizers>
+							<TapGestureRecognizer Command="{Binding SaveCommand}" />
+						</View.GestureRecognizers>
+					</Label>
+				</Grid>
+			</Grid>
+		</ContentView>
+	</custom:BasePage.Header>
+
+	<custom:BasePage.ContentPresenter>
+	  <ContentView BackgroundColor="White">
+			<TableView Intent="Form" RowHeight="50">
+				<TableRoot>
+					
+				  <TableSection Title="Changer le mot de passe">
+					<!--<ViewCell>
+					  <renderers:BorderlessEntry 
+						Style="{StaticResource EntryStyle}" 
+						Text="{Binding OldPassword}" 
+						IsPassword="True"
+                        IsVisible="false"
+						Placeholder="Ancien mot de passe"/>
+					</ViewCell>-->
+					<ViewCell>
+					  <renderers:BorderlessEntry 
+						Style="{StaticResource EntryStyle}" 
+						Text="{Binding NewPassword}" 
+						IsPassword="True"
+						Placeholder="Nouveau mot de passe"/>
+					</ViewCell>
+					<ViewCell>
+					  <renderers:BorderlessEntry 
+						Style="{StaticResource EntryStyle}" 
+						Text="{Binding ConfirmPassword}"
+						IsPassword="True"
+						Placeholder="Confirmez le mot de passe"/>
+					</ViewCell>
+				  </TableSection>
+				</TableRoot>
+			  </TableView>
+	  </ContentView>
+	</custom:BasePage.ContentPresenter>
+</custom:BasePage>

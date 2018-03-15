@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:libermedical.Renderers;" x:Class="libermedical.Pages.AddEditPatientPage" Style="{StaticResource ModalBackgroundColor}" x:Name="Root">
+	<custom:BasePage.Header>
+		<ContentView Style="{StaticResource HeaderFooterBackground}">
+			<Grid Padding="15,5,15,5" >
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<Grid Grid.Column="0">
+					<Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CancelCommand}" />
+					</Grid.GestureRecognizers>
+					<Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}" Text="Annuler" />
+				</Grid>
+				<Grid Grid.Column="2">
+					<Grid.GestureRecognizers>
+						<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SaveCommand}" />
+					</Grid.GestureRecognizers>
+					<Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}" Text="Enregistrer" />
+				</Grid>
+			</Grid>
+		</ContentView>
+	</custom:BasePage.Header>
+	<custom:BasePage.ContentPresenter>
+		<ContentView Padding="20,0,0,10" Style="{StaticResource ModalContentBackgroundColor}">
+			<StackLayout Spacing="0">
+				<TableView Intent="Form" HorizontalOptions="FillAndExpand" BackgroundColor="#ffffff" HeightRequest="250">
+					<TableRoot>
+						<TableSection>
+							<ViewCell>
+								<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+									<local:BorderlessEntry Text="{Binding PatientProperty.FirstName, Mode=TwoWay}" Placeholder="Prénom" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+								</StackLayout>
+							</ViewCell>
+							<ViewCell>
+								<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+									<local:BorderlessEntry Text="{Binding PatientProperty.LastName, Mode=TwoWay}" Placeholder="Nom" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+								</StackLayout>
+							</ViewCell>
+							<ViewCell >
+							<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100">
+							<Image Source="add.png" Margin="10,10,10,10">
+								<Image.GestureRecognizers>
+									<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddPhoneCommand}" />
+								</Image.GestureRecognizers>
+							</Image>
+							<local:BorderlessEntry Text="{Binding PhoneNo}" Placeholder="Ajouter un numéro" Style="{StaticResource PhoneNumberEntry}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Telephone" />
+						</StackLayout>
+						</ViewCell>
+						</TableSection>
+					</TableRoot>
+				</TableView>
+				<ListView ItemsSource="{Binding Phones}" SeparatorVisibility="None" IsPullToRefreshEnabled="false" Style="{StaticResource StandartListViewStyle}">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+									<Image Source="delete.png" Margin="10,10,10,10">
+										<Image.GestureRecognizers>
+											<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Path=BindingContext.DeletePhoneCommand, Source={x:Reference Name=Root}}" CommandParameter="{Binding .}"/>
+										</Image.GestureRecognizers>
+									</Image>
+                  <Image Source="path_5.png" />
+									<Label Text="{Binding .}" Style="{StaticResource PortableNumber}" VerticalOptions="Center" />
+								</StackLayout>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+					<ListView.Footer>
+						
+					</ListView.Footer>
+				</ListView>
+			</StackLayout>
+		</ContentView>
+	</custom:BasePage.ContentPresenter>
+</custom:BasePage>

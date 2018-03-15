@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:ToolbarContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.PatientListPage" Title="Patients" Style="{StaticResource ModalBackgroundColor}">
+	<custom:ToolbarContentPage.ToolbarItems>
+		<ToolbarItem Priority="0" Icon="plus.png" Command="{Binding AddUserCommand}" />
+       
+	</custom:ToolbarContentPage.ToolbarItems>
+	<ContentView Style="{StaticResource ModalContentBackgroundColor}">
+		<Grid RowSpacing="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="50" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			<StackLayout BackgroundColor="#c8c7cc" Grid.Row="0" HeightRequest="40" Padding="8,7" HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
+				<SearchBar x:Name="searchBar" TextChanged="Handle_TextChanged" Placeholder="Rechercher" Text="{Binding SearchString, Mode=TwoWay}" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" />
+			</StackLayout>
+			<ListView x:Name="PatientListView" SeparatorVisibility="Default" Refreshing="Handle_Refreshing" IsPullToRefreshEnabled="true" Grid.Row="1" Style="{StaticResource StandartListViewStyle}" ItemSelected="Handle_ItemSelected" IsGroupingEnabled="true" GroupDisplayBinding="{Binding HeaderKey}" GroupShortNameBinding="{Binding HeaderKey}"
+				ItemAppearing="PatientListView_ItemAppearing">
+				<ListView.GroupHeaderTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<Label Text="{Binding HeaderKey}" FontAttributes="Bold" Margin="10,0,0,0" VerticalOptions="CenterAndExpand" />
+						</ViewCell>
+					</DataTemplate>
+				</ListView.GroupHeaderTemplate>
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell Tapped="PatientTapped">
+							<ViewCell.View>
+								<StackLayout Padding="10,0,0,0">
+									<Label Text="{Binding Fullname}" TextColor="Black" VerticalOptions="CenterAndExpand" />
+								</StackLayout>
+							</ViewCell.View>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+                 <ListView.Footer>
+                    <ContentView HorizontalOptions="FillAndExpand" HeightRequest="80">
+                        <ActivityIndicator x:Name="indicator" IsVisible="false" IsRunning="true" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+                    </ContentView>
+                </ListView.Footer>
+			</ListView>
+		</Grid>
+	</ContentView>
+</custom:ToolbarContentPage>

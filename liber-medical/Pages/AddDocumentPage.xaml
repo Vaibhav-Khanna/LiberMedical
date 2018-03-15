@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:local="clr-namespace:libermedical.Renderers;"
+                 xmlns:converter="clr-namespace:libermedical.Converters;assembly=libermedical"
+                 x:Class="libermedical.Pages.AddDocumentPage" Style="{StaticResource ModalBackgroundColor}">
+  <custom:BasePage.Resources>
+    <ResourceDictionary>
+     
+    </ResourceDictionary>
+  </custom:BasePage.Resources>
+  <custom:BasePage.Header>
+    <ContentView Style="{StaticResource HeaderFooterBackground}">
+      <Grid Padding="5">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="80" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="99" />
+        </Grid.ColumnDefinitions>
+        <Image HorizontalOptions="Start" Margin="15,0,0,0" Grid.Column="0" IsVisible="{Binding CanEdit,Converter={converter:BooleanNegativeConverter}}" Source="back_arrow.png" VerticalOptions="Center" >
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CancelCommand}" />
+          </Image.GestureRecognizers>
+        </Image>
+        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Style="{StaticResource HeaderLabelAction}" IsVisible="{Binding CanEdit}" Text="Annuler">
+          <Label.GestureRecognizers>
+            <TapGestureRecognizer NumberOfTapsRequired="1"  Command="{Binding CancelCommand}" />
+          </Label.GestureRecognizers>
+        </Label>
+
+        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderLabel}" Text="Document" />
+        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Style="{StaticResource HeaderLabelAction}" Text="{Binding OptionText}">
+          <Label.GestureRecognizers>
+            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddCommand}" />
+          </Label.GestureRecognizers>
+        </Label>
+      </Grid>
+    </ContentView>
+  </custom:BasePage.Header>
+  <custom:BasePage.ContentPresenter>
+    <ContentView Padding="20,10,0,10" Style="{StaticResource ModalContentBackgroundColor}">
+      <Grid RowSpacing="0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="45" />
+          <RowDefinition Height="1" />
+          <RowDefinition Height="45" />
+          <RowDefinition Height="1" />
+          <RowDefinition Height="45" />
+          <RowDefinition Height="1" />
+        </Grid.RowDefinitions>
+        <local:BorderlessEntry x:Name="name" Text="{Binding Label}" Placeholder="Nom" IsEnabled="{Binding CanEdit}" Keyboard="Text" Style="{StaticResource PatientNameEntry}" TextColor="Gray" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Row="0" />
+        <BoxView BackgroundColor="#c8c7cc" HeightRequest="1" Grid.Row="1">
+        </BoxView>
+        <StackLayout Grid.Row="2" HorizontalOptions="FillAndExpand">
+          <Label x:Name="SelectedDate" TextColor="Gray" Text="{Binding CreatedDate}" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand"  />
+        </StackLayout>
+        <BoxView BackgroundColor="#c8c7cc" HeightRequest="1" Grid.Row="3">
+        </BoxView>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Grid.Row="4">
+          <StackLayout.GestureRecognizers>
+            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddDocumentCommand}" />
+          </StackLayout.GestureRecognizers>
+          <Label Text="" Style="{StaticResource JoinDocumentLabel}" VerticalOptions="Center" />
+          <Image Source="attachment.png">
+          </Image>
+          <Image Source="{Binding ImagePath}" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Margin="0,1,3,1"></Image>
+
+        </StackLayout>
+        <BoxView BackgroundColor="#c8c7cc" HeightRequest="1" Grid.Row="5">
+        </BoxView>
+      </Grid>
+    </ContentView>
+  </custom:BasePage.ContentPresenter>
+</custom:BasePage>

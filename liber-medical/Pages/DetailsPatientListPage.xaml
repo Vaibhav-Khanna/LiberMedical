@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.DetailsPatientListPage" xmlns:converter="clr-namespace:libermedical.Converters;assembly=libermedical" Style="{StaticResource ModalBackgroundColor}" x:Name="Root">
+	<custom:BasePage.Header>
+		<ContentView Style="{StaticResource HeaderFooterBackground}">
+			<Grid Padding="5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="40" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="50" />
+				</Grid.ColumnDefinitions>
+				<Grid Grid.Column="0">
+					<Grid.GestureRecognizers>
+						<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
+					</Grid.GestureRecognizers>
+					<Image HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center" />
+				</Grid>
+				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderLabel}" Text="Patient" />
+				<Grid Grid.Column="2">
+					<Grid.GestureRecognizers>
+						<TapGestureRecognizer NumberOfTapsRequired="1" Command  ="{Binding EditPatient}" />
+					</Grid.GestureRecognizers>
+					<Label HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource HeaderLabelAction}" Text="Editer" />
+				</Grid>
+			</Grid>
+		</ContentView>
+	</custom:BasePage.Header>
+	<custom:BasePage.ContentPresenter>
+		<ContentView BackgroundColor="White">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="50" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+				<StackLayout BackgroundColor="#f0f0f0" Grid.Row="0">
+					<Label Margin="0,20,0,0" Text="{Binding Patient.Fullname}" HorizontalOptions="Center" VerticalOptions="Fill" Style="{StaticResource PatientNameTitle}" />
+					<!--<Label Margin="0,0,0,0" Text="portable" HorizontalOptions="Center" VerticalOptions="Fill" Style="{StaticResource PortableTitle}" />
+					<Label Margin="0,0,0,21" Text="{Binding Patient.PhoneNumbers[0]}" HorizontalOptions="Center" VerticalOptions="Fill" Style="{StaticResource PortableNumber}" />-->
+          <Image Source="phone2.png" HeightRequest="50" WidthRequest="50" HorizontalOptions="Center">                        
+            <Image.GestureRecognizers>
+              <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CallCommand}" />
+            </Image.GestureRecognizers>
+          </Image>
+                    <Label Text="Contacter" Margin="0,5,0,10" HorizontalOptions="Center" FontSize="14" TextColor="#91c602"  />
+				</StackLayout>
+				<StackLayout Grid.Row="1" Padding="40,10">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="50*" />
+							<ColumnDefinition Width="50*" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="30" />
+							<RowDefinition Height="5" />
+						</Grid.RowDefinitions>
+						<Grid Grid.Column="0" Grid.Row="0">
+							<Label Text="Ordonnances" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource OrdonnanceDocumentMenu}" />
+							<Grid.GestureRecognizers>
+								<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding OrdonnancesCommand}" />
+							</Grid.GestureRecognizers>
+						</Grid>
+						<BoxView HeightRequest="2" BackgroundColor="#91c602" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.Row="1" WidthRequest="110" x:Name="BoxViewOrdonnances" IsVisible="{Binding ShowBoxViewOrdonnances}" />
+						<Grid Grid.Column="1" Grid.Row="0">
+							<Label Text="Documents" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource OrdonnanceDocumentMenu}" />
+							<Grid.GestureRecognizers>
+								<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding DocumentsCommand}" />
+							</Grid.GestureRecognizers>
+						</Grid>
+						<BoxView HeightRequest="2" BackgroundColor="#91c602" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Grid.Row="1" WidthRequest="100" x:Name="BoxViewDocuments" IsVisible="{Binding ShowBoxViewDocuments}" />
+					</Grid>
+				</StackLayout>
+
+					<StackLayout Padding="0,0,0,0" Grid.Row="2" >
+						<ListView ItemsSource="{Binding Ordonnances}" x:Name="stackOrdonnance" SelectedItem="{Binding SelectedOrdonnance}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected1" IsVisible="{Binding ShowStackOrdonnance}" >
+							<ListView.ItemTemplate>
+								<DataTemplate>
+									<ViewCell BindingContextChanged="Handle_BindingContextChanged">
+                                     <ViewCell.ContextActions>
+                                <MenuItem Clicked="Handle_Clicked"  IsDestructive="true" CommandParameter="{Binding .}"
+                                 Text="Supprimer" />
+                            </ViewCell.ContextActions>
+										<Grid Padding="20,0,0,0" >
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="50*" />
+												<ColumnDefinition Width="40*" />
+                                               
+												<ColumnDefinition Width="10*" />
+											</Grid.ColumnDefinitions>
+											<Grid.RowDefinitions>
+												<RowDefinition Height="60*" />
+												<RowDefinition Height="40*" />
+											</Grid.RowDefinitions>
+											<Label Text="{Binding Index, StringFormat='Ordonnance {0}'}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
+											<Label Text="{Binding CreatedAt,StringFormat='{0:dd-MM-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
+											<Button Text="{Binding StatusString}" IsVisible="{Binding IsSynced}" HorizontalOptions="Center" VerticalOptions="End" InputTransparent="true" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" TextColor="#ffffff" Grid.RowSpan="1" Grid.Column="1"  >
+												<Button.HeightRequest>
+													<OnPlatform x:TypeArguments="x:Double" iOS="20" Android="40" />
+												</Button.HeightRequest>
+												<Button.WidthRequest>
+													<OnPlatform x:TypeArguments="x:Double" iOS="90" Android="100" />
+												</Button.WidthRequest>
+												<Button.BorderRadius>
+													<OnPlatform x:TypeArguments="x:Int32" iOS="10" Android="0" />
+												</Button.BorderRadius>
+                                             <Button.FontSize>
+                                                    <OnPlatform x:TypeArguments="x:Double">
+                                                        <On Platform="Android" Value="10" />
+                                                        <On Platform="iOS" Value="12" />
+                                                    </OnPlatform>
+                                                </Button.FontSize>
+											</Button>
+                                            <Image Source="sync.png" VerticalOptions="End" HorizontalOptions="Center" IsVisible="{Binding IsSynced,Converter={converter:BooleanNegativeConverter}}" Grid.Row="0" Grid.RowSpan="1" Grid.Column="1"></Image>
+                                            <Label Text="{Binding RefusedReasonString}" LineBreakMode="TailTruncation" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Start" Style="{StaticResource OrdonnanceAddDate}" TextColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" IsVisible="{Binding IsSynced}" Grid.Row="1" Grid.Column="1" />
+											<Image Source="back_arrow_green.png" HorizontalOptions="Start" VerticalOptions="Center" Grid.RowSpan="2" Grid.Column="2" />
+										</Grid>
+									</ViewCell>
+								</DataTemplate>
+							</ListView.ItemTemplate>
+                        <ListView.Footer>
+                            <StackLayout HeightRequest="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+                            </StackLayout>
+                        </ListView.Footer>
+						</ListView>
+                    
+						<ListView ItemsSource="{Binding Documents}" x:Name="stackDocument" SelectedItem="{Binding SelectedDocument}" IsVisible="{Binding ShowStackDocument}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected">
+							<ListView.ItemTemplate>
+								<DataTemplate>
+									<ViewCell>
+										<Grid Padding="20,0,0,0" >
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="90*" />
+												<ColumnDefinition Width="10*" />
+											</Grid.ColumnDefinitions>
+											<Grid.RowDefinitions>
+												<RowDefinition Height="60*" />
+												<RowDefinition Height="40*" />
+											</Grid.RowDefinitions>
+											<Label Text="{Binding Label, StringFormat='Doc- {0}'}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
+											<Label Text="{Binding CreatedAt, StringFormat='{0:dd-MM-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
+											<Image Source="back_arrow_green.png" HorizontalOptions="Start" VerticalOptions="Center" Grid.RowSpan="2" Grid.Column="1" />
+										</Grid>
+									</ViewCell>
+								</DataTemplate>
+							</ListView.ItemTemplate>
+                         <ListView.Footer>
+                            <StackLayout HeightRequest="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+                            </StackLayout>
+                        </ListView.Footer>
+						</ListView>
+					</StackLayout>
+				
+			</Grid>
+		</ContentView>
+	</custom:BasePage.ContentPresenter>
+	<custom:BasePage.Footer>
+		<ContentView Style="{StaticResource HeaderFooterBackground}">
+			<Label x:Name="Label" Text="{Binding BottomTitle}" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource FooterLabel}" />
+			<ContentView.GestureRecognizers>
+				<TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddOrdonnanceCommand}" />
+			</ContentView.GestureRecognizers>
+		</ContentView>
+	</custom:BasePage.Footer>
+</custom:BasePage>

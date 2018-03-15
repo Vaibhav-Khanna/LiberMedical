@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Class="libermedical.Pages.FilterPage" Style="{StaticResource ModalBackgroundColor}">
+	<custom:BasePage.Header>
+		<ContentView Style="{StaticResource HeaderFooterBackground}">
+			<Grid Padding="5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="40" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<!--<Grid Grid.Column="0">
+					<Grid.GestureRecognizers>
+						<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
+					</Grid.GestureRecognizers>
+					<Image HorizontalOptions="Center" Source="back_arrow.png" VerticalOptions="Center" />
+				</Grid>-->
+				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderLabel}" Text="Filtrer" />
+				<Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Style="{StaticResource HeaderLabelAction}" Text="Réinitialiser">
+					<Label.GestureRecognizers>
+						<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Reset_Tapped" />
+					</Label.GestureRecognizers>
+				</Label>
+			</Grid>
+		</ContentView>
+	</custom:BasePage.Header>
+	<custom:BasePage.ContentPresenter>
+		<ContentView Padding="0,0,5,0" Style="{StaticResource ModalContentBackgroundColor}">
+			<TableView Intent="Settings" HasUnevenRows="True">
+				<TableRoot>
+					<TableSection>
+						<ViewCell Height="50">
+							<Grid>
+								<Grid.GestureRecognizers>
+									<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="HandleStartDateTapped" />
+								</Grid.GestureRecognizers>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="15*" />
+									<ColumnDefinition Width="50*" />
+									<ColumnDefinition Width="35*" />
+								</Grid.ColumnDefinitions>
+								<Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
+								<Label Text="Date de Début" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+								<DatePicker x:Name="StartDatePicker" VerticalOptions="CenterAndExpand" Date="{x:Static sys:DateTime.UtcNow}" Grid.Column="2" DateSelected="Handle_StartDateSelected" IsVisible="false" Unfocused="StartDateUnfocused">
+									<DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
+									<DatePicker.MinimumDate>
+										<sys:DateTime x:FactoryMethod="Parse">
+											<x:Arguments>
+												<x:String>Jan 1 2010</x:String>
+											</x:Arguments>
+										</sys:DateTime>
+									</DatePicker.MinimumDate>
+									<DatePicker.MaximumDate>
+										<sys:DateTime x:FactoryMethod="Parse">
+											<x:Arguments>
+												<x:String>Dec 31 2030</x:String>
+											</x:Arguments>
+										</sys:DateTime>
+									</DatePicker.MaximumDate>
+								</DatePicker>
+								<Label x:Name="StartDate" Grid.Column="2" VerticalOptions="CenterAndExpand">
+								</Label>
+							</Grid>
+						</ViewCell>
+						<ViewCell Height="50">
+							<Grid>
+								<Grid.GestureRecognizers>
+									<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="HandleEndDateTapped" />
+								</Grid.GestureRecognizers>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="15*" />
+									<ColumnDefinition Width="50*" />
+									<ColumnDefinition Width="35*" />
+								</Grid.ColumnDefinitions>
+								<Image Source="calendar.png" VerticalOptions="Center" Grid.Column="0" />
+								<Label Text="Date de Fin" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Grid.Column="1" />
+								<DatePicker x:Name="EndDatePicker" VerticalOptions="CenterAndExpand" Date="{x:Static sys:DateTime.UtcNow}" Grid.Column="2" DateSelected="Handle_EndDateSelected" IsVisible="false" Unfocused="EndDateUnfocused">
+									<DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
+									<DatePicker.MinimumDate>
+										<sys:DateTime x:FactoryMethod="Parse">
+											<x:Arguments>
+												<x:String>Jan 1 2010</x:String>
+											</x:Arguments>
+										</sys:DateTime>
+									</DatePicker.MinimumDate>
+									<DatePicker.MaximumDate>
+										<sys:DateTime x:FactoryMethod="Parse">
+											<x:Arguments>
+												<x:String>Dec 31 2030</x:String>
+											</x:Arguments>
+										</sys:DateTime>
+									</DatePicker.MaximumDate>
+								</DatePicker>
+								<Label x:Name="EndDate" Grid.Column="2" VerticalOptions="CenterAndExpand">
+								</Label>
+							</Grid>
+						</ViewCell>
+					</TableSection>
+					<TableSection Title="Statut">
+						<SwitchCell Text="En attente" x:Name="attente" />
+						<SwitchCell Text="Traité" x:Name="traite" />
+						<SwitchCell Text="Refusé" x:Name="refuse" />
+					</TableSection>
+				</TableRoot>
+			</TableView>
+		</ContentView>
+	</custom:BasePage.ContentPresenter>
+	<custom:BasePage.Footer>
+		<ContentView Style="{StaticResource HeaderFooterBackground}">
+			<Label Text="Lancer la recherche" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource FooterLabel}" />
+			<ContentView.GestureRecognizers>
+				<TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Search_Tapped" />
+			</ContentView.GestureRecognizers>
+		</ContentView>
+	</custom:BasePage.Footer>
+</custom:BasePage>

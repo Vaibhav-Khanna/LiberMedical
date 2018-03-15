@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
+                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashLogo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="jCc-BX-GS0">
+                                <rect key="frame" x="27" y="213" width="266" height="142"/>
+                                <variation key="heightClass=regular-widthClass=compact" image="logo.png"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint id="2197" firstItem="jCc-BX-GS0" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="11"/>
+                            <constraint id="2198" firstItem="Ze5-6b-2t3" firstAttribute="trailingMargin" secondItem="jCc-BX-GS0" secondAttribute="trailing" constant="11"/>
+                            <constraint id="2199" firstItem="jCc-BX-GS0" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="193"/>
+                            <constraint id="2200" firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="jCc-BX-GS0" secondAttribute="bottom" constant="213"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="2197"/>
+                                <exclude reference="2198"/>
+                                <exclude reference="2199"/>
+                                <exclude reference="2200"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="2197"/>
+                                <include reference="2198"/>
+                                <include reference="2199"/>
+                                <include reference="2200"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="701" y="793"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="splashLogo.jpg" width="412" height="274"/>
+        <image name="add.png" width="22" height="22"/>
+        <image name="sync.png" width="18" height="23"/>
+        <image name="ionAlertCircledIonicons.png" width="18" height="15"/>
+        <image name="addfast.png" width="97" height="97"/>
+        <image name="addnormal.png" width="97" height="97"/>
+        <image name="attachment.png" width="15" height="17"/>
+        <image name="back_arrow.png" width="13" height="21"/>
+        <image name="back_arrow_green.png" width="13" height="21"/>
+        <image name="back_arrow_grey.png" width="13" height="21"/>
+        <image name="bottom.png" width="21" height="13"/>
+        <image name="calendar.png" width="20" height="21"/>
+        <image name="cancel.png" width="79" height="79"/>
+        <image name="clock.png" width="23" height="23"/>
+        <image name="close.png" width="18" height="18"/>
+        <image name="contrat.png" width="25" height="32"/>
+        <image name="delete.png" width="22" height="22"/>
+        <image name="filters.png" width="24" height="25"/>
+        <image name="home_selected.png" width="32" height="32"/>
+        <image name="logo.jpg" width="206" height="137"/>
+        <image name="ordonnances.png" width="25" height="31"/>
+        <image name="path_5.png" width="8" height="15"/>
+        <image name="patients.png" width="32" height="30"/>
+        <image name="plus.png" width="21" height="21"/>
+        <image name="plus_tabbed.png" width="32" height="10"/>
+        <image name="search.png" width="23" height="23"/>
+        <image name="secure.png" width="19" height="24"/>
+        <image name="send.png" width="79" height="79"/>
+        <image name="support.png" width="97" height="97"/>
+        <image name="teledeclaration.png" width="32" height="27"/>
+        <image name="user.png" width="25" height="25"/>
+        <image name="phone.png" width="21" height="21"/>
+        <image name="logo.png" width="206" height="137"/>
+        <image name="phone2.png" width="43" height="43"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedOrientationMetrics key="orientation"/>
+    </simulatedMetricsContainer>
+</document>
