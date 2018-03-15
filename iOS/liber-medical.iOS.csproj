@@ -29,8 +29,9 @@
     <MtouchDebug>true</MtouchDebug>
     <CodesignProvision></CodesignProvision>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <MtouchSdkVersion>11.1</MtouchSdkVersion>
+    <MtouchSdkVersion>11.2</MtouchSdkVersion>
     <MtouchFloat32>true</MtouchFloat32>
+    <MtouchExtraArgs>--registrar:static</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>

@@ -23,6 +23,9 @@ namespace libermedical.Models
 		[JsonProperty("nursesInCharge")]
 		public List<string> NursesInCharge { get; set; }
 
+        [JsonProperty("oneSignalId")]
+        public string OneSignalId { get; set; }
+
 		[JsonIgnore]
 		public string Fullname => $"{Firstname} {Lastname}";
 

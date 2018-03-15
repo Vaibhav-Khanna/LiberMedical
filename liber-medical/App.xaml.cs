@@ -61,8 +61,9 @@ namespace libermedical
             }
 
 
-            OneSignal.Current.StartInit("YOUR_ONESIGNAL_APP_ID").EndInit();
-                  
+            OneSignal.Current.StartInit("045fee61-44e6-45d3-8366-a8cda02647a2").EndInit();
+
+           
 
             if (IsConnected())
                 SyncData();
@@ -79,7 +80,9 @@ namespace libermedical
                     SyncData();
             };
 
+          
         }
+      
 
         static bool IsOpening = false;
 
