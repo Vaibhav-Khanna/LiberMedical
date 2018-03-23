@@ -41,6 +41,8 @@
 	<string>Cette app requiere l&apos;accès à l&apos;apareil photo</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Cette app requiere l&apos;accès à la librairie photo</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Cette app requiere l&apos;accès au calendrier</string>
 	<key>CFBundleShortVersionString</key>
 	<string>0.0.1</string>
 	<key>CFBundleVersion</key>
