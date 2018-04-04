@@ -38,9 +38,12 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
-	<string>Cette app requiere l&apos;accès à l&apos;apareil photo</string>
+	<string>Cette app requiert l’accès à l’appareil photo afin de vous permettre la prise de photos des ordonnances et documents de vos patients</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Cette app requiere l&apos;accès à la librairie photo</string>
+
+	<string>Cette app requiert l’accès à votre bibliothèque afin de vous permettre la sélection de photos des ordonnances et documents de vos patients</string>
+
+	
 	<key>NSCalendarsUsageDescription</key>
 	<string>Cette app requiere l&apos;accès au calendrier</string>
 	<key>CFBundleShortVersionString</key>
