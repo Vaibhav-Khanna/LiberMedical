@@ -37,25 +37,47 @@ namespace libermedical.ViewModels
         }
 
 
-		public HomeViewModel()
-		{
-			SubscribeToMessages();
-            WelcomeText = $"Bonjour {JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Firstname}, que souhaitez-vous faire?";
-			CheckForAdvisor();
+        public HomeViewModel()
+        {
+            SubscribeToMessages();
 
-          
+            WelcomeText = $"Bonjour {JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Firstname}, que souhaitez-vous faire?";
+
+            CheckForAdvisor();
+
             OneSignal.Current.RegisterForPushNotifications();
 
             Com.OneSignal.Abstractions.IdsAvailableCallback callback = new Com.OneSignal.Abstractions.IdsAvailableCallback(HandleIdsAvailableCallback);
 
-            OneSignal.Current.IdsAvailable(callback);
-		}
+            if (!string.IsNullOrEmpty(Settings.NotificationToken))
+            {
+                Update();
+            }
 
+            OneSignal.Current.IdsAvailable(callback);
+        }
+
+        async void Update()
+        {
+            var CurrentUser = JsonConvert.DeserializeObject<User>(Settings.CurrentUser);
+
+            if (CurrentUser != null)
+            {
+                CurrentUser.OneSignalId = Settings.NotificationToken;
+
+                var return_user = await App.UserManager.SaveOrUpdateAsync(CurrentUser.Id, CurrentUser, false);
+
+                if (return_user != null)
+                    Settings.CurrentUser = JsonConvert.SerializeObject(return_user);
+            }
+        }
 
         async void HandleIdsAvailableCallback(string playerID, string pushToken)
         {
             if (!string.IsNullOrWhiteSpace(playerID))
             {
+                Settings.NotificationToken = playerID;
+
                 var CurrentUser = JsonConvert.DeserializeObject<User>(Settings.CurrentUser);
 
                 if (CurrentUser != null)
@@ -70,11 +92,11 @@ namespace libermedical.ViewModels
             }
         }
 
-
 		public ICommand AssistCommand => new Command(async () =>
 		{
 			var action = await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Appel vocal", "E-mail", "SMS");
-			switch (action)
+			
+            switch (action)
 			{
                 case "Appel vocal":
                     if (CrossMessaging.Current.PhoneDialer.CanMakePhoneCall)
@@ -96,10 +118,12 @@ namespace libermedical.ViewModels
 		private async Task CheckForAdvisor()
 		{
 			var request = new GetListRequest(20, 0);
-			var userInfo = await App.UserManager.GetAsync($"{JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id}/advisor");
-			Settings.AdvisorContact = AdvisorContact = userInfo != null ? userInfo.Phone : string.Empty;
-			Settings.AdvisorEmail = userInfo != null ? userInfo.Email : string.Empty;
 
+			var userInfo = await App.UserManager.GetAsync($"{JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id}/advisor");
+		
+            Settings.AdvisorContact = AdvisorContact = userInfo != null ? userInfo.Phone : string.Empty;
+			
+            Settings.AdvisorEmail = userInfo != null ? userInfo.Email : string.Empty;
 		}
 
 		//This concern only ordonances  in normal process
@@ -121,7 +145,7 @@ namespace libermedical.ViewModels
                 {
                     await CrossMedia.Current.Initialize();
                     var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                    { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30, SaveToAlbum = false });
+                    { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 70, SaveToAlbum = false });
                     //if photo ok
                     if (file != null)
                     {
@@ -193,7 +217,7 @@ namespace libermedical.ViewModels
                         {
                             Directory = "Docs",
                             Name = DateTime.UtcNow.Ticks.ToString(),
-                            CompressionQuality = 30,
+                            CompressionQuality = 70,
                             SaveToAlbum = false
                         });
 

@@ -290,8 +290,7 @@ namespace libermedical.ViewModels
                         Ordonnance.UpdatedAt = DateTimeOffset.UtcNow;
 
 					await storageService.AddAsync(Ordonnance);
-
-					
+                    	
 					if (App.IsConnected())
 					{
                         storageService.PushOrdonnance(Ordonnance, _isNew && Ordonnance.UpdatedAt == null );
@@ -345,7 +344,7 @@ namespace libermedical.ViewModels
                     {
                         await CrossMedia.Current.Initialize();
                         var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                        { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30,SaveToAlbum = false });
+                        { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 70,SaveToAlbum = false });
                         if (file != null)
                         {
                             Attachments.Add(file.Path);

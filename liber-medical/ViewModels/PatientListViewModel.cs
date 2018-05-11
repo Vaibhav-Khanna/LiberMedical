@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using libermedical.Helpers;
 using libermedical.Models;
+using libermedical.PopUp;
 using libermedical.Request;
 using libermedical.Services;
 using libermedical.ViewModels.Base;
@@ -75,17 +76,19 @@ namespace libermedical.ViewModels
 				var groupedList = new ObservableCollection<GroupedItem<Patient>>();
 
 				var patientsList = observableCollection.Cast<Patient>().ToList();
-				var headers = patientsList.Select(x => x.LastName.Substring(0, 1));
+				var headers = patientsList.Select(x => x.FirstName.Substring(0, 1));
 
 				headers = headers.Select(h => char.ToUpper(h[0]).ToString()).Distinct().OrderBy(x => x);
 
 				foreach (var headerkey in headers)
 				{
 					var patientGroup = new GroupedItem<Patient> { HeaderKey = headerkey };
-					foreach (var item in patientsList.Where(x => x.LastName.StartsWith(headerkey, StringComparison.OrdinalIgnoreCase)).ToList())
+
+					foreach (var item in patientsList.Where(x => x.FirstName.StartsWith(headerkey, StringComparison.OrdinalIgnoreCase)).ToList())
 					{
 						patientGroup.Add(item);
 					}
+
 					groupedList.Add(patientGroup);
 				}
 
@@ -133,6 +136,56 @@ namespace libermedical.ViewModels
             CoreMethods.PopPageModel(true,false);
        });
 
+		public Command DeleteCommand => new Command(async(obj) =>
+		{
+			
+			var Dlist = (await new StorageService<Document>().GetList()).Where(x => x.PatientId == (string)obj);
+           
+			if (Dlist != null && Dlist.Any())
+            {
+				await CoreMethods.DisplayAlert("Alerte", "Cet utilisateur ne peut pas être supprimé", "Ok");
+				return;
+            }
+
+			var list = (await new StorageService<Ordonnance>().GetList()).Where(x => x.PatientId == (string)obj);
+
+			if (list != null && list.Any())
+			{
+				await CoreMethods.DisplayAlert("Alerte", "Cet utilisateur ne peut pas être supprimé", "Ok");
+                return;
+			}
+
+			Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
+
+			var response = await App.PatientsManager.DeleteItemAsync((string)obj);         
+
+			if(response)
+			{
+				await new StorageService<Patient>().DeleteItemAsync(typeof(Patient).Name + "_" + (string)obj);
+			}
+
+			Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+
+			if (response)
+			{
+				await ToastService.Show("L’Patient a été supprimée avec succès");
+
+				SearchString = string.Empty;
+
+				var _list = await _storageService.GetList();
+
+				if (_list != null && _list.Count() != 0)
+				{
+					_list = _list.DistinctBy((arg) => arg.Id);
+					_list = _list.OrderByDescending((arg) => arg.CreatedAt);
+				}
+
+				GroupItems(_list.ToList());
+			}
+
+		});
+
+
 		private async void FilterGroupItems(string searchString)
 		{
 			try
@@ -143,13 +196,13 @@ namespace libermedical.ViewModels
 				{
 					var groupedList = new ObservableCollection<GroupedItem<Patient>>();
                     var xlist = (await _patientsStorage.GetList());
-                    var patientsList = xlist.Where(x => x.Fullname.ToLower().Contains(searchString) ).ToList();
-					var headers = patientsList.Select(x => x.LastName.Substring(0, 1)).Distinct().OrderBy(x => x);
+					var patientsList = xlist.Where(x => x.Fullname.ToLower().Contains(searchString)).ToList();
+					var headers = patientsList.Select(x => x.FirstName.Substring(0, 1)).Distinct().OrderBy(x => x);
 					foreach (var headerkey in headers)
 					{
 						var patientGroup = new GroupedItem<Patient>();
 						patientGroup.HeaderKey = headerkey;
-						foreach (var item in patientsList.Where(x => x.LastName.StartsWith(headerkey, StringComparison.OrdinalIgnoreCase)).ToList())
+						foreach (var item in patientsList.Where(x => x.FirstName.StartsWith(headerkey, StringComparison.OrdinalIgnoreCase)).ToList())
 						{
 							patientGroup.Add(item);
 						}
@@ -224,7 +277,8 @@ namespace libermedical.ViewModels
             SearchString = string.Empty;
 
             var list = await _storageService.GetList();
-            if (list != null && list.Count() != 0)
+           
+			if (list != null && list.Count() != 0)
             {
                 list = list.DistinctBy((arg) => arg.Id);
                 list = list.OrderByDescending((arg) => arg.CreatedAt);

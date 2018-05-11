@@ -19,6 +19,16 @@ namespace libermedical.Pages
 			InitializeComponent();
 		}
 
+		void DeletePatient(object sender, System.EventArgs e)
+		{
+			var item = (sender as MenuItem).CommandParameter as Patient;
+
+			if (item != null)
+			{
+				(BindingContext as PatientListViewModel).DeleteCommand.Execute(item.Id);
+			}
+		}
+
 		void PatientTapped(object sender, System.EventArgs e)
 		{
 			var vm = (PatientListViewModel)BindingContext;

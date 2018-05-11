@@ -112,7 +112,8 @@ namespace libermedical.Pages
             };
 
             var token = await App.LoginManager.Login(login);
-            if (token != null)
+          
+			if (token != null)
             {
                 Settings.IsLoggedIn = true;
                 Settings.Token = token.token;
@@ -136,7 +137,6 @@ namespace libermedical.Pages
                     Email = _email
                 };
                 
-
                 MessagingCenter.Send(this, Events.CreateTabbedPage);
 
                 //await Navigation.PushModalAsync(App.tabbedNavigation);

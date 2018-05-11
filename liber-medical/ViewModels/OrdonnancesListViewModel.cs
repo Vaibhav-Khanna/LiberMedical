@@ -199,7 +199,7 @@ namespace libermedical.ViewModels
                                 {
                                     Directory = "Docs",
                                     Name = DateTime.Now.Ticks.ToString(),
-                                    CompressionQuality = 30,
+                                    CompressionQuality = 70,
                                     RotateImage = false,
                                     SaveToAlbum = false
                                 });

@@ -19,7 +19,8 @@ namespace libermedical.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
-            Vapolia.WheelPickerForms.Droid.WheelPickerRenderer.InitializeForms();
+            Vapolia.WheelPickerForms.Droid.WheelPickerRenderer.InitializeForms();         
+
             Xamarin.Forms.Forms.Init(this, bundle);
 
             CachedImageRenderer.Init();

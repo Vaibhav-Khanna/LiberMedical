@@ -188,11 +188,18 @@ namespace libermedical.Managers
 				var content = new StringContent(json, Encoding.UTF8, "application/json");
 
 				var response = await _client.PostAsync(uri, content);
+
 				if (response.IsSuccessStatusCode)
 				{
 					var content2 = await response.Content.ReadAsStringAsync();
+				
 					var user = JsonConvert.DeserializeObject<User>(JObject.Parse(content2)["user"].ToString());
+
+					if (user.Role == RoleEnum.admin || user.Role == RoleEnum.employee)
+						return null;
+                    
 					Settings.CurrentUser = JsonConvert.SerializeObject(user);
+
 					resp = JsonConvert.DeserializeObject<TokenResponse>(content2);
 
 					Debug.WriteLine(@"				Item successfully saved.");

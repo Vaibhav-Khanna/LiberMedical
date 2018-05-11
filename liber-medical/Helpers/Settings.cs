@@ -36,6 +36,7 @@ namespace libermedical.Helpers
 	    private const string UserKey = "UserKey";
         private const string AdvisorPhone = "AdvisorPhone";
         private const string AdvisorMail = "AdvisorMail";
+        private const string NotificationTokenKey = "NotificationToken";
 
         #endregion
 
@@ -50,6 +51,13 @@ namespace libermedical.Helpers
 	        get { return AppSettings.GetValueOrDefault(TokenKey, stringDefault); }
 	        set { AppSettings.AddOrUpdateValue(TokenKey, value); }
 	    }
+
+        public static string NotificationToken
+        {
+            get { return AppSettings.GetValueOrDefault(NotificationTokenKey, stringDefault); }
+            set { AppSettings.AddOrUpdateValue(NotificationTokenKey, value); }
+        }
+
 
 	    public static int TokenExpiration
 	    {
