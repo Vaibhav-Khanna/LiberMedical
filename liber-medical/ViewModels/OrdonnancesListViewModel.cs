@@ -249,7 +249,7 @@ namespace libermedical.ViewModels
                                 {
                                     ordonnance.PatientId = patient.Id;
                                     ordonnance.Patient = patient;
-                                    ordonnance.PatientName = $"{patient.FirstName} {patient.LastName}";
+								    ordonnance.PatientName = $"{patient.LastName} {patient.FirstName}";
                                     ordonnance.IsSynced = false;
                                     ordonnance.UpdatedAt = null;
                                     ordonnance.First_Care_At = 0;                      

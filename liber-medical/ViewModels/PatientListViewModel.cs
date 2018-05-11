@@ -34,8 +34,7 @@ namespace libermedical.ViewModels
 
 
         public async Task BindData()
-        {
-            
+        {           
             MaxCount = await new StorageService<Patient>().DownloadPatients();
 
             DownlaodDocuments();
@@ -76,7 +75,8 @@ namespace libermedical.ViewModels
 				var groupedList = new ObservableCollection<GroupedItem<Patient>>();
 
 				var patientsList = observableCollection.Cast<Patient>().ToList();
-				var headers = patientsList.Select(x => x.FirstName.Substring(0, 1));
+
+				var headers = patientsList.Select(x => x.LastName.Substring(0, 1) );
 
 				headers = headers.Select(h => char.ToUpper(h[0]).ToString()).Distinct().OrderBy(x => x);
 
@@ -84,7 +84,7 @@ namespace libermedical.ViewModels
 				{
 					var patientGroup = new GroupedItem<Patient> { HeaderKey = headerkey };
 
-					foreach (var item in patientsList.Where(x => x.FirstName.StartsWith(headerkey, StringComparison.OrdinalIgnoreCase)).ToList())
+					foreach (var item in patientsList.Where(x => x.LastName.StartsWith(headerkey, StringComparison.OrdinalIgnoreCase)).ToList())
 					{
 						patientGroup.Add(item);
 					}
@@ -93,6 +93,7 @@ namespace libermedical.ViewModels
 				}
 
                 Patients = groupedList;
+
 				ItemsSource = groupedList;
 			}
 			catch (Exception ex)
@@ -197,12 +198,14 @@ namespace libermedical.ViewModels
 					var groupedList = new ObservableCollection<GroupedItem<Patient>>();
                     var xlist = (await _patientsStorage.GetList());
 					var patientsList = xlist.Where(x => x.Fullname.ToLower().Contains(searchString)).ToList();
-					var headers = patientsList.Select(x => x.FirstName.Substring(0, 1)).Distinct().OrderBy(x => x);
+
+					var headers = patientsList.Select(x =>  x.LastName.Substring(0, 1)).Distinct().OrderBy(x => x);
+
 					foreach (var headerkey in headers)
 					{
 						var patientGroup = new GroupedItem<Patient>();
 						patientGroup.HeaderKey = headerkey;
-						foreach (var item in patientsList.Where(x => x.FirstName.StartsWith(headerkey, StringComparison.OrdinalIgnoreCase)).ToList())
+						foreach (var item in patientsList.Where(x => x.LastName.StartsWith(headerkey, StringComparison.OrdinalIgnoreCase)).ToList())
 						{
 							patientGroup.Add(item);
 						}
@@ -212,8 +215,7 @@ namespace libermedical.ViewModels
 					_filteredPatients = (ObservableCollection<GroupedItem<Patient>>)(object)groupedList;
                                       
 					ItemsSource = _filteredPatients;
-
-
+                    
 				}
 				else
 				{
