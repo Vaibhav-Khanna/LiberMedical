@@ -17,7 +17,9 @@ namespace libermedical.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             Vapolia.WheelPickerForms.Ios.WheelPickerRenderer.InitializeForms();
-           
+
+			Rg.Plugins.Popup.IOS.Popup.Init();
+
             Forms.Init();
            
            

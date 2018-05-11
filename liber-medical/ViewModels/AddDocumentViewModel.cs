@@ -257,9 +257,11 @@ namespace libermedical.ViewModels
                             if (permission)
                             {
                                 await CrossMedia.Current.Initialize();
-                                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                                { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30, SaveToAlbum = false });
-                                if (file != null)
+                               
+								var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                                { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 70, SaveToAlbum = false });
+                               
+								if (file != null)
                                 {
                                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                                     Document.AttachmentPath = file.Path;

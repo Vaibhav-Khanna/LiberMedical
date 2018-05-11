@@ -156,10 +156,10 @@ namespace libermedical.ViewModels
                         if (permission)
                         {
                             await CrossMedia.Current.Initialize();
-                            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions() { SaveToAlbum = false, Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 30 });
+                            var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions() { SaveToAlbum = false, Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 70 });
                             if (file != null)
                             {
-
+                                
                                 if (BottomTitle == "+ Ajouter une ordonnance")
                                 {
                                     if (Ordo_action == "Ordonnance rapide")
