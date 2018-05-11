@@ -29,16 +29,19 @@
 				<TableView Intent="Form" HorizontalOptions="FillAndExpand" BackgroundColor="#ffffff" HeightRequest="250">
 					<TableRoot>
 						<TableSection>
+
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                    <local:BorderlessEntry Text="{Binding PatientProperty.LastName, Mode=TwoWay}" Placeholder="Nom" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
+                                </StackLayout>
+                            </ViewCell>
+                            
 							<ViewCell>
 								<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 									<local:BorderlessEntry Text="{Binding PatientProperty.FirstName, Mode=TwoWay}" Placeholder="Prénom" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
 								</StackLayout>
 							</ViewCell>
-							<ViewCell>
-								<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-									<local:BorderlessEntry Text="{Binding PatientProperty.LastName, Mode=TwoWay}" Placeholder="Nom" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Keyboard="Text" Style="{StaticResource PatientNameEntry}" />
-								</StackLayout>
-							</ViewCell>
+
 							<ViewCell >
 							<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="100">
 							<Image Source="add.png" Margin="10,10,10,10">
