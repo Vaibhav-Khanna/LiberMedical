@@ -84,7 +84,16 @@ namespace libermedical.ViewModels
 				{
 					var patientGroup = new GroupedItem<Patient> { HeaderKey = headerkey };
 
+					var list = new List<Patient>();
+
 					foreach (var item in patientsList.Where(x => x.LastName.StartsWith(headerkey, StringComparison.OrdinalIgnoreCase)).ToList())
+					{
+						list.Add(item);
+					}
+
+					list = list.OrderBy((arg) => arg.Fullname).ToList();
+
+					foreach (var item in list)
 					{
 						patientGroup.Add(item);
 					}
@@ -203,13 +212,23 @@ namespace libermedical.ViewModels
 
 					foreach (var headerkey in headers)
 					{
-						var patientGroup = new GroupedItem<Patient>();
-						patientGroup.HeaderKey = headerkey;
-						foreach (var item in patientsList.Where(x => x.LastName.StartsWith(headerkey, StringComparison.OrdinalIgnoreCase)).ToList())
-						{
-							patientGroup.Add(item);
-						}
-						groupedList.Add((GroupedItem<Patient>)(object)patientGroup);
+						var patientGroup = new GroupedItem<Patient> { HeaderKey = headerkey };
+
+                        var list = new List<Patient>();
+
+                        foreach (var item in patientsList.Where(x => x.LastName.StartsWith(headerkey, StringComparison.OrdinalIgnoreCase)).ToList())
+                        {
+                            list.Add(item);
+                        }
+
+                        list = list.OrderBy((arg) => arg.Fullname).ToList();
+
+                        foreach (var item in list)
+                        {
+                            patientGroup.Add(item);
+                        }
+
+                        groupedList.Add(patientGroup);
 					}
 
 					_filteredPatients = (ObservableCollection<GroupedItem<Patient>>)(object)groupedList;
