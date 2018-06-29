@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
 using Akavache;
 using Com.OneSignal;
+using Com.OneSignal.Abstractions;
 using FreshMvvm;
+using libermedical.Enums;
 using libermedical.Helpers;
 using libermedical.Managers;
 using libermedical.Models;
@@ -60,11 +64,9 @@ namespace libermedical
                 MainPage = new NavigationPage(new LoginPage()); // { BarTextColor = Color.White };
             }
 
-
-            OneSignal.Current.StartInit("045fee61-44e6-45d3-8366-a8cda02647a2").EndInit();
+            OneSignal.Current.StartInit("045fee61-44e6-45d3-8366-a8cda02647a2").HandleNotificationOpened(HandleNotificationOpened).EndInit();
 
            
-
             if (IsConnected())
                 SyncData();
             
@@ -78,11 +80,110 @@ namespace libermedical
             {
                 if(e.IsConnected)
                     SyncData();
-            };
-
-          
+            };             
         }
+
       
+        // Handle Notiications recieved via oneSignal and take appropriate actions
+        private static async void HandleNotificationOpened(OSNotificationOpenedResult result)
+        {
+            OSNotificationPayload payload = result.notification.payload;
+            Dictionary<string,object> additionalData = payload.additionalData;
+            string message = payload.body;
+            string actionID = result.action.actionID;
+
+            var extraMessage = "Notification opened with text: " + message;
+
+            if (additionalData != null)
+            {
+                string id = ""; //  the id of the object to open
+                string kind = ""; // the kind of object the id belongs to and take relevant action to open page based on this
+
+                if (additionalData.ContainsKey("id"))
+                {
+                    id = (additionalData["id"].ToString());
+                }
+                if (additionalData.ContainsKey("kind"))
+                {
+                    kind = (additionalData["kind"].ToString());
+                }
+
+                switch (kind)
+                {
+                    case "Document":
+                        {
+                            Document obj;
+
+                            if (await CrossConnectivity.Current.IsRemoteReachable("https://www.google.com"))
+                                obj = await DocumentsManager.GetAsync(id);
+                            else
+                                obj = await new StorageService<Document>().GetItemAsync(id);
+
+                            if (obj != null)
+                            {
+                                await (tabbedNavigation._tabs[0].BindingContext as FreshBasePageModel).CoreMethods.PushPageModel<AddDocumentViewModel>(obj, true, Device.RuntimePlatform == Device.iOS);
+                            }
+
+                            break;
+                        }
+                    case "Teledeclaration":
+                        {
+                            Teledeclaration obj;
+
+                            if (await CrossConnectivity.Current.IsRemoteReachable("https://www.google.com"))
+                                obj = await TeledeclarationsManager.GetAsync(id);
+                            else
+                                obj = await new StorageService<Teledeclaration>().GetItemAsync(id);
+
+                            if (obj != null)
+                            {
+                                await (tabbedNavigation._tabs[0].BindingContext as FreshBasePageModel).CoreMethods.PushPageModel<TeledeclarationSecureActionViewModel>(obj, true, true);
+                            }
+
+                            break;
+                        }
+                    case "Ordonnance":
+                        {
+                            Ordonnance obj;
+
+                            if (await CrossConnectivity.Current.IsRemoteReachable("https://www.google.com"))
+                                obj = await OrdonnanceManager.GetAsync(id);
+                            else
+                                obj = await new StorageService<Ordonnance>().GetItemAsync(id);
+
+                            if (obj != null)
+                            {
+                                await (tabbedNavigation._tabs[0].BindingContext as FreshBasePageModel).CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(obj, true);
+                            }
+
+                            break;    
+                        }
+                    case "InvoiceToSecure":
+                        {
+                            if (await CrossConnectivity.Current.IsRemoteReachable("https://www.google.com"))
+                            {
+                                var request = new GetListRequest(20, 1, sortField: "createdAt", sortDirection: SortDirectionEnum.Desc);
+                                var invoices = await InvoicesManager.GetListAsync(request);
+
+                                if (invoices != null && invoices.rows != null && invoices.rows.Count > 0)
+                                {
+                                    var invoice = invoices.rows.First();
+                                
+                                    if (invoice.FilePath.Contains(".pdf"))
+                                        await (tabbedNavigation._tabs[0].BindingContext as FreshBasePageModel).CoreMethods.PushPageModel<SecuriseBillsViewModel>(invoice, true);
+                                    else
+                                        await (tabbedNavigation._tabs[0].BindingContext as FreshBasePageModel).CoreMethods.PushPageModel<OrdonnanceViewViewModel>(invoice, true);
+                                }
+                            }
+                            break;
+                        }
+                    default:
+                        break;
+                }
+
+            }
+        }       
+
 
         static bool IsOpening = false;
 

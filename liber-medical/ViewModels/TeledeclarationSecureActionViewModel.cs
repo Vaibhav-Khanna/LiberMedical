@@ -38,6 +38,11 @@ namespace libermedical.ViewModels
 		public override void Init(object initData)
 		{
 			base.Init(initData);
+
+            if (initData is Teledeclaration)
+            {
+                Teledeclaration = ((Teledeclaration)initData);
+            }
 		}
 
 		public ICommand ValidateCommand
@@ -117,6 +122,5 @@ namespace libermedical.ViewModels
 				});
 			}
 		}
-
 	}
 }

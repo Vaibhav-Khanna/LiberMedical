@@ -248,7 +248,6 @@ namespace libermedical.ViewModels
             BindData();
 
             await ToastService.Show("Votre ordonnance a bien été enregistrée !");
-
         }
 
 
@@ -332,6 +331,25 @@ namespace libermedical.ViewModels
         });
 
 
+        public Command DeleteDocument => new Command(async (obj) =>
+        {
+            Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
+
+            var response = await App.DocumentsManager.DeleteItemAsync((string)obj);
+
+            if (response)
+            {
+                await new StorageService<Document>().DeleteItemAsync(typeof(Document).Name + "_" + (string)obj);
+            }
+
+            await BindData();
+
+            Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+
+            await ToastService.Show("L’Document a été supprimée avec succès");
+        });
+
+
         public ICommand CallCommand
         {
             get
@@ -348,7 +366,7 @@ namespace libermedical.ViewModels
             }
         }
 
-		protected override void ViewIsAppearing(object sender, System.EventArgs e)
+        protected override void ViewIsAppearing(object sender, System.EventArgs e)
 		{
 			base.ViewIsAppearing(sender, e);
             BindData();	

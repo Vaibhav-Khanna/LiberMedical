@@ -15,6 +15,17 @@ namespace libermedical.Pages
 
         }
 
+        // SWipe to delete the document item
+        void Handle_Clicked_1(object sender, System.EventArgs e)
+        {
+            var item = (sender as MenuItem).CommandParameter as Document;
+
+            if (item != null && item.Status != DocumentStatusEnum.valid.ToString())
+            {
+                (BindingContext as DetailsPatientListViewModel).DeleteDocument.Execute(item.Id);
+            }
+        }
+
         async void Back_Tapped(object sender, System.EventArgs e)
         {
             await Navigation.PopModalAsync();

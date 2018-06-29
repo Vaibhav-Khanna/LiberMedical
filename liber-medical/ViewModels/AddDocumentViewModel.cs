@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using libermedical.Request;
 using libermedical.PopUp;
+using libermedical.Enums;
 
 namespace libermedical.ViewModels
 {
@@ -171,7 +172,7 @@ namespace libermedical.ViewModels
 				{
 					try
 					{
-                        if (OptionText == "Modifier")
+                        if (OptionText == "Modifier" && Document.StatusString != DocumentStatusEnum.valid.ToString())
                         {
                             OptionText = "Enregistrer";
                             CanEdit = true;

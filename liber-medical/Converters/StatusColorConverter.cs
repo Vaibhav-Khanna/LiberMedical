@@ -22,7 +22,7 @@ namespace libermedical.Converters
 			else if (status == "Refusé")
 				return "#ff7586";
 			else
-				return "#ff7586";
+                return "#f6a623";
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

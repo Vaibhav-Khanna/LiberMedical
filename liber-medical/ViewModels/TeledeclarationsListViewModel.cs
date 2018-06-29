@@ -282,6 +282,7 @@ namespace libermedical.ViewModels
                     if (invoices != null && invoices.rows!=null && invoices.rows.Count > 0)
                     {
                         var invoice = invoices.rows.First();
+
                         if (invoice.FilePath.Contains(".pdf"))
                             await CoreMethods.PushPageModel<SecuriseBillsViewModel>(invoice, true);
                         else
