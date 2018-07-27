@@ -8,14 +8,25 @@ namespace libermedical.Models
     {
         [JsonProperty("label")]
         public string Label { get; set; }
+
         [JsonProperty("status")]
-        public DocumentStatusEnum Status { get; set; }
+        public string Status { get; set; } = DocumentStatusEnum.sent.ToString();
+
         [JsonProperty("attachment_path")]
         public string AttachmentPath { get; set; }
+
         [JsonProperty("patient_id")]
         public string PatientId { get; set; }
+
         [JsonProperty("nurse_id")]
         public string NurseId { get; set; }
+
+        [JsonIgnore]
+        public string StatusString => Status == DocumentStatusEnum.waiting.ToString()
+            ? "En attente"
+                                                                      : Status == DocumentStatusEnum.valid.ToString()
+                ? "Traité"
+                                                                      : Status == DocumentStatusEnum.refused.ToString() ? "Refusé" : "En attente de validation";
 
         public long Reference { set; get; }
         public DateTime AddDate { set; get; }

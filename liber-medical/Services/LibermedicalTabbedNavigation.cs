@@ -9,7 +9,7 @@ namespace libermedical.Services
 {
 	public class LibermedicalTabbedNavigation : TabbedPage, IFreshNavigationService
 	{
-		private readonly List<Page> _tabs = new List<Page>();
+        public List<Page> _tabs = new List<Page>();
 
 		public LibermedicalTabbedNavigation() : this("SomeDefaultContainerName")
 		{
@@ -21,7 +21,7 @@ namespace libermedical.Services
 			RegisterNavigation();   
 		}
 
-		public IEnumerable<Page> TabbedPages => _tabs;
+        public IEnumerable<Page> TabbedPages { get { return _tabs; } }
 
 		public string NavigationServiceName { get; }
 

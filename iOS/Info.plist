@@ -11,11 +11,11 @@
 	<key>CFBundleName</key>
 	<string>Liber&apos;Médical</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.matsiya.mobilecenter.libermedical</string>
+	<string>fr.libermedical.app</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
-	<string>9.3</string>
+	<string>10.0</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -40,10 +40,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Cette app requiert l’accès à l’appareil photo afin de vous permettre la prise de photos des ordonnances et documents de vos patients</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-
 	<string>Cette app requiert l’accès à votre bibliothèque afin de vous permettre la sélection de photos des ordonnances et documents de vos patients</string>
-
-	
 	<key>NSCalendarsUsageDescription</key>
 	<string>Cette app requiere l&apos;accès au calendrier</string>
 	<key>CFBundleShortVersionString</key>

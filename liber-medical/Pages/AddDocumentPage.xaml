@@ -51,7 +51,10 @@
           <RowDefinition Height="1" />
           <RowDefinition Height="45" />
           <RowDefinition Height="1" />
+          <RowDefinition Height="45" />
+          <RowDefinition Height="1" />
         </Grid.RowDefinitions>
+                
         <local:BorderlessEntry x:Name="name" Text="{Binding Label}" Placeholder="Nom" IsEnabled="{Binding CanEdit}" Keyboard="Text" Style="{StaticResource PatientNameEntry}" TextColor="Gray" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Row="0" />
         <BoxView BackgroundColor="#c8c7cc" HeightRequest="1" Grid.Row="1">
         </BoxView>
@@ -72,6 +75,26 @@
         </StackLayout>
         <BoxView BackgroundColor="#c8c7cc" HeightRequest="1" Grid.Row="5">
         </BoxView>
+
+        <Button Text="{Binding Document.StatusString}" HorizontalOptions="Start" VerticalOptions="Center" InputTransparent="true" BackgroundColor="{Binding Document.StatusString,Converter={converter:StatusColorConverter}}" TextColor="#ffffff" Grid.Row="6" >
+                                                <Button.HeightRequest>
+                                                    <OnPlatform x:TypeArguments="x:Double" iOS="20" Android="40" />
+                                                </Button.HeightRequest>
+                                                <Button.WidthRequest>
+                                                    <OnPlatform x:TypeArguments="x:Double" iOS="100" Android="130" />
+                                                </Button.WidthRequest>
+                                                <Button.BorderRadius>
+                                                    <OnPlatform x:TypeArguments="x:Int32" iOS="10" Android="0" />
+                                                </Button.BorderRadius>
+                                             <Button.FontSize>
+                                                    <OnPlatform x:TypeArguments="x:Double">
+                                                        <On Platform="Android" Value="10" />
+                                                        <On Platform="iOS" Value="12" />
+                                                    </OnPlatform>
+                                                </Button.FontSize>
+                                            </Button>
+
+                <BoxView BackgroundColor="#c8c7cc" HeightRequest="1" Grid.Row="7"/>
       </Grid>
     </ContentView>
   </custom:BasePage.ContentPresenter>
