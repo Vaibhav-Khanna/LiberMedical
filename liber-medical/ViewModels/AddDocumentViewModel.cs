@@ -142,7 +142,6 @@ namespace libermedical.ViewModels
                         CanEdit = true;
                         _isNew = true;
                     }
-
                 }
 			}
 		}
@@ -172,10 +171,13 @@ namespace libermedical.ViewModels
 				{
 					try
 					{
-                        if (OptionText == "Modifier" && Document.StatusString != DocumentStatusEnum.valid.ToString())
+                        if (OptionText == "Modifier")
                         {
-                            OptionText = "Enregistrer";
-                            CanEdit = true;
+                            if (Document.Status != DocumentStatusEnum.valid.ToString())
+                            {
+                                OptionText = "Enregistrer";
+                                CanEdit = true;
+                            }
                         }
                         else
                         {
@@ -184,6 +186,7 @@ namespace libermedical.ViewModels
                             Document.AttachmentPath = ImagePath;
                             Document.Label = Label;
                             Document.IsSynced = false;
+                            Document.Status = DocumentStatusEnum.sent.ToString();
 
                             if (_isNew && Document.UpdatedAt != null)
                                 Document.UpdatedAt = DateTimeOffset.UtcNow;
@@ -200,8 +203,7 @@ namespace libermedical.ViewModels
 
                             await CoreMethods.PopPageModel(true,false);
 
-                            await ToastService.Show("Informations enregistrées avec succès ");
-                                                  
+                            await ToastService.Show("Informations enregistrées avec succès ");                                                 
                         }
 					}
 					catch (Exception e)
