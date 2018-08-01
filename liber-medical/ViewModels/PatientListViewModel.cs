@@ -54,6 +54,8 @@ namespace libermedical.ViewModels
         {
             if (App.IsConnected())
             {
+                await new StorageService<Document>().SyncDocuments();
+
                 var request = new GetListRequest(10, 0);
                
                 var documents = await App.DocumentsManager.GetListAsync(request);

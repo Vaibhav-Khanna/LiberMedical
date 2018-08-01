@@ -68,12 +68,13 @@ namespace libermedical.ViewModels
 
             Ordonnances = new ObservableCollection<Ordonnance>(list);
 
+            await new StorageService<Document>().SyncDocuments();
+
             var Dlist = (await new StorageService<Document>().GetList()).Where(x => x.PatientId == Patient.Id);
             if (Dlist != null && Dlist.Any())
             {
                 Dlist = Dlist.OrderByDescending((arg) => arg.CreatedAt);
             }
-
 
             Documents = new ObservableCollection<Document>(Dlist);
         }
