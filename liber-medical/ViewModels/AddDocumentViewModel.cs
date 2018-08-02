@@ -196,7 +196,7 @@ namespace libermedical.ViewModels
                             if (App.IsConnected())
                             {
                                 UserDialogs.Instance.ShowLoading("Chargement...");
-                                new StorageService<Document>().PushDocument(Document, _isNew && Document.UpdatedAt != null);
+                                await new StorageService<Document>().PushDocument(Document, _isNew && Document.UpdatedAt != null);
                                 await DownlaodDocuments();
                                 UserDialogs.Instance.HideLoading();
                             }
