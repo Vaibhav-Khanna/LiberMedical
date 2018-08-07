@@ -136,6 +136,11 @@ namespace libermedical.ViewModels
                     _isNew = false;
                     CanEdit = false;
 
+                    if(Document.Status == DocumentStatusEnum.valid.ToString())
+                    {
+                        OptionText = "";
+                    }
+
                     if (Document.UpdatedAt == null)
                     {
                         OptionText = "Enregistrer";
@@ -179,7 +184,7 @@ namespace libermedical.ViewModels
                                 CanEdit = true;
                             }
                         }
-                        else
+                        else if (OptionText == "Enregistrer")
                         {
                             var storageService = new StorageService<Document>();
                             await storageService.DeleteItemAsync(typeof(Document).Name + "_" + Document.Id);
@@ -196,7 +201,7 @@ namespace libermedical.ViewModels
                             if (App.IsConnected())
                             {
                                 UserDialogs.Instance.ShowLoading("Chargement...");
-                                new StorageService<Document>().PushDocument(Document, _isNew && Document.UpdatedAt != null);
+                                await new StorageService<Document>().PushDocument(Document, _isNew && Document.UpdatedAt != null);
                                 await DownlaodDocuments();
                                 UserDialogs.Instance.HideLoading();
                             }
