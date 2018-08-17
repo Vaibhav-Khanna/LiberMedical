@@ -191,7 +191,7 @@ namespace libermedical.ViewModels
                             Document.AttachmentPath = ImagePath;
                             Document.Label = Label;
                             Document.IsSynced = false;
-                            Document.Status = DocumentStatusEnum.sent.ToString();
+                            Document.Status = DocumentStatusEnum.waiting.ToString();
 
                             if (_isNew && Document.UpdatedAt != null)
                                 Document.UpdatedAt = DateTimeOffset.UtcNow;
