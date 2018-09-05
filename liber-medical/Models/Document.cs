@@ -10,7 +10,7 @@ namespace libermedical.Models
         public string Label { get; set; }
 
         [JsonProperty("status")]
-        public string Status { get; set; } = DocumentStatusEnum.sent.ToString();
+        public string Status { get; set; } = DocumentStatusEnum.waiting.ToString();
 
         [JsonProperty("attachment_path")]
         public string AttachmentPath { get; set; }
@@ -26,7 +26,7 @@ namespace libermedical.Models
             ? "En attente"
                                                                       : Status == DocumentStatusEnum.valid.ToString()
                 ? "Traité"
-                                                                      : Status == DocumentStatusEnum.refused.ToString() ? "Refusé" : "En attente de validation";
+                                                                      : Status == DocumentStatusEnum.refused.ToString() ? "Refusé" : "En attente";
 
         public long Reference { set; get; }
         public DateTime AddDate { set; get; }

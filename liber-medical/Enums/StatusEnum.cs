@@ -11,7 +11,6 @@
     {
         waiting,
         valid,
-        sent,
         refused
     }
 }
