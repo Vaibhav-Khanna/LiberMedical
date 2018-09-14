@@ -153,7 +153,12 @@ namespace libermedical
 
                             if (obj != null)
                             {
-                                await (tabbedNavigation._tabs[0].BindingContext as FreshBasePageModel).CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(obj, true);
+                                if(tabbedNavigation!=null)
+                                {
+                                    await tabbedNavigation.SwitchSelectedRootPageModel<OrdonnancesListViewModel>();
+                                }
+
+                                await (tabbedNavigation._tabs[2].BindingContext as FreshBasePageModel).CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(obj, true);
                             }
 
                             break;    
