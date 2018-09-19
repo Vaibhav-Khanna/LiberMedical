@@ -39,8 +39,7 @@ namespace libermedical.iOS
             UIView.AppearanceWhenContainedIn(typeof(UIAlertController)).TintColor = tint;
             UIView.AppearanceWhenContainedIn(typeof(UIActivityViewController)).TintColor = tint;
             UIView.AppearanceWhenContainedIn(typeof(SLComposeViewController)).TintColor = tint;
-
-
+                       
             new SfPdfDocumentViewRenderer();
             SfPickerRenderer.Init();
             CachedImageRenderer.Init();

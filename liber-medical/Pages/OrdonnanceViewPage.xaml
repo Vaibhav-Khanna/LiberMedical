@@ -14,13 +14,22 @@
                     <ColumnDefinition Width="*" />
                      <ColumnDefinition Width="40" />
                 </Grid.ColumnDefinitions>
+                
                 <Grid Grid.Column="0" >
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
                     </Grid.GestureRecognizers>
                 <Image  HorizontalOptions="Center" Source="close.png" VerticalOptions="Center" />
                 </Grid>    
-                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" LineBreakMode="TailTruncation" Style="{StaticResource HeaderLabel}" Text="{Binding Title}" />              
+                
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" LineBreakMode="TailTruncation" Style="{StaticResource HeaderLabel}" Text="{Binding Title}" />       
+                
+                <Image Source="share.png" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="30" HeightRequest="25" >
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ShareCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+                
             </Grid>
         </ContentView>
     </custom:BasePage.Header>

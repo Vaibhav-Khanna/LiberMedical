@@ -137,6 +137,7 @@
     <Compile Include="Renderers\CustomViewCellRenderer.cs" />
     <Compile Include="Renderers\CustomRefreshListviewRenderer.cs" />
     <Compile Include="Renderers\ContentPageButtonRenderer.cs" />
+    <Compile Include="Services\ShareFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -361,6 +362,12 @@
     <Reference Include="OneSignal.iOS.Binding">
       <HintPath>..\packages\Com.OneSignal.3.0.1\lib\Xamarin.iOS10\OneSignal.iOS.Binding.dll</HintPath>
     </Reference>
+    <Reference Include="Plugin.ShareFile.Abstractions">
+      <HintPath>..\packages\Plugin.ShareFile.1.0.0\lib\Xamarin.iOS10\Plugin.ShareFile.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.ShareFile">
+      <HintPath>..\packages\Plugin.ShareFile.1.0.0\lib\Xamarin.iOS10\Plugin.ShareFile.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\liber-medical\liber-medical.csproj">
@@ -383,6 +390,7 @@
     <BundleResource Include="Resources\phone2.png" />
     <BundleResource Include="Resources\phone2%402x.png" />
     <BundleResource Include="Resources\phone2%403x.png" />
+    <BundleResource Include="Resources\share.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\add%402x.png" />
