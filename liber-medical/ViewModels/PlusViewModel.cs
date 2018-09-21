@@ -10,6 +10,7 @@ using Plugin.Share;
 using Plugin.Messaging;
 using libermedical.Pages;
 using libermedical.PopUp;
+using System.Collections.Generic;
 
 namespace libermedical.ViewModels
 {
@@ -58,7 +59,8 @@ namespace libermedical.ViewModels
 
 
 		public ICommand ConnectCommand => new Command(async () =>
-		{	
+        {
+
             var action = await CoreMethods.DisplayActionSheet("Contacter mon conseiller via:", "Annuler", null, "Appel vocal","E-mail", "SMS" );
             switch (action)
             {

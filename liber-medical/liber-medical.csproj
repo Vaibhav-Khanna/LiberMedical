@@ -60,6 +60,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Renderers\ImageViewPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AkavacheSqliteLinkerOverride.cs" />
@@ -245,6 +246,9 @@
     </Compile>
     <Compile Include="CustomControls\ToolbarContentPage.cs" />
     <Compile Include="Services\IShare.cs" />
+    <Compile Include="Renderers\ZoomImageAndroid.cs" />
+    <Compile Include="Renderers\ZoomImageIOS.cs" />
+    <Compile Include="Renderers\ImageViewPage.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Acr.UserDialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

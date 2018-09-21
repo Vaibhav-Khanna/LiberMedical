@@ -53,8 +53,6 @@ namespace libermedical.ViewModels
         {
             base.Init(initData);
 
-            m_pdfDocumentStream = Stream.Null;
-
             if (initData != null)
             {
                 if (initData is Teledeclaration)
@@ -121,6 +119,8 @@ namespace libermedical.ViewModels
 
             Acr.UserDialogs.UserDialogs.Instance.ShowLoading("");
 
+            //BackCommand.Execute(null);
+
             await DependencyService.Get<IShare>().ShareRemoteFile(fileLink, "PDF_" + DateTime.Today.Ticks + ".pdf");
 
             Acr.UserDialogs.UserDialogs.Instance.HideLoading();
@@ -142,19 +142,6 @@ namespace libermedical.ViewModels
             PdfDocumentStream = await new RestService<BaseDTO>("file").DownloadBill(filePath);
         }
 
-        //public static byte[] ReadFully(Stream input)
-        //{
-        //    byte[] buffer = new byte[16 * 1024];
-        //    using (MemoryStream ms = new MemoryStream())
-        //    {
-        //        int read;
-        //        while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-        //        {
-        //            ms.Write(buffer, 0, read);
-        //        }
-        //        return ms.ToArray();
-        //    }
-        //}
 
         public ICommand BackCommand => new Command(async () => await Application.Current.MainPage.Navigation.PopModalAsync());
     }

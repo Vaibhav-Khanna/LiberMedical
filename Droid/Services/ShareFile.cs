@@ -56,8 +56,9 @@ namespace libermedical.Droid.Services
 
             try
             {
-                string localFolder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-                localPath = System.IO.Path.Combine(localFolder, fileName);
+               
+                localPath = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath , fileName);
+
                 System.IO.File.WriteAllBytes(localPath, bytes); // write to local storage
             }
             catch (Exception ex)
@@ -71,7 +72,7 @@ namespace libermedical.Droid.Services
 
         public void Show(string title, string message, string filePath)
         {
-            var extension = filePath.Substring(title.LastIndexOf(".", StringComparison.Ordinal) + 1).ToLower();
+            var extension = filePath.Substring(filePath.LastIndexOf(".") + 1).ToLower();
             var contentType = string.Empty;
 
             // You can manually map more ContentTypes here if you want.

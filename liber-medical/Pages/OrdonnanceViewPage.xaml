@@ -34,12 +34,17 @@
         </ContentView>
     </custom:BasePage.Header>
   <custom:BasePage.ContentPresenter>
-    <ContentView Padding="0">
-            <StackLayout Spacing="0" Orientation="Vertical" VerticalOptions="FillAndExpand">
-                <ProgressBar HeightRequest="2" BackgroundColor="Transparent" Progress="{Binding Downloadprogress}" />
-                <ffimageloading:CachedImage HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Source="{Binding ImageSource}" DownloadStartedCommand="{Binding DownloadStarted}" DownloadProgressCommand="{Binding Downloading}" />
-            </StackLayout> 
-    </ContentView>
+         <ContentView Padding="0">
+      <StackLayout Spacing="0" Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" x:Name ="stack_container">           
+            <!--<StackLayout Spacing="0" HeightRequest="48" Padding="0,0,0,15" Margin="0" BackgroundColor="Black" HorizontalOptions="FillAndExpand">
+                <Label VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" HorizontalOptions="Center"  Text="Terminé" TextColor="White" FontSize="20" >
+                     <Label.GestureRecognizers>
+                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding CancelCommand}" />
+                     </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>-->
+        </StackLayout>
+       </ContentView>
   </custom:BasePage.ContentPresenter>
    
     </custom:BasePage>
