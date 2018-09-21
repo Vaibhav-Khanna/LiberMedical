@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Synchro.CustomRenderer;
 using Xamarin.Forms;
 using FFImageLoading.Forms;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
+using libermedical.Renderers;
 
 namespace Synchro.Pages
 {

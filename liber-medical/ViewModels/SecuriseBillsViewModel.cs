@@ -112,20 +112,22 @@ namespace libermedical.ViewModels
             if (string.IsNullOrEmpty(fileLink))
                 return;
 
-            if (isSharing)
-                return;
+            await CoreMethods.PopPageModel(fileLink,modal:true);
 
-            isSharing = true;
+            //if (isSharing)
+            //    return;
 
-            Acr.UserDialogs.UserDialogs.Instance.ShowLoading("");
+            //isSharing = true;
 
-            //BackCommand.Execute(null);
+            //Acr.UserDialogs.UserDialogs.Instance.ShowLoading("");
 
-            await DependencyService.Get<IShare>().ShareRemoteFile(fileLink, "PDF_" + DateTime.Today.Ticks + ".pdf");
+            ////BackCommand.Execute(null);
 
-            Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+            //await DependencyService.Get<IShare>().ShareRemoteFile(fileLink, "PDF_" + DateTime.Today.Ticks + ".pdf");
 
-            isSharing = false;
+            //Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+
+            //isSharing = false;
         });
 
         private async void DownloadFile(string filePath)
