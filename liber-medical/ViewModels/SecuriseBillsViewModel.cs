@@ -10,11 +10,15 @@ using Xamarin.Forms;
 using System.Reflection;
 using libermedical.Managers;
 using libermedical.Models;
+using libermedical.Services;
+using libermedical.Helpers;
 
 namespace libermedical.ViewModels
 {
     class SecuriseBillsViewModel : ViewModelBase
     {
+        string fileLink;
+
         private Stream m_pdfDocumentStream;
         public Stream PdfDocumentStream
         {
@@ -48,7 +52,7 @@ namespace libermedical.ViewModels
         public override void Init(object initData)
         {
             base.Init(initData);
-           
+
             if (initData != null)
             {
                 if (initData is Teledeclaration)
@@ -101,17 +105,45 @@ namespace libermedical.ViewModels
 
         }
 
+        bool isSharing;
+
+        public Command ShareCommand => new Command(async () =>
+        {
+            if (string.IsNullOrEmpty(fileLink))
+                return;
+
+            await CoreMethods.PopPageModel(fileLink,modal:true);
+
+            //if (isSharing)
+            //    return;
+
+            //isSharing = true;
+
+            //Acr.UserDialogs.UserDialogs.Instance.ShowLoading("");
+
+            ////BackCommand.Execute(null);
+
+            //await DependencyService.Get<IShare>().ShareRemoteFile(fileLink, "PDF_" + DateTime.Today.Ticks + ".pdf");
+
+            //Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+
+            //isSharing = false;
+        });
+
         private async void DownloadFile(string filePath)
         {
             await Task.Delay(800);
+            fileLink = string.Format(Constants.RestUrl + "file?path=" + filePath + "&" + string.Concat("token=", Settings.Token));
             PdfDocumentStream = await new RestService<BaseDTO>("file").DownloadFile(filePath, false);
         }
 
         private async void DownloadBill(string filePath)
         {
             await Task.Delay(800);
+            fileLink = filePath;
             PdfDocumentStream = await new RestService<BaseDTO>("file").DownloadBill(filePath);
         }
+
 
         public ICommand BackCommand => new Command(async () => await Application.Current.MainPage.Navigation.PopModalAsync());
     }

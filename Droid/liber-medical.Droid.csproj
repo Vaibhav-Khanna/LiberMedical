@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>libermedical.Droid</RootNamespace>
     <AssemblyName>liber-medical.Droid</AssemblyName>
-    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
@@ -398,6 +398,12 @@
     <Reference Include="OneSignal.Android.Binding">
       <HintPath>..\packages\Com.OneSignal.3.0.1\lib\MonoAndroid\OneSignal.Android.Binding.dll</HintPath>
     </Reference>
+    <Reference Include="Plugin.ShareFile.Abstractions">
+      <HintPath>..\packages\Plugin.ShareFile.1.0.0\lib\MonoAndroid10\Plugin.ShareFile.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.ShareFile">
+      <HintPath>..\packages\Plugin.ShareFile.1.0.0\lib\MonoAndroid10\Plugin.ShareFile.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\liber-medical\liber-medical.csproj">
@@ -415,6 +421,7 @@
     <Compile Include="SplashScreen.cs" />
     <Compile Include="Renderers\BorderlessPickerRenderer.cs" />
     <Compile Include="AkavacheSqliteLinkerOverride.cs" />
+    <Compile Include="Services\ShareFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -528,6 +535,7 @@
     <AndroidResource Include="Resources\drawable-xhdpi\splasht.9.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\splasht.9.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\splasht.9.png" />
+    <AndroidResource Include="Resources\drawable\share.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />

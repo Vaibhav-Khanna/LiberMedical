@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using libermedical.Models;
 using libermedical.ViewModels.Base;
+using Plugin.ShareFile;
 using Xamarin.Forms;
 
 namespace libermedical.ViewModels

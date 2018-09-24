@@ -47,7 +47,7 @@
                                             <RowDefinition Height="60*" />
                                             <RowDefinition Height="40*" />
                                         </Grid.RowDefinitions>
-                                        <Label Grid.Row="0" Grid.Column="0" HorizontalOptions="StartAndExpand" Style="{StaticResource Ordonnance}" Text="{Binding Label}" VerticalOptions="EndAndExpand"  />
+                                        <Label Grid.Row="0" Grid.Column="0" LineBreakMode="TailTruncation" HorizontalOptions="StartAndExpand" Style="{StaticResource Ordonnance}" Text="{Binding Label}" VerticalOptions="EndAndExpand"  />
                                         <Label Grid.Row="1" Grid.Column="0" HorizontalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Text="{Binding CreatedAt, StringFormat='{0:dd-MM-yyyy}'}" VerticalOptions="StartAndExpand" />
                                         <Button Grid.RowSpan="2" Grid.Column="1" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" HorizontalOptions="Center" Text="{Binding StatusString}" TextColor="#ffffff" VerticalOptions="Center" Command="{Binding Source={x:Reference Root}, Path=BindingContext.TeledeclarationTappedCommand}" CommandParameter="{Binding .}">
                                             <Button.HeightRequest>

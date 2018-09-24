@@ -2,11 +2,17 @@
 using libermedical.Models;
 using libermedical.ViewModels.Base;
 using Xamarin.Forms;
+using Plugin.ShareFile;
+using libermedical.Services;
+using System;
+using FFImageLoading.Forms;
 
 namespace libermedical.ViewModels
 {
     public class OrdonnanceViewViewModel : ViewModelBase
     {
+        string fileLink;
+
         private string _title;
         public string Title
         {
@@ -39,6 +45,7 @@ namespace libermedical.ViewModels
                 RaisePropertyChanged();
             }
         }
+
         public Ordonnance Ordonnance { get; set; }
         public Teledeclaration Teledeclaration { get; set; }
 
@@ -69,17 +76,42 @@ namespace libermedical.ViewModels
             if (!string.IsNullOrEmpty(path))
             if (path.StartsWith("Ordonnance/") || path.StartsWith("PatientDocuments/") || path.StartsWith("contracts/") || path.StartsWith("invoices/") || path.ToLower().StartsWith("teledeclarations/"))
                 {
-                    return $"{Constants.RestUrl}file?path={System.Net.WebUtility.UrlEncode(path)}&token={Settings.Token}";
+                    return fileLink = $"{Constants.RestUrl}file?path={System.Net.WebUtility.UrlEncode(path)}&token={Settings.Token}";
                 }
                 else
-                    return path;
+                return  path;
             else
                 return string.Empty;
         }
 
+        bool isSharing;
+
+        public Command ShareCommand => new Command(() =>
+        {
+            if (string.IsNullOrEmpty(fileLink))
+                return;
+
+            Device.BeginInvokeOnMainThread(async() =>
+            {
+                if (isSharing)
+                    return;
+
+                isSharing = true;
+
+                Acr.UserDialogs.UserDialogs.Instance.ShowLoading("");
+
+                await DependencyService.Get<IShare>().ShareRemoteFile(fileLink, "IMG_"+DateTime.Today.Ticks+".png");
+
+                Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+
+                isSharing = false;
+            });
+        });
+
         public override void Init(object initData)
         {
             base.Init(initData);
+           
             if (initData != null)
             {
                 if (initData is Ordonnance)

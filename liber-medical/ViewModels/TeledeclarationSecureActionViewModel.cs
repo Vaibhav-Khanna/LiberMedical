@@ -6,6 +6,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Acr.UserDialogs;
 using libermedical.PopUp;
+using System.Threading.Tasks;
 
 namespace libermedical.ViewModels
 {
@@ -122,5 +123,28 @@ namespace libermedical.ViewModels
 				});
 			}
 		}
-	}
+
+
+        public async override void ReverseInit(object returnedData)
+        {
+            base.ReverseInit(returnedData);
+
+            if(returnedData is string)
+            {
+                var fileLink = (string)returnedData;
+
+                if (string.IsNullOrEmpty(fileLink))
+                    return;
+
+                Acr.UserDialogs.UserDialogs.Instance.ShowLoading("");
+
+                await Task.Delay(600);
+
+                await DependencyService.Get<IShare>().ShareRemoteFile(fileLink, "PDF_" + DateTime.Today.Ticks + ".pdf");
+
+                Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+            }
+
+        }
+    }
 }
