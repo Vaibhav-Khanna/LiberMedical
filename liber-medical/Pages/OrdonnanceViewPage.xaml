@@ -10,9 +10,9 @@
         <ContentView Style="{StaticResource HeaderFooterBackgroundBlack}">
             <Grid Padding="5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="*" />
-                     <ColumnDefinition Width="40" />
+                     <ColumnDefinition Width="50" />
                 </Grid.ColumnDefinitions>
                 
                 <Grid Grid.Column="0" >
@@ -25,10 +25,14 @@
                 <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" LineBreakMode="TailTruncation" Style="{StaticResource HeaderLabel}" Text="{Binding Title}" />       
                 
                 <Image Source="share.png" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="30" HeightRequest="25" >
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ShareCommand}"/>
-                    </Image.GestureRecognizers>
+                    
                 </Image>
+                
+                <BoxView WidthRequest="50" Grid.Column="2" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Color="Transparent">
+                   <BoxView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ShareCommand}"/>
+                    </BoxView.GestureRecognizers>
+                </BoxView>
                 
             </Grid>
         </ContentView>
