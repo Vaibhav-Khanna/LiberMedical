@@ -60,7 +60,6 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchFastDev>false</MtouchFastDev>
     <MtouchLink>SdkOnly</MtouchLink>
-    <MtouchSdkVersion>11.2</MtouchSdkVersion>
     <MtouchFloat32>true</MtouchFloat32>
     <CodesignProvision>VS: fr.libermedical.app Development</CodesignProvision>
   </PropertyGroup>

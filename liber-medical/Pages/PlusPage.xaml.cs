@@ -42,6 +42,7 @@ namespace libermedical.Pages
                 }
 
                 await BlobCache.UserAccount.InvalidateAll();
+
                 Application.Current.MainPage = new NavigationPage(new LoginPage());
             }
         }
