@@ -39,7 +39,7 @@ namespace libermedical.ViewModels
 
         public HomeViewModel()
         {
-            SubscribeToMessages();
+            //SubscribeToMessages();
 
             WelcomeText = $"Bonjour {JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Firstname}, que souhaitez-vous faire?";
 
@@ -255,10 +255,9 @@ namespace libermedical.ViewModels
                 }
                 else
                     return;
+                   
 
-
-                              
-                if (permission)
+                if(permission)
                 {                  
                         //if document we change typeDoc to document
                         if (action == "Document") 
@@ -270,27 +269,25 @@ namespace libermedical.ViewModels
 
                      
                         var typeNavigation = "fast";
-                      
-                      
+                         
                         await CoreMethods.PushPageModel<PatientListViewModel>(new string[] { "HomeSelectPatient", typeNavigation, typeDoc }, true);
                                       
                 }
 			}
 		});
+       
 
-		private void SubscribeToMessages()
-		{
-			MessagingCenter.Subscribe<PatientListViewModel, Patient>(this, Events.HomePageSetPatientForOrdonnance,
-				async (sender, patient) =>
-				{
-					if (patient != null)
-					{
-						await AddPrescription(patient);
-					}
-				});
-		}
+        public async override void ReverseInit(object returnedData)
+        {
+            base.ReverseInit(returnedData);
 
-		private async Task AddPrescription(Patient patient)
+            if (returnedData is Patient)
+            {
+                await AddPrescription(returnedData as Patient);
+            }
+        }
+
+        private async Task AddPrescription(Patient patient)
 		{
 			if (typeDoc == "ordonnance")
 			{

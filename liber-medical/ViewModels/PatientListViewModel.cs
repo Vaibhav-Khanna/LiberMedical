@@ -258,7 +258,7 @@ namespace libermedical.ViewModels
 			if (ParentScreen == "HomeSelectPatient")
 			{                 
                 MessagingCenter.Send(this, Events.HomePageSetPatientForOrdonnance, cell.BindingContext as Patient);
-                await CoreMethods.PopPageModel(true);
+                await CoreMethods.PopPageModel(cell.BindingContext as Patient, true);
 			}
             else if (ParentScreen == "OrdonanceSelectPatient")
 			{
