@@ -188,6 +188,9 @@ namespace libermedical.Pages
 
         private void SubscribeMessages()
         {
+            MessagingCenter.Unsubscribe<OrdonnanceCreateEditViewModel, ObservableCollection<Frequency>>(this, Events.UpdateFrequenciesViewCellHeight);
+            MessagingCenter.Unsubscribe<OrdonnanceCreateEditViewModel, List<string>>(this, Events.UpdateAttachmentsViewCellHeight);
+
             MessagingCenter.Subscribe<OrdonnanceCreateEditViewModel, ObservableCollection<Frequency>>(this, Events.UpdateFrequenciesViewCellHeight, (sender, args) =>
             {
                 UpdateFrequenciesViewCellHeight(args);

@@ -93,7 +93,7 @@ namespace libermedical.Managers
             TModel res = null;
             try
             {
-                res = await _restService.GetSingleDataAsyncCached(id);
+                res = await _restService.GetSingleDataAsync(id);
             }
             catch (UnauthorizedAccessException e)
             {

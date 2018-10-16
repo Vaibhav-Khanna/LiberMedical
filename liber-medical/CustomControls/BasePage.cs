@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Xamarin.Forms;
-
+using FreshMvvm;
 
 namespace libermedical.CustomControls
 {
-	public class BasePage : ContentPage
+    public class BasePage : FreshBaseContentPage
 	{
 		ContentView _header;
 		public ContentView Header
