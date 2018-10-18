@@ -178,10 +178,11 @@ namespace libermedical.ViewModels
                 {
                     SaveLabel = "Modifier";
                     var ordonnance = initData as Ordonnance;
-                    if (ordonnance.Id != null)
-                        Ordonnance = await new StorageService<Ordonnance>().GetItemAsync($"Ordonnance_{ordonnance.Id}");
 
-                    if (Ordonnance == null)
+                    //if (ordonnance.Id != null)
+                        //Ordonnance = await new StorageService<Ordonnance>().GetItemAsync($"Ordonnance_{ordonnance.Id}");
+
+                    if (ordonnance != null)
                         Ordonnance = ordonnance;
 
                     Ordonnance.Patient = ordonnance.Patient;
