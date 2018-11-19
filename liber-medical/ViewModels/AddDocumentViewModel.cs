@@ -17,106 +17,119 @@ using libermedical.Enums;
 
 namespace libermedical.ViewModels
 {
-	public class AddDocumentViewModel : ViewModelBase
-	{
-		private bool _isNew;
+    public class AddDocumentViewModel : ViewModelBase
+    {
+        private bool _isNew;
         private string _createdDate = DateTime.UtcNow.ToString("dd-MM-yyyy");
 
-		public string CreatedDate
-		{
-			get { return _createdDate; }
-			set
-			{
-				_createdDate = value;
-				RaisePropertyChanged();
-			}
-		}
+        public string CreatedDate
+        {
+            get { return _createdDate; }
+            set
+            {
+                _createdDate = value;
+                RaisePropertyChanged();
+            }
+        }
 
-		private string _imagePath;
-		public string ImagePath
-		{
-			get { return _imagePath; }
-			set
-			{
-				_imagePath = value;
-				RaisePropertyChanged();
-			}
-		}
+        private string _imagePath;
+        public string ImagePath
+        {
+            get { return _imagePath; }
+            set
+            {
+                _imagePath = value;
+                RaisePropertyChanged();
+            }
+        }
 
-		private string _label;
-		public string Label
-		{
-			get { return _label; }
-			set
-			{
-				_label = value;
-				RaisePropertyChanged();
-			}
-		}
+        private string _label;
+        public string Label
+        {
+            get { return _label; }
+            set
+            {
+                _label = value;
+                RaisePropertyChanged();
+            }
+        }
 
-		private Document _document;
-		public Document Document
-		{
-			get { return _document; }
-			set
-			{
-				_document = value;
-				RaisePropertyChanged();
-			}
-		}
+        private Document _document;
+        public Document Document
+        {
+            get { return _document; }
+            set
+            {
+                _document = value;
+                RaisePropertyChanged();
+            }
+        }
 
-		private string _optionText;
-		public string OptionText
-		{
-			get { return _optionText; }
-			set
-			{
-				_optionText = value;
-				RaisePropertyChanged();
-			}
-		}
+        private string _optionText;
+        public string OptionText
+        {
+            get { return _optionText; }
+            set
+            {
+                _optionText = value;
+                RaisePropertyChanged();
+            }
+        }
 
-		private bool _canEdit;
-		public bool CanEdit
-		{
-			get { return _canEdit; }
-			set
-			{
-				_canEdit = value;
-				RaisePropertyChanged();
-			}
-		}
+        private bool _canEdit;
+        public bool CanEdit
+        {
+            get { return _canEdit; }
+            set
+            {
+                _canEdit = value;
+                RaisePropertyChanged();
+            }
+        }
 
-		public AddDocumentViewModel()
-		{
-			Document = new Document
-			{
-				Id = Guid.NewGuid().ToString(),
+        private bool _isRunning = false;
+        public bool IsRunning
+        {
+            get { return _isRunning; }
+            set
+            {
+                _isRunning = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public AddDocumentViewModel()
+        {
+            Document = new Document
+            {
+                Id = Guid.NewGuid().ToString(),
                 CreatedAt = DateTime.UtcNow,
                 AddDate = DateTime.UtcNow,
-				NurseId = JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id,
-			};
+                NurseId = JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Id,
+            };
 
-			SubscribeMessage();
+            SubscribeMessage();
 
-		}
+        }
 
-		private void SubscribeMessage()
-		{
-			MessagingCenter.Unsubscribe<DetailsPatientListViewModel, string>(this, Events.DocumentPathFromPatientDetail);
-			MessagingCenter.Subscribe<DetailsPatientListViewModel, string>(this, Events.DocumentPathFromPatientDetail, (sender, args) =>
-			{
-				ImagePath = args;
-				if (Document != null)
-					Document.AttachmentPath = ImagePath;
-			});
-		}
+        private void SubscribeMessage()
+        {
+            MessagingCenter.Unsubscribe<DetailsPatientListViewModel, string>(this, Events.DocumentPathFromPatientDetail);
+            MessagingCenter.Subscribe<DetailsPatientListViewModel, string>(this, Events.DocumentPathFromPatientDetail, (sender, args) =>
+            {
+                ImagePath = args;
+                if (Document != null)
+                    Document.AttachmentPath = ImagePath;
+            });
+        }
 
         public override void Init(object initData)
-		{
-			base.Init(initData);
-			if (initData != null)
-			{
+        {
+            base.Init(initData);
+            IsRunning = false;
+
+            if (initData != null)
+            {
                 if (initData is Patient)
                 {
                     var patient = initData as Patient;
@@ -136,7 +149,7 @@ namespace libermedical.ViewModels
                     _isNew = false;
                     CanEdit = false;
 
-                    if(Document.Status == DocumentStatusEnum.valid.ToString())
+                    if (Document.Status == DocumentStatusEnum.valid.ToString())
                     {
                         OptionText = "";
                     }
@@ -148,34 +161,34 @@ namespace libermedical.ViewModels
                         _isNew = true;
                     }
                 }
-			}
-		}
+            }
+        }
 
-		public ICommand CancelCommand
-		{
-			get
-			{
-				return new Command(async () =>
-				{
-					if (CanEdit)
-					{
-						CanEdit = false;
-						OptionText = "Modifier";
-					}
-					else
-                        await CoreMethods.PopPageModel(true,false);
-				});
-			}
-		}
+        public ICommand CancelCommand
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    if (CanEdit)
+                    {
+                        CanEdit = false;
+                        OptionText = "Modifier";
+                    }
+                    else
+                        await CoreMethods.PopPageModel(true, false);
+                });
+            }
+        }
 
-		public ICommand AddCommand
-		{
-			get
-			{
-				return new Command(async () =>
-				{
-					try
-					{
+        public ICommand AddCommand
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    try
+                    {
                         if (OptionText == "Modifier")
                         {
                             if (Document.Status != DocumentStatusEnum.valid.ToString())
@@ -197,7 +210,7 @@ namespace libermedical.ViewModels
                                 Document.UpdatedAt = DateTimeOffset.UtcNow;
 
                             await storageService.AddAsync(Document);
-                          
+
                             if (App.IsConnected())
                             {
                                 UserDialogs.Instance.ShowLoading("Chargement...");
@@ -206,22 +219,22 @@ namespace libermedical.ViewModels
                                 UserDialogs.Instance.HideLoading();
                             }
 
-                            await CoreMethods.PopPageModel(true,false);
+                            await CoreMethods.PopPageModel(true, false);
 
-                            await ToastService.Show("Informations enregistrées avec succès ");                                                 
+                            await ToastService.Show("Informations enregistrées avec succès ");
                         }
-					}
-					catch (Exception e)
-					{
-						Debug.WriteLine(e.Message);
-					}
-					finally
-					{
-						
-					}
-				});
-			}
-		}
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                    }
+                    finally
+                    {
+
+                    }
+                });
+            }
+        }
 
         private async Task DownlaodDocuments()
         {
@@ -242,86 +255,97 @@ namespace libermedical.ViewModels
         }
 
 
-		public ICommand AddDocumentCommand
-		{
-			get
-			{
-				return new Command(async () =>
-				{
-					if (CanEdit)
-					{
-						var action = await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Appareil photo", "Bibliothèque photo");
-						if (action == "Appareil photo")
-						{
-							await CrossMedia.Current.Initialize();
+        public ICommand AddDocumentCommand
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    if (CanEdit)
+                    {
+                        var action = await CoreMethods.DisplayActionSheet(null, "Annuler", null, "Appareil photo", "Bibliothèque photo");
+                        if (action == "Appareil photo")
+                        {
+                            await CrossMedia.Current.Initialize();
 
-							if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
-							{
-								await CoreMethods.DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
-								return;
-							}
+                            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                            {
+                                await CoreMethods.DisplayAlert("L'appareil photo n'est pas disponible", null, "OK");
+                                return;
+                            }
                             var permission = await App.AskForCameraPermission();
 
                             if (permission)
                             {
+
                                 await CrossMedia.Current.Initialize();
-                               
-								var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                                IsRunning = true;
+                                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                                 { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 70, SaveToAlbum = false });
-                               
-								if (file != null)
+
+                                if (file != null)
                                 {
+
                                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                                     Document.AttachmentPath = file.Path;
+
                                 }
+                                IsRunning = false;
+
                             }
 
-						}
-						else if (action == "Bibliothèque photo")
-						{
-							await CrossMedia.Current.Initialize();
+                        }
+                        else if (action == "Bibliothèque photo")
+                        {
+                            await CrossMedia.Current.Initialize();
 
                             if (await App.AskForPhotoPermission())
                             {
+
+                                IsRunning = true;
                                 var pickerOptions = new PickMediaOptions() { CompressionQuality = 30 };
                                 var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
                                 if (file != null)
                                 {
+
                                     var profilePicture = ImageSource.FromStream(() => file.GetStream());
                                     Document.AttachmentPath = file.Path;
+
                                 }
+                                IsRunning = false;
+
                             }
-						}
+                        }
 
-						ImagePath = Document.AttachmentPath;
-					}
-					else
-					{
-						if (Document.AttachmentPath != null)
-						{
-							if (Document.AttachmentPath.Contains(".pdf"))
-								await CoreMethods.PushPageModel<SecuriseBillsViewModel>(Document, true);
-							else
-								await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(Document, true);
-						}
-					}
+                        ImagePath = Document.AttachmentPath;
+                    }
+                    else
+                    {
+                        if (Document.AttachmentPath != null)
+                        {
+                            if (Document.AttachmentPath.Contains(".pdf"))
+                                await CoreMethods.PushPageModel<SecuriseBillsViewModel>(Document, true);
+                            else
+                                await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(Document, true);
+                        }
+                    }
 
-				});
-			}
-		}
+                });
+            }
+        }
 
-		private string GetDocumentPath(string path)
-		{
-			if (!string.IsNullOrEmpty(path))
-				if (path.StartsWith("Ordonnance/") || path.StartsWith("PatientDocuments/"))
-				{
-					return $"{Constants.RestUrl}file?path={System.Net.WebUtility.UrlEncode(path)}&token={Settings.Token}";
-				}
-				else
-					return path;
-			else
-				return string.Empty;
-		}
+        private string GetDocumentPath(string path)
+        {
+            if (!string.IsNullOrEmpty(path))
+                if (path.StartsWith("Ordonnance/") || path.StartsWith("PatientDocuments/"))
+                {
+                    return $"{Constants.RestUrl}file?path={System.Net.WebUtility.UrlEncode(path)}&token={Settings.Token}";
+                }
+                else
+                    return path;
+            else
+                return string.Empty;
+        }
 
-	}
+    }
 }

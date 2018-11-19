@@ -3,16 +3,12 @@ using libermedical.ViewModels;
 
 namespace libermedical.Pages
 {
-	public partial class HomePage
+    public partial class HomePage
     {
         public HomePage()
         {
             InitializeComponent();
-
-           
         }
 
-      
-        
     }
 }
