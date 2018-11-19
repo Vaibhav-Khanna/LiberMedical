@@ -35,9 +35,19 @@ namespace libermedical.ViewModels
 
         private ObservableCollection<Document> _documents;
         public ObservableCollection<Document> Documents { get { return _documents; } set { _documents = value; RaisePropertyChanged(); } }
-
+        private bool _isRunning = false;
+        public bool IsRunning
+        {
+            get { return _isRunning; }
+            set
+            {
+                _isRunning = value;
+                RaisePropertyChanged();
+            }
+        }
         private string _bottomTitle;
         public string BottomTitle { get { return _bottomTitle; } set { _bottomTitle = value; RaisePropertyChanged(); } }
+
         public override void Init(object initData)
         {
             base.Init(initData);
@@ -49,12 +59,12 @@ namespace libermedical.ViewModels
             BottomTitle = "+ Ajouter une ordonnance";
 
         }
-       
+
         private async Task BindData()
         {
             var list = (await new StorageService<Ordonnance>().GetList()).Where(x => x.PatientId == Patient.Id);
 
-            if(list != null&& list.Any())
+            if (list != null && list.Any())
             {
                 list = list.OrderByDescending((arg) => arg.CreatedAt);
 
@@ -62,7 +72,7 @@ namespace libermedical.ViewModels
 
                 for (int i = 0; i < list.Count(); i++)
                 {
-                    list.ElementAt(i).Index = (count-i);
+                    list.ElementAt(i).Index = (count - i);
                 }
             }
 
@@ -157,10 +167,11 @@ namespace libermedical.ViewModels
                         if (permission)
                         {
                             await CrossMedia.Current.Initialize();
+                            IsRunning = true;
                             var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions() { SaveToAlbum = false, Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 70 });
                             if (file != null)
                             {
-                                
+
                                 if (BottomTitle == "+ Ajouter une ordonnance")
                                 {
                                     if (Ordo_action == "Ordonnance rapide")
@@ -176,10 +187,11 @@ namespace libermedical.ViewModels
                                 else
                                 {
                                     _documentPath = file.Path;
-                                    await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient,true,false);
+                                    await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient, true, false);
                                     MessagingCenter.Send(this, Events.DocumentPathFromPatientDetail, _documentPath);
                                 }
                             }
+                            IsRunning = false;
                         }
                     }
                     else if (action == "Bibliothèque photo")
@@ -190,6 +202,7 @@ namespace libermedical.ViewModels
 
                         if (await App.AskForPhotoPermission())
                         {
+                            IsRunning = true;
                             var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
                             if (file != null)
                             {
@@ -206,12 +219,13 @@ namespace libermedical.ViewModels
                                     }
                                 }
                                 else
-                                {                                   
+                                {
                                     _documentPath = file.Path;
-                                    await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient,true,false);
+                                    await CoreMethods.PushPageModel<AddDocumentViewModel>(Patient, true, false);
                                     MessagingCenter.Send(this, Events.DocumentPathFromPatientDetail, _documentPath);
                                 }
                             }
+                            IsRunning = false;
                         }
                     }
 
@@ -275,9 +289,9 @@ namespace libermedical.ViewModels
                 {
                     if (isOpening)
                         return;
-                    
+
                     isOpening = true;
-                    await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(SelectedOrdonnance,true,Device.RuntimePlatform == Device.iOS);
+                    await CoreMethods.PushPageModel<OrdonnanceCreateEditViewModel>(SelectedOrdonnance, true, Device.RuntimePlatform == Device.iOS);
                     isOpening = false;
                 });
             }
@@ -306,7 +320,7 @@ namespace libermedical.ViewModels
                         return;
 
                     isOpening = true;
-                    await CoreMethods.PushPageModel<AddDocumentViewModel>(SelectedDocument,true,Device.RuntimePlatform == Device.iOS);
+                    await CoreMethods.PushPageModel<AddDocumentViewModel>(SelectedDocument, true, Device.RuntimePlatform == Device.iOS);
                     isOpening = false;
 
                 });
@@ -314,12 +328,12 @@ namespace libermedical.ViewModels
         }
 
         public Command DeleteOrdo => new Command(async (obj) =>
-        {            
+        {
             Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
 
             var response = await App.OrdonnanceManager.DeleteItemAsync((string)obj);
 
-            if(response)
+            if (response)
             {
                 await new StorageService<Ordonnance>().DeleteItemAsync(typeof(Ordonnance).Name + "_" + (string)obj);
             }
@@ -368,10 +382,10 @@ namespace libermedical.ViewModels
         }
 
         protected override void ViewIsAppearing(object sender, System.EventArgs e)
-		{
-			base.ViewIsAppearing(sender, e);
-            BindData();	
-		}
+        {
+            base.ViewIsAppearing(sender, e);
+            BindData();
+        }
 
     }
 }

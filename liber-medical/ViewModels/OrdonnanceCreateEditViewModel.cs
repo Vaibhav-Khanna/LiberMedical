@@ -34,6 +34,18 @@ namespace libermedical.ViewModels
             }
         }
 
+        private bool _isRunning = false;
+        public bool IsRunning
+        {
+            get { return _isRunning; }
+            set
+            {
+                _isRunning = value;
+                RaisePropertyChanged();
+            }
+        }
+
+
         bool showbutton = false;
         public bool ShowButton
         {
@@ -344,6 +356,7 @@ namespace libermedical.ViewModels
                     if (per)
                     {
                         await CrossMedia.Current.Initialize();
+                        IsRunning = true;
                         var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                         { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 70, SaveToAlbum = false });
                         if (file != null)
@@ -351,12 +364,14 @@ namespace libermedical.ViewModels
                             Attachments.Add(file.Path);
                             Ordonnance.Attachments.Add(file.Path);
                         }
+                        IsRunning = false;
                     }
                 }
                 else if (action == "Bibliothèque photo")
                 {
                     if (await App.AskForPhotoPermission())
                     {
+                        IsRunning = true;
                         var pickerOptions = new PickMediaOptions() { CompressionQuality = 30 };
                         var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
                         if (file != null)
@@ -364,6 +379,7 @@ namespace libermedical.ViewModels
                             Attachments.Add(file.Path);
                             Ordonnance.Attachments.Add(file.Path);
                         }
+                        IsRunning = false;
                     }
                 }
                 MessagingCenter.Send(this, Events.UpdateAttachmentsViewCellHeight, Ordonnance.Attachments);

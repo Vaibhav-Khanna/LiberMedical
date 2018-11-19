@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.DetailsPatientListPage" xmlns:converter="clr-namespace:libermedical.Converters;assembly=libermedical" Style="{StaticResource ModalBackgroundColor}" x:Name="Root">
+<custom:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+                 xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                 x:Class="libermedical.Pages.DetailsPatientListPage" 
+                 xmlns:converter="clr-namespace:libermedical.Converters;assembly=libermedical" 
+                 Style="{StaticResource ModalBackgroundColor}" 
+                 x:Name="Root">
 	<custom:BasePage.Header>
 		<ContentView Style="{StaticResource HeaderFooterBackground}">
 			<Grid Padding="5">
@@ -26,13 +32,29 @@
 	</custom:BasePage.Header>
 	<custom:BasePage.ContentPresenter>
 		<ContentView BackgroundColor="White">
-			<Grid>
+            <StackLayout IsVisible="{Binding IsRunning}" 
+                         HorizontalOptions="FillAndExpand" 
+                         VerticalOptions="FillAndExpand" >
+            
+            </StackLayout>
+			<Grid >
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="50" />
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
-				<StackLayout BackgroundColor="#f0f0f0" Grid.Row="0">
+                <ActivityIndicator 
+                               IsRunning="{Binding IsRunning}" 
+                               HorizontalOptions="CenterAndExpand" 
+                               VerticalOptions="CenterAndExpand" 
+                               WidthRequest="60" 
+                               HeightRequest="60" 
+                               Color="Black"
+                               Grid.Row="0"
+                               Grid.RowSpan="3"
+                               />
+                
+				<StackLayout BackgroundColor="#f0f0f0" Grid.Row="0" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}">
 					<Label Margin="0,20,0,0" Text="{Binding Patient.Fullname}" HorizontalOptions="Center" VerticalOptions="Fill" Style="{StaticResource PatientNameTitle}" />
 					<!--<Label Margin="0,0,0,0" Text="portable" HorizontalOptions="Center" VerticalOptions="Fill" Style="{StaticResource PortableTitle}" />
 					<Label Margin="0,0,0,21" Text="{Binding Patient.PhoneNumbers[0]}" HorizontalOptions="Center" VerticalOptions="Fill" Style="{StaticResource PortableNumber}" />-->
@@ -43,7 +65,7 @@
           </Image>
                     <Label Text="Contacter" Margin="0,5,0,10" HorizontalOptions="Center" FontSize="14" TextColor="#91c602"  />
 				</StackLayout>
-				<StackLayout Grid.Row="1" Padding="40,10">
+				<StackLayout Grid.Row="1" Padding="40,10" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}">
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="50*" />
@@ -70,7 +92,7 @@
 					</Grid>
 				</StackLayout>
 
-					<StackLayout Padding="0,0,0,0" Grid.Row="2" >
+					<StackLayout Padding="0,0,0,0" Grid.Row="2" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}">
 						<ListView ItemsSource="{Binding Ordonnances}" x:Name="stackOrdonnance" SelectedItem="{Binding SelectedOrdonnance}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected1" IsVisible="{Binding ShowStackOrdonnance}" >
 							<ListView.ItemTemplate>
 								<DataTemplate>

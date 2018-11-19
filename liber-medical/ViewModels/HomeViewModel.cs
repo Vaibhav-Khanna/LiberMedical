@@ -36,6 +36,18 @@ namespace libermedical.ViewModels
             }
         }
 
+        private bool _isRunning = false;
+        public bool IsRunning
+        {
+            get { return _isRunning; }
+            set
+            {
+                _isRunning = value;
+                RaisePropertyChanged();
+            }
+        }
+
+
 
         public HomeViewModel()
         {
@@ -143,12 +155,15 @@ namespace libermedical.ViewModels
                 var permission = await App.AskForCameraPermission();
                 if (permission)
                 {
+
                     await CrossMedia.Current.Initialize();
+                    IsRunning = true;
                     var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                     { Directory = "Docs", Name = DateTime.Now.Ticks.ToString(), CompressionQuality = 70, SaveToAlbum = false });
                     //if photo ok
                     if (file != null)
                     {
+
                         var profilePicture = ImageSource.FromStream(() => file.GetStream());
 
                         _documentPath = file.Path;
@@ -156,28 +171,32 @@ namespace libermedical.ViewModels
                         CreatePrescription(_documentPath);
 
                     }
+                    IsRunning = false;
+
                 }
             }
             else if (action == "Bibliothèque photo")
             {
                 await CrossMedia.Current.Initialize();
 
+
+
                 var pickerOptions = new PickMediaOptions() { CompressionQuality = 30 };
 
                 if (await App.AskForPhotoPermission())
                 {
+
+                    IsRunning = true;
                     var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
 
                     if (file != null)
                     {
-
-
-
                         _documentPath = file.Path;
 
                         CreatePrescription(_documentPath);
-
                     }
+                    IsRunning = false;
+
                 }
             }
         });
@@ -212,7 +231,10 @@ namespace libermedical.ViewModels
 
                     if (permission)
                     {
+
+
                         await CrossMedia.Current.Initialize();
+                        IsRunning = true;
                         var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                         {
                             Directory = "Docs",
@@ -223,10 +245,15 @@ namespace libermedical.ViewModels
 
                         if (file != null)
                         {
+
                             _documentPath = file.Path;
+
+
+
                         }
-                        else
-                            return;
+                        else { return; }
+                        IsRunning = false;
+
                     }
                     else
                         return;
@@ -238,6 +265,8 @@ namespace libermedical.ViewModels
 
                     if (permission)
                     {
+
+
                         await CrossMedia.Current.Initialize();
 
                         var pickerOptions = new PickMediaOptions() { CompressionQuality = 30 };
@@ -245,10 +274,12 @@ namespace libermedical.ViewModels
 
                         if (file != null)
                         {
+                            IsRunning = true;
                             _documentPath = file.Path;
+                            IsRunning = false;
                         }
-                        else
-                            return;
+                        else { return; }
+
                     }
                     else
                         return;

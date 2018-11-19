@@ -16,8 +16,17 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-
-           <StackLayout Orientation="Vertical" VerticalOptions="Start" Spacing="0" Grid.Row="0"  >
+             <ActivityIndicator 
+                               IsRunning="{Binding IsRunning}" 
+                               HorizontalOptions="CenterAndExpand" 
+                               VerticalOptions="CenterAndExpand" 
+                               WidthRequest="60" 
+                               HeightRequest="60" 
+                               Color="Black"
+                               Grid.Row="0"
+                               Grid.RowSpan="2"
+                               />
+           <StackLayout Orientation="Vertical" VerticalOptions="Start" Spacing="0" Grid.Row="0" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}" >
             
             <StackLayout BackgroundColor="#c8c7cc"  HeightRequest="50"  HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
                 <SearchBar x:Name="searchBar" SearchButtonPressed="Handle_SearchButtonPressed" TextChanged="Handle_TextChanged" Placeholder="Rechercher" Margin="8,7" BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Style="{StaticResource ResearchBar}" HeightRequest="30" />
@@ -41,7 +50,7 @@
             
                  </StackLayout>
     
-                       <ListView x:Name="MyListView" Grid.Row="1" VerticalOptions="FillAndExpand" Refreshing="Handle_Refreshing" IsPullToRefreshEnabled="true" ItemsSource="{Binding Ordonnances}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected" ItemAppearing="MyListView_ItemAppearing">
+                       <ListView x:Name="MyListView" Grid.Row="1" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}" VerticalOptions="FillAndExpand" Refreshing="Handle_Refreshing" IsPullToRefreshEnabled="true" ItemsSource="{Binding Ordonnances}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected" ItemAppearing="MyListView_ItemAppearing">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell BindingContextChanged="Handle_BindingContextChanged"> 

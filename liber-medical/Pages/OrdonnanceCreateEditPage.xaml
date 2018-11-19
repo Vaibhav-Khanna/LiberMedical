@@ -125,6 +125,15 @@
               </StackLayout.GestureRecognizers>
               <Label Text="Pièce jointe"></Label>
               <Label Text="+ Ajouter" TextColor="{Binding CanEdit,Converter={converter:DisableColorConverter}}" Style="{StaticResource CotationAddTitle}"></Label>
+                <ActivityIndicator 
+                               IsRunning="{Binding IsRunning}" 
+                               HorizontalOptions="CenterAndExpand" 
+                               VerticalOptions="CenterAndExpand" 
+                               WidthRequest="60" 
+                               HeightRequest="60" 
+                               Color="Black"
+                               IsVisible="{Binding IsRunning}" 
+                               />            
               <BoxView HeightRequest="1" BackgroundColor="#f3f3f3" Margin="10,0,0,0"></BoxView>
             </StackLayout>
             <custom:NonScrollableList  x:Name="AttachmentsListView" SeparatorVisibility="None" VerticalOptions="Start" ItemsSource="{Binding Attachments}" ItemSelected="AttachmentsListView_OnItemSelected">
