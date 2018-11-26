@@ -17,11 +17,11 @@ using libermedical.PopUp;
 
 namespace libermedical.ViewModels
 {
-    
+
     public class OrdonnancesListViewModel : ListViewModelBase<Ordonnance>
     {
         int _initCount = 0;
-      
+
         public int MaxCount { get; set; } = 0;
         public IStorageService<Ordonnance> _ordonnanceStorage;
 
@@ -37,7 +37,7 @@ namespace libermedical.ViewModels
         }
 
         string refreshtext = string.Empty;
-        public string RefreshText 
+        public string RefreshText
         {
             get { return refreshtext; }
             set
@@ -69,14 +69,25 @@ namespace libermedical.ViewModels
             }
         }
 
+        private bool _isRunning = false;
+        public bool IsRunning
+        {
+            get { return _isRunning; }
+            set
+            {
+                _isRunning = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public OrdonnancesListViewModel(IStorageService<Ordonnance> storageService) : base(storageService)
         {
             _ordonnanceStorage = storageService;
-           
-            MessagingCenter.Subscribe<HomeViewModel>(this,"Showhomemessage", async (obj) => 
-            {
-                await ToastService.Show("Votre ordonnance a bien été enregistrée !");
-            });
+
+            MessagingCenter.Subscribe<HomeViewModel>(this, "Showhomemessage", async (obj) =>
+             {
+                 await ToastService.Show("Votre ordonnance a bien été enregistrée !");
+             });
 
             CachedList();
         }
@@ -97,10 +108,10 @@ namespace libermedical.ViewModels
             }
             else
                 list = new List<Ordonnance>();
-        
+
             Ordonnances = new ObservableCollection<Ordonnance>(list);
 
-            var left_sync = Ordonnances.Where( (Ordonnance arg) => !arg.IsSynced ).Count();
+            var left_sync = Ordonnances.Where((Ordonnance arg) => !arg.IsSynced).Count();
 
             if (left_sync > 0)
             {
@@ -150,7 +161,7 @@ namespace libermedical.ViewModels
 
            if (resp)
            {
-              await _ordonnanceStorage.DeleteItemAsync(typeof(Ordonnance).Name + "_" + (string)obj);
+               await _ordonnanceStorage.DeleteItemAsync(typeof(Ordonnance).Name + "_" + (string)obj);
            }
 
            await BindData(false);
@@ -194,6 +205,7 @@ namespace libermedical.ViewModels
                         if (perm)
                         {
                             await CrossMedia.Current.Initialize();
+                            IsRunning = true;
                             var file = await CrossMedia.Current.TakePhotoAsync(
                                 new StoreCameraMediaOptions
                                 {
@@ -207,18 +219,21 @@ namespace libermedical.ViewModels
                             {
                                 filePath = file.Path;
                             }
+                            IsRunning = false;
                         }
                     }
                     else if (action2 == "Bibliothèque photo")
                     {
                         if (await App.AskForPhotoPermission())
                         {
+                            IsRunning = true;
                             var pickerOptions = new PickMediaOptions() { CompressionQuality = 30, RotateImage = false };
                             var file = await CrossMedia.Current.PickPhotoAsync(pickerOptions);
                             if (file != null)
                             {
                                 filePath = file.Path;
                             }
+                            IsRunning = false;
                         }
                     }
 
@@ -234,7 +249,7 @@ namespace libermedical.ViewModels
                     };
 
                     Filter _filters = null;
-                  
+
 
                     if (action == "Ordonnance rapide")
                     {
@@ -249,10 +264,10 @@ namespace libermedical.ViewModels
                                 {
                                     ordonnance.PatientId = patient.Id;
                                     ordonnance.Patient = patient;
-								    ordonnance.PatientName = $"{patient.LastName} {patient.FirstName}";
+                                    ordonnance.PatientName = $"{patient.LastName} {patient.FirstName}";
                                     ordonnance.IsSynced = false;
                                     ordonnance.UpdatedAt = null;
-                                    ordonnance.First_Care_At = 0;                      
+                                    ordonnance.First_Care_At = 0;
 
                                     var storageService = new StorageService<Ordonnance>();
 
@@ -261,10 +276,10 @@ namespace libermedical.ViewModels
                                     if (App.IsConnected())
                                     {
                                         Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Chargement...");
-                                        storageService.PushOrdonnance(ordonnance, true);                                       
+                                        storageService.PushOrdonnance(ordonnance, true);
                                         Acr.UserDialogs.UserDialogs.Instance.HideLoading();
                                     }
-                                   
+
                                     await BindData(false);
 
                                     Device.BeginInvokeOnMainThread(() =>
@@ -290,7 +305,7 @@ namespace libermedical.ViewModels
 
         public async Task CachedList()
         {
-            
+
             var list = await _ordonnanceStorage.GetList();
 
             if (list != null && list.Count() != 0)
@@ -307,10 +322,10 @@ namespace libermedical.ViewModels
 
             if (left_sync > 0)
             {
-                if (left_sync!=1)
-                RefreshText = left_sync + " fichiers en cours de synchronisation…";
+                if (left_sync != 1)
+                    RefreshText = left_sync + " fichiers en cours de synchronisation…";
                 else
-                RefreshText = left_sync + " fichier en cours de synchronisation…";
+                    RefreshText = left_sync + " fichier en cours de synchronisation…";
             }
             else
             {

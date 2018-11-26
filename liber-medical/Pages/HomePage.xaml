@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="libermedical.Pages.HomePage" Style="{StaticResource AppBackgroundColor}" Title="Liber'Médical">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:custom="clr-namespace:libermedical.CustomControls;assembly=libermedical" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter="clr-namespace:libermedical.Converters;assembly=libermedical"
+             x:Class="libermedical.Pages.HomePage" 
+             Style="{StaticResource AppBackgroundColor}" 
+             Title="Liber'Médical">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="HomePageAsk" TargetType="Label">
@@ -16,15 +22,25 @@
     </ContentPage.Resources>
 
         <ContentView>
-            <Grid RowSpacing="0" >
+          
+            <Grid RowSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="7*" />
                     <RowDefinition Height="30*" />
                     <RowDefinition Height="30*" />
                     <RowDefinition Height="33*" />
                 </Grid.RowDefinitions>
-            <Label Text="{Binding WelcomeText}" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" Style="{StaticResource HomePageAsk}" Grid.Row="0" />
-                <StackLayout HorizontalOptions="FillAndExpand" Grid.Row="1">
+            <ActivityIndicator 
+                               IsRunning="{Binding IsRunning}" 
+                               HorizontalOptions="CenterAndExpand" 
+                               VerticalOptions="CenterAndExpand" 
+                               WidthRequest="60" 
+                               HeightRequest="60" 
+                               Grid.RowSpan="4"
+                               Grid.Row="0"/>
+         
+             <Label Text="{Binding WelcomeText}" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" Style="{StaticResource HomePageAsk}" Grid.Row="0" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}"/>
+                <StackLayout HorizontalOptions="FillAndExpand" Grid.Row="1" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}">
                     <Image Source="addnormal.png" Margin="0,10,0,0">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddOrdonnanceCommand}" />
@@ -32,7 +48,7 @@
                     </Image>
                     <Label Margin="0,5,0,0" Text="Ajouter une ordonnance" HorizontalOptions="Center" Style="{StaticResource HomePageTask}" />
                 </StackLayout>
-                <StackLayout HorizontalOptions="FillAndExpand" Grid.Row="2">
+                <StackLayout HorizontalOptions="FillAndExpand" Grid.Row="2" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}">
                     <Image Source="addfast.png" Margin="0,10,0,0">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding FastCommand}" />
@@ -40,7 +56,7 @@
                     </Image>
                     <Label Margin="0,5,0,0" Text="Ajout rapide" HorizontalOptions="Center" Style="{StaticResource HomePageTask}" />
                 </StackLayout>
-                <StackLayout HorizontalOptions="FillAndExpand" Grid.Row="3">
+                <StackLayout HorizontalOptions="FillAndExpand" Grid.Row="3" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}">
                     <Image VerticalOptions="Start" Source="support.png" Aspect="AspectFit" Margin="0,10,0,0">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AssistCommand}" />
@@ -50,5 +66,4 @@
                 </StackLayout>
             </Grid>
         </ContentView>
-       
 </ContentPage>
