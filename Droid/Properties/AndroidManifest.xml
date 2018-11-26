@@ -1,22 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="4740" android:versionName="1.0.4740" package="com.matsiya.libermedical">
-	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="25" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="4936" android:versionName="1.0.4936" package="fr.libermedical.app">
+	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="27" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.CAMERA" />
 	<uses-permission android:name="android.permission.SEND_SMS" />
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<permission android:name="com.matsiya.libermedical.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-	<uses-permission android:name="com.matsiya.libermedical.permission.C2D_MESSAGE" />
+	<permission android:name="fr.libermedical.app.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+	<uses-permission android:name="fr.libermedical.app.permission.C2D_MESSAGE" />
 	<application android:label="Liber Medical">
 		<receiver android:name="com.onesignal.GcmBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
 			<intent-filter>
 				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
-				<category android:name="com.matsiya.libermedical" />
+				<category android:name="fr.libermedical.app" />
 			</intent-filter>
 		</receiver>
-		<provider android:name="android.support.v4.content.FileProvider" android:authorities="com.matsiya.libermedical.fileprovider" android:exported="false" android:grantUriPermissions="true">
+		<provider android:name="android.support.v4.content.FileProvider" android:authorities="fr.libermedical.app.fileprovider" android:exported="false" android:grantUriPermissions="true">
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"></meta-data>
 		</provider>
 	</application>
