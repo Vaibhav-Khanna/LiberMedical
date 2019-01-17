@@ -62,21 +62,22 @@ namespace libermedical.ViewModels
         {
 
             var action = await CoreMethods.DisplayActionSheet("Contacter mon conseiller via:", "Annuler", null, "Appel vocal","E-mail", "SMS" );
-            switch (action)
+           
+             switch (action)
             {
                 case "Appel vocal":
-                    if (CrossMessaging.Current.PhoneDialer.CanMakePhoneCall)
-                        CrossMessaging.Current.PhoneDialer.MakePhoneCall(Settings.AdvisorContact);                   
+                    if (CrossMessaging.Current.PhoneDialer.CanMakePhoneCall && !string.IsNullOrWhiteSpace(Settings.AdvisorContact))
+                        CrossMessaging.Current.PhoneDialer.MakePhoneCall(Settings.AdvisorContact);
                     break;
                 case "SMS":
                     var smsMessenger = CrossMessaging.Current.SmsMessenger;
-                    if (smsMessenger.CanSendSms)
+                    if (smsMessenger.CanSendSms && !string.IsNullOrWhiteSpace(Settings.AdvisorContact))
                         smsMessenger.SendSms(Settings.AdvisorContact, "Bonjour, je vous informe que mon TLA est branché");
                     break;
                 case "E-mail":
-                    if (CrossMessaging.Current.EmailMessenger.CanSendEmail)
+                    if (CrossMessaging.Current.EmailMessenger.CanSendEmail && !string.IsNullOrWhiteSpace(Settings.AdvisorEmail))
                         CrossMessaging.Current.EmailMessenger.SendEmail(Settings.AdvisorEmail);
-                    break;                        
+                    break;
             }
         });
 

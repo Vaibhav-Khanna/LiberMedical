@@ -2,6 +2,8 @@
 using System.Net;
 using System.Threading.Tasks;
 using Android.Content;
+using Android.Support.Compat;
+using Android.Support.V4.Content;
 using libermedical.Droid.Services;
 using libermedical.Services;
 using Xamarin.Forms;
@@ -12,6 +14,7 @@ namespace libermedical.Droid.Services
     public class ShareFile : IShare
     {
         private readonly Context _context;
+
         public ShareFile()
         {
             _context = Android.App.Application.Context;
@@ -55,11 +58,10 @@ namespace libermedical.Droid.Services
             string localPath = "";
 
             try
-            {
-               
-                localPath = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath , fileName);
+            { 
+                localPath = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, fileName);
 
-                System.IO.File.WriteAllBytes(localPath, bytes); // write to local storage
+                System.IO.File.WriteAllBytes(localPath,bytes); // write to local storage
             }
             catch (Exception ex)
             {
@@ -73,8 +75,11 @@ namespace libermedical.Droid.Services
         public void Show(string title, string message, string filePath)
         {
             var extension = filePath.Substring(filePath.LastIndexOf(".") + 1).ToLower();
+           
             var contentType = string.Empty;
-
+                     
+            Android.Net.Uri uri = FileProvider.GetUriForFile(Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity,"fr.libermedical.app.fileprovider", new Java.IO.File(filePath));
+             
             // You can manually map more ContentTypes here if you want.
             switch (extension)
             {
@@ -91,7 +96,8 @@ namespace libermedical.Droid.Services
 
             var intent = new Intent(Intent.ActionSend);
             intent.SetType(contentType);
-            intent.PutExtra(Intent.ExtraStream, Android.Net.Uri.Parse("file://" + filePath));
+            intent.PutExtra(Intent.ExtraStream, uri);
+            intent.AddFlags(ActivityFlags.GrantReadUriPermission);
             intent.PutExtra(Intent.ExtraText, string.Empty);
             intent.PutExtra(Intent.ExtraSubject, message ?? string.Empty);
 
@@ -99,6 +105,7 @@ namespace libermedical.Droid.Services
             chooserIntent.SetFlags(ActivityFlags.ClearTop);
             chooserIntent.SetFlags(ActivityFlags.NewTask);
             _context.StartActivity(chooserIntent);
+
         }
     }
 }
