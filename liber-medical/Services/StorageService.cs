@@ -272,16 +272,17 @@ namespace libermedical.Services
             {
                 if (!document.AttachmentPath.StartsWith("PatientDocuments") && !document.AttachmentPath.StartsWith("Ordonnance"))
                 {
-
                     var res = await FileUpload.UploadFile(document.AttachmentPath, "PatientDocuments", document.Id);
+
                     if (res)
                         document.AttachmentPath = $"PatientDocuments/{document.Id}/{Path.GetFileName(document.AttachmentPath)}";
                 }
 
                 var localId = document.Id;
+               
                 var doc = await App.DocumentsManager.SaveOrUpdateAsync(document.Id, document, document.UpdatedAt == null);
 
-                if (doc != null)
+                if (doc != null && document.AttachmentPath.StartsWith("PatientDocuments"))
                 {
                     doc.IsSynced = true;
                     doc.UpdatedAt = DateTime.UtcNow;
@@ -305,6 +306,7 @@ namespace libermedical.Services
             try
             {
                 var localId = ordonnanceObject.Id;            
+              
                 var ordonnance = await App.OrdonnanceManager.SaveOrUpdateAsync(ordonnanceObject.Id, ordonnanceObject, ordonnanceObject.UpdatedAt == null );
             
                 if (ordonnance != null)
@@ -312,6 +314,7 @@ namespace libermedical.Services
                     ordonnance.UpdatedAt = DateTime.UtcNow;
 
                     await DeleteItemAsync(typeof(Ordonnance).Name + "_" + localId);
+
                     await UpdateAsync(ordonnance as TModel, typeof(Ordonnance).Name + "_" + ordonnance.Id);
 
                     var attachments = new Dictionary<string, string>();
@@ -321,7 +324,8 @@ namespace libermedical.Services
                         if (!attachment.StartsWith("PatientDocuments") && !attachment.StartsWith("Ordonnance"))
                         {
                             var res = await FileUpload.UploadFile(attachment, "Ordonnance", ordonnance.Id);
-                            if (res)
+                           
+                             if (res)
                                 attachments.Add(attachment, $"Ordonnance/{ordonnance.Id}/{Path.GetFileName(attachment)}");
                         }
                     }
@@ -332,7 +336,7 @@ namespace libermedical.Services
 
                     var ordonnanceUpdated = await App.OrdonnanceManager.SaveOrUpdateAsync(ordonnance.Id, ordonnance, false);
                    
-                    if (ordonnanceUpdated != null)
+                    if (ordonnanceUpdated != null && attachments.Count == ordonnance.Attachments.Count)
                     {
                         ordonnance = ordonnanceUpdated;
                         ordonnance.IsSynced = true;
@@ -344,8 +348,8 @@ namespace libermedical.Services
                     }
 
                     await UpdateAsync(ordonnance as TModel, typeof(Ordonnance).Name + "_" + ordonnance.Id);
-                    MessagingCenter.Send(this,"RefreshOrdonanceList");
 
+                    MessagingCenter.Send(this,"RefreshOrdonanceList");
                 }
             }
             catch (Exception ex)
