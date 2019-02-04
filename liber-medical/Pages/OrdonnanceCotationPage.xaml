@@ -10,13 +10,14 @@
     <ResourceDictionary>
       <Style x:Key="ButtonCotation" TargetType="Button">
         <Setter Property="BackgroundColor" Value="#d1d1d1" />
-        <Setter Property="WidthRequest" Value="90" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
         <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="TextColor" Value="#ffffff" />
-        <Setter Property="Margin" Value="10,10" />
+        <Setter Property="Margin" Value="0,5,0,5" />
       </Style>
 
-
+      
     </ResourceDictionary>
   </custom:BasePage.Resources>
   <custom:BasePage.Header>
@@ -63,7 +64,7 @@
             </Button>
             <Button Text="1 AMI 4" Grid.Row="0" Grid.Column="2" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 4" BackgroundColor="{Binding AMI4,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
             </Button>
-            <Button Text="1 AMI 1.5" Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 1.5" BackgroundColor="{Binding AMI15,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
+            <Button Text="1 AMI 1.5" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMI 1.5" BackgroundColor="{Binding AMI15,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
             </Button>
             <Button Text="1 AIS 3" Grid.Row="1" Grid.Column="1" Style="{StaticResource ButtonCotation}" CommandParameter="1 AIS 3" BackgroundColor="{Binding AIS3,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
             </Button>
@@ -71,9 +72,9 @@
             </Button>
             <Button Text="2 AIS 3" Grid.Row="2" Grid.Column="0" Style="{StaticResource ButtonCotation}" CommandParameter="2 AIS 3" IsVisible="{Binding AIS32,Converter={converter:QuotationColorConverter}}" BackgroundColor="{Binding AIS32,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
             </Button>
-            <Button Text="1 AMS 7.5" Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMS 7.5" IsVisible="{Binding AMS75,Converter={converter:QuotationColorConverter}}" BackgroundColor="{Binding AMS75,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
+            <Button Text="1 AMS 7.5" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="1" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMS 7.5" IsVisible="{Binding AMS75,Converter={converter:QuotationColorConverter}}" BackgroundColor="{Binding AMS75,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
             </Button>
-            <Button Text="1 AMS 9.5" Grid.Row="2" Grid.Column="2" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMS 9.5" IsVisible="{Binding AMS95,Converter={converter:QuotationColorConverter}}" BackgroundColor="{Binding AMS95,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
+            <Button Text="1 AMS 9.5" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="2" Style="{StaticResource ButtonCotation}" CommandParameter="1 AMS 9.5" IsVisible="{Binding AMS95,Converter={converter:QuotationColorConverter}}" BackgroundColor="{Binding AMS95,Converter={converter:QuotationColorConverter}}" Command="{Binding SelectCotationCommand}">
             </Button>
           </Grid>
 
