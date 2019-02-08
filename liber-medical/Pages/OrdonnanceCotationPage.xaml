@@ -41,6 +41,7 @@
     <ContentView Style="{StaticResource ModalContentBackgroundColor}">
 
       <StackLayout BackgroundColor="#f3f3f3">
+                
         <ScrollView x:Name="scrollview" Orientation="Vertical">
           <StackLayout x:Name="Container">
           <Label Style="{StaticResource CotationSectionTitle}" HorizontalOptions="CenterAndExpand" Text="Sélectionnez votre cotation dans la liste ou choisissez cotation manuelle">

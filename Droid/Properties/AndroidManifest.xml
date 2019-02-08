@@ -8,8 +8,7 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<permission android:name="fr.libermedical.app.permission.C2D_MESSAGE" android:protectionLevel="signature" />
 	<uses-permission android:name="fr.libermedical.app.permission.C2D_MESSAGE" />
-	
-    <application android:label="Liber Medical">
+	<application android:label="Liber Medical">
 		<receiver android:name="com.onesignal.GcmBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
 			<intent-filter>
 				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -20,5 +19,4 @@
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"></meta-data>
 		</provider>
 	</application>
-    
 </manifest>
