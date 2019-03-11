@@ -73,6 +73,17 @@ namespace libermedical.ViewModels
         {
             var CurrentUser = JsonConvert.DeserializeObject<User>(Settings.CurrentUser);
 
+            var new_user = await App.UserManager.GetAsync(CurrentUser.Id);
+
+            if (new_user != null && CurrentUser != null)
+            {
+                //new user has been updated and has latest data.
+                CurrentUser.Firstname = new_user.Firstname;
+                CurrentUser.Lastname = new_user.Lastname;
+                CurrentUser.Email = new_user.Email;
+                CurrentUser.Phone = new_user.Phone;
+            }           
+
             if (CurrentUser != null)
             {
                 CurrentUser.OneSignalId = Settings.NotificationToken;

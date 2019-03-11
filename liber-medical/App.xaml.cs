@@ -47,8 +47,6 @@ namespace libermedical
             FreshIOC.Container.Register<IStorageService<Teledeclaration>, StorageService<Teledeclaration>>();
             FreshIOC.Container.Register(UserDialogs.Instance);
 
-            MessagingCenter.Subscribe<MyAccountEditViewModel>(this, "ProfileUpdate", UpdateProfile);
-
             MessagingCenter.Subscribe<LoginPage>(this, Events.CreateTabbedPage, sender =>
             {
                 CreateTabbedPage();
@@ -236,6 +234,7 @@ namespace libermedical
             isSyncing = true;
 
             var synchelper = new StorageService<BaseDTO>();
+
             await synchelper.SyncTables();
 
             isSyncing = false;
@@ -338,27 +337,44 @@ namespace libermedical
             }
         }
 
-
-        private Task updateProfile;
-
-        public void UpdateProfile(MyAccountEditViewModel myAccountEditViewModel)
+        public static async Task<bool> AskForStoragePermission()
         {
-             UpdateProfileAsync();
+            try
+            {
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+
+                if (status != PermissionStatus.Granted)
+                {
+                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
+                    {
+                        await tabbedNavigation.DisplayAlert("Accès à la caméra", "L'accès est requis pour les ordonnances et les documents", "Oui");
+                    }
+
+                    var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
+                    //Best practice to always check that the key exists
+
+                    if (results.ContainsKey(Permission.Storage))
+                        status = results[Permission.Storage];
+                }
+
+                if (status == PermissionStatus.Granted)
+                {
+                    return true;
+                }
+                else
+                {
+                    await tabbedNavigation.DisplayAlert("Accès refusé", "Veuillez activer l'autorisation dans les paramètres pour utiliser cette fonctionnalité", "Oui");
+                    return false;
+                }
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        private void UpdateProfileAsync()
-        {
-            //TODO: Send new profile from Settings to server.
-            //await Task.Delay(400);
-            //await ToastService.Show("Un nouveau mot de passe vient de vous etre transmis par email");
-        }
 
-        //public static IUserManager UserManager(string id, string route)
-        //{
-        //	if (!string.IsNullOrEmpty(route))
-        //		return _userManager = new UserManager(new RestService<User>($"users/{id}/{route}"));
-        //	return _userManager = new UserManager(new RestService<User>($"users/{id}"));
-        //}
 
         public static ILoginManager LoginManager => _loginManager ??
                                                     (_loginManager = new LoginManager(new RestService<LoginRequest>("")));

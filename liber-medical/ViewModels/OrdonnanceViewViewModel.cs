@@ -86,9 +86,14 @@ namespace libermedical.ViewModels
 
         bool isSharing;
 
-        public Command ShareCommand => new Command(() =>
+        public Command ShareCommand => new Command(async() =>
         {
             if (string.IsNullOrEmpty(fileLink))
+                return;
+
+            var isAllow = await App.AskForStoragePermission();
+
+            if (!isAllow)
                 return;
 
             Device.BeginInvokeOnMainThread(async() =>
@@ -100,9 +105,10 @@ namespace libermedical.ViewModels
 
                 Acr.UserDialogs.UserDialogs.Instance.ShowLoading("");
 
-                await DependencyService.Get<IShare>().ShareRemoteFile(fileLink, "IMG_"+DateTime.Today.Ticks+".png");
+                await DependencyService.Get<IShare>().ShareRemoteFile(fileLink, "IMG_" + DateTime.Today.Ticks + ".png");
 
                 Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+
 
                 isSharing = false;
             });

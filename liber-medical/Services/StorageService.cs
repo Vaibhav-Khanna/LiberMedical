@@ -172,9 +172,9 @@ namespace libermedical.Services
 		{
 			try
 			{
-
 				var items = (await BlobCache.UserAccount.GetAllObjects<Patient>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
-				foreach (var item in items)
+				
+                foreach (var item in items)
 				{
                     await PushPatient(item, item.UpdatedAt == null ? true : false );
 				}

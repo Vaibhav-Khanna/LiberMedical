@@ -74,6 +74,15 @@ namespace libermedical.Droid.Services
 
         public void Show(string title, string message, string filePath)
         {
+
+            var pdfFile = new Java.IO.File(filePath);
+          
+            if (!pdfFile.Exists())
+            {
+                //  The file that is being shared does not exist so throw an exception
+                throw new Exception("Unable to share file; File does not exist at specified path");
+            }
+
             var extension = filePath.Substring(filePath.LastIndexOf(".") + 1).ToLower();
            
             var contentType = string.Empty;

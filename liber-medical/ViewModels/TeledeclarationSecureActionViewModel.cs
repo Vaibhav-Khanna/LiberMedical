@@ -129,20 +129,25 @@ namespace libermedical.ViewModels
         {
             base.ReverseInit(returnedData);
 
-            if(returnedData is string)
+            if (returnedData is string)
             {
                 var fileLink = (string)returnedData;
 
                 if (string.IsNullOrEmpty(fileLink))
                     return;
 
-                Acr.UserDialogs.UserDialogs.Instance.ShowLoading("");
-
                 await Task.Delay(600);
+
+                var isAllow = await App.AskForStoragePermission();
+
+                if (!isAllow)
+                    return;
+
+                UserDialogs.Instance.ShowLoading("");
 
                 await DependencyService.Get<IShare>().ShareRemoteFile(fileLink, "PDF_" + DateTime.Today.Ticks + ".pdf");
 
-                Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+                UserDialogs.Instance.HideLoading();
             }
 
         }

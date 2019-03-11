@@ -121,6 +121,7 @@ namespace libermedical.ViewModels
                         UserDialogs.Instance.ShowLoading("Chargement...");
                         await new StorageService<Patient>().PushPatient(PatientProperty, _isNew && PatientProperty.UpdatedAt != null);
 					}
+
 					await CoreMethods.PopPageModel(PatientProperty);
 
 				}
