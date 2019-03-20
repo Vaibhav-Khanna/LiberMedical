@@ -15,13 +15,23 @@ namespace libermedical.Converters
 		{
 			var status = value.ToString();
 
-			if (status == "En attente")
-				return "#f6a623";
+           
+
+            if (status == "En attente" || status == "En attente de validation")
+                return "#f6a623";
             else if (status == "Traité" || status == "Validé")
                 return "#77D42A";
 			else if (status == "Refusé")
-				return "#ff7586";
-			else
+				return "#ff7586";         
+            else if (status == "En attente de télétransmission")
+            {
+                return "#efd032";
+            }
+            else if (status == "Télétransmise")
+            {
+                return "#77D42A";
+            }           
+            else
                 return "#f6a623";
 		}
 
