@@ -14,7 +14,6 @@ namespace libermedical.Converters
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			var status = value.ToString();
-
            
 
             if (status == "En attente" || status == "En attente de validation")
@@ -23,9 +22,9 @@ namespace libermedical.Converters
                 return "#77D42A";
 			else if (status == "Refusé")
 				return "#ff7586";         
-            else if (status == "En attente de télétransmission")
+            else if (status == "En attetente de télétransmission")
             {
-                return "#efd032";
+                return "#0078d4";
             }
             else if (status == "Télétransmise")
             {
