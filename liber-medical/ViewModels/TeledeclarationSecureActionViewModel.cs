@@ -53,15 +53,19 @@ namespace libermedical.ViewModels
 				return new Command(async (args) =>
 				{
                     UserDialogs.Instance.ShowLoading("Chargement...");
+
                     if (args as string == "Valid")
                         Teledeclaration.Status = Enums.StatusEnum.valid.ToString();
 					else
                         Teledeclaration.Status = Enums.@StatusEnum.refused.ToString();
 
 					_teledeclarationService = new StorageService<Teledeclaration>();
-					await _teledeclarationService.DeleteItemAsync(typeof(Teledeclaration).Name + "_" + Teledeclaration.Id);
-					Teledeclaration.IsSynced = false;
-					await _teledeclarationService.AddAsync(Teledeclaration);
+					
+                    await _teledeclarationService.DeleteItemAsync(typeof(Teledeclaration).Name + "_" + Teledeclaration.Id);
+					
+                    Teledeclaration.IsSynced = false;
+					
+                    await _teledeclarationService.AddAsync(Teledeclaration);
 
                     if (App.IsConnected())
                     {
@@ -71,10 +75,10 @@ namespace libermedical.ViewModels
 
                     await ToastService.Show("Votre télédéclaration vient d’être envoyée !");
 
-                 
-
                     await CoreMethods.PopPageModel(true,true);
+             
                     UserDialogs.Instance.HideLoading();
+
                 });
 			}
 		}

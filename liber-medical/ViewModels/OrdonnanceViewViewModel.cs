@@ -74,7 +74,7 @@ namespace libermedical.ViewModels
         private string GetDocumentPath(string path)
         {
             if (!string.IsNullOrEmpty(path))
-            if (path.StartsWith("Ordonnance/") || path.StartsWith("PatientDocuments/") || path.StartsWith("contracts/") || path.StartsWith("invoices/") || path.ToLower().StartsWith("teledeclarations/"))
+            if (path.StartsWith("Ordonnance/") || path.StartsWith("invoicesToSecure/") || path.StartsWith("PatientDocuments/") || path.StartsWith("contracts/") || path.StartsWith("invoices/") || path.ToLower().StartsWith("teledeclarations/"))
                 {
                     return fileLink = $"{Constants.RestUrl}file?path={System.Net.WebUtility.UrlEncode(path)}&token={Settings.Token}";
                 }

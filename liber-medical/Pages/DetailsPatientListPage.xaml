@@ -146,7 +146,7 @@
                         </ListView.Footer>
 						</ListView>
                     
-						<ListView ItemsSource="{Binding Documents}" x:Name="stackDocument" SelectedItem="{Binding SelectedDocument}" IsVisible="{Binding ShowStackDocument}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected">
+						<ListView ItemsSource="{Binding Documents}" HasUnevenRows="true" x:Name="stackDocument" SelectedItem="{Binding SelectedDocument}" IsVisible="{Binding ShowStackDocument}" SeparatorVisibility="Default" ItemSelected="Handle_ItemSelected">
 							<ListView.ItemTemplate>
 								<DataTemplate>
                                 <ViewCell>
@@ -156,17 +156,29 @@
                                                   Text="Supprimer" />
                                     </ViewCell.ContextActions>
 
-                                    <Grid Padding="20,0,0,0" >
-											<Grid.ColumnDefinitions>
+                                    <Grid RowSpacing="4" Padding="20,5,0,5" >
+										
+                                        <Grid.ColumnDefinitions>
 												<ColumnDefinition Width="90*" />
 												<ColumnDefinition Width="10*" />
-											</Grid.ColumnDefinitions>
-											<Grid.RowDefinitions>
-												<RowDefinition Height="60*" />
-												<RowDefinition Height="40*" />
+                                        </Grid.ColumnDefinitions>
+										
+                                        <Grid.RowDefinitions>
+												<RowDefinition Height="Auto" />
+												<RowDefinition Height="Auto" />
 											</Grid.RowDefinitions>
+                                        
 											<Label Text="{Binding Label, StringFormat='Doc- {0}'}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
-											<Label Text="{Binding CreatedAt, StringFormat='{0:dd-MM-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
+											
+                                        <Grid ColumnSpacing="5" VerticalOptions="Start" Grid.Row="1" RowSpacing="0" Grid.Column="0" HorizontalOptions="FillAndExpand" Padding="0" Margin="0" >
+                                            
+                                            <Label Text="{Binding CreatedAt, StringFormat='{0:dd-MM-yyyy}'}" Grid.Column="0" LineBreakMode="NoWrap" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource OrdonnanceAddDate}"  />
+                                        
+                                              
+                                            <Label Text="{Binding RefusedReasonString}" Grid.Column="1" LineBreakMode="WordWrap" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start" VerticalOptions="Center" Style="{StaticResource OrdonnanceAddDate}" TextColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" IsVisible="{Binding IsSynced}" />
+   
+                                        </Grid>
+                                      
 
                                              <Button Text="{Binding StatusString}"  HorizontalOptions="End" VerticalOptions="End" InputTransparent="true" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" TextColor="#ffffff" Margin="0,0,10,0" Grid.RowSpan="1" Grid.Column="0"  >
                                                 <Button.HeightRequest>
@@ -187,7 +199,8 @@
                                             </Button>
                                         
 											<Image Source="back_arrow_green.png" HorizontalOptions="Start" VerticalOptions="Center" Grid.RowSpan="2" Grid.Column="1" />
-										</Grid>
+										
+                                    </Grid>
 									</ViewCell>
 								</DataTemplate>
 							</ListView.ItemTemplate>

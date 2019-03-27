@@ -6,7 +6,8 @@ namespace libermedical.Models
 {
     public class Document : BaseDTO
     {
-        [JsonProperty("label")]
+       
+         [JsonProperty("label")]
         public string Label { get; set; }
 
         [JsonProperty("status")]
@@ -18,6 +19,9 @@ namespace libermedical.Models
         [JsonProperty("patient_id")]
         public string PatientId { get; set; }
 
+        [JsonProperty("refused_reason")]
+        public string RefusedReason { get; set; }
+
         [JsonProperty("nurse_id")]
         public string NurseId { get; set; }
 
@@ -28,8 +32,13 @@ namespace libermedical.Models
                 ? "Traité"
                                                                       : Status == DocumentStatusEnum.refused.ToString() ? "Refusé" : "En attente";
 
+        [JsonIgnore]
+        public string RefusedReasonString => !string.IsNullOrWhiteSpace(RefusedReason) && Status == StatusEnum.refused.ToString() ? "Motif: " + RefusedReason : "";
+
         public long Reference { set; get; }
+
         public DateTime AddDate { set; get; }
+
         public Patient Patient { set; get; }
 
     }

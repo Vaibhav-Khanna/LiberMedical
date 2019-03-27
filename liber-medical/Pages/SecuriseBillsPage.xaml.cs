@@ -11,6 +11,7 @@ namespace libermedical.Pages
     public partial class SecuriseBillsPage : BasePage
     {
         public ObservableCollection<Teledeclaration> Teledeclarations { get; set; }
+
         public SecuriseBillsPage() : base(-1, 0, false)
         {
             BindingContext = this;
