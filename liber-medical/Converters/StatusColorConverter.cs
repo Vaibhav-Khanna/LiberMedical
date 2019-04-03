@@ -18,11 +18,11 @@ namespace libermedical.Converters
 
             if (status == "En attente" || status == "En attente de validation")
                 return "#f6a623";
-            else if (status == "Traité" || status == "Validé")
+            else if (status == "Traitée" || status == "Validé")
                 return "#77D42A";
-			else if (status == "Refusé")
+			else if (status == "Refusée")
 				return "#ff7586";         
-            else if (status == "En attetente de télétransmission")
+            else if (status == "En attente de télétransmission")
             {
                 return "#0078d4";
             }

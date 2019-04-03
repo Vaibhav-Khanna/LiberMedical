@@ -21,7 +21,9 @@ namespace libermedical.iOS.Services
 
         private string GetFilePath(string filename)
         {
-            return System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), filename);
+            var s =  System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonPictures), filename);
+
+            return s;
         }
     }
 }

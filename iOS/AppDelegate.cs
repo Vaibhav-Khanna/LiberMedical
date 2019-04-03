@@ -18,12 +18,10 @@ namespace libermedical.iOS
         {
             Vapolia.WheelPickerForms.Ios.WheelPickerRenderer.InitializeForms();
 
-			Rg.Plugins.Popup.IOS.Popup.Init();
+            Rg.Plugins.Popup.Popup.Init();
 
             Forms.Init();
-           
-           
-
+                 
             var application = new App();
 			var color = ((Color)application.Resources["HeaderFooterBackgroundColor"]).ToUIColor();
             //Vapolia.WheelPickerForms.Ios.WheelPickerRenderer.InitializeForms();

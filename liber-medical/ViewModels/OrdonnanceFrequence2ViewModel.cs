@@ -132,14 +132,24 @@ namespace libermedical.ViewModels
             MessagingCenter.Send(this, Events.UpdateFrequencies, Frequency);
         });
 
+        bool isOpening;
+
         public ICommand CotationsTappedCommand => new Command(async () =>
         {
             if (CanEdit)
             {
+                if (isOpening)
+                    return;
+
+                isOpening = true;
+
                 SubscribeCotationsMessage();
 
                 await CoreMethods.PushPageModel<OrdonnanceCotationViewModel>(new Frequency(){ Quotations = Cotations.ToList() }, true);
+
                 MessagingCenter.Send(this, Events.EnableCotationsEditMode, true);
+
+                isOpening = false;
             }
 
         });

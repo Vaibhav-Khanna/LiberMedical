@@ -2,7 +2,6 @@
 using System.Net;
 using System.Threading.Tasks;
 using Android.Content;
-using Android.Support.Compat;
 using Android.Support.V4.Content;
 using libermedical.Droid.Services;
 using libermedical.Services;
@@ -11,6 +10,7 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(ShareFile))]
 namespace libermedical.Droid.Services
 {
+
     public class ShareFile : IShare
     {
         private readonly Context _context;
@@ -20,6 +20,7 @@ namespace libermedical.Droid.Services
             _context = Android.App.Application.Context;
         }
 
+
         public void ShareFileBytes(byte[] fileData, string fileName, string title = "", object view = null)
         {
             var filePath = WriteFile(fileName, fileData);
@@ -27,11 +28,13 @@ namespace libermedical.Droid.Services
             Show(title, "", filePath);
         }
 
+
         public async Task ShareLocalFile(string localFilePath, string title = "", object view = null)
         {
             await Task.Delay(100);
             Show(title, "", localFilePath);
         }
+
 
         public async Task ShareRemoteFile(string fileUri, string fileName, string title = "", object view = null)
         {
@@ -53,6 +56,7 @@ namespace libermedical.Droid.Services
             }
         }
 
+
         private string WriteFile(string fileName, byte[] bytes)
         {
             string localPath = "";
@@ -72,9 +76,9 @@ namespace libermedical.Droid.Services
             return localPath;
         }
 
+
         public void Show(string title, string message, string filePath)
         {
-
             var pdfFile = new Java.IO.File(filePath);
           
             if (!pdfFile.Exists())

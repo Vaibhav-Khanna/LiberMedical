@@ -9,6 +9,7 @@ namespace libermedical.Models
 {
     public class Ordonnance : BaseDTO
     {
+
         [JsonProperty("status")]
         public string Status { get; set; } = StatusEnum.waiting.ToString();
         [JsonProperty("first_care_at")]
@@ -43,8 +44,8 @@ namespace libermedical.Models
         public string StatusString => Status == StatusEnum.waiting.ToString()
             ? "En attente"
                                                               : Status == StatusEnum.valid.ToString()
-                ? "Traité"
-                                                              : Status == StatusEnum.refused.ToString() ? "Refusé" : "";
+                ? "Traitée"
+                                                              : Status == StatusEnum.refused.ToString() ? "Refusée" : "";
 
         [JsonIgnore]
         public string RefusedReasonString => !string.IsNullOrWhiteSpace(RefusedReason) && Status == StatusEnum.refused.ToString() ? "Motif: " + RefusedReason : "";

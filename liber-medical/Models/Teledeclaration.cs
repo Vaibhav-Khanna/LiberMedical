@@ -24,7 +24,7 @@ namespace libermedical.Models
         public string StatusString => Status == StatusEnum.waiting.ToString()
                     ? "En attente de validation"
                                                               : Status == StatusEnum.valid.ToString()
-                                                          ? "En attetente de télétransmission"
-                                                              : Status == StatusEnum.refused.ToString() ? "Refusé" : Status == "sent" ? "Télétransmise" : "";
+                                                          ? "En attente de télétransmission"
+                                                              : Status == StatusEnum.refused.ToString() ? "Refusée" : Status == "sent" ? "Télétransmise" : "";
 	}
 }

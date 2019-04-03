@@ -18,7 +18,6 @@ namespace libermedical.Managers
         {
             try
             {
-                
                 var bytedata = ReadFully(DependencyService.Get<IPDFStream>().GetStream(filepath));
                  
                 HttpClient client = new HttpClient();

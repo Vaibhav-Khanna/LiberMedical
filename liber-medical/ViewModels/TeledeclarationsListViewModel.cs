@@ -198,16 +198,10 @@ namespace libermedical.ViewModels
             ApplyFilter(_filter);         
         }
 
-        protected override async Task TapCommandFunc(Cell cell)
-        {
-            //var ctx = cell.BindingContext;
-            //await CoreMethods.PushPageModelWithNewNavigation<TeledeclarationSecureActionViewModel>(ctx);
-        }
-
+      
         bool isOpening = false;
 
-        public ICommand BillTappedCommand => new Command(
-            async () => await Application.Current.MainPage.Navigation.PushModalAsync(new SecuriseBillsPage()));
+
 
         public ICommand TeledeclarationTappedCommand
         {
@@ -253,6 +247,21 @@ namespace libermedical.ViewModels
             IsRefreshing = false;
         }
 
+        public override void ReverseInit(object returnedData)
+        {
+            base.ReverseInit(returnedData);
+
+            if(returnedData is string)
+            {
+
+            }
+        }
+
+        protected override Task TapCommandFunc(Cell cell)
+        {
+            throw new NotImplementedException();
+        }
+
         bool isopening = false;
 
         public ICommand FilterTappedCommand => new Command(
@@ -275,11 +284,15 @@ namespace libermedical.ViewModels
                 return new Command(
                 async (args) =>
                 {
-                    
+
                     UserDialogs.Instance.ShowLoading("ouverture");
-                    var request = new GetListRequest(20, 1,sortField:"createdAt",sortDirection: SortDirectionEnum.Desc);
+
+                    await Task.Delay(500);
+
+                    var request = new GetListRequest(20, 1, sortField: "createdAt", sortDirection: SortDirectionEnum.Desc);
                     var invoices = await App.InvoicesManager.GetListAsync(request);
-                    if (invoices != null && invoices.rows!=null && invoices.rows.Count > 0)
+
+                    if (invoices != null && invoices.rows != null && invoices.rows.Count > 0)
                     {
                         var invoice = invoices.rows.First();
 
@@ -288,6 +301,7 @@ namespace libermedical.ViewModels
                         else
                             await CoreMethods.PushPageModel<OrdonnanceViewViewModel>(invoice, true);
                     }
+
                     UserDialogs.Instance.HideLoading();
 
                 });

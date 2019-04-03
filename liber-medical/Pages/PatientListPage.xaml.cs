@@ -38,7 +38,7 @@ namespace libermedical.Pages
 			vm.ListElementTapCommand.Execute(cell);
 		}
 
-        async Task Handle_Refreshing(object sender, System.EventArgs e)
+        async void Handle_Refreshing(object sender, System.EventArgs e)
         {
             if (App.IsConnected())
                 await App.SyncData();
@@ -47,6 +47,7 @@ namespace libermedical.Pages
             PatientListView.EndRefresh();
             isExecuting = false;
         }
+
 
         void Handle_ItemSelected(object sender, SelectedItemChangedEventArgs e)
 		{

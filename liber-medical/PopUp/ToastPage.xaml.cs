@@ -14,19 +14,19 @@ namespace libermedical.PopUp
             ToastLabel.Text = Text;
         }
 
-        protected override Task OnAppearingAnimationEnd()
+        protected override void OnAppearingAnimationEnd()
         {
-            Device.StartTimer(new TimeSpan(0,0,2), () =>
+            Device.StartTimer(new TimeSpan(0, 0, 2), () =>
             {
-                Device.BeginInvokeOnMainThread( async() => 
-                {
-                    await Rg.Plugins.Popup.Services.PopupNavigation.PopAllAsync();
-                });
+                  Device.BeginInvokeOnMainThread(async () =>
+               {
+                   await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAllAsync();
+               });
 
                 return false;
             });
 
-            return base.OnAppearingAnimationEnd();
+            base.OnAppearingAnimationEnd();
         }
     }
 }

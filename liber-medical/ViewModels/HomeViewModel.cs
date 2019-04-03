@@ -384,8 +384,8 @@ namespace libermedical.ViewModels
 
         async void ShowMessage()
         {
-            // await ToastService.Show("Votre ordonnance a bien été enregistrée !");
-            MessagingCenter.Send(this, "Showhomemessage");
+            await ToastService.Show("Votre ordonnance a bien été enregistrée !");
+            //MessagingCenter.Send(this, "Showhomemessage");
         }
 
     }

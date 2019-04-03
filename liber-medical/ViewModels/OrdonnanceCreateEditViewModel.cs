@@ -246,14 +246,24 @@ namespace libermedical.ViewModels
             await CoreMethods.PopPageModel(null, true);
         });
 
+        bool isOpening;
+
         public ICommand SelectPatientCommand => new Command(async () =>
         {
             if (CanEdit)
             {
+                if (isOpening)
+                    return;
+
+                isOpening = true;
+
                 if (Ordonnance.Status != Enums.StatusEnum.valid.ToString())
                     await CoreMethods.PushPageModel<PatientListViewModel>(new[] { "OrdonanceSelectPatient", "normal", "ordonnance" }, true);
+
+                isOpening = false;
             }
         });
+
 
         public ICommand SaveCommand => new Command(async () =>
         {

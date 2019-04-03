@@ -43,10 +43,12 @@ namespace libermedical.Services
                 foreach (var item in items)
                 {
                     var key = typeof(TModel).Name + "_" + item.Id;
-                    item.IsSynced = true;
-               
+
                     if (!list_keys.Contains(key))
+                    {
+                        item.IsSynced = true;
                         dic.Add(key, item);
+                    }
                 }
 
                 await BlobCache.UserAccount.InsertObjects(dic);
@@ -136,6 +138,7 @@ namespace libermedical.Services
 
         bool isSyncing = false;
 
+
 		public async Task SyncTables()
 		{
             if (isSyncing)
@@ -207,7 +210,6 @@ namespace libermedical.Services
         {
             try
             {
-
                 var localId = teledeclaration.Id;
                 var tele = await App.TeledeclarationsManager.SaveOrUpdateAsync(teledeclaration.Id, teledeclaration, false);
 
@@ -301,6 +303,7 @@ namespace libermedical.Services
             }
         }
 
+
         public async Task PushOrdonnance(Ordonnance ordonnanceObject, bool isNew)
         {
             try
@@ -309,6 +312,7 @@ namespace libermedical.Services
               
                 var ordonnance = await App.OrdonnanceManager.SaveOrUpdateAsync(ordonnanceObject.Id, ordonnanceObject, ordonnanceObject.UpdatedAt == null );
             
+
                 if (ordonnance != null)
                 {
                     ordonnance.UpdatedAt = DateTime.UtcNow;
@@ -344,6 +348,7 @@ namespace libermedical.Services
                     }
                     else
                     {
+                        ordonnance = ordonnanceUpdated;
                         ordonnance.IsSynced = false;
                     }
 
@@ -362,7 +367,6 @@ namespace libermedical.Services
         {
             try
             {
-
                 await DeleteItemAsync(id);
                 await AddAsync(item as TModel);
                 return true;
@@ -379,7 +383,8 @@ namespace libermedical.Services
 			try
 			{
 				var items = (await BlobCache.UserAccount.GetAllObjects<Ordonnance>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
-				foreach (var item in items)
+				
+                foreach (var item in items)
 				{
                     var isNew = item.UpdatedAt == null ? true : false;
 					await PushOrdonnance(item, isNew);

@@ -29,8 +29,8 @@ namespace libermedical.Models
         public string StatusString => Status == DocumentStatusEnum.waiting.ToString()
             ? "En attente"
                                                                       : Status == DocumentStatusEnum.valid.ToString()
-                ? "Traité"
-                                                                      : Status == DocumentStatusEnum.refused.ToString() ? "Refusé" : "En attente";
+                ? "Traitée"
+                                                                      : Status == DocumentStatusEnum.refused.ToString() ? "Refusée" : "En attente";
 
         [JsonIgnore]
         public string RefusedReasonString => !string.IsNullOrWhiteSpace(RefusedReason) && Status == StatusEnum.refused.ToString() ? "Motif: " + RefusedReason : "";

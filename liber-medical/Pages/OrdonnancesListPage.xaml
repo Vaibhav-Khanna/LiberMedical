@@ -24,8 +24,8 @@
                                HeightRequest="60" 
                                Color="Black"
                                Grid.Row="0"
-                               Grid.RowSpan="2"
-                               />
+                               Grid.RowSpan="2" />
+        
            <StackLayout Orientation="Vertical" VerticalOptions="Start" Spacing="0" Grid.Row="0" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}" >
             
             <StackLayout BackgroundColor="#c8c7cc"  HeightRequest="50"  HorizontalOptions="FillAndExpand" Style="{StaticResource BackgroundResearch}">
@@ -50,7 +50,8 @@
             
                  </StackLayout>
     
-                       <ListView x:Name="MyListView" Grid.Row="1" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}" VerticalOptions="FillAndExpand" Refreshing="Handle_Refreshing" IsPullToRefreshEnabled="true" ItemsSource="{Binding Ordonnances}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected" ItemAppearing="MyListView_ItemAppearing">
+    
+                   <ListView x:Name="MyListView" Grid.Row="1" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}" VerticalOptions="FillAndExpand" Refreshing="Handle_Refreshing" IsPullToRefreshEnabled="true" ItemsSource="{Binding Ordonnances}" SeparatorVisibility="Default" RowHeight="60" ItemSelected="Handle_ItemSelected" ItemAppearing="MyListView_ItemAppearing">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell BindingContextChanged="Handle_BindingContextChanged"> 
@@ -71,10 +72,10 @@
                                         <Label Text="{Binding PatientName}" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" Style="{StaticResource Ordonnance}" Grid.Row="0" Grid.Column="0" />
                                         <Label Text="{Binding CreatedAt, StringFormat='{0:dd-MM-yyyy}'}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Grid.Row="1" Grid.Column="0" />
                                         <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalOptions="End">
-                                            <Button x:Name="bt" Text="{Binding StatusString}" HorizontalOptions="Center" VerticalOptions="End" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" TextColor="#ffffff" IsVisible="{Binding IsSynced}" Command="{Binding Source={x:Reference Root}, Path=BindingContext.SelectItemCommand}" CommandParameter="{Binding .}"  >
+                                            <Button x:Name="bt" Padding="0" Text="{Binding StatusString}" HorizontalOptions="Center" VerticalOptions="End" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" TextColor="#ffffff" IsVisible="{Binding IsSynced}" Command="{Binding Source={x:Reference Root}, Path=BindingContext.SelectItemCommand}" CommandParameter="{Binding .}"  >
                                                 <Button.HeightRequest>
                                                     <OnPlatform x:TypeArguments="x:Double">
-                                                        <On Platform="Android" Value="40" />
+                                                        <On Platform="Android" Value="20" />
                                                         <On Platform="iOS" Value="20" />
                                                     </OnPlatform>
                                                 </Button.HeightRequest>
@@ -92,17 +93,21 @@
                                                 </Button.WidthRequest>
                                                 <Button.BorderRadius>
                                                     <OnPlatform x:TypeArguments="x:Int32">
-                                                        <On Platform="Android" Value="0" />
+                                                        <On Platform="Android" Value="10" />
                                                         <On Platform="iOS" Value="10" />
                                                     </OnPlatform>
                                                 </Button.BorderRadius>
                                             </Button>
                                             <Image Source="sync.png" VerticalOptions="End" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsSynced,Converter={converter:BooleanNegativeConverter}}"></Image>
                                         </StackLayout>
-                                        <Label Text="{Binding RefusedReasonString}" LineBreakMode="TailTruncation" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Start" Style="{StaticResource OrdonnanceAddDate}" TextColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" IsVisible="{Binding IsSynced}" Grid.Row="1" Grid.Column="1" />
-                                        <Image Source="back_arrow_green.png" HorizontalOptions="Start" VerticalOptions="Center" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" />
-                                    </Grid>
-                                </ViewCell>
+                        
+                            <Label Text="{Binding RefusedReasonString}" LineBreakMode="TailTruncation" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Start" Style="{StaticResource OrdonnanceAddDate}" TextColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" IsVisible="{Binding IsSynced}" Grid.Row="1" Grid.Column="1" />
+                            
+                            <Image Source="back_arrow_green.png" IsOpaque="true"  HorizontalOptions="Start" VerticalOptions="Center" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" />     
+                       
+                        </Grid>
+                            
+                    </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                 <custom:CustomRefreshListView.Footer>
@@ -111,9 +116,7 @@
                     </ContentView>
                 </custom:CustomRefreshListView.Footer>              
                </ListView>
-
-                
-          
+               
        </Grid>
       
 </ContentPage>

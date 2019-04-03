@@ -11,12 +11,12 @@ namespace libermedical.PopUp
 		{
 			var popupPage = new ToastPage(text);
 
-			if (PopupNavigation.PopupStack.Count > 0)
+			if (PopupNavigation.Instance.PopupStack.Count > 0)
 			{
-				await PopupNavigation.PopAllAsync();
+				await PopupNavigation.Instance.PopAllAsync();
 			}
 
-			await PopupNavigation.PushAsync(popupPage);
+			await PopupNavigation.Instance.PushAsync(popupPage);
 		}
 
     }

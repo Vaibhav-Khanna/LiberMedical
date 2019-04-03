@@ -109,7 +109,6 @@ namespace libermedical.ViewModels
 
                 Acr.UserDialogs.UserDialogs.Instance.HideLoading();
 
-
                 isSharing = false;
             });
         });

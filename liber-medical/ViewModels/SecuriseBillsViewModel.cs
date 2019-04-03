@@ -49,6 +49,8 @@ namespace libermedical.ViewModels
         {
         }
 
+        bool isTeledeclaration;
+
         public override void Init(object initData)
         {
             base.Init(initData);
@@ -57,6 +59,7 @@ namespace libermedical.ViewModels
             {
                 if (initData is Teledeclaration)
                 {
+                    isTeledeclaration = true;
                     var teledeclaration = initData as Teledeclaration;
                     Title = teledeclaration.Label;
                     if (teledeclaration.FilePath.StartsWith("/"))
@@ -93,7 +96,6 @@ namespace libermedical.ViewModels
                     else
                     DownloadFile(invoice.FilePath);
                 }
-
             }
         }
 
@@ -105,29 +107,30 @@ namespace libermedical.ViewModels
 
         }
 
-        bool isSharing;
-
+      
         public Command ShareCommand => new Command(async () =>
         {
             if (string.IsNullOrEmpty(fileLink))
                 return;
 
-            await CoreMethods.PopPageModel(fileLink,modal:true);
+            if (isTeledeclaration)
+            {
+                await CoreMethods.PopPageModel(fileLink, modal: true);
+                return;
+            }
 
-            //if (isSharing)
-            //    return;
 
-            //isSharing = true;
+            var isAllow = await App.AskForStoragePermission();
 
-            //Acr.UserDialogs.UserDialogs.Instance.ShowLoading("");
+            if (!isAllow)
+                return;
 
-            ////BackCommand.Execute(null);
+            Acr.UserDialogs.UserDialogs.Instance.ShowLoading("");
 
-            //await DependencyService.Get<IShare>().ShareRemoteFile(fileLink, "PDF_" + DateTime.Today.Ticks + ".pdf");
+            await DependencyService.Get<IShare>().ShareRemoteFile(fileLink, "PDF_" + DateTime.Today.Ticks + ".pdf");
 
-            //Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+            Acr.UserDialogs.UserDialogs.Instance.HideLoading();
 
-            //isSharing = false;
         });
 
         private async void DownloadFile(string filePath)
