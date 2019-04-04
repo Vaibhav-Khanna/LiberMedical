@@ -38,7 +38,7 @@
                             <DataTemplate>
                                 <ViewCell>
                             <StackLayout VerticalOptions="FillAndExpand">
-                                    <Grid ColumnSpacing="2" RowSpacing="5" VerticalOptions="Start" Margin="0,8,0,8" Padding="15,5,0,5">
+                                    <Grid ColumnSpacing="2" RowSpacing="5" VerticalOptions="Start" Margin="0,8,0,8" Padding="10,5,0,5">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="60*" />
                                             <ColumnDefinition Width="30*" />
@@ -53,11 +53,11 @@
                                  <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" LineBreakMode="WordWrap" HorizontalOptions="StartAndExpand" Style="{StaticResource Ordonnance}" Text="{Binding Label}"  />
                                
                                     
-                                <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="5">
+                                <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="2">
                                       
-                                     <Label  HorizontalOptions="Start" Style="{StaticResource OrdonnanceAddDate}" Text="{Binding CreatedAt, StringFormat='{0:dd-MM-yyyy}'}" VerticalOptions="Center" />
+                                     <Label  HorizontalOptions="StartAndExpand" Style="{StaticResource OrdonnanceAddDate}" Text="{Binding CreatedAt, StringFormat='{0:dd-MM-yyyy}'}" VerticalOptions="Center" />
                                     
-                                       <Frame HasShadow="false" Padding="4" CornerRadius="7" HorizontalOptions="FillAndExpand" Margin="0,0,10,0" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" VerticalOptions="CenterAndExpand">
+                                       <Frame HasShadow="false" Padding="4" CornerRadius="7" HorizontalOptions="EndAndExpand" WidthRequest="180" Margin="0,0,10,0" BackgroundColor="{Binding StatusString,Converter={converter:StatusColorConverter}}" VerticalOptions="CenterAndExpand">
                                         <Label Text="{Binding StatusString}" HorizontalTextAlignment="Center" HorizontalOptions="Fill" LineBreakMode="TailTruncation" TextColor="#ffffff" >
                                             <Label.FontSize>
                                                     <OnPlatform x:TypeArguments="x:Double">

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Rg.Plugins.Popup.Pages;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 
 namespace libermedical.PopUp
@@ -18,10 +19,11 @@ namespace libermedical.PopUp
         {
             Device.StartTimer(new TimeSpan(0, 0, 2), () =>
             {
-                  Device.BeginInvokeOnMainThread(async () =>
-               {
-                   await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAllAsync();
-               });
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    if (PopupNavigation.Instance.PopupStack.Count != 0)
+                        await PopupNavigation.Instance.PopAllAsync();
+                });
 
                 return false;
             });

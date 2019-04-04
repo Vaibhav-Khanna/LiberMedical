@@ -18,6 +18,7 @@ namespace libermedical.Services
 
 	public class StorageService<TModel> : IStorageService<TModel> where TModel : BaseDTO, new()
 	{
+
 		public async Task<bool> AddAsync(TModel item)
 		{
 			try
@@ -31,6 +32,20 @@ namespace libermedical.Services
 				return false;
 			}
 		}
+
+        public async Task<bool> AddAsync(TModel item,string id)
+        {
+            try
+            { 
+                await BlobCache.UserAccount.InsertObject(id, item);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
 
         public async Task<bool> AddManyAsync(List<TModel> items)
         {
@@ -54,7 +69,6 @@ namespace libermedical.Services
                 await BlobCache.UserAccount.InsertObjects(dic);
 
                 return true;
-
             }
 			catch (Exception e)
 			{
@@ -120,8 +134,6 @@ namespace libermedical.Services
 			{
                 var items = (await BlobCache.UserAccount.GetAllObjects<TModel>()).ToList().Where(x => x.IsSynced != false);
 				
-                System.Diagnostics.Debug.WriteLine($"{typeof(TModel).Name} count is {items.ToObservable().Count()}");
-
                 foreach (var item in items)
                 {
                     var key = typeof(TModel).Name + "_" + item.Id;
@@ -192,9 +204,9 @@ namespace libermedical.Services
 		{
 			try
 			{
-
 				var items = (await BlobCache.UserAccount.GetAllObjects<Document>()).ToObservable().Where(x => x.IsSynced == false).ToEnumerable();
-				foreach (var item in items)
+			
+             	foreach (var item in items)
 				{
                     await PushDocument(item, item.UpdatedAt == null ? true : false);
 				}
@@ -318,7 +330,7 @@ namespace libermedical.Services
                     ordonnance.UpdatedAt = DateTime.UtcNow;
 
                     await DeleteItemAsync(typeof(Ordonnance).Name + "_" + localId);
-
+                    
                     await UpdateAsync(ordonnance as TModel, typeof(Ordonnance).Name + "_" + ordonnance.Id);
 
                     var attachments = new Dictionary<string, string>();
@@ -347,8 +359,7 @@ namespace libermedical.Services
                         ordonnance.UpdatedAt = DateTime.UtcNow;
                     }
                     else
-                    {
-                        ordonnance = ordonnanceUpdated;
+                    {               
                         ordonnance.IsSynced = false;
                     }
 
@@ -368,7 +379,7 @@ namespace libermedical.Services
             try
             {
                 await DeleteItemAsync(id);
-                await AddAsync(item as TModel);
+                await AddAsync(item as TModel,id);
                 return true;
             }
             catch (Exception)

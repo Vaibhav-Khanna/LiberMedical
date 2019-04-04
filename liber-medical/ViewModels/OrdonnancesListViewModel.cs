@@ -94,6 +94,9 @@ namespace libermedical.ViewModels
 
         public async Task BindData(bool download = true)
         {
+
+            await new StorageService<Ordonnance>().SyncOrdonnances();
+
             //if (download)
             {
                 MaxCount = await new StorageService<Ordonnance>().DownloadOrdonnances();
@@ -305,7 +308,6 @@ namespace libermedical.ViewModels
 
         public async Task CachedList()
         {
-
             var list = await _ordonnanceStorage.GetList();
 
             if (list != null && list.Count() != 0)

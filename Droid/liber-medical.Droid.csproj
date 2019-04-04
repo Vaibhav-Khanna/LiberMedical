@@ -43,7 +43,7 @@
     <WarningLevel>4</WarningLevel>
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
-    <AndroidSupportedAbis>armeabi-v7a;armeabi;arm64-v8a</AndroidSupportedAbis>
+    <AndroidSupportedAbis>armeabi-v7a;arm64-v8a</AndroidSupportedAbis>
     <AndroidKeyStore>True</AndroidKeyStore>
     <AndroidSigningKeyStore>/Users/vaibhavkhanna/Projects/LiberMedical/_git/Xamarin/ContinuousIntegration/Certificates/Android/libermedical.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>j07lg95rCm9LTcP</AndroidSigningStorePass>
