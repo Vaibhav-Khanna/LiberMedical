@@ -25,6 +25,11 @@ namespace libermedical.ViewModels
         private string typeDoc = "ordonnance";
         private string _documentPath = string.Empty;
         private string AdvisorContact = string.Empty;
+
+        public string NextMeetingText { get; set; }
+
+        public string NextMeeting { get; set; }
+
         private string _welcomeText;
         public string WelcomeText
         {
@@ -51,9 +56,11 @@ namespace libermedical.ViewModels
 
         public HomeViewModel()
         {
-            //SubscribeToMessages();
+            WelcomeText = $"Bienvenue sur votre espace {JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Firstname} !";
 
-            WelcomeText = $"Bonjour {JsonConvert.DeserializeObject<User>(Settings.CurrentUser).Firstname}, que souhaitez-vous faire?";
+            NextMeetingText = "Votre prochain rendez-vous est" + Environment.NewLine;
+         
+            NextMeeting = $"le 3 Avril 2019 a 16h15";
 
             CheckForAdvisor();
 
