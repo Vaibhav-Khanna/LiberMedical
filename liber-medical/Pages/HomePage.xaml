@@ -23,7 +23,7 @@
 
         <ContentView>
           
-            <Grid RowSpacing="0">
+            <Grid RowSpacing="0" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20*" />
                     <RowDefinition Height="30*" />
@@ -41,13 +41,13 @@
          
             <StackLayout BackgroundColor="#f8f8f8" Margin="0,0,0,5" Orientation="Vertical" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}" HorizontalOptions="FillAndExpand" Grid.Row="0" VerticalOptions="FillAndExpand">
                                
-                <Label Text="{Binding WelcomeText}" VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand" Style="{StaticResource HomePageAsk}" />
+                <Label Text="{Binding WelcomeText}" VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand" Style="{StaticResource HomePageAsk}" FontSize="17" />
                
-                <Label HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalOptions="StartAndExpand" Style="{StaticResource HomePageAsk}" >
+                <Label HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalOptions="StartAndExpand" Style="{StaticResource HomePageAsk}" FontSize="17" >
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="{Binding NextMeetingText}" FontAttributes="None" TextColor="{StaticResource PurpleyGrey2}" />
-                            <Span Text="{Binding NextMeeting}" FontAttributes="Bold" TextColor="{StaticResource PurpleyGrey2}"/>
+                            <Span Text="{Binding NextMeetingText}" FontAttributes="None" TextColor="{StaticResource PurpleyGrey2}" FontSize="17" />
+                            <Span Text="{Binding NextMeeting}" FontAttributes="Bold" TextColor="{StaticResource PurpleyGrey2}" FontSize="16" />
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -56,23 +56,23 @@
             
             
             
-            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Center" Grid.Row="1" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}">
-                    <Image Source="addnormal.png" Margin="0,10,0,0">
+                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Center" Grid.Row="1" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}">
+                    <Image Source="btnadd.png" HeightRequest="82" WidthRequest="82" Margin="0,10,0,0">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding AddOrdonnanceCommand}" />
                         </Image.GestureRecognizers>
                     </Image>
-                    <Label Margin="0,5,0,0" Text="Ajouter une ordonnance" HorizontalOptions="Center" Style="{StaticResource HomePageTask}" />
+                    <Label Margin="0,5,0,0" Text="Ajouter une ordonnance" HorizontalOptions="Center" Style="{StaticResource HomePageTask}" FontSize="14" />
                 </StackLayout>
             
             
                 <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Center" Grid.Row="2" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}">
-                    <Image Source="addfast.png" Margin="0,10,0,0">
+                    <Image Source="btnfast.png" HeightRequest="82" WidthRequest="82" Margin="0,10,0,0">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding FastCommand}" />
                         </Image.GestureRecognizers>
                     </Image>
-                    <Label Margin="0,5,0,0" Text="Ajout rapide" HorizontalOptions="Center" Style="{StaticResource HomePageTask}" />
+                    <Label Margin="0,5,0,0" Text="Ajout rapide" HorizontalOptions="Center" Style="{StaticResource HomePageTask}" FontSize="14" />
                 </StackLayout>
             
             
@@ -85,7 +85,7 @@
                     <Label Margin="0,5,0,25" Text="Contacter mon conseiller" HorizontalOptions="Center" Style="{StaticResource HomePageTask}" />
                 </StackLayout>-->
             
-            <Button BackgroundColor="White" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}" Command="{Binding AssistCommand}" Grid.Row="3" Text="Contacter mon conseiller" TextColor="{StaticResource PurpleyGrey2}" FontAttributes="Bold" FontSize="16" Padding="25,0,25,0" BorderColor="{StaticResource PurpleyGrey2}" BorderWidth="0.5" BorderRadius="3" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" />
+            <Button BackgroundColor="White" IsVisible="{Binding IsRunning,Converter={converter:BooleanNegativeConverter}}" Command="{Binding AssistCommand}" Grid.Row="3" Text="Contacter mon conseiller" TextColor="{StaticResource PurpleyGrey2}" FontAttributes="Bold" FontSize="17" Padding="25,0,25,0" BorderColor="{StaticResource PurpleyGrey2}" BorderWidth="0.5" BorderRadius="3" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center" />
             
             </Grid>
         </ContentView>

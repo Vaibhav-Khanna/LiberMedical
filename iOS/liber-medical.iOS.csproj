@@ -384,6 +384,12 @@
     <BundleResource Include="Resources\phone2%402x.png" />
     <BundleResource Include="Resources\phone2%403x.png" />
     <BundleResource Include="Resources\share.png" />
+    <BundleResource Include="Resources\btnadd.png" />
+    <BundleResource Include="Resources\btnadd%402x.png" />
+    <BundleResource Include="Resources\btnadd%403x.png" />
+    <BundleResource Include="Resources\btnfast.png" />
+    <BundleResource Include="Resources\btnfast%402x.png" />
+    <BundleResource Include="Resources\btnfast%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\add%402x.png" />
